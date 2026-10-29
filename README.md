@@ -3,7 +3,8 @@
 A private, two-person space for location sharing, disappearing moments, chat and connection.
 One React/TypeScript codebase targets the web and a sideloaded Capacitor Android app.
 
-**Status:** M0 local scaffold verified; product features and hosted services are not ready.
+**Status:** M0 complete and pushed. Waiting for human task #2 (Supabase setup) before M1.
+Product features and hosted services are not ready.
 Follow [PLAN.md](PLAN.md) for the ordered milestones and [DEVLOG.md](DEVLOG.md) for evidence.
 
 See [local development](docs/DEVELOPMENT.md) for installation, verification, native builds,

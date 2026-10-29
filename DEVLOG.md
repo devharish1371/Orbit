@@ -58,3 +58,18 @@ GitHub correction: sandboxed auth status was misleading. Outside the sandbox, th
 keychain login works. Confirmed the public repository `https://github.com/devharish1371/Orbit`
 is empty and suitable for the initial push. Human #1 is satisfied. Publishing the initial
 scaffold is next; M0 remains open until push succeeds.
+
+## 2026-10-30 — M0 complete; stopped at human #2
+
+- Created scaffold commit `97bac05` (`chore: scaffold orbit web tools supabase and android`).
+- Successfully pushed `main` to `https://github.com/devharish1371/Orbit`; origin tracking is set.
+- All required local M0 acceptance checks passed as recorded above. A final documentation
+  commit records completion and will be tagged `m0-done` and pushed with that tag.
+- M1 has not started. Stopped at `08_HUMAN_TASKS.md` #2 because a real Supabase project
+  and populated local environment files are needed. The copies already exist:
+  `.env.tools` (server/admin/account configuration) and `web/.env.local` (public URL/key only).
+- Human next: create the Free project, configure Auth as documented in #2, fill those local
+  files, and say "env files are ready". Keep passwords out of files/chat; account creation
+  will prompt for them after the M1 admin tooling is implemented.
+- Native APK compilation/device tests remain unrun because the optional local JDK/SDK
+  is unavailable. No live integration, background tracking, push, or soak claim is made.

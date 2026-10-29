@@ -18,8 +18,8 @@ Architecture notes and version records live in `docs/`.
 
 | Milestone | Work and acceptance gate | Status |
 | --- | --- | --- |
-| M0 | Scaffold strict React/TypeScript + Vite/Tailwind, Capacitor Android, Supabase CLI config, Python venv/tools, environment templates. Bootstrap, dev smoke, build, tests, lint, typecheck, format and Android sync pass; first commit pushed. | In progress |
-| M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Pending M0 |
+| M0 | Scaffold strict React/TypeScript + Vite/Tailwind, Capacitor Android, Supabase CLI config, Python venv/tools, environment templates. Bootstrap, dev smoke, build, tests, lint, typecheck, format and Android sync pass; first commit pushed. | Complete; scaffold commit `97bac05` pushed |
+| M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Waiting for human #2; implementation not started |
 | M2 | Design system, HashRouter/query/auth, config/copy, login, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Pending M1 |
 | M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Pending M2 |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | Pending M3 |
@@ -31,9 +31,10 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
-1. Local M0 implementation and checks passed, including a clean install from npm lockfiles.
-2. Commit and push the verified scaffold to the existing empty public Orbit repository.
-3. Tag `m0-done` after push; stop at human #2's missing Supabase project configuration.
+1. Human #2: create the free Supabase project and disable public signup per `08`.
+2. Fill the existing ignored `.env.tools` and `web/.env.local` files; never paste secrets into chat.
+3. Resume with "env files are ready". Verify config, implement M1, run real-project integration
+   tests, deploy retention/cron, commit, then tag `m1-done` when all M1 criteria pass.
 
 ## Human dependencies observed
 
