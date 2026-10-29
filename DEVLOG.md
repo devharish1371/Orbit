@@ -161,3 +161,46 @@ Final hosted cleanup health check passed with zero errors. A count-only audit co
 exactly two permanent Auth users, one couple and two members; zero disposable test users,
 post rows, cleanup tombstones or media objects remain. The staged milestone will be
 published under `m1-done`; current SMTP setup instructions are ready for the owner-only step.
+
+## 2026-10-30 — SMTP configured; M2 implementation started
+
+- Stored the user-supplied app credential only in ignored owner-readable `.env.tools`,
+  removing Google's display spaces. Supabase SMTP/template configuration succeeded;
+  Gmail accepted SMTP authentication over TLS. The sender and credential were not printed.
+- Corrected a Management API format mismatch: `smtp_port` must be a string, as verified
+  by the current official reference and a sanitized HTTP 400 diagnostic.
+- A normal Supabase OTP request to the user returned HTTP 200; the user confirmed arrival
+  by supplying the eight-digit code. SMTP is no longer a human blocker.
+- Starting M2: real email OTP client, session persistence/refresh, auth-gated private data,
+  themeable shell, shared connection settings and Home. Generated types from live schema
+  metadata (no row data). Added `0006_couple_connect.sql` for the shared Meet URL behind RLS.
+
+
+## 2026-10-30 — M2 shell, login and personal profiles
+
+- Built the auth-gated, mobile-first shell, Home/Us/settings and personal profile editor,
+  with shared copy/config validation, offline/error/reconnect states, PWA update prompt,
+  self-hosted fonts, reduced motion and Day/Night/Match device appearance.
+- Verified actual Dev email OTP sign-in, session reload without OTP, explicit logout,
+  Vidya login (admin-generated one-use code, no email send), correct partner contact links,
+  and anniversary countdown. Saved the user-provided shared date/Meet URL behind RLS.
+- Added private avatar compression/upload/reference/cleanup/signing, editable identity and
+  nicknames, separate partner alias, personal color and synced app appearance. Browser test
+  saved nickname/Day/violet accent, reloaded successfully, then restored initial values.
+  Orbit icon upload/removal succeeded; no fabricated personal photo remains.
+- New migrations 0006/0007 applied and generated schema types refreshed. Full Python suite
+  **38 passed (23 live integration + 15 local)**, including self-only profile preferences,
+  validation and own-upload avatar references. Fixtures were torn down via admin/Storage APIs.
+- Web checks passed: 16 tests across 8 files, 5 worker tests, backend/web ESLint, strict
+  typechecks, formatting and production build. Initial JS is ~155 KB gzip; profile
+  compression is lazy. MapLibre remains outside first-load JS. Build warns on >500 KB raw
+  entry chunk; gzip is below the 250 KB budget.
+- Lighthouse: production login accessibility 100, best practices 100 after bundled-font CSP
+  fix; Home authenticated DOM snapshots accessibility 100 in dark and light. Snapshots and
+  screenshots containing private data stay ignored under .artifacts/qa, never public git.
+- Native sync and the final profile accessibility result are recorded below after verification.
+
+Final M2 checks: profile authenticated DOM accessibility **100**; Android native build/sync
+passed (Java compilation not attempted). Full web checks passed after the theme-save
+concurrency guard. Secret scan: 187 files, zero findings. The temporary profile nickname,
+accent/theme changes and icon photo were restored/removed. Milestone ready for `m2-done`.

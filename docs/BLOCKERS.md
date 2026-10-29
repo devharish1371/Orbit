@@ -1,30 +1,26 @@
 # Orbit blockers
 
-## Human #2a — Email OTP sender credential (2026-10-30)
+No human task currently blocks M3 implementation.
 
-The user requested email OTP with a persistent session. Both permanent passwordless Auth
-identities and their shared membership are provisioned; no password prompt remains.
-The backend, Vault, retention function and cron are deployed, and security tests pass.
+## Resolved — Email OTP sender and M2 logins
 
-Custom SMTP is not configured. The built-in Supabase sender only delivers to organization
-team members, so it does not satisfy normal login delivery for the couple. Gmail SMTP
-host/port/user/from are already prepared in ignored `.env.tools`. The account owner must
-create a Google app password and fill the single remaining `SMTP_PASSWORD` entry.
-Do not put a regular Gmail password in that file or put sender credentials in chat.
+Gmail SMTP is configured using the owner-provided app credential, held only in ignored
+local configuration. Real inbox delivery and Dev's email code login succeeded. Vidya's
+UI login was verified with an admin-generated one-use code, without sending another email.
+Both accounts restored on reload. Logout clears the session and query cache.
 
-Follow `docs/AUTHENTICATION.md` / `08_HUMAN_TASKS.md` #2a. The agent can then run
-`configure_email_otp.py` to configure the sender and code template. Real inbox delivery,
-client session persistence and both real logins remain M2 acceptance checks.
-The hosted session timebox/inactivity limits are already zero; routine reopen should not
-require a new code once the M2 client persists and refreshes the session.
+## Upcoming human gates
 
-## Resolved — Supabase project and permanent identities
+- #7: install the debug APK on Android phones for tracking/permission, screen-off,
+  swipe-away and offline reliability tests. Hardware performance remains unverified.
+- #3: Firebase project and private configuration for M5 push delivery.
+- #6: personal anniversary letter for M7; profiles now allow people to set photos,
+  nicknames and colors themselves. Shared date and Meet link are already configured.
+- #1/#5: Pages/CI release configuration and backed-up signing key for M9.
 
-API/DB/CLI credentials and both identities are configured privately. Hosted signup is
-disabled. The earlier four-digit password issue was superseded by the email OTP request.
-No user password was padded, invented or saved. Temporary test users were deleted.
+## Resolved — Backend and GitHub
 
-## Resolved — GitHub access
-
-Authentication works outside the sandbox. `devharish1371/Orbit` is the project's public
-remote. M0 was pushed with `m0-done`; M1 publication is recorded in DEVLOG.
+Hosted database/Vault/retention/cron and permanent passwordless identities are configured;
+signup is disabled. Disposable-user integration tests pass. M0 and M1 are pushed to
+`devharish1371/Orbit` with milestone tags. The password-choice requirement was superseded
+by the user's email OTP request.

@@ -66,6 +66,7 @@ Recorded 2026-10-30 from installed tools, package metadata, and generated Androi
 | `eslint-plugin-react-refresh` | 0.5.7 |
 | `globals` | 17.13.0 |
 | `jsdom` | 29.1.1 |
+| `lighthouse` | 13.6.0 |
 | `prettier` | 3.9.10 |
 | `tailwindcss` | 4.3.3 |
 | `typescript` | 6.0.3 |

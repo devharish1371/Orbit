@@ -3,11 +3,11 @@
 A private, two-person space for location sharing, disappearing moments, chat and connection.
 One React/TypeScript codebase targets the web and a sideloaded Capacitor Android app.
 
-**Status:** M0 scaffold and M1 backend security/retention are implemented. The hosted backend
-is deployed and integration-tested. Both passwordless accounts are provisioned. The latest
-login plan is email OTP with persistent sessions; human task #2a's SMTP sender credential
-is the next step. See [authentication setup](docs/AUTHENTICATION.md).
-The current UI is a welcome scaffold; product screens start at M2.
+**Status:** M0–M2 are implemented: secured hosted backend, passwordless email login with
+remembered sessions, private Home/settings, and editable personal profiles. Each person can
+set a photo, nickname, partner nickname, contact number, personal color, and app appearance.
+SMTP delivery and both web logins have been verified. Map/tracking and the remaining product
+features are next. See [authentication setup](docs/AUTHENTICATION.md).
 Follow [PLAN.md](PLAN.md) for the ordered milestones and [DEVLOG.md](DEVLOG.md) for evidence.
 
 See [local development](docs/DEVELOPMENT.md) for installation, verification, native builds,

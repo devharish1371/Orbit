@@ -6,7 +6,7 @@ Both permanent passwordless Auth accounts and their shared couple membership are
 Their email addresses and phones are held in ignored local configuration, not public source.
 No chosen password has been stored or silently modified. Public signup remains disabled.
 
-## Intended login behavior (M2)
+## Implemented login behavior (M2)
 
 1. Enter email and request an eight-digit code. Use `signInWithOtp` with
    `shouldCreateUser: false`, so no third account is created.
@@ -20,10 +20,10 @@ The real project currently reports zero timebox and inactivity timeout, and sing
 restriction disabled. These already support long-lived sessions. Do not extend the one-hour
 JWT lifetime to emulate persistent login: refresh tokens provide that behavior.
 
-## Remaining human setup — free email delivery
+## Configured free email delivery
 
-Custom SMTP is not configured. Supabase's built-in sender only sends to organization-team
-addresses and is not a dependable sender for the couple's login. Do not add a partner as a
+Gmail SMTP is configured and actual inbox delivery is verified. Supabase's built-in sender
+only sends to organization-team addresses and was replaced for normal couple login. Do not add a partner as a
 project administrator merely to get OTP delivery. SMS requires an external SMS provider and
 conflicts with the original free/no-card constraint.
 
@@ -57,8 +57,10 @@ Once the local sender credential is ready, the agent runs:
 This configures the sender and an OTP email template with the actual token, keeps signup
 disabled, and selects an eight-digit code with a ten-minute expiry. It never prints sender
 credentials or sends mail by itself. `--check` reads safe readiness flags without making
-changes. SMTP delivery and the actual M2 login UI are not yet verified; do not claim OTP
-emails are working before sender setup and a real inbox check.
+changes. Actual inbox delivery and Dev’s code login are verified. Vidya’s UI login was checked
+with an admin-generated one-use code (no additional email). Both sessions restored after
+reload; explicit logout returned to login. Native session storage uses Capacitor
+Preferences; APK behavior still requires human #7 testing.
 
 `tools/create_users.py` now defaults to passwordless provisioning and is safe to re-run.
 Legacy synthetic-email password provisioning remains available via `--mode password` and

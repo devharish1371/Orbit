@@ -20,8 +20,8 @@ Architecture notes and version records live in `docs/`.
 | --- | --- | --- |
 | M0 | Scaffold strict React/TypeScript + Vite/Tailwind, Capacitor Android, Supabase CLI config, Python venv/tools, environment templates. Bootstrap, dev smoke, build, tests, lint, typecheck, format and Android sync pass; first commit pushed. | Complete; scaffold commit `97bac05` pushed |
 | M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Backend acceptance complete; deployed/tested; both passwordless identities provisioned |
-| M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Waiting for human #2a SMTP sender; implementation not started |
-| M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Pending M2 |
+| M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Complete; both logins, persistent sessions, personal profiles and accessibility verified |
+| M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Starting after M2 commit |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | Pending M3 |
 | M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Pending M4 |
 | M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Pending M5 |
@@ -31,11 +31,9 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
-1. Human #2a: create a Google app password for the prepared Gmail sender and put it in
-   `.env.tools` as `SMTP_PASSWORD`. See `docs/AUTHENTICATION.md`; no regular Gmail password.
-2. Resume with "SMTP is ready". Configure sender/template using `configure_email_otp.py`.
-3. Build M2's shell/design system and email OTP login using the secured backend; verify both accounts,
-   theme persistence and accessibility before the next milestone commit/tag.
+1. Finish M2 verification and publish its milestone commit/tag.
+2. Build M3 foreground location, the realtime map, shared places and the simulator.
+3. M4 on-device reliability tests require human #7; no browser test substitutes for them.
 
 ## Human dependencies observed
 
@@ -45,6 +43,6 @@ Architecture notes and version records live in `docs/`.
 - #2 project/configuration satisfied: real API, database, Vault, CLI deployment, disabled
   signup and live security/retention checks verified. Both identities are configured privately.
   Both permanent email-OTP accounts and shared membership are now provisioned without passwords.
-- #2a is the user-requested passwordless alternative: free SMTP delivery needs the mailbox
-  owner's app password. The user changed the original password-login requirement; see
+- #2a satisfied: free Gmail SMTP configured; actual inbox delivery and Dev's code login
+  verified. Both users logged in on web; sessions restore without a fresh OTP. See
   `docs/AUTHENTICATION.md`. Default sessions have no timebox or inactivity expiry.

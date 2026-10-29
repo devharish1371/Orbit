@@ -25,7 +25,7 @@ def main(check: bool = typer.Option(False, help='Inspect SMTP/session readiness 
             if port not in (465, 587, 2525):
                 raise ValueError('Use the SMTP provider\'s TLS-enabled port (465, 587 or 2525).')
             payload = {
-                'smtp_host': v['SMTP_HOST'], 'smtp_port': port,
+                'smtp_host': v['SMTP_HOST'], 'smtp_port': str(port),
                 'smtp_user': v['SMTP_USER'], 'smtp_pass': v['SMTP_PASSWORD'],
                 'smtp_admin_email': normalized_email(v['SMTP_FROM_EMAIL']),
                 'smtp_sender_name': 'Orbit', 'external_email_enabled': True,

@@ -1,34 +1,72 @@
+import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
+import { OfflineBanner } from '@/components/OfflineBanner'
+import { UpdatePrompt } from '@/components/UpdatePrompt'
 import { copy } from '@/copy/en'
-
+const LoginPage = lazy(() => import('@/features/auth/LoginPage'))
+const Shell = lazy(() => import('@/app/Shell'))
+const HomePage = lazy(() => import('@/features/home/HomePage'))
+const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
+const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
+const UsPage = lazy(() => import('@/features/profile/UsPage'))
+const EmptyPage = lazy(() => import('@/features/EmptyPage'))
 export default function App() {
+  const { session, restoring, restoreError, retryRestore } = useAuth()
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname, session?.user.id])
   return (
-    <main className="relative isolate flex min-h-svh items-center justify-center overflow-hidden px-6 py-12">
-      <div className="orbit-glow" aria-hidden="true" />
-      <section
-        className="relative w-full max-w-96 text-center"
-        aria-labelledby="orbit-title"
+    <>
+      <div className="aurora" aria-hidden="true" />
+      <OfflineBanner />
+      <Suspense
+        fallback={
+          <main className="loading-shell" role="status">
+            {copy.common.loading}
+          </main>
+        }
       >
-        <img
-          className="mx-auto mb-8 h-20 w-20"
-          src={`${import.meta.env.BASE_URL}orbit.svg`}
-          alt=""
-        />
-        <p className="mb-4 text-xs font-semibold tracking-[0.28em] uppercase text-pink-200">
-          {copy.appName}
-        </p>
-        <h1
-          id="orbit-title"
-          className="font-display text-4xl leading-tight font-medium"
-        >
-          {copy.welcome}
-        </h1>
-        <p className="mx-auto mt-5 max-w-72 text-base leading-7 text-slate-300">
-          {copy.description}
-        </p>
-        <p className="mt-12 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm leading-6 text-slate-300">
-          {copy.preparing}
-        </p>
-      </section>
-    </main>
+        {restoring ? (
+          <main className="loading-shell" role="status">
+            {copy.common.loading}
+          </main>
+        ) : restoreError ? (
+          <main className="fallback">
+            <h1>{copy.common.reconnectTitle}</h1>
+            <p>{copy.common.reconnectBody}</p>
+            <button
+              className="button"
+              onClick={() => {
+                void retryRestore()
+              }}
+            >
+              {copy.common.retry}
+            </button>
+          </main>
+        ) : !session ? (
+          <LoginPage />
+        ) : (
+          <Routes>
+            <Route element={<Shell />}>
+              <Route index element={<HomePage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="us" element={<UsPage />} />
+              {(['map', 'moments', 'chat'] as const).map((page) => (
+                <Route
+                  path={page}
+                  key={page}
+                  element={<EmptyPage page={page} />}
+                />
+              ))}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        )}
+      </Suspense>
+      <UpdatePrompt />
+    </>
   )
 }

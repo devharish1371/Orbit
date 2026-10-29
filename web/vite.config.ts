@@ -12,6 +12,23 @@ export default defineConfig(({ mode }) => {
   return {
     base,
     plugins: [
+      {
+        name: 'orbit-production-csp',
+        apply: 'build',
+        transformIndexHtml() {
+          return [
+            {
+              tag: 'meta',
+              attrs: {
+                'http-equiv': 'Content-Security-Policy',
+                content:
+                  "default-src 'self'; script-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://tiles.openfreemap.org; img-src 'self' data: blob: https://*.supabase.co https://tiles.openfreemap.org; media-src 'self' blob: https://*.supabase.co; font-src 'self' data:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'",
+              },
+              injectTo: 'head',
+            },
+          ]
+        },
+      },
       react(),
       tailwindcss(),
       VitePWA({

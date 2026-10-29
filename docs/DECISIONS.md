@@ -159,3 +159,36 @@ Sources: [email OTP](https://supabase.com/docs/guides/auth/auth-email-passwordle
 [SMTP restrictions](https://supabase.com/docs/guides/auth/auth-smtp),
 [session lifecycle](https://supabase.com/docs/guides/auth/sessions), and
 [Google app passwords](https://support.google.com/accounts/answer/185833).
+
+
+## D024 — Auth-gated personalization and accessible appearance (2026-10-30)
+
+The user requested production-quality editable profiles. Store names, nicknames, phone,
+private avatar path, personal color, theme mode and app accent on the existing self-editable
+member row. Couple date and Meet URL remain shared. Public source contains no couple PII.
+New constraints reject invalid lengths/colors/phones/themes. Live tests prove self-only writes.
+
+Resize avatar JPEG/PNG/WebP to WebP ≤600px with EXIF removed, upload to a private UUID-bound
+path, then update the member reference. Delete the previous file only after that succeeds;
+clean failed uploads. Use 1-hour signed URLs cached for 50 minutes. Compression runs locally
+without fetching worker scripts from a CDN. No personal photo was supplied; the upload and
+remove flow was verified with the disposable Orbit icon and cleaned up.
+
+Per-user appearance loads from the profile across devices, with a local cache for startup.
+Custom accents are adjusted for readable text contrast; saved colors are not modified.
+Day/Night/Match device and reduced-motion preferences are supported. Source metadata uses
+only the public client key; secret-key shapes are rejected before creating the client.
+
+## D025 — Verified SMTP, persistent sessions and production CSP (2026-10-30)
+
+Gmail accepted the owner-provided app credential over TLS. Supabase's current Management
+API requires smtp_port as a string; corrected after a sanitized 400 response. Configured
+8-digit, 10-minute email codes with signup disabled and no session timebox/inactivity expiry.
+Real code delivery and Dev's login succeeded; both UI accounts restore without a new code.
+Transient restoration network failures show reconnect state instead of clearing sign-in.
+
+Add font-src data: to permit Fontsource's tiny bundled font subset; production Lighthouse
+then reports 100 accessibility and 100 best practices, with no browser-console CSP errors.
+Home accessibility 100 in both themes uses exact authenticated DOM snapshots served locally;
+live account, theme, contact links and logout behavior were exercised separately in-browser.
+This does not claim Android performance or the later M8 full-app performance gate.

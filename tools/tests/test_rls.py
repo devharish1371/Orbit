@@ -55,6 +55,30 @@ def test_member_cannot_change_partner_or_membership(backend) -> None:
     assert backend.rest(backend.clients[0],'PATCH','members',{'couple_id':backend.couples[1]},user_id='eq.'+backend.users[0]).status_code >= 400
 
 
+def test_profile_preferences_are_self_editable_and_validated(backend) -> None:
+    values = {'nickname':'Fixture', 'partner_nickname':'My person', 'color':'#24BCA0',
+              'theme_mode':'light', 'theme_accent':'#7C5CFF', 'phone':'+919999999999'}
+    own = backend.rest(backend.clients[0], 'PATCH', 'members', values, user_id='eq.'+backend.users[0])
+    assert own.status_code == 200
+    assert all(own.json()[0][key] == value for key, value in values.items())
+    denied = backend.rest(backend.clients[1], 'PATCH', 'members', {'theme_mode':'dark'}, user_id='eq.'+backend.users[0])
+    assert denied.status_code == 200 and denied.json() == []
+    for invalid in [{'display_name':' '}, {'nickname':'x'*41}, {'partner_nickname':'x'*41},
+                    {'color':'red'}, {'theme_accent':'javascript:alert(1)'},
+                    {'theme_mode':'invalid'}, {'phone':'9999'}]:
+        assert backend.rest(backend.clients[0], 'PATCH', 'members', invalid, user_id='eq.'+backend.users[0]).status_code >= 400
+
+
+def test_private_profile_photo_can_only_reference_own_upload(backend) -> None:
+    path = backend.upload(avatar=True)
+    own = backend.rest(backend.clients[0], 'PATCH', 'members', {'avatar_path':path}, user_id='eq.'+backend.users[0])
+    assert own.status_code == 200 and own.json()[0]['avatar_path'] == path
+    spoofed = backend.rest(backend.clients[1], 'PATCH', 'members', {'avatar_path':path}, user_id='eq.'+backend.users[1])
+    assert spoofed.status_code >= 400
+    cleared = backend.rest(backend.clients[0], 'PATCH', 'members', {'avatar_path':None}, user_id='eq.'+backend.users[0])
+    assert cleared.status_code == 200
+
+
 def test_partner_can_keep_but_cannot_edit_body_author_or_cleanup_state(backend) -> None:
     post = backend.post()
     response = backend.rest(backend.clients[1],'PATCH','posts',{'keep':True},id='eq.'+post['id'])
