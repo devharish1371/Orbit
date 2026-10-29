@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "supabase": "supabase",
-    "check:web": "npm --prefix web run lint && npm --prefix web run typecheck && npm --prefix web test && npm --prefix web run format:check && npm --prefix web run build"
+    "check:web": "npm run lint:backend && npm --prefix web run lint && npm --prefix web run typecheck && npm --prefix web test && npm --prefix web run test:backend && npm --prefix web run format:check && npm --prefix web run build",
+    "lint:backend": "npm --prefix web exec -- eslint --config web/eslint.config.js supabase/functions --max-warnings 0"
   },
   "engines": {
     "node": ">=22.12.0"

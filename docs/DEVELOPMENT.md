@@ -31,7 +31,8 @@ npm run check:web
 npm --prefix web run cap:sync
 ```
 
-`check:web` runs ESLint, strict TypeScript checks for both app and tooling, Vitest,
+`check:web` runs ESLint, strict TypeScript checks for app/tooling/Edge Functions, Vitest
+web and retention-worker suites,
 Prettier, and the web production build. `cap:sync` builds with `VITE_BASE=./`,
 disables the service worker for the native bundle, and syncs Android. It is
 cross-platform and must be run before any local Android build. Do not copy a Pages
@@ -75,6 +76,44 @@ No permissions are requested by the M0 welcome screen.
 Firebase's Google Services Gradle integration is already conditional on the ignored
 `web/android/app/google-services.json` (human #3). Push cannot work until that task.
 Biometric/voice/privacy plugins will be selected and verified in their feature milestones.
+
+## M1 backend operations
+
+All configuration comes from ignored `.env.tools`, never command-line secret arguments:
+
+```sh
+.venv/bin/python tools/apply_sql.py
+.venv/bin/python tools/seed_vault.py
+.venv/bin/python tools/deploy_backend.py
+.venv/bin/python tools/retention_run.py
+.venv/bin/python -m pytest --run-integration --tb=short
+```
+
+Migrations apply in one transaction, with a lock and recorded checksums. `--reapply` is
+an explicit idempotency check for this initial schema; investigate checksum drift before
+using it on a changed deployed migration. Future schema changes should be new migrations.
+CLI deployment uses the API (no Docker), reads the account token locally and passes the
+internal function secret via a temporary owner-only file that is removed afterward.
+
+`pytest` without `--run-integration` skips the hosted tests. An explicit integration run
+creates four disposable Auth identities: two partners, an unaffiliated stranger and a
+member of another couple. It uses temporary couple rows/media, tests real RLS/Storage/
+retention/cron behavior, and tears down only its own fixtures. Run against a designated
+test project once real memories are in use: retention tests invoke the global cleanup job.
+Timestamp setup uses owner-only SQL; physical file deletion always uses the Storage API.
+
+`create_users.py` now defaults to email OTP and reads the configured real email addresses,
+names and phones. It provisions passwordless identities without sending emails; both
+permanent users are already provisioned and an idempotent re-run passed. The old password
+workflow is available only with `--mode password`; `reset_password.py` supports those legacy
+synthetic-email accounts. Neither is required for the current OTP login plan.
+
+Read [authentication setup](AUTHENTICATION.md) for the free SMTP human step and persistent
+session behavior. `configure_email_otp.py --check` prints only safe configuration flags;
+without `--check` it applies sender credentials and the code template from the ignored env file.
+
+See [backend security and retention](BACKEND.md) for schema/API contracts and deviations
+from the supplied SQL sample. Notify hooks exist; the actual notifier is an M5 task.
 
 ## Human #1 handoff
 

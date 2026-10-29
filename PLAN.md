@@ -19,8 +19,8 @@ Architecture notes and version records live in `docs/`.
 | Milestone | Work and acceptance gate | Status |
 | --- | --- | --- |
 | M0 | Scaffold strict React/TypeScript + Vite/Tailwind, Capacitor Android, Supabase CLI config, Python venv/tools, environment templates. Bootstrap, dev smoke, build, tests, lint, typecheck, format and Android sync pass; first commit pushed. | Complete; scaffold commit `97bac05` pushed |
-| M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Waiting for human #2; implementation not started |
-| M2 | Design system, HashRouter/query/auth, config/copy, login, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Pending M1 |
+| M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Backend acceptance complete; deployed/tested; both passwordless identities provisioned |
+| M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Waiting for human #2a SMTP sender; implementation not started |
 | M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Pending M2 |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | Pending M3 |
 | M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Pending M4 |
@@ -31,15 +31,20 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
-1. Human #2: create the free Supabase project and disable public signup per `08`.
-2. Fill the existing ignored `.env.tools` and `web/.env.local` files; never paste secrets into chat.
-3. Resume with "env files are ready". Verify config, implement M1, run real-project integration
-   tests, deploy retention/cron, commit, then tag `m1-done` when all M1 criteria pass.
+1. Human #2a: create a Google app password for the prepared Gmail sender and put it in
+   `.env.tools` as `SMTP_PASSWORD`. See `docs/AUTHENTICATION.md`; no regular Gmail password.
+2. Resume with "SMTP is ready". Configure sender/template using `configure_email_otp.py`.
+3. Build M2's shell/design system and email OTP login using the secured backend; verify both accounts,
+   theme persistence and accessibility before the next milestone commit/tag.
 
 ## Human dependencies observed
 
 - #1 satisfied: authenticated as `devharish1371` outside the sandbox; existing empty public
   repository `https://github.com/devharish1371/Orbit` verified. The earlier authentication
   failure came from sandbox access limits, not an invalid credential.
-- #2 next: `.env.tools` and `web/.env.local` exist but contain Supabase placeholders.
-  `bootstrap_check.py --require-config` correctly rejects them. No provider keys were invented.
+- #2 project/configuration satisfied: real API, database, Vault, CLI deployment, disabled
+  signup and live security/retention checks verified. Both identities are configured privately.
+  Both permanent email-OTP accounts and shared membership are now provisioned without passwords.
+- #2a is the user-requested passwordless alternative: free SMTP delivery needs the mailbox
+  owner's app password. The user changed the original password-login requirement; see
+  `docs/AUTHENTICATION.md`. Default sessions have no timebox or inactivity expiry.

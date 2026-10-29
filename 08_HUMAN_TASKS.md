@@ -84,3 +84,20 @@ onboarding/reveal copy · a couple of photos for avatars (JPG/PNG) · the **anni
 Install on her phone beforehand (or do it together), set the reveal to the anniversary date, and
 hand over a card with the website/APK link. The first launch on the anniversary plays the
 reveal. Test the reveal on your own phone first (Us → Timeline → "Replay reveal").
+
+---
+## #2a · Email OTP sender (user-requested alternative added 2026-10-30)
+
+The user's later request replaces phone/password login with email OTP and persistent
+sessions. Both real-email accounts are already provisioned. No password choice is needed.
+
+For the free Gmail SMTP option, the sender's account owner enables 2-Step Verification,
+creates an app password at https://myaccount.google.com/apppasswords, and puts only that
+generated app credential in local `.env.tools` as `SMTP_PASSWORD`. The sender host, port
+and address can be prepared by the agent. Never provide a normal Google password.
+The agent then configures Supabase's SMTP/template and verifies real OTP delivery.
+If app passwords are unavailable, use another free/no-card SMTP sender.
+
+Full steps and session behavior: `docs/AUTHENTICATION.md`. Supabase's default sender
+is restricted to project-team addresses; do not grant a partner project access as a
+workaround. Email OTP can stay free; SMS delivery is outside the no-cost constraint.

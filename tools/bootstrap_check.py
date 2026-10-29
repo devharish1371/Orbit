@@ -79,6 +79,8 @@ def collect_checks(*, require_config: bool = False, local_android: bool = False)
     if require_config:
         values = dotenv_values(ROOT / ".env.tools")
         required = ["SUPABASE_URL", "SUPABASE_PROJECT_REF", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_ACCESS_TOKEN", "SUPABASE_DB_URL", "USER_A_PHONE", "USER_B_PHONE", "USER_A_NAME", "USER_B_NAME"]
+        if values.get('AUTH_MODE') == 'email-otp':
+            required.extend(['USER_A_EMAIL', 'USER_B_EMAIL'])
         missing_keys = [key for key in required if not configured(values.get(key))]
         checks.append(Check("Supabase configuration", not missing_keys, "Configured (values hidden)" if not missing_keys else "Human #2 must fill .env.tools: " + ", ".join(missing_keys)))
         web_values = dotenv_values(ROOT / "web/.env.local")
@@ -99,7 +101,7 @@ def main(
     failures = sum(not check.ok and check.required for check in checks)
     console.print(f"\nRequired checks: {len([c for c in checks if c.required]) - failures} passed, {failures} failed.")
     if not require_config:
-        console.print("Account configuration is pending human #2; use --require-config before M1 integration tests.")
+        console.print("Use --require-config to verify local account configuration before integration tests.")
     raise typer.Exit(1 if failures else 0)
 
 

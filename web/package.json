@@ -10,10 +10,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint . --max-warnings 0",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "cap:sync": "node scripts/sync-android.mjs"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.functions.json",
+    "format": "prettier --write . ../supabase/functions",
+    "format:check": "prettier --check . ../supabase/functions",
+    "cap:sync": "node scripts/sync-android.mjs",
+    "test:backend": "vitest run --config vitest.backend.config.ts"
   },
   "dependencies": {
     "@capacitor-community/background-geolocation": "1.3.1",

@@ -20,3 +20,9 @@ def test_privileged_legacy_jwt_is_detected() -> None:
     encode = lambda obj: base64.urlsafe_b64encode(json.dumps(obj).encode()).decode().rstrip("=")
     token = ".".join([encode({"alg": "HS256"}), encode({"role": "service_role"}), "fake-signature"])
     assert findings(Path("oops.ts"), token) == ["privileged JWT"]
+
+
+def test_account_tokens_and_database_passwords_are_detected() -> None:
+    assert findings(Path('oops.txt'), 'sb' + 'p_' + 'a' * 40) == ['Supabase account token']
+    uri = 'postgresql' + '://account:' + 'dummy-value' + '@host/database'
+    assert findings(Path('oops.txt'), uri) == ['Database password in URI']

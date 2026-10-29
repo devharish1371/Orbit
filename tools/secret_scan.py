@@ -16,6 +16,8 @@ app = typer.Typer(add_completion=False)
 PATTERNS = {
     "private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "Supabase secret key": re.compile(r"\bsb_secret_[A-Za-z0-9_-]{20,}"),
+    "Supabase account token": re.compile(r"\bsbp_[A-Za-z0-9]{30,}"),
+    "Database password in URI": re.compile(r"postgres(?:ql)?://[^:\s/]+:[^@\s]+@"),
     "Google API key": re.compile(r"\bAIza[A-Za-z0-9_-]{30,}"),
     "GitHub token": re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{50,})"),
     "Telegram bot token": re.compile(r"\b\d{8,12}:[A-Za-z0-9_-]{30,}"),
