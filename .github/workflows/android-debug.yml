@@ -47,8 +47,12 @@ jobs:
       - run: npm ci
       - run: npm --prefix web ci
       - run: npm run check:web
-      - name: Scan tracked source for secrets
-        run: python3 tools/secret_scan.py
+      - name: Check Python tools and scan source
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -r tools/requirements.lock.txt
+          .venv/bin/python -m pytest --tb=short
+          .venv/bin/python tools/secret_scan.py
       - run: npm --prefix web run cap:sync
       - name: Build installable debug APK
         working-directory: web/android
