@@ -204,3 +204,28 @@ Final M2 checks: profile authenticated DOM accessibility **100**; Android native
 passed (Java compilation not attempted). Full web checks passed after the theme-save
 concurrency guard. Secret scan: 187 files, zero findings. The temporary profile nickname,
 accent/theme changes and icon photo were restored/removed. Milestone ready for `m2-done`.
+
+
+## 2026-10-30 — M2 published; M3 web map implemented
+
+- Published M2 as `88ed64a`, tagged/pushed `m2-done`.
+- Implemented lazy MapLibre with bundled Vite worker, OpenFreeMap Fiord/Liberty styles,
+  visible attribution, animated personal/photo markers with battery/heading, accuracy/place
+  radii, fit both, distance/midpoint directions, details sheet, connection status and trail.
+- Added shared places create/edit/delete, radius/emoji/alert preferences and keyboard-friendly
+  center selection. Alert copy states push is not yet active. Foreground sharing starts only
+  on tap and clears watchers on hide/stop/logout. Tested consent/visibility lifecycle and
+  filtering/throttling with mocked geolocation; actual browser GPS permission was not requested.
+- One Realtime channel batches snapshot invalidation at 250ms, refetches on reconnect/visibility,
+  and keeps Home location status current. Migration 0008 rejects precise history writes during
+  pause/surprise (including an in-flight sender race), and publishes shared couple settings.
+- Simulator creates disposable users/couple and synthetic public-area points, with private
+  one-use login handoff and automatic cleanup. Browser confirmed live marker, distance,
+  midpoint link and timestamp updates without reload; added a demo café and changed radius
+  from 150 to 200m. User profiles/history were not used as simulation fixtures.
+- Full checks: **22 web tests + 5 worker tests**, strict typechecks/lint/format/build pass;
+  **39 Python tests (24 live + 15 local)** pass. Android asset sync passes. The initial entry
+  is ~156 KB gzip; map engine ~292 KB gzip is lazy. Excluded map/worker from PWA precache.
+- Preparing a pinned GitHub Actions Java 21 debug build for the human #7 Android WebView
+  performance gate. Only public client variables configured on the existing repository.
+  M3 remains untagged until that hardware acceptance check; M4 has not started.

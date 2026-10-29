@@ -24,7 +24,7 @@ export const couple: OrbitConfig = {
   quietHours: { start: '23:00', end: '07:00' },
   theme: { primary: '#FF6B8A', secondary: '#7C5CFF', accent: '#3DE0C5' },
   mapStyleUrl: 'https://tiles.openfreemap.org/styles/liberty',
-  mapStyleDarkUrl: 'https://tiles.openfreemap.org/styles/dark',
+  mapStyleDarkUrl: 'https://tiles.openfreemap.org/styles/fiord',
 } as const
 
 export function validDate(value: string): boolean {

@@ -190,3 +190,15 @@ def test_passwordless_otp_session_refresh_and_explicit_logout(backend) -> None:
         assert public.client.post('/auth/v1/token?grant_type=refresh_token',json={'refresh_token':refreshed['refresh_token']}).status_code >= 400
     finally:
         public.close()
+
+
+def test_history_rejects_precise_writes_while_paused_or_surprise(backend) -> None:
+    user=backend.users[0]
+    for mode in ['paused','surprise']:
+        try:
+            changed=backend.rest(backend.clients[0],'PATCH','members',{'share_mode':mode},user_id='eq.'+user)
+            assert changed.status_code == 200
+            row={'user_id':user,'couple_id':backend.couples[0],'lat':13,'lng':80,'recorded_at':datetime.now(timezone.utc).isoformat()}
+            assert backend.rest(backend.clients[0],'POST','location_history',row).status_code >= 400
+        finally:
+            assert backend.rest(backend.clients[0],'PATCH','members',{'share_mode':'live'},user_id='eq.'+user).status_code == 200

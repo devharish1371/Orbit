@@ -1,6 +1,8 @@
 # Orbit blockers
 
-No human task currently blocks M3 implementation.
+M3 web implementation passes automated checks. Its Android WebView performance acceptance
+requires human #7 on a physical phone; the debug APK handoff is being prepared.
+See `docs/MAP_TESTING.md`. M3 is not tagged complete and M4 has not started.
 
 ## Resolved — Email OTP sender and M2 logins
 

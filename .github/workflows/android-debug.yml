@@ -1,0 +1,61 @@
+name: Android debug test build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: android-debug-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  debug:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            web/package-lock.json
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: |
+            web/android/**/*.gradle
+            web/android/gradle/wrapper/gradle-wrapper.properties
+      - name: Validate public client configuration
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          const url = process.env.VITE_SUPABASE_URL;
+          const key = process.env.VITE_SUPABASE_ANON_KEY ?? '';
+          let valid = /^sb_publishable_/.test(key);
+          if (key.startsWith('eyJ')) {
+            try { valid = JSON.parse(Buffer.from(key.split('.')[1], 'base64url').toString()).role === 'anon'; } catch { valid = false; }
+          }
+          if (!url?.startsWith('https://') || !valid) throw new Error('Configure only the project URL and public client key in repository variables.');
+          JS
+      - run: npm ci
+      - run: npm --prefix web ci
+      - run: npm run check:web
+      - name: Scan tracked source for secrets
+        run: python3 tools/secret_scan.py
+      - run: npm --prefix web run cap:sync
+      - name: Build installable debug APK
+        working-directory: web/android
+        run: bash ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: orbit-m3-debug
+          path: web/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7

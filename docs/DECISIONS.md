@@ -192,3 +192,31 @@ then reports 100 accessibility and 100 best practices, with no browser-console C
 Home accessibility 100 in both themes uses exact authenticated DOM snapshots served locally;
 live account, theme, contact links and logout behavior were exercised separately in-browser.
 This does not claim Android performance or the later M8 full-app performance gate.
+
+
+## D026 — Realtime map, foreground privacy and test-only simulation (2026-10-30)
+
+Follow current [OpenFreeMap Vite setup](https://openfreemap.org/quick_start/) with a bundled
+MapLibre worker and local CSS; use Fiord for night readability and Liberty by day. Keep
+attribution visible. Animate DOM markers with requestAnimationFrame interpolation (short
+longitude path, reduced-motion bypass); update GeoJSON radii/trail sources. Re-read snapshots
+behind RLS from one channel, coalesced at 250ms, with reconnect/visibility reconciliation.
+[Postgres Changes](https://supabase.com/docs/guides/realtime/postgres-changes) remains subject
+to subscriber-based authorization costs. Avoid duplicate channels and polling refetch loops.
+
+Current [Supabase billing reference](https://supabase.com/docs/guides/platform/billing-on-supabase)
+lists **2 million Realtime messages/month** on Free. Two senders at a 15s maximum rate and
+two subscribers produce at most ~691,200 location deliveries/month if continuously moving;
+normal stationary five-minute heartbeats are much lower. This worst case exceeds the 25%
+design target, so actual usage needs monitoring before broad native tracking/soak. The
+account-specific dashboard override/usage has not been inspected; do not claim it has.
+
+Web location requires explicit opt-in, suspends when hidden, and respects pause/surprise.
+Server history guard closes a share-mode race. The synthetic simulator only creates and
+updates disposable users; it never writes fake locations to either real partner. Desktop
+visual/functional tests cannot satisfy M3's mid-range Android WebView 60 fps item. Prepare
+a manual debug APK CI job now to unblock human #7; release signing remains M9.
+
+Official actions refs were resolved via GitHub API and pinned to commit hashes: checkout v6,
+setup-node v6, setup-java v6, upload-artifact v7. The job has read-only repository permission,
+no persisted checkout credential, a timeout, and only public app configuration.

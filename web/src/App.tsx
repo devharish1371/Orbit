@@ -10,6 +10,7 @@ const HomePage = lazy(() => import('@/features/home/HomePage'))
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
 const UsPage = lazy(() => import('@/features/profile/UsPage'))
+const MapPage = lazy(() => import('@/features/map/MapPage'))
 const EmptyPage = lazy(() => import('@/features/EmptyPage'))
 export default function App() {
   const { session, restoring, restoreError, retryRestore } = useAuth()
@@ -54,7 +55,8 @@ export default function App() {
               <Route path="settings" element={<SettingsPage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="us" element={<UsPage />} />
-              {(['map', 'moments', 'chat'] as const).map((page) => (
+              <Route path="map" element={<MapPage />} />
+              {(['moments', 'chat'] as const).map((page) => (
                 <Route
                   path={page}
                   key={page}

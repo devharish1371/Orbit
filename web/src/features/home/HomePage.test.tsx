@@ -2,6 +2,9 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { expect, test, vi } from 'vitest'
 import HomePage from './HomePage'
+vi.mock('@/features/map/LiveContext', () => ({
+  useLiveData: () => ({ locations: { data: [] } }),
+}))
 vi.mock('@/hooks/useSpace', () => ({
   useSpace: () => ({
     data: {
