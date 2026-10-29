@@ -1,0 +1,15 @@
+{
+  "name": "orbit-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "supabase": "supabase",
+    "check:web": "npm --prefix web run lint && npm --prefix web run typecheck && npm --prefix web test && npm --prefix web run format:check && npm --prefix web run build"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "supabase": "2.122.0"
+  }
+}

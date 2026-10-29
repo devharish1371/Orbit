@@ -1,0 +1,38 @@
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/fraunces';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-display: 'Fraunces Variable', serif;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color: #f4f4f8;
+  background: #0b0b12;
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+.orbit-glow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 20%, #7c5cff22, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, #ff6b8a18, transparent 50%);
+}
+
+main {
+  padding-top: max(3rem, env(safe-area-inset-top));
+  padding-bottom: max(3rem, env(safe-area-inset-bottom));
+}
