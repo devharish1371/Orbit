@@ -39,7 +39,7 @@ export function DailyQuestion() {
     <section className="glass memory-section daily-question">
       <p className="eyebrow">{text.question}</p>
       {daily.data && <h2>{dailyQuestions[daily.data.question_idx]}</h2>}
-      {(daily.isPending || answers.isPending) && (
+      {(daily.isPending || (daily.data && answers.isPending)) && (
         <p role="status">Loading today’s question…</p>
       )}
       {(daily.error || answers.error) && (

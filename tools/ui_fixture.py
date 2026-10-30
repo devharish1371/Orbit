@@ -9,7 +9,7 @@ from PIL import Image,ImageDraw
 from tools.orbit_common import ROOT,admin_api,database
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--clean',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--clean',action='store_true');parser.add_argument('--polish',action='store_true');args=parser.parse_args()
     folder=ROOT/'.artifacts/private/ui-fixture';folder.mkdir(parents=True,exist_ok=True);folder.chmod(0o700)
     file=folder/'state.json';api=admin_api()
     try:
@@ -29,6 +29,19 @@ def main():
         if file.exists():
             state=json.loads(file.read_text())
             if state.get('fixture')!='orbit-m6-ui' or len(state['users'])!=2 or len(state['paths'])<2:raise ValueError('Partial fixture; clean before preparing again.')
+            if args.polish:
+                with database() as db:
+                    if db.execute('select name from public.couples where id=%s',(state['couple'],)).fetchone()!=('Disposable UI fixture',):raise ValueError('Unexpected couple')
+                    db.execute("update public.couples set anniversary='2025-11-11',meet_url='https://meet.google.com/abc-defg-hij' where id=%s",(state['couple'],))
+                    for index,user in enumerate(state['users']):
+                        db.execute('update public.members set phone=%s where user_id=%s',('+1555555010'+str(index+1),user))
+                        db.execute('insert into public.live_location(user_id,couple_id,lat,lng,accuracy_m,battery_pct,recorded_at) values(%s,%s,%s,%s,20,85,now()) on conflict(user_id) do update set recorded_at=now()', (user,state['couple'],13.08+index*.02,80.27+index*.02))
+                    db.execute("update public.posts set channel='moment',keep=true,lat=13.08,lng=80.27 where couple_id=%s and kind='photo'",(state['couple'],))
+                    if not db.execute('select 1 from public.places where couple_id=%s',(state['couple'],)).fetchone():
+                        db.execute("insert into public.places(couple_id,name,emoji,lat,lng,created_by) values(%s,'Our little café','☕',13.08,80.27,%s)",(state['couple'],state['users'][0]))
+                    if not db.execute('select 1 from public.capsules where couple_id=%s',(state['couple'],)).fetchone():
+                        db.execute("insert into public.capsules(couple_id,author_id,title,body,unlock_at,notified_at) values(%s,%s,'A note for a future day','Synthetic browser QA capsule.',now()+interval '2 days',now())",(state['couple'],state['users'][0]))
+                        db.execute("insert into public.capsules(couple_id,author_id,title,body,unlock_at,notified_at) values(%s,%s,'A tiny surprise','Synthetic unlocked capsule.',now()-interval '1 day',now())",(state['couple'],state['users'][1]))
             link=api.request('POST','/auth/v1/admin/generate_link',json={'type':'magiclink','email':state['email']}).json()
             state['code']=link['email_otp'];file.write_text(json.dumps(state));file.chmod(0o600)
             print('Disposable UI fixture login refreshed privately; no email sent.');return

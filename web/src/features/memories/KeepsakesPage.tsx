@@ -1,4 +1,5 @@
 import { lazy, Suspense, useMemo, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { useTheme } from '@/hooks/useTheme'
 import { useNow } from '@/hooks/useNow'
@@ -10,6 +11,7 @@ import { useKeptMemories } from './useMemories'
 const MemoryMap = lazy(() => import('./MemoryMap'))
 export default function KeepsakesPage() {
   const kept = useKeptMemories(),
+    query = useQueryClient(),
     now = useNow(),
     { theme } = useTheme()
   const [map, setMap] = useState(false)
@@ -51,7 +53,7 @@ export default function KeepsakesPage() {
           {text.failed} Retry
         </button>
       )}
-      {!kept.isPending && posts.length === 0 && (
+      {!kept.isPending && !kept.error && posts.length === 0 && (
         <section className="glass memory-section muted">{text.empty}</section>
       )}
       {map &&
@@ -96,6 +98,16 @@ export default function KeepsakesPage() {
           }}
         >
           {text.more}
+        </button>
+      )}
+      {(kept.data?.pages.length ?? 0) > 1 && (
+        <button
+          className="text-button"
+          onClick={() => {
+            void query.resetQueries({ queryKey: ['kept-memories'] })
+          }}
+        >
+          Back to latest keepsakes
         </button>
       )}
       {map && posts.length > 0 && (

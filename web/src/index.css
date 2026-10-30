@@ -81,6 +81,11 @@ input:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
 h1,
 h2,
 p {
@@ -1958,8 +1963,8 @@ input::placeholder {
   top: 0;
   right: 0;
   border: 0;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   display: grid;
   place-items: center;
@@ -1974,8 +1979,8 @@ input::placeholder {
   gap: 0.2rem;
 }
 .chat-bubble .reaction-summary button {
-  min-width: 36px;
-  min-height: 30px;
+  min-width: 44px;
+  min-height: 44px;
   font-size: 0.9rem;
   padding: 0.15rem 0.4rem;
   border-color: var(--border);
@@ -2197,8 +2202,8 @@ input::placeholder {
   margin-block: 1rem;
 }
 .memory-map-pin {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 2px solid white;
   background: #7c5cff;

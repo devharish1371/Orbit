@@ -14,6 +14,7 @@ export default function CapsulesPage() {
     query = useQueryClient(),
     capsules = useCapsules(),
     now = useNow()
+  const rows = capsules.data?.pages.flat() ?? []
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState('')
   const [draft, setDraft] = useState(() => crypto.randomUUID())
@@ -130,12 +131,12 @@ export default function CapsulesPage() {
           {text.failed} Retry
         </button>
       )}
-      {capsules.data?.length === 0 && (
+      {!capsules.isPending && !capsules.error && rows.length === 0 && (
         <section className="glass memory-section muted">
           {text.capsuleEmpty}
         </section>
       )}
-      {capsules.data?.map((row) => {
+      {rows.map((row) => {
         const own = row.author_id === session?.user.id,
           locked = Date.parse(row.unlock_at) > now
         const showBody = own || !!row.opened_at
@@ -183,6 +184,27 @@ export default function CapsulesPage() {
           </article>
         )
       })}
+      {capsules.hasNextPage && (
+        <Button
+          className="button-secondary"
+          disabled={capsules.isFetchingNextPage}
+          onClick={() => {
+            void capsules.fetchNextPage()
+          }}
+        >
+          Earlier capsules
+        </Button>
+      )}
+      {(capsules.data?.pages.length ?? 0) > 1 && (
+        <button
+          className="text-button"
+          onClick={() => {
+            void query.resetQueries({ queryKey: ['capsules'] })
+          }}
+        >
+          Back to latest capsules
+        </button>
+      )}
     </div>
   )
 }

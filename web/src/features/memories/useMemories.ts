@@ -47,20 +47,27 @@ export function useAnswers(day?: string) {
 }
 export function useCapsules() {
   const { client, session } = useAuth()
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['capsules', session?.user.id],
     enabled: !!session,
     // RLS time changes do not emit a row change. Refresh while this screen is open.
     refetchInterval: 30000,
-    queryFn: async () => {
-      const result = await client
+    initialPageParam: null as Pick<Post, 'id' | 'created_at'> | null,
+    maxPages: 3,
+    queryFn: async ({ pageParam }) => {
+      let request = client
         .from('capsules')
         .select('*')
-        .order('unlock_at', { ascending: false })
-        .limit(100)
+        .order('created_at', { ascending: false })
+        .order('id', { ascending: false })
+        .limit(30)
+      if (pageParam) request = request.or(cursorFilter(pageParam))
+      const result = await request
       if (result.error) throw result.error
       return result.data
     },
+    getNextPageParam: (page) =>
+      page.length === 30 ? page[page.length - 1] : undefined,
   })
 }
 export function useKeptMemories() {

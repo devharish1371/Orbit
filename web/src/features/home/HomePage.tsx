@@ -16,13 +16,15 @@ import { anniversaryDays, localDateParts } from '@/lib/calendar'
 import { AttentionActions } from '@/features/alerts/AttentionActions'
 import { ExpiringSoon } from '@/features/posts/ExpiringSoon'
 import { DailyQuestion } from '@/features/memories/DailyQuestion'
+import { useNow } from '@/hooks/useNow'
 
 export default function HomePage() {
+  const now = useNow()
   const { data: space } = useSpace()
   const live = useLiveData()
   if (!space) return null
   const { self, partner, couple } = space
-  const hour = localDateParts(new Date(), couple.timezone).hour
+  const hour = localDateParts(new Date(now), couple.timezone).hour
   const greeting =
     copy.home.greeting[hour < 5 ? 3 : hour < 12 ? 0 : hour < 17 ? 1 : 2]
   const phone = partner?.phone ?? ''
@@ -31,7 +33,7 @@ export default function HomePage() {
   )
   const locationAvailable = partnerLocation && partner?.share_mode !== 'paused'
   const days = couple.anniversary
-    ? anniversaryDays(couple.anniversary, new Date(), couple.timezone)
+    ? anniversaryDays(couple.anniversary, new Date(now), couple.timezone)
     : null
   return (
     <div className="page home-page">

@@ -624,3 +624,15 @@ staying covered, authenticated unlock and screenshot/app-preview protection. He 
 **ZIP saved and opened** on Nothing Phone (3a), Nothing OS 4.1. M7 acceptance is complete;
 tag m7-done. No in-app personal letter, per instruction. Begin M8 polish/performance;
 M4/M5/M6's separately deferred physical checks are not waived by this milestone.
+
+## 2026-10-31 — M8 polish and visual acceptance underway
+
+Cold mobile Lighthouse on the production login scores **97 performance / 100 accessibility /
+100 best practices** (LCP 2.5s in simulated mobile conditions). Initial app JS is ~161 KB
+gzip, with MapLibre and its worker lazy. No speculative dependency/performance rewrite.
+
+Expanded small chat reaction/menu and Memory Map pin targets to 44px, added textarea/select
+focus rings, kept the Home greeting/countdown current across midnight, corrected combined
+loading/error states, added cursor-window capsule pagination and return-to-latest controls
+for capsules/keepsakes. Web **49**, worker **16**, lint/types/format/build pass. Preparing
+disposable-only dark/light phone screenshots and authenticated-screen accessibility audits.
