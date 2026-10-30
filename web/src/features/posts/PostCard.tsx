@@ -72,6 +72,7 @@ export function PostCard({
         'post-reactions',
         'storage-summary',
         'expiring',
+        'kept-memories',
       ])
         void query.invalidateQueries({ queryKey: [key] })
     }

@@ -3,6 +3,8 @@ import { ArrowUpRight, Heart } from 'lucide-react'
 import { useSpace } from '@/hooks/useSpace'
 import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
+import { memories as text } from '@/copy/memories'
+import { DailyQuestion } from '@/features/memories/DailyQuestion'
 export default function UsPage() {
   const { data } = useSpace()
   if (!data) return null
@@ -56,6 +58,22 @@ export default function UsPage() {
         <span>{copy.profile.shared}</span>
         <ArrowUpRight size={20} aria-hidden="true" />
       </Link>
+      <section className="memory-hub-links">
+        {(
+          [
+            ['/keepsakes', text.keepsakes, '✦'],
+            ['/capsules', text.capsules, '✉'],
+            ['/timeline', text.timeline, '♡'],
+          ] as const
+        ).map(([url, label, icon]) => (
+          <Link className="glass memory-hub-link" to={url} key={url}>
+            <span aria-hidden="true">{icon}</span>
+            <strong>{label}</strong>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
+        ))}
+      </section>
+      <DailyQuestion />
       <p className="muted small profile-privacy">{copy.settings.private}</p>
     </div>
   )

@@ -587,3 +587,21 @@ Recorded short voice preview/playback, keyboard composer visibility and backgrou
 microphone release as passed on Nothing Phone (3a), Nothing OS 4.1. The remaining
 second-phone voice/4G acceptance stays open; no M6 completion tag. Continuing M7 under
 the surprise-gift exception and requesting the human-authored anniversary letter (#6).
+
+## 2026-10-31 — M7 memories, capsules and privacy implementation
+
+The user clarified that the anniversary letter must stay outside the app. Implemented a
+visual anniversary reveal/replay with generic copy, and no personal-letter field. Added
+Keepsakes across both channels, a lazy Memory Map, timeline, daily questions and recap.
+
+Migration 0015 is applied; schema types refreshed. Capsules use scoped/idempotent creation
+and server-timed recipient opening. Daily replies use a canonical local day/index and
+are immutable; direct inserts are revoked to prevent backdated-answer peeking. Permanent
+Moment/arrival counters survive TTL; recap labels available GPS travel honestly. New
+hosted scenarios pass, and the complete suite passes **58/58** with disposable identities.
+
+Added a bounded ZIP export of kept media and RLS-readable memories, Android document
+saving without broad permissions, native launch/60-second device lock and screenshot/
+preview privacy. Web checks pass **49/49**, worker **16/16**, lint/types/format/build.
+Native compilation and disposable browser QA continue; physical lock/export checks are
+not yet claimed. Details and limitations: docs/MEMORIES_PRIVACY.md. M7 remains untagged.

@@ -17,6 +17,7 @@ import { LiveProvider } from '@/features/map/LiveContext'
 import { LocationProvider } from '@/features/location/LocationProvider'
 import { Button } from '@/components/ui/Button'
 import { PushProvider } from '@/features/alerts/PushProvider'
+import { AutomaticReveal } from '@/features/memories/AnniversaryReveal'
 const tabs = [
   { to: '/', key: 'home', icon: Home },
   { to: '/map', key: 'map', icon: MapPin },
@@ -74,6 +75,7 @@ export default function Shell() {
     <LiveProvider>
       <LocationProvider>
         <PushProvider>
+          <AutomaticReveal />
           <div className="app-shell">
             <header className="app-top">
               <Link to="/" className="brand">

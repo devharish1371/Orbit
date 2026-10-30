@@ -121,10 +121,10 @@ def test_quota_is_database_enforced(backend) -> None:
 
 
 def test_capsule_is_hidden_before_unlock_and_visible_after(backend) -> None:
-    body={'couple_id':backend.couples[0],'author_id':backend.users[0],'title':'Capsule','body':'Private future note','unlock_at':(datetime.now(timezone.utc)+timedelta(days=1)).isoformat()}
-    response=backend.rest(backend.clients[0],'POST','capsules',body)
-    assert response.status_code == 201
-    capsule=response.json()[0]['id']
+    body={'p_id':str(uuid.uuid4()),'p_title':'Capsule','p_body':'Private future note','p_unlock_at':(datetime.now(timezone.utc)+timedelta(days=1)).isoformat()}
+    response=backend.clients[0].client.post('/rest/v1/rpc/create_capsule',json=body)
+    assert response.status_code == 200
+    capsule=response.json()['id']
     assert backend.rest(backend.clients[1],'GET','capsules',id='eq.'+capsule).json() == []
     with backend.db() as db:
         db.execute("update public.capsules set unlock_at=now()-interval '1 minute' where id=%s",(capsule,))
@@ -135,8 +135,10 @@ def test_capsule_is_hidden_before_unlock_and_visible_after(backend) -> None:
 def test_daily_answers_hidden_until_both_answered(backend) -> None:
     day='2026-01-02'
     for actor in (0,1):
-        response=backend.rest(backend.clients[actor],'POST','question_answers',{'couple_id':backend.couples[0],'user_id':backend.users[actor],'day':day,'question_idx':0,'answer':'Fixture answer'})
-        assert response.status_code == 201
+        # Historical fixture setup is admin-only. Clients now use a server-dated RPC;
+        # test_delight verifies they cannot forge/backdate an answer to bypass disclosure.
+        with backend.db() as db:
+            db.execute('insert into public.question_answers(couple_id,user_id,day,question_idx,answer) values(%s,%s,%s,0,%s)',(backend.couples[0],backend.users[actor],day,'Fixture answer'))
         visible=backend.rest(backend.clients[1],'GET','question_answers',day='eq.'+day).json()
         assert len(visible) == (0 if actor == 0 else 2)
 

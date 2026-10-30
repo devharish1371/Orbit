@@ -95,10 +95,14 @@ jobs:
           activity=next(p for p in root.findall('./application/activity') if p.get(a+'name')=='app.orbit.couple.MainActivity')
           assert activity.get(a+'windowSoftInputMode')=='adjustResize'
           print('Foreground voice permissions and chat keyboard resize verified.')
+          assert 'android.permission.USE_BIOMETRIC' in permissions
+          from pathlib import Path
+          assert 'PrivacyPlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
+          print('Native privacy bridge and biometric permission verified.')
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: orbit-m6-debug
+          name: orbit-m7-debug
           path: web/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 7

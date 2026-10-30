@@ -18,6 +18,10 @@ const NotificationsPage = lazy(
 )
 const ActivityPage = lazy(() => import('@/features/alerts/ActivityPage'))
 const CallPage = lazy(() => import('@/features/alerts/CallPage'))
+const KeepsakesPage = lazy(() => import('@/features/memories/KeepsakesPage'))
+const CapsulesPage = lazy(() => import('@/features/memories/CapsulesPage'))
+const TimelinePage = lazy(() => import('@/features/memories/TimelinePage'))
+const ReplayReveal = lazy(() => import('@/features/memories/AnniversaryReveal'))
 export default function App() {
   const { session, restoring, restoreError, retryRestore } = useAuth()
   const { pathname } = useLocation()
@@ -65,6 +69,10 @@ export default function App() {
               <Route path="call" element={<CallPage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="us" element={<UsPage />} />
+              <Route path="keepsakes" element={<KeepsakesPage />} />
+              <Route path="capsules" element={<CapsulesPage />} />
+              <Route path="timeline" element={<TimelinePage />} />
+              <Route path="reveal" element={<ReplayReveal />} />
               <Route path="map" element={<MapPage />} />
               {(['moments', 'chat'] as const).map((page) => (
                 <Route

@@ -103,6 +103,10 @@ export function useLiveSpace() {
             'storage-summary',
             'expiring',
             'cleanup-status',
+            'kept-memories',
+            'capsules',
+            'question-answers',
+            'week-recap',
           ])
             mark(key)
         },
@@ -121,6 +125,10 @@ export function useLiveSpace() {
             'storage-summary',
             'expiring',
             'cleanup-status',
+            'kept-memories',
+            'capsules',
+            'question-answers',
+            'week-recap',
           ])
             mark(key)
         }
@@ -138,6 +146,10 @@ export function useLiveSpace() {
           'storage-summary',
           'expiring',
           'cleanup-status',
+          'kept-memories',
+          'capsules',
+          'question-answers',
+          'week-recap',
         ])
           mark(key)
       }

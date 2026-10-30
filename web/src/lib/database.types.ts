@@ -173,6 +173,8 @@ export type Database = {
           couple_id: string
           day: string
           distance_km: number
+          moments_shared: number
+          places_visited: number
           points: number
           user_id: string
         }
@@ -180,6 +182,8 @@ export type Database = {
           couple_id: string
           day: string
           distance_km?: number
+          moments_shared?: number
+          places_visited?: number
           points?: number
           user_id: string
         }
@@ -187,6 +191,8 @@ export type Database = {
           couple_id?: string
           day?: string
           distance_km?: number
+          moments_shared?: number
+          places_visited?: number
           points?: number
           user_id?: string
         }
@@ -830,6 +836,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      answer_daily_question: {
+        Args: { p_answer: string }
+        Returns: {
+          answer: string
+          couple_id: string
+          created_at: string
+          day: string
+          question_idx: number
+          user_id: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'question_answers'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      cancel_capsule: { Args: { p_id: string }; Returns: undefined }
       claim_expired_posts: {
         Args: { p_limit?: number }
         Returns: {
@@ -877,6 +901,31 @@ export type Database = {
         }
       }
       claim_orphan_media: { Args: { p_paths: string[] }; Returns: string[] }
+      create_capsule: {
+        Args: {
+          p_body: string
+          p_id: string
+          p_title: string
+          p_unlock_at: string
+        }
+        Returns: {
+          author_id: string
+          body: string
+          couple_id: string
+          created_at: string
+          id: string
+          notified_at: string | null
+          opened_at: string | null
+          title: string
+          unlock_at: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'capsules'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       create_shared_post: {
         Args: { p_post: Json }
         Returns: {
@@ -913,6 +962,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      daily_question: { Args: never; Returns: Json }
       finish_expired_post: {
         Args: { p_id: string; p_token: string }
         Returns: boolean
@@ -922,6 +972,26 @@ export type Database = {
         Returns: undefined
       }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      open_capsule: {
+        Args: { p_id: string }
+        Returns: {
+          author_id: string
+          body: string
+          couple_id: string
+          created_at: string
+          id: string
+          notified_at: string | null
+          opened_at: string | null
+          title: string
+          unlock_at: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'capsules'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       request_unsend: { Args: { p_id: string }; Returns: boolean }
       reserve_notification: {
         Args: { p_id: string; p_key: string }
@@ -945,6 +1015,7 @@ export type Database = {
         }
         Returns: Json
       }
+      week_recap: { Args: never; Returns: Json }
     }
     Enums: {
       [_ in never]: never
