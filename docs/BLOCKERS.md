@@ -1,10 +1,12 @@
 # Orbit blockers
 
-M4 implementation, tests and final signed APK build pass. The APK is ready for
-human #7; screen-off, swipe-away and offline recovery must pass before M4 is tagged.
-See `docs/TRACKING.md` and the [verified M4 build](https://github.com/devharish1371/Orbit/actions/runs/41069740547). The user accepted Profile/Map on Nothing Phone
-(3a), Nothing OS 4.1; M3's qualitative device check is complete. M4 will need a separate
-human #7 screen-off/swipe-away/offline test with its new build.
+M4 implementation, tests and final signed APK build pass. The APK is installed on the
+Nothing Phone (3a), Nothing OS 4.1. Short screen-off and swipe-away heartbeats, pause,
+surprise and resume passed. Offline queue flushing, moving-update timing and full
+30-minute endurance remain human #7 gates before M4 is tagged. The observer uses the
+phone's hotspot, so an observer connection loss cannot establish a phone tracking failure.
+See `docs/TRACKING.md` and the [verified M4 build](https://github.com/devharish1371/Orbit/actions/runs/41069740547).
+The earlier Profile/Map usability check completed M3.
 
 ## Resolved — Email OTP sender and M2 logins
 

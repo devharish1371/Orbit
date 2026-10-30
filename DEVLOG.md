@@ -403,3 +403,34 @@ screen-off heartbeat check is positive; the 30-minute endurance criterion was NO
 Swipe-away, offline queue recovery and real pause/surprise tests remain unverified; M4 stays
 untagged. Added a bounded read-only observation helper for subsequent explicitly requested
 tests. Helper syntax/help and source secret scan checked; no production app code changed.
+
+
+## 2026-10-30 — Swipe-away and real privacy controls
+
+On the same Nothing Phone (3a) / Nothing OS 4.1 with APK 42e45cb, the user confirmed
+swiping Orbit out of Recents while its notification remained around 20:12:46 IST.
+Observed a fresh server heartbeat at 20:14:06 IST, battery 46%. This establishes a
+post-swipe upload, without claiming measured moving-position latency.
+
+An attempted offline check showed queue count zero. The user then clarified that the
+Mac observer's internet comes from the phone's hotspot. Read-only observer connection
+errors during disconnection are inconclusive. Uploads resumed at 20:22:38 IST, but
+queue flushing is not established without a captured queued item. The user deferred the
+separate offline movement/queue-count check until later; do not disconnect the hotspot.
+
+The user confirmed pause, then surprise, then live on the phone. The server confirmed all
+three modes; the browser verified pause and surprise. Thirteen paused samples had one
+unchanged upload timestamp and the observer hid
+the marker. A fresh surprise upload at 20:33:00 IST had fuzzed=true, null speed/heading,
+blur-grid membership and >=2000 m accuracy. Only computed flags and metadata were returned;
+no coordinates were logged. The observer showed approximate location. Resume produced
+a fresh live upload. Private evidence remains ignored under .artifacts/private/tracking-observation.
+
+Added observation labels to preserve separate test runs and read-only computed privacy
+flags. No production application code changed. Full endurance, moving timing, timed-mode
+expiration and verified offline queue flushing remain open; M4 stays untagged.
+
+Validation: helper syntax/help and both one-minute live database observation runs passed,
+with five samples each and zero observer errors. Source secret scan: 231 files, zero
+findings; git diff whitespace check passed. Production source and APK are unchanged, so
+the previously passing full web/Python/native suites and signed build remain applicable.

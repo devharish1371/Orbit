@@ -61,6 +61,10 @@ signing key in human task #5 is still a separate M9 requirement.
    action and stops tracking; reopen the app afterward.
 4. Enable airplane mode briefly, move, then restore connectivity. Confirm Last upload recovers
    and queued items drain without a fresh login. Read diagnostics if it does not recover.
+   If the observer uses the phone's hotspot, expect the observer to disconnect too. Note the
+   phone's queue count while offline, restore connectivity, then compare its count and upload
+   time. A zero count throughout does not establish queue flushing; stationary GPS may not
+   produce a new accepted fix. Keep Location on and move enough to produce a fix.
 5. Pause sharing: the observer must show paused and receive no new exact fixes. Resume, then
    test surprise: the observer must show planning a surprise with a broad area and no precise
    trail/speed/heading. Test a timed mode returning to live after its deadline.
@@ -88,3 +92,26 @@ The desktop observer/server metadata showed a fresh heartbeat at 20:04:00 IST wi
 battery. The user requested a shorter check, so observation ended after about six minutes.
 This verifies an initial screen-off upload, not 30-minute endurance, swipe-away or offline
 recovery. M4 acceptance remains open for those items.
+
+## Further phone checks — 2026-10-30
+
+The user confirmed removing Orbit from Recents while its ongoing notification remained
+around 20:12:46 IST. A new server heartbeat arrived at **20:14:06 IST**, battery 46%.
+This verifies an upload after swipe-away; moving-position latency was not measured.
+
+Connectivity resumed with an upload at **20:22:38 IST** after an attempted offline test.
+The user reported Queued items stayed at zero and explained that the Mac observer uses
+the phone's hotspot. Observer connection errors during that interval are therefore
+inconclusive. Resumed uploads passed; durable offline queue flushing remains unverified.
+The user deferred the separate offline movement/queue-count check until later.
+
+Pause was confirmed on the phone and server. Across 13 paused metadata samples, the
+upload timestamp stayed unchanged; the desktop map hid the marker and showed Sharing is
+paused. Surprise was then confirmed. A fresh upload at **20:33:00 IST** had fuzzed=true,
+null speed/heading, the expected blur-grid coordinates and at least 2000 m accuracy,
+checked as booleans without returning or logging coordinates. The observer showed
+Planning a surprise / approximate location. Resume was confirmed with a fresh live upload.
+
+These are positive functional checks on the real phone. Full 30-minute screen-off endurance,
+moving-update timing, timed-mode expiration and durable offline queue flushing are still
+open. The longer native-refresh/24-hour soak belongs to the later release gate.
