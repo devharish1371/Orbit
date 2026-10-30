@@ -1,8 +1,8 @@
 # M3 map and phone acceptance
 
-M3 web behavior is implemented. The Android WebView 60 fps acceptance item remains open;
-there is no physical Android device attached to this workspace. Do not tag `m3-done` or
-start M4 until that item passes. This is human task #7 in the supplied task list.
+M3 is accepted after the user reported Profile and Map work well on a Nothing Phone (3a)
+with Nothing OS 4.1. This is a qualitative smoothness/usability check, not an instrumented
+60 fps measurement. M4 can proceed; its background reliability tests remain separate.
 
 ## Disposable partner simulation
 

@@ -268,3 +268,17 @@ remains available. Temporary viewport override reset. Source scan: 207 files, ze
 mid-range WebView map performance check. Test profile editing/photo/theme persistence too.
 Report phone model and findings; do not infer hardware performance from desktop screenshots.
 M3 remains untagged; M4–M9 remain pending. No background tracking/push delivery claim is made.
+
+
+## 2026-10-30 — Human M3 phone check accepted; start M4
+
+The user reports Profile and Map work well on a Nothing Phone (3a), Nothing OS 4.1.
+Accepting that direct human usability/smoothness check to close M3 and tag `m3-done`.
+This is qualitative device feedback; no instrumented FPS measurement was supplied.
+Automated/source/APK evidence remains the verified M3 checks recorded above.
+
+Starting M4: explicit native permission onboarding, Android battery/settings helper,
+foreground-service tracker with native HTTP, bounded offline queue/backoff, adaptive
+location/battery modes, geofences and visible pause/surprise controls, tracking health
+and coordinate-free diagnostics. M4 screen-off/swipe-away/offline acceptance is separate
+and still requires human #7 using the next APK.

@@ -21,8 +21,8 @@ Architecture notes and version records live in `docs/`.
 | M0 | Scaffold strict React/TypeScript + Vite/Tailwind, Capacitor Android, Supabase CLI config, Python venv/tools, environment templates. Bootstrap, dev smoke, build, tests, lint, typecheck, format and Android sync pass; first commit pushed. | Complete; scaffold commit `97bac05` pushed |
 | M1 | Database migrations, auth/admin tools, RLS, TTL/quota/stale/rollup, Storage API retention and cron. Real-project isolation/retention tests pass; signup disabled. Human #2. | Backend acceptance complete; deployed/tested; both passwordless identities provisioned |
 | M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Complete; `88ed64a` / `m2-done` pushed; login/profile/accessibility verified |
-| M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Web implemented/tested; awaiting human #7 Android WebView performance check |
-| M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | Pending M3 |
+| M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Complete; user confirms Profile/Map work well on Nothing Phone (3a), Nothing OS 4.1; qualitative check |
+| M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | In progress; native tracker and permission flow |
 | M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Pending M4 |
 | M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Pending M5 |
 | M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Pending M6 |
@@ -31,11 +31,10 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
-1. Human #7: install the verified debug APK (`d9fff3d`); the build and download are ready.
-2. Run M3's Android WebView smoothness/performance check on a mid-range phone; keep M3
-   untagged until it passes. Details: `docs/MAP_TESTING.md`.
-3. Then begin M4 background tracking. Phone screen-off/swipe/offline acceptance remains
-   a separate human #7 gate; M5 also needs Firebase human #3.
+1. Close M3 with the accepted Nothing Phone (3a) / Nothing OS 4.1 human check and tag it.
+2. Implement/test M4, then deliver its new APK for human #7 screen-off, swipe-away and
+   airplane-mode recovery tests. Do not infer background reliability from M3's result.
+3. M5 needs Firebase human #3 after M4 acceptance.
 
 ## Human dependencies observed
 

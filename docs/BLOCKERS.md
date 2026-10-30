@@ -1,8 +1,8 @@
 # Orbit blockers
 
-M3 web implementation passes automated checks. Its Android WebView performance acceptance
-requires human #7 on a physical phone; the debug APK handoff is ready.
-See `docs/MAP_TESTING.md` and the [verified APK build](https://github.com/devharish1371/Orbit/actions/runs/41028725065). M3 is not tagged complete and M4 has not started.
+No human task blocks M4 implementation. The user accepted Profile/Map on Nothing Phone
+(3a), Nothing OS 4.1; M3's qualitative device check is complete. M4 will need a separate
+human #7 screen-off/swipe-away/offline test with its new build.
 
 ## Resolved — Email OTP sender and M2 logins
 
