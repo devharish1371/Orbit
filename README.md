@@ -7,7 +7,8 @@ One React/TypeScript codebase targets the web and a sideloaded Capacitor Android
 remembered sessions, private Home/settings, and editable personal profiles. Each person can
 set a photo, nickname, partner nickname, contact number, personal color, and app appearance.
 SMTP delivery and both web logins have been verified. The foreground realtime map and shared places are implemented; M3’s Android device
-performance check is next. Background tracking and the remaining product features follow. See [authentication setup](docs/AUTHENTICATION.md).
+performance check is next. M4’s native background tracker is implemented and undergoing phone reliability acceptance.
+See [tracking setup and test steps](docs/TRACKING.md). Remaining product features follow. See [authentication setup](docs/AUTHENTICATION.md).
 Follow [PLAN.md](PLAN.md) for the ordered milestones and [DEVLOG.md](DEVLOG.md) for evidence.
 
 See [local development](docs/DEVELOPMENT.md) for installation, verification, native builds,

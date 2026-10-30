@@ -294,6 +294,8 @@ export const copy = {
     reboot: 'After restarting your phone, open Orbit once to restart sharing.',
     servicesOff: 'Your phone’s location switch is off.',
     servicesAction: 'Turn on device location',
+    clock:
+      'Your phone’s clock differs from the server. Turn on automatic date and time in your phone settings.',
     auth: 'Sign-in session',
     service: 'Location service',
   },

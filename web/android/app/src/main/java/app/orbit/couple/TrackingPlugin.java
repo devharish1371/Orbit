@@ -30,9 +30,9 @@ public class TrackingPlugin extends Plugin {
     @PluginMethod public void setAuth(PluginCall call){work(call,()->{
         String value=call.getString("value");if(value==null)throw new Exception();
         String previous=TrackerAuth.read(getContext());String nextUser=new JSONObject(value).getJSONObject("user").getString("id");
-        if(previous!=null&&!new JSONObject(previous).getJSONObject("user").getString("id").equals(nextUser)){getContext().stopService(new Intent(getContext(),OrbitTrackerService.class));try(var store=new TrackerStore(getContext())){store.clear();}getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",false).remove("policy").remove("presence").commit();}
+        if(previous!=null&&!new JSONObject(previous).getJSONObject("user").getString("id").equals(nextUser)){getContext().stopService(new Intent(getContext(),OrbitTrackerService.class));try(var store=new TrackerStore(getContext())){store.clear();}getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",false).remove("policy").remove("presence").remove("places").remove("lastUpload").remove("lastFix").remove("diagnostics").remove("issue").commit();}
         TrackerAuth.save(getContext(),value);return new JSObject();});}
-    @PluginMethod public void clearAuth(PluginCall call){work(call,()->{getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",false).remove("pendingMode").commit();getContext().stopService(new Intent(getContext(),OrbitTrackerService.class));TrackerAuth.clear(getContext());try(var store=new TrackerStore(getContext())){store.clear();}return new JSObject();});}
+    @PluginMethod public void clearAuth(PluginCall call){work(call,()->{getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",false).remove("pendingMode").remove("policy").remove("places").remove("presence").remove("lastUpload").remove("lastFix").remove("diagnostics").remove("issue").commit();getContext().stopService(new Intent(getContext(),OrbitTrackerService.class));TrackerAuth.clear(getContext());try(var store=new TrackerStore(getContext())){store.clear();}return new JSObject();});}
     @PluginMethod public void refreshAuth(PluginCall call){work(call,()->{try{var reply=TrackerAuth.refresh(getContext(),false);return new JSObject().put("status",reply.status()).put("data",reply.json());}catch(Exception error){return new JSObject().put("status",503).put("data",new JSONObject().put("message","Connection unavailable"));}});}
     @PluginMethod public void start(PluginCall call){
         if(!ready(getContext())){call.reject("TRACKING_PERMISSIONS_REQUIRED");return;}
@@ -44,13 +44,14 @@ public class TrackingPlugin extends Plugin {
         JSONObject pending=new JSONObject().put("share_mode",mode).put("share_mode_until",call.getString("until")==null?JSONObject.NULL:call.getString("until"));
         getContext().getSharedPreferences("OrbitTracking",0).edit().putString("pendingMode",pending.toString()).commit();
         try(var store=new TrackerStore(getContext())){store.clear();}
-        OrbitTrackerService.wake();call.resolve();}catch(Exception error){call.reject("SHARING_CHANGE_FAILED");}}
+        OrbitTrackerService.wake();worker.execute(()->{try{TrackerAuth.syncMode(getContext());}catch(Exception error){TrackerStore.log(getContext(),"mode_pending");}});call.resolve();}catch(Exception error){call.reject("SHARING_CHANGE_FAILED");}}
+    @PluginMethod public void retryMode(PluginCall call){worker.execute(()->{try{TrackerAuth.syncMode(getContext());}catch(Exception error){TrackerStore.log(getContext(),"mode_pending");}});call.resolve();}
     @PluginMethod public void health(PluginCall call){work(call,()->{
         var c=getContext();var prefs=c.getSharedPreferences("OrbitTracking",0);int boot=Settings.Global.getInt(c.getContentResolver(),Settings.Global.BOOT_COUNT,-1);
         JSObject result=new JSObject().put("native",true).put("location",granted(c,Manifest.permission.ACCESS_FINE_LOCATION)).put("background",Build.VERSION.SDK_INT<29||granted(c,Manifest.permission.ACCESS_BACKGROUND_LOCATION))
             .put("notifications",Build.VERSION.SDK_INT<33||granted(c,Manifest.permission.POST_NOTIFICATIONS)).put("battery",((PowerManager)c.getSystemService(android.content.Context.POWER_SERVICE)).isIgnoringBatteryOptimizations(c.getPackageName()))
             .put("services",Build.VERSION.SDK_INT>=28?((android.location.LocationManager)c.getSystemService(android.content.Context.LOCATION_SERVICE)).isLocationEnabled():((android.location.LocationManager)c.getSystemService(android.content.Context.LOCATION_SERVICE)).isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)).put("enabled",prefs.getBoolean("enabled",false)).put("running",OrbitTrackerService.running()).put("lastUpload",prefs.getLong("lastUpload",0)).put("lastFix",prefs.getLong("lastFix",0))
-            .put("mode",prefs.getString("adaptive","moving")).put("pendingMode",prefs.contains("pendingMode")).put("auth",TrackerAuth.read(c)!=null).put("rebooted",prefs.getInt("boot",boot)!=boot)
+            .put("issue",prefs.getString("issue","")).put("mode",prefs.getString("adaptive","moving")).put("pendingMode",prefs.contains("pendingMode")).put("auth",TrackerAuth.read(c)!=null).put("rebooted",prefs.getInt("boot",boot)!=boot)
             .put("manufacturer",Build.MANUFACTURER).put("model",Build.MODEL).put("os",Build.VERSION.RELEASE);
         try(var store=new TrackerStore(c)){result.put("queue",store.count());}
         return result;

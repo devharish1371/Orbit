@@ -322,3 +322,17 @@ Debug signing is being made persistent in private CI secrets with an ignored enc
 PKCS12 backup. This is a debug identity only; release signing remains human #5. The earlier
 M3 runner used a disposable debug key that cannot be recovered, so the first M4 install
 requires uninstalling M3 once and signing in again. Later M4 debug builds will update in place.
+
+
+M4 first native CI build [0454671](https://github.com/devharish1371/Orbit/actions/runs/41066011969)
+succeeded: three native JVM policy tests, Android compilation, cryptographic apksigner
+verification and private foreground-service merged-manifest assertion all pass, along with
+web/Python/source checks. Browser Tracking health navigation and foreground-only copy render
+correctly; zero console warnings/errors observed. A screenshot is ignored under .artifacts/qa.
+
+Final review strengthened queued mode synchronization even before the service starts,
+retries on reconnect/resume, removes private native caches on logout/account change, and
+checks the queued account identity under the auth lock before HTTP. Added clock-skew
+feedback and removal of invalid future batches. Final build will include these corrections.
+Full web checks passed after changes; one targeted hosted privacy assertion is being verified.
+Physical screen-off/swipe-away/offline/native refresh behavior remains human #7; see TRACKING.md.

@@ -12,13 +12,20 @@ export function useTrackingHealth() {
   })
   useEffect(() => {
     if (!nativeTracking) return
+    const reconnect = () => {
+      void tracker.retryMode().catch(() => {})
+      void query.invalidateQueries({ queryKey: ['tracking-health'] })
+    }
+    window.addEventListener('online', reconnect)
     const listener = App.addListener('appStateChange', (state) => {
       if (state.isActive) {
+        reconnect()
         void query.invalidateQueries({ queryKey: ['tracking-health'] })
         void query.invalidateQueries({ queryKey: ['space'] })
       }
     })
     return () => {
+      window.removeEventListener('online', reconnect)
       void listener.then((handle) => handle.remove())
     }
   }, [query])

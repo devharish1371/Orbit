@@ -26,6 +26,7 @@ def test_native_ingest_is_retry_safe_and_does_not_regress_latest(backend):
 
 def test_native_ingest_privacy_generations_and_surprise_blur(backend):
     epoch=member(backend)['location_epoch']
+    assert backend.rest(backend.clients[0],'PATCH','members',{'location_epoch':0},user_id='eq.'+backend.users[0]).status_code>=400
     try:
         backend.rest(backend.clients[0],'PATCH','members',{'share_mode':'paused'},user_id='eq.'+backend.users[0])
         assert send(backend,epoch,[fix()]).status_code>=400

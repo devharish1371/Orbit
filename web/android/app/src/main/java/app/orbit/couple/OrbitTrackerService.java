@@ -33,7 +33,7 @@ public class OrbitTrackerService extends Service {
         @Override public void onAvailable(Network n){if(!worker.isShutdown())submit(()->{nextAttempt=0;tickCore();});}
     };
     public static boolean running(){return current!=null;}
-    public static void wake(){OrbitTrackerService service=current;if(service!=null){service.stopLocations();if(!service.worker.isShutdown())service.submit(()->{service.lastSync=0;service.nextAttempt=0;service.tickCore();});}}
+    public static void wake(){OrbitTrackerService service=current;if(service!=null){service.stopLocations();service.main.post(()->{try{service.showNotification(true);}catch(Exception ignored){}});if(!service.worker.isShutdown())service.submit(()->{service.lastSync=0;service.nextAttempt=0;service.tickCore();});}}
     public static void heartbeat(){OrbitTrackerService service=current;if(service!=null){service.scheduleHeartbeat();service.submit(service::tickCore);}}
     private void submit(Runnable task){
         if(worker.isShutdown())return;
@@ -95,8 +95,7 @@ public class OrbitTrackerService extends Service {
         String raw=TrackerAuth.read(this);if(raw==null){stopSelf();throw new Exception("auth");}
         String uid=new JSONObject(raw).getJSONObject("user").getString("id");
         if(prefs().contains("pendingMode")){
-            stopLocations();require(TrackerAuth.request(this,"PATCH","/rest/v1/members?user_id=eq."+uid,new JSONObject(prefs().getString("pendingMode","{}"))));
-            prefs().edit().remove("pendingMode").apply();lastSync=0;store.clear();
+            stopLocations();TrackerAuth.syncMode(this);lastSync=0;store.clear();
         }
         if(now-lastSync>=60000){
             JSONArray rows=require(TrackerAuth.request(this,"GET","/rest/v1/members?user_id=eq."+uid+"&select=user_id,couple_id,share_mode,share_mode_until,location_epoch",null)).getJSONArray("rows");
@@ -181,9 +180,10 @@ public class OrbitTrackerService extends Service {
         var items=store.batch();if(items.isEmpty())return;
         JSONArray fixes=new JSONArray(),transitions=new JSONArray();for(var item:items){if(item.kind().equals("fix"))fixes.put(item.value());else transitions.put(item.value());}
         boolean low=lowArmed&&battery>=0&&battery<=15&&!charging;if(battery>25||charging)lowArmed=true;
-        var response=TrackerAuth.request(this,"POST","/rest/v1/rpc/submit_locations",new JSONObject().put("p_epoch",policy.getLong("location_epoch")).put("p_fixes",fixes).put("p_transitions",transitions).put("p_low_battery",low));
+        var response=TrackerAuth.requestAs(this,policy.getString("user_id"),"POST","/rest/v1/rpc/submit_locations",new JSONObject().put("p_epoch",policy.getLong("location_epoch")).put("p_fixes",fixes).put("p_transitions",transitions).put("p_low_battery",low));
         if(response.status()==400&& (response.body().contains("LOCATION_EPOCH_CHANGED")||response.body().contains("SHARING_PAUSED"))){store.clear();lastSync=0;stopLocations();TrackerStore.log(this,"privacy_queue_discarded");return;}
-        require(response);store.acknowledge(items);if(low)lowArmed=false;nextAttempt=0;backoff=5000;prefs().edit().putLong("lastUpload",now).apply();TrackerStore.log(this,"upload_ok");
+        if(response.status()==400&&response.body().contains("FUTURE_FIX")){store.acknowledge(items);prefs().edit().putString("issue","clock").apply();TrackerStore.log(this,"clock_check");nextAttempt=now+300000;return;}
+        require(response);prefs().edit().remove("issue").apply();store.acknowledge(items);if(low)lowArmed=false;nextAttempt=0;backoff=5000;prefs().edit().putLong("lastUpload",now).apply();TrackerStore.log(this,"upload_ok");
     }
     @Override public IBinder onBind(Intent intent){return null;}
     @Override public void onTaskRemoved(Intent rootIntent){TrackerStore.log(this,"task_swiped_service_retained");super.onTaskRemoved(rootIntent);}

@@ -71,6 +71,19 @@ final class TrackerAuth {
         if(reply.status==400||reply.status==401||reply.status==403){clear(c);TrackerStore.log(c,"auth_required");}
         return reply;
     }
+    static synchronized void syncMode(Context c) throws Exception {
+        var prefs=c.getSharedPreferences("OrbitTracking",0);String pending=prefs.getString("pendingMode",null);if(pending==null)return;
+        String raw=read(c);if(raw==null)throw new Exception("AUTH_REQUIRED");
+        String uid=new JSONObject(raw).getJSONObject("user").getString("id");
+        Reply reply=request(c,"PATCH","/rest/v1/members?user_id=eq."+uid,new JSONObject(pending));
+        if(reply.status<200||reply.status>=300)throw new Exception("MODE_PENDING");
+        if(pending.equals(prefs.getString("pendingMode",null)))prefs.edit().remove("pendingMode").commit();
+    }
+    static synchronized Reply requestAs(Context c,String uid,String method,String path,JSONObject body) throws Exception {
+        String raw=read(c);
+        if(raw==null||!uid.equals(new JSONObject(raw).getJSONObject("user").getString("id")))return new Reply(401,"{\"error_code\":\"account_changed\"}");
+        return request(c,method,path,body);
+    }
     static synchronized Reply request(Context c,String method,String path,JSONObject body) throws Exception {
         Reply session=refresh(c,false);if(session.status!=200)return session;
         return http(c,method,path,session.json().getString("access_token"),body);

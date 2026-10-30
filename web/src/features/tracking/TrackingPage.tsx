@@ -186,6 +186,11 @@ export default function TrackingPage() {
               )}
               <p className="small muted">{copy.tracking.reboot}</p>
             </section>
+            {h.issue === 'clock' && (
+              <section className="glass settings-section">
+                <p role="status">{copy.tracking.clock}</p>
+              </section>
+            )}
             {!h.services && (
               <section className="glass settings-section">
                 <p>{copy.tracking.servicesOff}</p>

@@ -1,6 +1,8 @@
 # Orbit blockers
 
-No human task blocks M4 implementation. The user accepted Profile/Map on Nothing Phone
+M4 implementation and first native CI build pass. The final APK is being prepared for
+human #7; screen-off, swipe-away and offline recovery must pass before M4 is tagged.
+See `docs/TRACKING.md`. The user accepted Profile/Map on Nothing Phone
 (3a), Nothing OS 4.1; M3's qualitative device check is complete. M4 will need a separate
 human #7 screen-off/swipe-away/offline test with its new build.
 

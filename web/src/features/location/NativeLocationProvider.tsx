@@ -13,6 +13,9 @@ export function NativeLocationProvider({ children }: { children: ReactNode }) {
     running = Boolean(health.data?.running),
     ready = health.data ? trackingReady(health.data) : false
   useEffect(() => {
+    if (health.data?.pendingMode) void tracker.retryMode().catch(() => {})
+  }, [health.data?.pendingMode])
+  useEffect(() => {
     if (enabled && !running && ready)
       void tracker
         .start()

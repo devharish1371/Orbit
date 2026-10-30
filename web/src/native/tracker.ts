@@ -1,6 +1,7 @@
 import { Capacitor, registerPlugin } from '@capacitor/core'
 export interface TrackingHealth {
   services: boolean
+  issue?: string
   native: boolean
   location: boolean
   background: boolean
@@ -29,6 +30,7 @@ export interface TrackingPlugin {
   setAuth(options: { value: string }): Promise<void>
   clearAuth(): Promise<void>
   refreshAuth(): Promise<{ status: number; data: unknown }>
+  retryMode(): Promise<void>
   health(): Promise<TrackingHealth>
   diagnostics(): Promise<{ entries: Diagnostic[] }>
   start(): Promise<void>
