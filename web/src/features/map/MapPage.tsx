@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { nativeTracking } from '@/native/tracker'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNow } from '@/hooks/useNow'
@@ -198,14 +200,22 @@ export default function MapPage() {
         <p className="muted small map-waiting">{copy.map.waiting}</p>
       )}
       <section className="glass map-sharing">
-        <p className="muted small">{copy.map.webNotice}</p>
-        <Button
-          type="button"
-          onClick={sharing.enabled ? sharing.stop : sharing.start}
-          disabled={data.self.share_mode === 'paused'}
-        >
-          {sharing.enabled ? copy.map.stop : copy.map.start}
-        </Button>
+        <p className="muted small">
+          {nativeTracking ? copy.tracking.nativeNotice : copy.map.webNotice}
+        </p>
+        {nativeTracking ? (
+          <Link className="button" to="/tracking">
+            {copy.tracking.manage}
+          </Link>
+        ) : (
+          <Button
+            type="button"
+            onClick={sharing.enabled ? sharing.stop : sharing.start}
+            disabled={data.self.share_mode === 'paused'}
+          >
+            {sharing.enabled ? copy.map.stop : copy.map.start}
+          </Button>
+        )}
         {(sharing.message || data.self.share_mode === 'paused') && (
           <p className="small" role="status">
             {data.self.share_mode === 'paused'

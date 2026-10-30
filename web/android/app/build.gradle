@@ -16,6 +16,18 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        debug {
+            def debugPath = System.getenv('ORBIT_DEBUG_KEYSTORE_PATH')
+            if (debugPath) {
+                storeFile file(debugPath)
+                storeType 'PKCS12'
+                storePassword System.getenv('ORBIT_DEBUG_KEYSTORE_PASSWORD')
+                keyAlias 'orbit-debug'
+                keyPassword System.getenv('ORBIT_DEBUG_KEYSTORE_PASSWORD')
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

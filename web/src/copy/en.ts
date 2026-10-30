@@ -220,6 +220,83 @@ export const copy = {
     collapse: 'Hide location details',
     you: 'You',
   },
+  tracking: {
+    title: 'Tracking health',
+    heading: 'A little peace of mind.',
+    description:
+      'You choose when and how you share. Your person can always see your sharing mode.',
+    web: 'This browser shares only while Orbit is open and visible. Install the Android app for background sharing.',
+    nativeNotice:
+      'Android sharing can continue with your screen off. Manage permissions and sharing here.',
+    manage: 'Manage location sharing',
+    consent:
+      'I want to share my location with my person, including while Orbit is in the background.',
+    setup: 'Let’s get you connected.',
+    location: '1 · Precise location',
+    locationBody:
+      'Allow location while using Orbit, with precise location enabled.',
+    locationAction: 'Allow location',
+    background: '2 · All the time',
+    backgroundBody:
+      'Open Permissions → Location and choose Allow all the time. Return here when you’re done.',
+    backgroundAction: 'Open location settings',
+    notifications: '3 · A visible reminder',
+    notificationsBody:
+      'Allow notifications so Orbit can show that location sharing is running.',
+    notificationsAction: 'Allow notifications',
+    battery: '4 · Keep the connection',
+    batteryBody:
+      'Allow unrestricted battery use so Android can keep sharing with your screen off.',
+    batteryAction: 'Set battery access',
+    nothing:
+      'Nothing OS: check Orbit → App info → Battery usage and allow background activity. Keep location set to Allow all the time.',
+    genericBattery:
+      'Check your phone’s app battery settings and allow background activity.',
+    ready: 'Ready',
+    missing: 'Needs attention',
+    enable: 'Start background sharing',
+    enabling: 'Starting…',
+    active: 'Background sharing is running.',
+    inactive: 'Background sharing is off.',
+    degraded: 'Tracking needs attention — tap to fix',
+    permissionFailed:
+      'That step could not finish. Check your app settings and try again.',
+    shareMode: 'Your sharing mode',
+    live: 'Share live',
+    paused: 'Pause sharing',
+    surprise: 'Surprise mode',
+    surpriseBody:
+      'Your person sees “planning a surprise” and an approximate area. Exact locations, speed, heading and place alerts are withheld.',
+    duration: 'For how long?',
+    hour: '1 hour',
+    fourHours: '4 hours',
+    tomorrow: 'Until tomorrow',
+    indefinite: 'Until I resume',
+    pending:
+      'Stopped on this phone. Your sharing change will sync when your connection returns.',
+    modeSaved:
+      'Your sharing change is queued. The status below updates after the server confirms it.',
+    modeFailed: 'We couldn’t change sharing. Try again.',
+    current: 'Confirmed sharing mode',
+    resume: 'Resume live sharing',
+    upload: 'Last upload',
+    fix: 'Last GPS fix',
+    queued: 'Queued items',
+    never: 'Not yet',
+    refresh: 'Check again',
+    settings: 'Open app settings',
+    diagnostics: 'Diagnostics',
+    diagnosticsBody:
+      'Recent tracking events contain no coordinates or sign-in credentials.',
+    noDiagnostics: 'No tracking events yet.',
+    copy: 'Copy diagnostics',
+    copied: 'Diagnostics copied.',
+    reboot: 'After restarting your phone, open Orbit once to restart sharing.',
+    servicesOff: 'Your phone’s location switch is off.',
+    servicesAction: 'Turn on device location',
+    auth: 'Sign-in session',
+    service: 'Location service',
+  },
   empty: {
     map: 'Your shared view.',
     mapBody: 'Your places and live locations will live here.',

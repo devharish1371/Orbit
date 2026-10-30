@@ -220,3 +220,24 @@ a manual debug APK CI job now to unblock human #7; release signing remains M9.
 Official actions refs were resolved via GitHub API and pinned to commit hashes: checkout v6,
 setup-node v6, setup-java v6, upload-artifact v7. The job has read-only repository permission,
 no persisted checkout credential, a timeout, and only public app configuration.
+
+
+## D027 — Independent native tracking and one refresh owner (2026-10-30)
+
+The installed community geolocation service intentionally stops in onUnbind when its activity
+is disconnected. See [maintainer source](https://github.com/capacitor-community/background-geolocation/blob/master/android/src/main/java/com/equimaps/capacitor_background_geolocation/BackgroundGeolocationService.java).
+Use an unbound private Android foreground service for locations, SQLite queue and native
+HTTP; it continues independently of JS/activity lifecycle. Removed the unused dependency.
+No paid plugin, new service account or custom login token scheme is introduced.
+
+Use standard Supabase refresh sessions in an Android Keystore encrypted store. The service
+and SDK refresh fetch adapter serialize refresh through one native owner; native SDK auto
+refresh ticker is disabled. Read/migrate existing Preferences login on upgrade, then remove
+its unencrypted session value. The native service never logs coordinates, tokens or URLs.
+
+Android foreground-service types/permissions follow [current Android guidance](https://developer.android.com/develop/background-work/services/fgs/service-types).
+Fine/background/notification grants are explicit; battery exemption and location services
+are visible in health. No boot receiver silently starts tracking. Restart once by opening
+Orbit after reboot. The M4 physical phone tests remain required; code/CI success is not
+proof of OEM behavior. Moving uploads use 30s instead of the source minimum 15s to keep
+worst-case two-sender/two-subscriber traffic under 25% of the published Free message quota.

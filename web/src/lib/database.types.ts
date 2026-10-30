@@ -354,6 +354,7 @@ export type Database = {
         Row: {
           accuracy_m: number | null
           battery_pct: number | null
+          client_id: string | null
           couple_id: string
           expires_at: string
           id: number
@@ -366,6 +367,7 @@ export type Database = {
         Insert: {
           accuracy_m?: number | null
           battery_pct?: number | null
+          client_id?: string | null
           couple_id: string
           expires_at?: string
           id?: never
@@ -378,6 +380,7 @@ export type Database = {
         Update: {
           accuracy_m?: number | null
           battery_pct?: number | null
+          client_id?: string | null
           couple_id?: string
           expires_at?: string
           id?: never
@@ -426,6 +429,7 @@ export type Database = {
           couple_id: string
           created_at: string
           display_name: string
+          location_epoch: number
           nickname: string | null
           notify_prefs: Json
           partner_nickname: string | null
@@ -446,6 +450,7 @@ export type Database = {
           couple_id: string
           created_at?: string
           display_name: string
+          location_epoch?: number
           nickname?: string | null
           notify_prefs?: Json
           partner_nickname?: string | null
@@ -466,6 +471,7 @@ export type Database = {
           couple_id?: string
           created_at?: string
           display_name?: string
+          location_epoch?: number
           nickname?: string | null
           notify_prefs?: Json
           partner_nickname?: string | null
@@ -847,6 +853,15 @@ export type Database = {
         Returns: boolean
       }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      submit_locations: {
+        Args: {
+          p_epoch: number
+          p_fixes: Json
+          p_low_battery?: boolean
+          p_transitions?: Json
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

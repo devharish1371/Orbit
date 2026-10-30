@@ -22,7 +22,7 @@ Recorded 2026-10-30 from installed tools, package metadata, and generated Androi
 
 | Package | Pinned version |
 | --- | --- |
-| `@capacitor-community/background-geolocation` | 1.3.1 |
+| `@capacitor-community/background-geolocation` | Removed in M4; independent native foreground service replaces activity-bound callbacks |
 | `@capacitor/app` | 8.1.2 |
 | `@capacitor/core` | 8.6.0 |
 | `@capacitor/device` | 8.0.3 |

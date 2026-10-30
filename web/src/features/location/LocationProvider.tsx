@@ -4,8 +4,17 @@ import { useSpace } from '@/hooks/useSpace'
 import { blur } from '@/lib/geo'
 import { shouldPublish, shouldRecord, type Fix } from '@/lib/location-policy'
 import { copy } from '@/copy/en'
+import { nativeTracking } from '@/native/tracker'
+import { NativeLocationProvider } from './NativeLocationProvider'
 import { LocationContext } from './LocationContext'
 export function LocationProvider({ children }: { children: ReactNode }) {
+  return nativeTracking ? (
+    <NativeLocationProvider>{children}</NativeLocationProvider>
+  ) : (
+    <WebLocationProvider>{children}</WebLocationProvider>
+  )
+}
+function WebLocationProvider({ children }: { children: ReactNode }) {
   const { client } = useAuth()
   const { data } = useSpace()
   const [enabled, setEnabled] = useState(false)

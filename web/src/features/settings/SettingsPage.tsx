@@ -79,6 +79,10 @@ export default function SettingsPage() {
         <h1>{copy.settings.title}</h1>
         <p className="muted">{copy.settings.description}</p>
       </header>
+      <Link className="profile-settings-link" to="/tracking">
+        {copy.tracking.title}
+        <span aria-hidden="true">↗</span>
+      </Link>
       <section className="glass settings-section">
         <h2>{copy.common.theme}</h2>
         <div className="theme-options">

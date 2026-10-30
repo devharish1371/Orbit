@@ -1,25 +1,10 @@
-import {
-  createClient,
-  type SupabaseClient,
-  type SupportedStorage,
-} from '@supabase/supabase-js'
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { Capacitor } from '@capacitor/core'
-import { Preferences } from '@capacitor/preferences'
+import { nativeAuthStorage, nativeAuthFetch } from '@/native/auth-storage'
 import type { Database } from './database.types'
 import { isPublicKey } from './public-config'
 
 export type OrbitClient = SupabaseClient<Database>
-const nativeStorage: SupportedStorage = {
-  async getItem(key) {
-    return (await Preferences.get({ key })).value
-  },
-  async setItem(key, value) {
-    await Preferences.set({ key, value })
-  },
-  async removeItem(key) {
-    await Preferences.remove({ key })
-  },
-}
 let instance: OrbitClient | undefined
 export function getClient(): OrbitClient {
   if (!instance) {
@@ -28,11 +13,16 @@ export function getClient(): OrbitClient {
     if (!url || !key || url.includes('<') || !isPublicKey(key))
       throw new Error('Public client configuration is missing or invalid')
     instance = createClient<Database>(url, key, {
+      ...(Capacitor.isNativePlatform()
+        ? { global: { fetch: nativeAuthFetch } }
+        : {}),
       auth: {
         persistSession: true,
-        autoRefreshToken: true,
+        autoRefreshToken: !Capacitor.isNativePlatform(),
         detectSessionInUrl: false,
-        ...(Capacitor.isNativePlatform() ? { storage: nativeStorage } : {}),
+        ...(Capacitor.isNativePlatform()
+          ? { storage: nativeAuthStorage(url, key) }
+          : {}),
       },
     })
   }

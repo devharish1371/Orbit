@@ -10,6 +10,7 @@ const HomePage = lazy(() => import('@/features/home/HomePage'))
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
 const UsPage = lazy(() => import('@/features/profile/UsPage'))
+const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'))
 const MapPage = lazy(() => import('@/features/map/MapPage'))
 const EmptyPage = lazy(() => import('@/features/EmptyPage'))
 export default function App() {
@@ -53,6 +54,7 @@ export default function App() {
             <Route element={<Shell />}>
               <Route index element={<HomePage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="tracking" element={<TrackingPage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="us" element={<UsPage />} />
               <Route path="map" element={<MapPage />} />

@@ -282,3 +282,43 @@ foreground-service tracker with native HTTP, bounded offline queue/backoff, adap
 location/battery modes, geofences and visible pause/surprise controls, tracking health
 and coordinate-free diagnostics. M4 screen-off/swipe-away/offline acceptance is separate
 and still requires human #7 using the next APK.
+
+
+## 2026-10-30 — M4 implementation checkpoint
+
+- Implemented an unbound Android location foreground service, native HTTP and bounded SQLite
+  queue (500 items). The community plugin stops its service in onUnbind; inspected installed
+  source and current maintainer docs, then replaced it rather than depending on WebView
+  callbacks after activity destruction. Runtime screen-off/swipe-away behavior is not yet
+  verified. Service is private, stopWithTask=false, with an ongoing visible notification.
+- Native session storage uses Android Keystore AES-GCM. An adapter migrates the existing
+  Capacitor Preferences session without OTP. Native service and JS refresh requests share
+  one synchronized refresh owner using standard Supabase refresh tokens, avoiding competing
+  token rotations. Logout stops tracking and clears native session/queue.
+- Added one-step permission onboarding, Nothing OS battery guidance, Tracking Health,
+  pause/surprise durations, degraded-state banner and coordinate-free diagnostics. Browser
+  tracking keeps its explicit foreground-only flow; sharing controls work from either client.
+- Native policies: fresh/accuracy/mock/GPS-jump filtering, movement/stillness/low-battery
+  modes, 30s moving upload floor (free-tier budget), five-minute heartbeat, native network
+  reconnect/backoff, hysteresis with two good geofence fixes and low-battery cycle handling.
+- Migrations 0009/0010 add privacy generations, atomic batch ingestion, retry-safe history
+  IDs, geofence state/events and server event dedupe. Pause/surprise transitions invalidate
+  old queued generations. Generated public schema metadata refreshed without row data.
+- 25 web tests and five worker tests passed, strict lint/typecheck/format/build passed.
+  New hosted ingestion tests passed; the full run had 41 passes and two old retention tests
+  hit connection resets. A full rerun outside the sandbox is in progress; not claiming green
+  until it completes. Native policy JVM tests and merged-service/signature checks are added
+  to debug CI and will be verified in the next build. M4 stays untagged pending human #7.
+
+
+M4 pre-build verification: complete live suite rerun outside sandbox **43 passed** (28 hosted,
+15 local); connection resets did not repeat. Updated web suite **28 passed** plus five worker
+tests, lint/strict typecheck/format/build pass. Native asset sync passed after removal of
+the community plugin. Added explicit, bounded upload wake locks and an inexact heartbeat
+alarm that wakes only an existing consented service; it never starts tracking after reboot.
+Alarm timing is OS-controlled, so real screen-off reliability remains a phone test.
+
+Debug signing is being made persistent in private CI secrets with an ignored encrypted
+PKCS12 backup. This is a debug identity only; release signing remains human #5. The earlier
+M3 runner used a disposable debug key that cannot be recovered, so the first M4 install
+requires uninstalling M3 once and signing in again. Later M4 debug builds will update in place.

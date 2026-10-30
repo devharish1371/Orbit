@@ -1244,3 +1244,102 @@ input::placeholder {
   z-index: 5;
   white-space: nowrap;
 }
+
+.tracking-banner {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  max-width: 480px;
+  margin: auto;
+  padding: 13px 18px;
+  background: #6a4815;
+  color: #fff4d8;
+  font-size: 12px;
+  text-align: center;
+}
+.tracking-page .page-heading h1 {
+  font-size: 38px;
+}
+.tracking-overview dl {
+  display: grid;
+  gap: 14px;
+  margin: 8px 0;
+}
+.tracking-overview dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+}
+.tracking-overview dt {
+  color: var(--text-dim);
+}
+.tracking-overview dd {
+  text-align: right;
+}
+.tracking-step {
+  padding: 22px;
+  margin-bottom: 16px;
+  display: grid;
+  gap: 14px;
+}
+.tracking-step-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.tracking-step-heading h2 {
+  font-size: 21px;
+}
+.step-ready {
+  color: var(--accent);
+}
+.step-missing {
+  color: var(--primary);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.tracking-consent {
+  align-items: start;
+  line-height: 1.8;
+}
+.tracking-consent input {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.share-mode-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.share-mode-options .button {
+  font-size: 12px;
+}
+.share-mode-options .button:last-child {
+  grid-column: 1/-1;
+}
+.tracking-page select {
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  border-radius: 14px;
+  color: var(--text);
+  padding: 13px;
+  min-height: 48px;
+  font: inherit;
+  font-size: 13px;
+}
+.tracking-page summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.diagnostics-log {
+  background: var(--bg);
+  padding: 12px;
+  border-radius: 12px;
+  overflow: auto;
+  max-height: 300px;
+  font-size: 10px;
+  color: var(--text-dim);
+}
