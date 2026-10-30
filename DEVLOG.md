@@ -383,3 +383,23 @@ Final gate remains human #7 only: install and test 30-minute screen-off, swipe-a
 airplane-mode recovery and visible pause/surprise behavior. M4 is untagged. The test APK,
 checksum, private debug-key backup and screenshots are excluded from Git; all intended
 source/docs are committed. Nothing Phone (3a), Nothing OS 4.1 feedback is recorded for M3.
+
+
+## 2026-10-30 — Real-phone short screen-off observation
+
+The user asked for a second-device observer. Reused the existing Dev desktop web session,
+opened Map → You, and left desktop GPS sharing off. The observer displayed the phone’s
+marker, battery and accurate-fix metadata. No new login or account change was necessary.
+
+The user confirmed screen off at about 20:02 IST. Started a read-only metadata sampler
+(no coordinates queried or logged). Supabase recorded a fresh phone heartbeat at
+**20:04:00 IST**, after that confirmation, with battery **49%**. GPS capture time remained
+older while the phone was stationary; the fresh server upload time is the background signal.
+Six metadata samples were collected over approximately six minutes. Private evidence is
+in ignored `.artifacts/private/tracking-observation/`.
+
+The user requested quicker verification, so the 30-minute observer was stopped. The short
+screen-off heartbeat check is positive; the 30-minute endurance criterion was NOT completed.
+Swipe-away, offline queue recovery and real pause/surprise tests remain unverified; M4 stays
+untagged. Added a bounded read-only observation helper for subsequent explicitly requested
+tests. Helper syntax/help and source secret scan checked; no production app code changed.

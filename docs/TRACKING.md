@@ -79,3 +79,12 @@ JVM policy tests cover filtering, blur, geofence hysteresis and adaptive upload 
 CI runs these tests, compiles the APK, verifies its signature with apksigner and checks the
 merged manifest for a private location foreground service with stopWithTask=false.
 Native Keystore/permissions/OEM behavior require the physical acceptance test above.
+
+
+## Short observation recorded
+
+On 2026-10-30 the user confirmed the Nothing Phone screen was off around 20:02 IST.
+The desktop observer/server metadata showed a fresh heartbeat at 20:04:00 IST with 49%
+battery. The user requested a shorter check, so observation ended after about six minutes.
+This verifies an initial screen-off upload, not 30-minute endurance, swipe-away or offline
+recovery. M4 acceptance remains open for those items.
