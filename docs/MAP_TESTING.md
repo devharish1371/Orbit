@@ -27,6 +27,9 @@ on-screen. Failed WebGL/style loading has a retry path and text details remain u
 
 ## Debug APK
 
+Verified build: [d9fff3d / Android debug workflow](https://github.com/devharish1371/Orbit/actions/runs/41028725065).
+Local APK: `.artifacts/apk/d9fff3d/app-debug.apk`, with adjacent `.sha256` checksum.
+
 The manual **Android debug test build** GitHub workflow runs all web checks and the source
 secret scan, syncs Capacitor, compiles with Java 21, then uploads `orbit-m3-debug` for seven
 days. It receives only the project URL and public client key as repository variables.

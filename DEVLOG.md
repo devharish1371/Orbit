@@ -243,3 +243,28 @@ battery text omitted from marker accessible names; corrected the accessible labe
 battery/charging. Full web checks passed again after that fix (22 + 5 tests).
 The simulator finished and removed its disposable users, couple, places and history.
 A final APK build will include the accessibility correction; M3 still awaits human #7.
+
+
+## 2026-10-30 — Debug APK ready; human #7 handoff
+
+Final source build `d9fff3d` passed the [updated Android debug workflow](https://github.com/devharish1371/Orbit/actions/runs/41028725065): web
+lint/typecheck/format/build, 22 web + five worker tests, 15 local Python checks (24 hosted
+checks intentionally skipped in CI), secret scan, native sync and Java/Gradle compilation.
+The hosted suite was run locally with all **39 passing** before the checkpoint.
+
+Downloaded `.artifacts/apk/d9fff3d/app-debug.apk` (6,792,525 bytes). ZIP CRC integrity passes,
+Android's modern APK signing block is present, and scanning packaged web assets found no
+secret patterns or real email identities. This is a packaging sanity check, not an independent
+cryptographic apksigner verification; Android verifies the signature during human installation.
+SHA256: `baecc6c3c492531f7564cdefa75088b37801e5308a4ff7e0efdb08d1b76db80a`.
+The APK and checksum are ignored local artifacts; no binary/private screenshot enters git.
+
+Dev's preview session was restored with an admin-generated one-use code (no email sent),
+and the private handoff file was removed. The profile page is left open. Demo production
+session/tab and owned production/static QA servers were closed; the user-facing dev preview
+remains available. Temporary viewport override reset. Source scan: 207 files, zero findings.
+
+**Stop at human task #7:** install this debug APK on an Android phone and perform M3's
+mid-range WebView map performance check. Test profile editing/photo/theme persistence too.
+Report phone model and findings; do not infer hardware performance from desktop screenshots.
+M3 remains untagged; M4–M9 remain pending. No background tracking/push delivery claim is made.

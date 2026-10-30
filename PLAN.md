@@ -31,7 +31,7 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
-1. Publish the M3 implementation checkpoint and build a debug APK for human #7.
+1. Human #7: install the verified debug APK (`d9fff3d`); the build and download are ready.
 2. Run M3's Android WebView smoothness/performance check on a mid-range phone; keep M3
    untagged until it passes. Details: `docs/MAP_TESTING.md`.
 3. Then begin M4 background tracking. Phone screen-off/swipe/offline acceptance remains
