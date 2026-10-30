@@ -79,6 +79,18 @@ function PersonMarker({
     return () => cancelAnimationFrame(frame)
   }, [location.lat, location.lng])
   const battery = location.battery_pct
+  useEffect(() => {
+    element.setAttribute(
+      'aria-label',
+      `${member.nickname || member.display_name} · ${battery === null ? copy.map.batteryUnknown : `${battery}%`}${location.charging ? ' ϟ' : ''}`,
+    )
+  }, [
+    element,
+    member.nickname,
+    member.display_name,
+    battery,
+    location.charging,
+  ])
   return createPortal(
     <span
       className="map-marker-inner"

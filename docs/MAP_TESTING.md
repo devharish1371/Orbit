@@ -45,7 +45,7 @@ Use the disposable simulator for movement without putting synthetic locations in
 
 Location permission is requested only after **Share my location**. This build shares only
 while its page is visible; background/screen-off/swipe-away tracking belongs to M4 and is
-not implemented yet. Never treat lack of updates as evidence that someone is safe or unsafe.
+not implemented yet. 
 
 ## Automated evidence
 

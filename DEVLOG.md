@@ -229,3 +229,17 @@ accent/theme changes and icon photo were restored/removed. Milestone ready for `
 - Preparing a pinned GitHub Actions Java 21 debug build for the human #7 Android WebView
   performance gate. Only public client variables configured on the existing repository.
   M3 remains untagged until that hardware acceptance check; M4 has not started.
+
+
+M3 checkpoint `f8a34cd` and CI dependency correction `d04d921` are pushed. The first
+[debug build](https://github.com/devharish1371/Orbit/actions/runs/40967068486) succeeded,
+including Java/Gradle APK compilation, web checks, local Python checks and secret scan.
+The compiled production map/worker rendered under CSP with zero console warnings/errors.
+A local preview route briefly hit removed chunks during a concurrent dist rebuild; reloading
+the finished assets recovered. Do not rebuild dist while testing a loaded production preview.
+
+Authenticated map DOM accessibility scored 100. An additional label-content warning found
+battery text omitted from marker accessible names; corrected the accessible label to include
+battery/charging. Full web checks passed again after that fix (22 + 5 tests).
+The simulator finished and removed its disposable users, couple, places and history.
+A final APK build will include the accessibility correction; M3 still awaits human #7.

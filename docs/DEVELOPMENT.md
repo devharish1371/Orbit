@@ -38,7 +38,7 @@ disables the service worker for the native bundle, and syncs Android. It is
 cross-platform and must be run before any local Android build. Do not copy a Pages
 bundle into Android: Pages has a different asset base and service worker behavior.
 
-Run `npm --prefix web run dev` and open `http://127.0.0.1:5173/` for the scaffold.
+Run `npm --prefix web run dev` and open `http://127.0.0.1:5173/` for the app.
 `npm --prefix web run preview` previews the most recent build. A web production build
 uses `VITE_BASE=/` by default; Pages builds must set `VITE_BASE=/<repository-name>/`.
 HashRouter avoids server-side SPA fallback requirements.
@@ -69,9 +69,9 @@ Docker is not required; use the hosted free project for M1 integration tests.
 
 Capacitor Android is generated under `web/android/`, with Java 21 source compatibility,
 minimum SDK 24 and compile/target SDK 36. Android Studio + JDK/SDK are optional for M0;
-CI APK compilation is planned for M9. APK compilation, merged manifests, real background
+A manual M3 debug APK workflow is available; signed release automation remains M9. APK compilation, merged manifests, real background
 tracking, runtime permissions, and killed-app push have not been verified in M0.
-No permissions are requested by the M0 welcome screen.
+Location is requested only after the user starts web sharing.
 
 Firebase's Google Services Gradle integration is already conditional on the ignored
 `web/android/app/google-services.json` (human #3). Push cannot work until that task.
