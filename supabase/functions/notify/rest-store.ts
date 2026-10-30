@@ -69,8 +69,19 @@ export function notifyStore(url: string, key: string): NotifyStore {
       if (!self || !partner) return null;
       let type: string;
       if (job.source_table === "events") type = String(record.type);
-      else if (job.source_table === "posts") type = String(record.channel);
-      else if (
+      else if (job.source_table === "posts") {
+        const live = await request<{ id: string }[]>(
+          "posts?id=eq." +
+            encodeURIComponent(String(record.id)) +
+            "&couple_id=eq." +
+            encodeURIComponent(couple) +
+            "&unsent_at=is.null&or=(keep.eq.true,expires_at.gt." +
+            encodeURIComponent(new Date().toISOString()) +
+            ")&select=id",
+        );
+        if (!live.length) return null;
+        type = String(record.channel);
+      } else if (
         job.source_table === "comments" ||
         job.source_table === "reactions"
       ) {
@@ -79,7 +90,9 @@ export function notifyStore(url: string, key: string): NotifyStore {
             encodeURIComponent(String(record.post_id)) +
             "&couple_id=eq." +
             encodeURIComponent(couple) +
-            "&select=author_id",
+            "&unsent_at=is.null&or=(keep.eq.true,expires_at.gt." +
+            encodeURIComponent(new Date().toISOString()) +
+            ")&select=author_id",
         );
         if (post[0]?.author_id !== partner.user_id) return null;
         type = job.source_table === "comments" ? "comment" : "reaction";

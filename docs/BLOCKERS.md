@@ -1,5 +1,10 @@
 # Orbit blockers
 
+M6 typing diagnostic resolved: private-channel subscription raced initial Realtime
+authentication. Awaiting setAuth before subscribe fixes member joins. The disposable
+socket test confirms both members join and receive typing while strangers/other couples
+are rejected. No broader channel permission was granted.
+
 M4 implementation, tests and final signed APK build pass. The APK is installed on the
 Nothing Phone (3a), Nothing OS 4.1. Short screen-off and swipe-away heartbeats, pause,
 surprise and resume passed. Offline queue flushing, moving-update timing and full

@@ -12,7 +12,7 @@ const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
 const UsPage = lazy(() => import('@/features/profile/UsPage'))
 const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'))
 const MapPage = lazy(() => import('@/features/map/MapPage'))
-const EmptyPage = lazy(() => import('@/features/EmptyPage'))
+const PostsPage = lazy(() => import('@/features/posts/PostsPage'))
 const NotificationsPage = lazy(
   () => import('@/features/alerts/NotificationsPage'),
 )
@@ -22,7 +22,7 @@ export default function App() {
   const { session, restoring, restoreError, retryRestore } = useAuth()
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (pathname !== '/chat') window.scrollTo(0, 0)
   }, [pathname, session?.user.id])
   return (
     <>
@@ -70,7 +70,9 @@ export default function App() {
                 <Route
                   path={page}
                   key={page}
-                  element={<EmptyPage page={page} />}
+                  element={
+                    <PostsPage channel={page === 'chat' ? 'chat' : 'moment'} />
+                  }
                 />
               ))}
               <Route path="*" element={<Navigate to="/" replace />} />

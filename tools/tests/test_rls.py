@@ -142,7 +142,10 @@ def test_daily_answers_hidden_until_both_answered(backend) -> None:
 
 
 def test_storage_is_private_and_stranger_cannot_sign_or_read(backend) -> None:
-    path=backend.upload()
+    post_id=str(uuid.uuid4())
+    path=backend.upload(post_id=post_id)
+    assert backend.clients[1].client.get('/storage/v1/object/authenticated/media/'+path).status_code >= 400
+    backend.post(id=post_id,kind='photo',body=None,media_path=path)
     assert backend.clients[2].client.get('/storage/v1/object/authenticated/media/'+path).status_code >= 400
     assert backend.clients[2].client.post('/storage/v1/object/sign/media/'+path,json={'expiresIn':60}).status_code >= 400
     assert backend.clients[1].client.get('/storage/v1/object/authenticated/media/'+path).status_code == 200

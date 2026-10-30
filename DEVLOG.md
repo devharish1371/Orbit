@@ -507,3 +507,55 @@ gift. Her onboarding and second-phone acceptance will happen at the reveal. Cont
 the build with disposable identities, keeping those hardware checks open and her account
 untouched during further testing. Beginning M6 Moments/Chat implementation; M4 and M5
 remain untagged until their outstanding acceptance checks can be completed.
+
+
+## 2026-10-30 — M6 Moments/Chat implementation underway
+
+Added shared text/photo/voice/mood composers, paginated feed/chat, signed-media caching,
+photo thumbnails/full-screen viewing, comments/reactions, Keep/un-keep, expiry indicators,
+Home expiring-soon strip and Settings storage/cleanup transparency. Photos are re-encoded
+locally to WebP (maximum 1600px / 250KB, thumbnail 400px / 40KB) without EXIF. Voice capture
+is opt-in, bounded to two minutes, released on background/unmount/cancellation, and is
+never uploaded before Share. Added the normal Android MODIFY_AUDIO_SETTINGS permission
+required by Capacitor's installed WebChromeClient microphone permission flow.
+
+Migrations 0013/0014 add ownership-derived idempotent post creation with atomic Keep,
+author-only unsend tombstones, immediate expired-content RLS, protected referenced media,
+private typing policies and scoped storage summaries. Unsend requests the existing
+Storage-API retention worker; no physical file is deleted through SQL. A content-free
+couple revision invalidates clients when RLS hides an unsent row, so no hidden content
+needs to enter Realtime payloads. Tests use disposable identities only.
+
+First six new hosted post scenarios found only the expected 204 response for a void RPC;
+that assertion was corrected. The next full run passed 52/53, with the older Storage test
+still expecting partner access to unshared uploads. Updated it to assert pending files
+are private and a properly shared photo is readable. Web unit checks pass 40 cases,
+including ambiguous upload responses, expiry boundaries and microphone lifecycle. Full
+typing/RLS/browser/native verification continues before the M6 checkpoint commit.
+
+
+## 2026-10-31 — M6 familiar messenger and browser acceptance
+
+The user requested a normal Instagram/WhatsApp-style chat. Reworked Chat to a partner
+header, bottom textarea/photo/mic/send controls, date separators and personal bubbles.
+Reactions/Keep/copy/unsend live behind press/hold or the message menu. Enter sends and
+Shift+Enter inserts a newline. Expiry choices sit under More; no fake read receipt is
+shown. Moments retains its feed, caption, comment and Keep controls.
+
+Private typing initially failed membership authorization because subscribe raced initial
+Realtime authentication. Awaiting setAuth fixed it; no permission broadening was needed.
+The complete hosted/local run now passes **54/54**, including actual Presence delivery
+between disposable members and rejection of stranger/other-couple joins. Final web pass
+is **44/44**, worker pass **16/16**, with strict lint/types/format/build green.
+
+Production browser QA on isolated port 4173 verified real text send, a synthetic photo
+compressed to 1600×1018 then uploaded/displayed, full-photo viewer, persisted reactions,
+Moment posting, comments and Keep. Dark/light layouts fit 412×915 and 360×800 without
+horizontal overflow. The normal Dev login stayed on port 5173. No real partner message
+was sent. Temporary preview/accounts/media are being cleaned using the Storage API.
+
+Fixed cached Chat entry scrolling (global route reset no longer overrides latest-message
+position), a transient 8d label for a freshly created 7d post, and closing composer More
+after a send. Added Android keyboard resize and native permission assertions to CI.
+Source scan: **277 files, zero findings**. Full implementation/check details and outstanding
+device voice/4G/reveal-phone gates are in docs/MOMENTS_CHAT.md. M6 stays untagged.

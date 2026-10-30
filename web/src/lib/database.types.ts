@@ -141,6 +141,7 @@ export type Database = {
           meet_url: string | null
           name: string
           retention_days: number
+          social_revision: number
           timezone: string
         }
         Insert: {
@@ -151,6 +152,7 @@ export type Database = {
           meet_url?: string | null
           name?: string
           retention_days?: number
+          social_revision?: number
           timezone?: string
         }
         Update: {
@@ -161,6 +163,7 @@ export type Database = {
           meet_url?: string | null
           name?: string
           retention_days?: number
+          social_revision?: number
           timezone?: string
         }
         Relationships: []
@@ -618,10 +621,14 @@ export type Database = {
           lng: number | null
           media_bytes: number
           media_duration_s: number | null
+          media_height: number | null
           media_path: string | null
+          media_width: number | null
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
         }
         Insert: {
           author_id: string
@@ -641,10 +648,14 @@ export type Database = {
           lng?: number | null
           media_bytes?: number
           media_duration_s?: number | null
+          media_height?: number | null
           media_path?: string | null
+          media_width?: number | null
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
+          unsent_at?: string | null
+          waveform?: number[] | null
         }
         Update: {
           author_id?: string
@@ -664,10 +675,14 @@ export type Database = {
           lng?: number | null
           media_bytes?: number
           media_duration_s?: number | null
+          media_height?: number | null
           media_path?: string | null
+          media_width?: number | null
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
+          unsent_at?: string | null
+          waveform?: number[] | null
         }
         Relationships: [
           {
@@ -835,10 +850,14 @@ export type Database = {
           lng: number | null
           media_bytes: number
           media_duration_s: number | null
+          media_height: number | null
           media_path: string | null
+          media_width: number | null
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
         }[]
         SetofOptions: {
           from: '*'
@@ -858,6 +877,42 @@ export type Database = {
         }
       }
       claim_orphan_media: { Args: { p_paths: string[] }; Returns: string[] }
+      create_shared_post: {
+        Args: { p_post: Json }
+        Returns: {
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          expires_at: string | null
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       finish_expired_post: {
         Args: { p_id: string; p_token: string }
         Returns: boolean
@@ -867,6 +922,7 @@ export type Database = {
         Returns: undefined
       }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      request_unsend: { Args: { p_id: string }; Returns: boolean }
       reserve_notification: {
         Args: { p_id: string; p_key: string }
         Returns: boolean
@@ -875,6 +931,11 @@ export type Database = {
         Args: { p_id: string; p_type: string }
         Returns: string
       }
+      set_post_reaction: {
+        Args: { p_emoji?: string; p_id: string }
+        Returns: undefined
+      }
+      storage_summary: { Args: never; Returns: Json }
       submit_locations: {
         Args: {
           p_epoch: number

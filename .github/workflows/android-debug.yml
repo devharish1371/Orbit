@@ -90,10 +90,15 @@ jobs:
           resources=list(Path('app/build/generated/res').rglob('values.xml'))
           assert any(any(s.get('name')=='google_app_id' and s.text for s in ET.parse(p).getroot().findall('string')) for p in resources)
           print('Firebase native configuration and messaging service verified.')
+          permissions={p.get(a+'name') for p in root.findall('uses-permission')}
+          assert {'android.permission.RECORD_AUDIO','android.permission.MODIFY_AUDIO_SETTINGS'} <= permissions
+          activity=next(p for p in root.findall('./application/activity') if p.get(a+'name')=='app.orbit.couple.MainActivity')
+          assert activity.get(a+'windowSoftInputMode')=='adjustResize'
+          print('Foreground voice permissions and chat keyboard resize verified.')
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: orbit-m5-debug
+          name: orbit-m6-debug
           path: web/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 7

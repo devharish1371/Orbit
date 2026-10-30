@@ -4,6 +4,7 @@ import { expect, test, vi } from 'vitest'
 import HomePage from './HomePage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 vi.mock('@/hooks/useAuth', () => ({ useAuth: () => ({ client: {} }) }))
+vi.mock('@/features/posts/ExpiringSoon', () => ({ ExpiringSoon: () => null }))
 vi.mock('@/features/map/LiveContext', () => ({
   useLiveData: () => ({ locations: { data: [] } }),
 }))

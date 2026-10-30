@@ -94,7 +94,18 @@ export function useLiveSpace() {
           table: 'couples',
           filter: `id=eq.${id}`,
         },
-        () => mark('space'),
+        () => {
+          for (const key of [
+            'space',
+            'posts',
+            'post-reactions',
+            'post-comments',
+            'storage-summary',
+            'expiring',
+            'cleanup-status',
+          ])
+            mark(key)
+        },
       )
       .subscribe((status) => {
         setConnection(status === 'SUBSCRIBED' ? 'live' : 'reconnecting')
@@ -103,6 +114,15 @@ export function useLiveSpace() {
           mark('places')
           mark('space')
           mark('activity')
+          for (const key of [
+            'posts',
+            'post-reactions',
+            'post-comments',
+            'storage-summary',
+            'expiring',
+            'cleanup-status',
+          ])
+            mark(key)
         }
       })
     const refresh = () => {
@@ -111,6 +131,15 @@ export function useLiveSpace() {
         mark('places')
         mark('space')
         mark('activity')
+        for (const key of [
+          'posts',
+          'post-reactions',
+          'post-comments',
+          'storage-summary',
+          'expiring',
+          'cleanup-status',
+        ])
+          mark(key)
       }
     }
     document.addEventListener('visibilitychange', refresh)

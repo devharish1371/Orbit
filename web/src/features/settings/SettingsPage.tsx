@@ -8,6 +8,7 @@ import { useSpace } from '@/hooks/useSpace'
 import { useTheme, type Theme } from '@/hooks/useTheme'
 import { validDate, validMeetUrl } from '@/config/couple.config'
 import { Button } from '@/components/ui/Button'
+import { StorageStatus } from '@/features/posts/StorageStatus'
 
 export default function SettingsPage() {
   const { data: space } = useSpace()
@@ -145,6 +146,7 @@ export default function SettingsPage() {
           </p>
         )}
       </form>
+      <StorageStatus />
       <section className="settings-section">
         <Button
           className="button-secondary"

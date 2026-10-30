@@ -14,6 +14,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { callUrl, whatsappUrl } from '@/lib/connect'
 import { anniversaryDays, localDateParts } from '@/lib/calendar'
 import { AttentionActions } from '@/features/alerts/AttentionActions'
+import { ExpiringSoon } from '@/features/posts/ExpiringSoon'
 
 export default function HomePage() {
   const { data: space } = useSpace()
@@ -128,6 +129,7 @@ export default function HomePage() {
         </div>
       </section>
       <AttentionActions />
+      <ExpiringSoon />
       <Link className="map-preview glass" to="/map">
         <div className="map-lines" aria-hidden="true">
           <span />

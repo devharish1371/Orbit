@@ -265,3 +265,28 @@ Added a private metadata-only outbox and retry cron in addition to the source's 
 webhook. SQL leases and dedupe serialize concurrent calls; successful device hashes survive
 partial retry. Delivery remains at-least-once across a provider/receipt crash boundary.
 Human Android delivery testing is still required; see docs/NOTIFICATIONS.md.
+
+## 2026-10-31 — Familiar Chat UI and private media
+
+The user requested a normal Instagram/WhatsApp-style messaging flow. Chat therefore uses
+a compact bottom composer and chronological personal bubbles, with message actions on
+press/hold/menu; expiry choices move into More. Moments retains feed/comments controls.
+No fake read/delivery status is displayed. Default expiry and Keep remain part of the
+original product contract.
+
+Use browser canvas encoding for deterministic WebP dimensions/byte budgets and EXIF
+removal; no compression worker is downloaded from a CDN. Use [MediaRecorder](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder)
+with codec capability checks and explicit foreground capture. The installed Capacitor
+WebChromeClient requests both RECORD_AUDIO and MODIFY_AUDIO_SETTINGS; declare both.
+
+Use [private Realtime Presence authorization](https://supabase.com/docs/guides/realtime/authorization)
+for typing. An actual disposable-socket test exposed the initial-auth race; awaiting
+Realtime setAuth before subscribe fixes it without broadening permissions. Both members
+receive typing, while a stranger and another couple fail to join. Do not expose private
+row contents just to invalidate a hidden unsend; use the existing couple channel with a
+server-only revision instead.
+
+M6 retention tightens partner access to referenced visible files. Uploaders can inspect
+their own pending files; neither client can delete a currently referenced shared asset.
+Unsend uses a tombstone plus the existing API deletion worker, keeping file/row cleanup
+retryable. Signed URLs cannot revoke already downloaded copies; document that limit.
