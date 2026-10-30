@@ -67,7 +67,22 @@ Official references checked 2026-10-31:
   immutable daily answers, reciprocal disclosure, permanent counters and existing RLS/TTL.
 - Web: **49 passed**; worker: **16 passed**; lint/types/format/build pass. ZIP tests check
   CRC/directory fields and path safety; calendar tests check local-day boundaries/catalog.
-- Browser verification and Android compilation are in progress. Device biometric/PIN,
-  screenshot/preview privacy, 60-second resume lock and native ZIP saving still require #7.
+- Disposable browser QA passes: seal/open capsules, partner-locked content hidden, both
+  daily answers after reply, kept photo on Memory Map, timeline and replay. Automatic
+  reveal was tested by changing only the disposable couple's anniversary; dismissal
+  persisted across reload. Keyboard focus stayed in the reveal; Escape dismissed it.
+- Dark **412×915** and light **360×800** layouts have no horizontal overflow. Private
+  captures are under `.artifacts/qa/m7-*`. Temporary preview, accounts and media cleaned.
+- A browser-exported ZIP opened with Python's independent zipfile reader; CRCs passed.
+  It contained the kept photo/thumbnail, two readable capsules and both answers; the
+  locked partner capsule was absent, and no signed URL or auth token was exported.
+- [Android CI 41115767108](https://github.com/devharish1371/Orbit/actions/runs/41115767108)
+  passed for **959314d**, including four native tests, compilation and apksigner. APK:
+  **6,820,427 bytes**, SHA256 `5eeb1e354710d992c8594e17bf22bf16adb693b93ff42205074648b9c3d29a83`.
+  Local ZIP/private-material checks and v2 certificate comparison with M6 pass.
+- Dev installed M7 on Nothing Phone (3a), Nothing OS 4.1 and confirmed **all privacy
+  checks pass** (60-second background lock, cancellation stays covered, successful
+  unlock, screenshots/app previews blocked), plus **ZIP saved and opened**. Very large
+  archive memory use and older Android credential fallback remain unmeasured.
 - Telegram is optional and unconfigured; no bot account/token is needed for core features.
 - M4/M5/M6 outstanding endurance/offline/partner/4G checks remain recorded separately.

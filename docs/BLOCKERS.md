@@ -1,5 +1,12 @@
 # Orbit blockers
 
+M7 acceptance passed on 2026-10-31. Dev confirms all device privacy checks (including
+60-second background lock, cancellation protection and screenshot/app-preview blocking),
+and saving/opening the native ZIP. Browser automatic/replay reveal, capsule opening,
+daily-answer disclosure, Memory Map and ZIP disclosure checks pass. The personal letter
+stays outside the app per user instruction; human #6 is not blocking the visual reveal.
+Telegram is optional and unconfigured. See `docs/MEMORIES_PRIVACY.md`.
+
 M6 implementation, hosted/browser checks and Android CI pass. Signed APK `2133d94`
 matches the installed signing identity and passed ZIP/private-material checks. Human #7
 passed on Dev's phone: voice preview/playback, keyboard visibility and microphone release

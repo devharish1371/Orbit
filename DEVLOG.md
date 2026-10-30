@@ -605,3 +605,22 @@ saving without broad permissions, native launch/60-second device lock and screen
 preview privacy. Web checks pass **49/49**, worker **16/16**, lint/types/format/build.
 Native compilation and disposable browser QA continue; physical lock/export checks are
 not yet claimed. Details and limitations: docs/MEMORIES_PRIVACY.md. M7 remains untagged.
+
+## 2026-10-31 — M7 acceptance complete
+
+Implementation **959314d** passed [Android run 41115767108](https://github.com/devharish1371/Orbit/actions/runs/41115767108),
+including four native tests, build/signature and manifest assertions. APK 6,820,427 bytes;
+SHA256 `5eeb1e354710d992c8594e17bf22bf16adb693b93ff42205074648b9c3d29a83`.
+ZIP integrity, configured-private-material scan and signer continuity with M6 pass.
+
+Disposable browser QA verified capsule seal/open and locked-content exclusion, reciprocal
+daily answers, Memory Map/photo, timeline, replay, automatic anniversary trigger and
+dismissal persistence. Narrow light/dark layouts fit. Independent Python ZIP validation
+confirmed photo/thumbnail + readable JSON content and exclusion of a locked partner capsule.
+Temporary preview/accounts/media cleaned through the Storage API; real accounts untouched.
+
+Dev confirms **all privacy checks pass**, including 60-second background lock, cancellation
+staying covered, authenticated unlock and screenshot/app-preview protection. He also confirms
+**ZIP saved and opened** on Nothing Phone (3a), Nothing OS 4.1. M7 acceptance is complete;
+tag m7-done. No in-app personal letter, per instruction. Begin M8 polish/performance;
+M4/M5/M6's separately deferred physical checks are not waived by this milestone.
