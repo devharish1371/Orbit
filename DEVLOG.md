@@ -579,3 +579,11 @@ are cleaned up; the normal Dev session is preserved. Requested human #7 to insta
 M6 update and check short voice preview/playback, composer visibility with keyboard,
 and microphone release on background. No message needs sending. Voice on both phones
 and 4G timing remain unverified; M6 is untagged and Vidya's tests stay deferred until reveal.
+
+## 2026-10-31 — M6 Dev voice and keyboard acceptance passed
+
+The user installed M6 and confirmed **“Voice, keyboard and background stop all pass.”**
+Recorded short voice preview/playback, keyboard composer visibility and background
+microphone release as passed on Nothing Phone (3a), Nothing OS 4.1. The remaining
+second-phone voice/4G acceptance stays open; no M6 completion tag. Continuing M7 under
+the surprise-gift exception and requesting the human-authored anniversary letter (#6).

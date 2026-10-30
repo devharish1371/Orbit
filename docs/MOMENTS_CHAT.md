@@ -77,9 +77,9 @@ is verified by apksigner in CI; certificate comparison alone does not replace it
 
 ## Remaining physical checks (human #7)
 
-Install the M6 APK update on Dev's phone. In Chat, record a short voice note, stop,
-preview it, and verify playback; sending is optional because the actual partner account
-belongs to the surprise gift. Check that the keyboard leaves the composer visible and
-that backgrounding stops capture. Real 4G upload latency and voice on both phones are
+On 2026-10-31 the user confirmed **voice, keyboard and background stop all pass** on
+the M6 APK update on Nothing Phone (3a), Nothing OS 4.1. This verifies short voice
+preview/playback, composer visibility with the keyboard, and microphone release when
+backgrounded. No partner message was required. Real 4G upload latency and voice on both phones are
 not claimed from browser/CI results. Vidya's onboarding and second-phone checks remain
 deferred until the reveal, as requested. M6 stays untagged pending outstanding acceptance.

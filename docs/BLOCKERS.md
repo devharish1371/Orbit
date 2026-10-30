@@ -2,8 +2,8 @@
 
 M6 implementation, hosted/browser checks and Android CI pass. Signed APK `2133d94`
 matches the installed signing identity and passed ZIP/private-material checks. Human #7
-has been asked to install it and verify short voice preview/playback, keyboard visibility
-and microphone release on background. Real 4G timing and Vidya's device remain unverified;
+passed on Dev's phone: voice preview/playback, keyboard visibility and microphone release
+on background (user confirmation 2026-10-31). Real 4G timing and Vidya's device remain unverified;
 M6 stays untagged. See `docs/MOMENTS_CHAT.md` for the build and acceptance record.
 
 M6 typing diagnostic resolved: private-channel subscription raced initial Realtime

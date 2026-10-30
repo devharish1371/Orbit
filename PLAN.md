@@ -29,8 +29,8 @@ Architecture notes and version records live in `docs/`.
 | M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Complete; user confirms Profile/Map work well on Nothing Phone (3a), Nothing OS 4.1; qualitative check |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | APK `42e45cb`: short screen-off/swipe-away heartbeats, pause, surprise and resume verified; offline queue and full endurance gate open |
 | M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Implementation/hosted tests complete; APK `333a4c6` installed; Dev confirms swiped-away test push arrived and opened Activity; partner/event-specific delivery checks pending |
-| M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Implementation/browser/hosted checks pass (54 Python, 44 web, 16 worker); signed APK `2133d94` passed Android CI and package checks; Dev voice/keyboard check requested; partner-phone acceptance deferred until reveal |
-| M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Pending M6 |
+| M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Dev confirms voice, keyboard and background microphone stop pass on APK `2133d94`; automated/browser checks pass; partner-phone voice and 4G timing deferred; untagged |
+| M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | In progress; human #6 personal letter requested; reveal remains unpublished until supplied |
 | M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | Pending M7 |
 | M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | Pending M8 |
 
@@ -42,8 +42,9 @@ Architecture notes and version records live in `docs/`.
    heartbeats and pause/surprise/resume passed. Keep M4 untagged until the gate passes.
 3. M5's Dev background test passed; second-phone alerts remain deferred. Keep real-phone
    delivery acceptance separate from M4's deferred offline/endurance gate.
-4. M6 messenger/feed browser QA and Android CI pass. Signed APK `2133d94` is verified;
-   perform the short Dev voice/keyboard check from `docs/MOMENTS_CHAT.md` (human #7).
+4. M6 Dev voice/keyboard/background-stop checks passed. Keep the remaining 4G and
+   second-phone acceptance open. Continue M7 implementation with disposable identities;
+   do not publish a fabricated personal letter or use Vidya's account for testing.
 
 ## Human dependencies observed
 
