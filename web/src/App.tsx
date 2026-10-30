@@ -13,6 +13,11 @@ const UsPage = lazy(() => import('@/features/profile/UsPage'))
 const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'))
 const MapPage = lazy(() => import('@/features/map/MapPage'))
 const EmptyPage = lazy(() => import('@/features/EmptyPage'))
+const NotificationsPage = lazy(
+  () => import('@/features/alerts/NotificationsPage'),
+)
+const ActivityPage = lazy(() => import('@/features/alerts/ActivityPage'))
+const CallPage = lazy(() => import('@/features/alerts/CallPage'))
 export default function App() {
   const { session, restoring, restoreError, retryRestore } = useAuth()
   const { pathname } = useLocation()
@@ -55,6 +60,9 @@ export default function App() {
               <Route index element={<HomePage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="tracking" element={<TrackingPage />} />
+              <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="activity" element={<ActivityPage />} />
+              <Route path="call" element={<CallPage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="us" element={<UsPage />} />
               <Route path="map" element={<MapPage />} />

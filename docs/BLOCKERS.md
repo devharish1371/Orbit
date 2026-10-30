@@ -6,7 +6,12 @@ surprise and resume passed. Offline queue flushing, moving-update timing and ful
 30-minute endurance remain human #7 gates before M4 is tagged. The observer uses the
 phone's hotspot, so an observer connection loss cannot establish a phone tracking failure.
 See `docs/TRACKING.md` and the [verified M4 build](https://github.com/devharish1371/Orbit/actions/runs/41069740547).
-The earlier Profile/Map usability check completed M3.
+The earlier Profile/Map usability check completed M3. The user explicitly authorized
+continuing to M5 while M4's remaining physical tests are deferred; no M4 completion tag.
+
+M5 implementation and hosted tests pass. Firebase human #3 files are validated and
+configured privately. APK compilation/delivery acceptance is in progress. See
+`docs/NOTIFICATIONS.md`; do not claim killed-app delivery before the phone check.
 
 ## Resolved — Email OTP sender and M2 logins
 
@@ -19,7 +24,7 @@ Both accounts restored on reload. Logout clears the session and query cache.
 
 - #7: install the debug APK on Android phones for tracking/permission, screen-off,
   swipe-away and offline reliability tests. Hardware performance remains unverified.
-- #3: Firebase project and private configuration for M5 push delivery.
+- #3 resolved: matching Firebase Android/service-account files supplied and configured.
 - #6: personal anniversary letter for M7; profiles now allow people to set photos,
   nicknames and colors themselves. Shared date and Meet link are already configured.
 - #1/#5: Pages/CI release configuration and backed-up signing key for M9.

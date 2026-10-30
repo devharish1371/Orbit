@@ -8,6 +8,8 @@ Architecture notes and version records live in `docs/`.
 ## Working rules
 
 - Complete each milestone's acceptance criteria before starting the next.
+- User exception (2026-10-30): proceed to M5 while the remaining M4 physical tests are
+  deferred. M4 remains untagged; this does not waive release reliability checks.
 - Implement, verify, update this plan and `DEVLOG.md`, then commit with Conventional Commits.
 - Tag completed milestones `m<N>-done` only when all acceptance criteria pass.
 - Use only free services without a credit card. Never commit secrets or personal credentials.
@@ -23,7 +25,7 @@ Architecture notes and version records live in `docs/`.
 | M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Complete; `88ed64a` / `m2-done` pushed; login/profile/accessibility verified |
 | M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Complete; user confirms Profile/Map work well on Nothing Phone (3a), Nothing OS 4.1; qualitative check |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | APK `42e45cb`: short screen-off/swipe-away heartbeats, pause, surprise and resume verified; offline queue and full endurance gate open |
-| M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Pending M4 |
+| M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | In progress by user request; Firebase files supplied; real delivery acceptance pending |
 | M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Pending M5 |
 | M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Pending M6 |
 | M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | Pending M7 |
@@ -35,7 +37,8 @@ Architecture notes and version records live in `docs/`.
 2. Human #7: the verified M4 APK is installed. Complete offline queue/recovery and full
    screen-off/moving endurance tests in `docs/TRACKING.md`. Short screen-off/swipe-away
    heartbeats and pause/surprise/resume passed. Keep M4 untagged until the gate passes.
-3. M5 needs Firebase human #3 after M4 acceptance.
+3. Build and verify M5 using the supplied Firebase configuration; keep real-phone delivery
+   acceptance separate from M4's deferred offline/endurance gate.
 
 ## Human dependencies observed
 

@@ -25,6 +25,7 @@ export interface Diagnostic {
   code: string
 }
 export interface TrackingPlugin {
+  pushConfiguration(): Promise<{ configured: boolean }>
   configure(options: { url: string; publicKey: string }): Promise<void>
   getAuth(): Promise<{ value: string | null }>
   setAuth(options: { value: string }): Promise<void>

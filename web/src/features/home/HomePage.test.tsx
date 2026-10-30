@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { expect, test, vi } from 'vitest'
 import HomePage from './HomePage'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+vi.mock('@/hooks/useAuth', () => ({ useAuth: () => ({ client: {} }) }))
 vi.mock('@/features/map/LiveContext', () => ({
   useLiveData: () => ({ locations: { data: [] } }),
 }))
@@ -29,9 +31,11 @@ test('home connects to the partner and shared room without inventing location da
   vi.setSystemTime(new Date('2026-10-30T00:00:00Z'))
   try {
     render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
+      <QueryClientProvider client={new QueryClient()}>
+        <MemoryRouter>
+          <HomePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
     )
     expect(screen.getByRole('link', { name: 'Call' })).toHaveAttribute(
       'href',

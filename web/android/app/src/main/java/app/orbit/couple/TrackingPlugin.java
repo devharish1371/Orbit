@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
  @Permission(alias="background",strings={Manifest.permission.ACCESS_BACKGROUND_LOCATION})
 })
 public class TrackingPlugin extends Plugin {
+    @PluginMethod public void pushConfiguration(PluginCall call){call.resolve(new JSObject().put("configured",getContext().getResources().getIdentifier("google_app_id","string",getContext().getPackageName())!=0));}
     private final ExecutorService worker=Executors.newSingleThreadExecutor();
     private interface Action{JSObject run() throws Exception;}
     private void work(PluginCall call,Action action){worker.execute(()->{try{call.resolve(action.run());}catch(Exception error){call.reject("NATIVE_TRACKING_UNAVAILABLE");}});}

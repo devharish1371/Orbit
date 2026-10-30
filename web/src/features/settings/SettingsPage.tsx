@@ -83,6 +83,14 @@ export default function SettingsPage() {
         {copy.tracking.title}
         <span aria-hidden="true">↗</span>
       </Link>
+      <Link className="profile-settings-link" to="/notifications">
+        {copy.alerts.notificationTitle}
+        <span aria-hidden="true">↗</span>
+      </Link>
+      <Link className="profile-settings-link" to="/activity">
+        {copy.alerts.activity}
+        <span aria-hidden="true">↗</span>
+      </Link>
       <section className="glass settings-section">
         <h2>{copy.common.theme}</h2>
         <div className="theme-options">
@@ -142,7 +150,7 @@ export default function SettingsPage() {
           className="button-secondary"
           type="button"
           onClick={() => {
-            void signOut()
+            void signOut().catch(() => setMessage(copy.alerts.failed))
           }}
         >
           <LogOut size={17} aria-hidden="true" />

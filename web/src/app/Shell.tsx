@@ -16,6 +16,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { LiveProvider } from '@/features/map/LiveContext'
 import { LocationProvider } from '@/features/location/LocationProvider'
 import { Button } from '@/components/ui/Button'
+import { PushProvider } from '@/features/alerts/PushProvider'
 const tabs = [
   { to: '/', key: 'home', icon: Home },
   { to: '/map', key: 'map', icon: MapPin },
@@ -72,50 +73,52 @@ export default function Shell() {
   return (
     <LiveProvider>
       <LocationProvider>
-        <div className="app-shell">
-          <header className="app-top">
-            <Link to="/" className="brand">
-              <img
-                src={`${import.meta.env.BASE_URL}orbit.svg`}
-                alt=""
-                width="28"
-                height="28"
-              />
-              <span>{copy.appName}</span>
-            </Link>
-            <div className="header-actions">
-              <Link
-                to="/profile"
-                className="profile-shortcut"
-                aria-label={copy.profile.title}
-              >
-                <Avatar
-                  name={space.data?.self.display_name ?? '?'}
-                  color={space.data?.self.color ?? '#FF6B8A'}
-                  path={space.data?.self.avatar_path}
+        <PushProvider>
+          <div className="app-shell">
+            <header className="app-top">
+              <Link to="/" className="brand">
+                <img
+                  src={`${import.meta.env.BASE_URL}orbit.svg`}
+                  alt=""
+                  width="28"
+                  height="28"
                 />
+                <span>{copy.appName}</span>
               </Link>
-              <Link
-                className="icon-button"
-                to="/settings"
-                aria-label={copy.common.settings}
-              >
-                <Settings size={21} aria-hidden="true" />
-              </Link>
-            </div>
-          </header>
-          <main id="content">
-            <Outlet />
-          </main>
-          <nav className="bottom-nav glass" aria-label={copy.appName}>
-            {tabs.map(({ to, key, icon: Icon }) => (
-              <NavLink key={to} to={to} end={to === '/'}>
-                <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
-                <span>{copy.nav[key]}</span>
-              </NavLink>
-            ))}
-          </nav>
-        </div>
+              <div className="header-actions">
+                <Link
+                  to="/profile"
+                  className="profile-shortcut"
+                  aria-label={copy.profile.title}
+                >
+                  <Avatar
+                    name={space.data?.self.display_name ?? '?'}
+                    color={space.data?.self.color ?? '#FF6B8A'}
+                    path={space.data?.self.avatar_path}
+                  />
+                </Link>
+                <Link
+                  className="icon-button"
+                  to="/settings"
+                  aria-label={copy.common.settings}
+                >
+                  <Settings size={21} aria-hidden="true" />
+                </Link>
+              </div>
+            </header>
+            <main id="content">
+              <Outlet />
+            </main>
+            <nav className="bottom-nav glass" aria-label={copy.appName}>
+              {tabs.map(({ to, key, icon: Icon }) => (
+                <NavLink key={to} to={to} end={to === '/'}>
+                  <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
+                  <span>{copy.nav[key]}</span>
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+        </PushProvider>
       </LocationProvider>
     </LiveProvider>
   )

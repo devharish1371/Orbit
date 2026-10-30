@@ -847,12 +847,34 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      claim_notification_jobs: {
+        Args: { p_id?: string; p_limit?: number }
+        Returns: unknown[]
+        SetofOptions: {
+          from: '*'
+          to: 'notification_jobs'
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       claim_orphan_media: { Args: { p_paths: string[] }; Returns: string[] }
       finish_expired_post: {
         Args: { p_id: string; p_token: string }
         Returns: boolean
       }
+      finish_notification: {
+        Args: { p_id: string; p_status: string; p_tokens?: string[] }
+        Returns: undefined
+      }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      reserve_notification: {
+        Args: { p_id: string; p_key: string }
+        Returns: boolean
+      }
+      send_attention: {
+        Args: { p_id: string; p_type: string }
+        Returns: string
+      }
       submit_locations: {
         Args: {
           p_epoch: number

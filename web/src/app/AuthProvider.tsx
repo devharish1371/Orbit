@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
 import { AuthContext } from './AuthContext'
 import { getClient, type OrbitClient } from '@/lib/supabase'
+import { disablePush } from '@/native/push'
 
 export function AuthProvider({
   children,
@@ -75,6 +76,7 @@ export function AuthProvider({
         }
       },
       async signOut() {
+        await disablePush()
         await client.auth.signOut({ scope: 'local' })
         query.clear()
         setSession(null)

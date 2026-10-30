@@ -54,6 +54,13 @@ jobs:
           .venv/bin/python -m pytest --tb=short
           .venv/bin/python tools/secret_scan.py
       - run: npm --prefix web run cap:sync
+      - name: Configure private Firebase Android app
+        env:
+          GOOGLE_SERVICES_JSON_B64: ${{ secrets.GOOGLE_SERVICES_JSON_B64 }}
+        run: |
+          test -n "$GOOGLE_SERVICES_JSON_B64"
+          printf '%s' "$GOOGLE_SERVICES_JSON_B64" | base64 --decode > web/android/app/google-services.json
+          chmod 600 web/android/app/google-services.json
       - name: Prepare stable debug signing
         env:
           DEBUG_KEY_B64: ${{ secrets.ORBIT_DEBUG_KEYSTORE_B64 }}
@@ -77,10 +84,16 @@ jobs:
           service=next(s for s in root.findall('./application/service') if s.get(a+'name')=='app.orbit.couple.OrbitTrackerService')
           assert service.get(a+'foregroundServiceType')=='location' and service.get(a+'exported')=='false' and service.get(a+'stopWithTask')=='false'
           print('Independent location foreground service verified in merged manifest.')
+          push=next(s for s in root.findall('./application/service') if s.get(a+'name')=='com.capacitorjs.plugins.pushnotifications.MessagingService')
+          assert any(action.get(a+'name')=='com.google.firebase.MESSAGING_EVENT' for action in push.findall('./intent-filter/action'))
+          from pathlib import Path
+          resources=list(Path('app/build/generated/res').rglob('values.xml'))
+          assert any(any(s.get('name')=='google_app_id' and s.text for s in ET.parse(p).getroot().findall('string')) for p in resources)
+          print('Firebase native configuration and messaging service verified.')
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: orbit-m4-debug
+          name: orbit-m5-debug
           path: web/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 7

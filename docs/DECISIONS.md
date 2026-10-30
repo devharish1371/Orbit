@@ -241,3 +241,27 @@ are visible in health. No boot receiver silently starts tracking. Restart once b
 Orbit after reboot. The M4 physical phone tests remain required; code/CI success is not
 proof of OEM behavior. Moving uploads use 30s instead of the source minimum 15s to keep
 worst-case two-sender/two-subscriber traffic under 25% of the published Free message quota.
+
+## 2026-10-30 — M5 continuation and notification delivery
+
+The user explicitly deferred the remaining M4 physical tests and asked to proceed.
+Continue M5 while retaining the incomplete M4 gate; neither milestone is tagged on code
+checks alone. Firebase human #3 files are supplied and validated privately.
+
+Use the already pinned Capacitor Push Notifications 8.1.3. Verified its installed Android
+source and [v8 API](https://capacitorjs.com/docs/apis/push-notifications): explicit
+permission/registration, channels and retained notification-action events. Registration
+enables Firebase auto-init; unregister disables it and deletes the token. Android
+configuration goes only into native resources and private CI secrets.
+
+Use [FCM notification + data messages](https://firebase.google.com/docs/cloud-messaging/customize-messages/set-message-type)
+so Android can display notifications without a running WebView. No data-only JS background
+handler is required. Follow [HTTP v1 OAuth](https://firebase.google.com/docs/cloud-messaging/send/v1-api)
+using built-in WebCrypto RS256 rather than adding a JWT dependency. Clean tokens only on
+[explicit UNREGISTERED](https://firebase.google.com/docs/cloud-messaging/error-codes), not
+every generic 404. Do not send actual chat previews or exact location on lock screens.
+
+Added a private metadata-only outbox and retry cron in addition to the source's best-effort
+webhook. SQL leases and dedupe serialize concurrent calls; successful device hashes survive
+partial retry. Delivery remains at-least-once across a provider/receipt crash boundary.
+Human Android delivery testing is still required; see docs/NOTIFICATIONS.md.

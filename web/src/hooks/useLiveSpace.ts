@@ -55,6 +55,16 @@ export function useLiveSpace() {
         {
           event: '*',
           schema: 'public',
+          table: 'events',
+          filter: `couple_id=eq.${id}`,
+        },
+        () => mark('activity'),
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
           table: 'live_location',
           filter: `couple_id=eq.${id}`,
         },
@@ -92,6 +102,7 @@ export function useLiveSpace() {
           mark('locations')
           mark('places')
           mark('space')
+          mark('activity')
         }
       })
     const refresh = () => {
@@ -99,14 +110,17 @@ export function useLiveSpace() {
         mark('locations')
         mark('places')
         mark('space')
+        mark('activity')
       }
     }
     document.addEventListener('visibilitychange', refresh)
     window.addEventListener('online', refresh)
+    window.addEventListener('orbit-activity', refresh)
     return () => {
       clearTimeout(timer)
       document.removeEventListener('visibilitychange', refresh)
       window.removeEventListener('online', refresh)
+      window.removeEventListener('orbit-activity', refresh)
       void client.removeChannel(channel)
     }
   }, [client, id, query])

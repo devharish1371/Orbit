@@ -72,7 +72,7 @@ def test_orphan_tombstone_prevents_late_post_reference(backend) -> None:
 def test_cron_and_function_privileges(backend) -> None:
     with backend.db() as db:
         jobs=db.execute("select jobname from cron.job where jobname like 'orbit-%'").fetchall()
-        assert {row[0] for row in jobs} == {'orbit-retention','orbit-stale','orbit-modes','orbit-rollup','orbit-capsules'}
+        assert {row[0] for row in jobs} == {'orbit-retention','orbit-stale','orbit-modes','orbit-rollup','orbit-capsules','orbit-notify-retry','orbit-notify-cleanup'}
         unsafe=db.execute("select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='orbit_private' and p.prosecdef and (has_function_privilege('anon',p.oid,'EXECUTE') or p.proconfig is null)").fetchall()
         assert unsafe == []
         assert db.execute("select public from storage.buckets where id='media'").fetchone() == (False,)

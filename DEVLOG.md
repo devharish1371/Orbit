@@ -434,3 +434,38 @@ Validation: helper syntax/help and both one-minute live database observation run
 with five samples each and zero observer errors. Source secret scan: 231 files, zero
 findings; git diff whitespace check passed. Production source and APK are unchanged, so
 the previously passing full web/Python/native suites and signed build remain applicable.
+
+
+## 2026-10-30 — M5 implementation; M4 physical gate deferred by user
+
+The user requested proceeding with the offline test later. Recorded an explicit exception
+to milestone ordering in PLAN; M4 remains untagged with offline/endurance/moving checks
+open. Human #3 then supplied Firebase Android and service-account files. Validated matching
+project/package IDs, copied ignored local configuration, and set the private Android CI
+secret. No key values or downloaded JSON files enter Git.
+
+Implemented a metadata-only private notification outbox, leased retries/cron, atomic
+two-minute dedupe, per-device partial-retry receipts and explicit UNREGISTERED cleanup.
+FCM v1 uses WebCrypto RS256 and cached OAuth. Quiet hours follow the couple's time zone;
+SOS/stopped-sharing bypass quiet hours. Preferences remain honored. Lock-screen copy is
+generic and does not include chat bodies, media URLs or coordinates.
+
+Added opt-in native token registration/channels, safe notification routes, token removal
+before logout, per-person preferences/quiet hours, Activity, and Home nudge/call/urgent
+actions. Attention RPCs derive ownership and enforce cooldown/idempotency. Android CI
+receives Firebase config privately and preserves the existing stable debug signing key.
+
+Initial dry-run deployment had an incorrect authorization-helper import, caught by the
+strict type/hosted endpoint tests. Fixed and redeployed; the deployment helper now requires
+passing strict type checks first. Initial full hosted run also exposed the expected cron
+assertion needing both new jobs and two transient connection resets. Updated that assertion;
+the next complete run passed **47/47**. All **31 web** and **15 worker** checks passed with
+lint/typecheck/format/build. Source scan **251 files, zero findings** after eliminating
+synthetic PEM-header false positives in test/validation source. Native compilation and
+real phone delivery remain pending; APK preparation continues.
+
+Final local web pass after adding urgent-confirmation/cooldown UI tests: **33/33**;
+worker checks **15/15**. Source scan **254 files, zero findings**. Firebase OAuth and
+FCM API access also passed a validate-only probe with an intentionally invalid device
+token, which cannot deliver to a phone. Preferences and real activity loaded in the
+authenticated browser. No real attention request was sent during this browser check.
