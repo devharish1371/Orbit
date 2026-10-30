@@ -41,7 +41,8 @@ export function contrast(a: string, b: string): number {
 }
 export function accessibleAccent(color: string, light: boolean): string {
   let result = isHex(color) ? color : '#FF6B8A'
-  const background = light ? '#FFFFFF' : '#22202E'
+  // Allow for the tinted active tab/glass surface, which is darker than pure white.
+  const background = light ? '#F0EAF0' : '#22202E'
   for (let step = 0; step < 30 && contrast(result, background) < 4.8; step++)
     result = blend(result, light ? '#111111' : '#FFFFFF', 0.12)
   return result

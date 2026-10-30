@@ -11,6 +11,11 @@ export default defineConfig(({ mode }) => {
     '/'
   return {
     base,
+    define: {
+      __ORBIT_BUILD__: JSON.stringify(
+        process.env.GITHUB_SHA?.slice(0, 7) ?? 'local',
+      ),
+    },
     plugins: [
       {
         name: 'orbit-production-csp',

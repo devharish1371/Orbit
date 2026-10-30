@@ -1,5 +1,16 @@
 import { Component, type ReactNode } from 'react'
 import { copy } from '@/copy/en'
+import { UpdatePrompt } from './UpdatePrompt'
+
+// The update action must survive a lazy route failure after a website deployment.
+export function AppBoundary({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <ErrorBoundary>{children}</ErrorBoundary>
+      <UpdatePrompt />
+    </>
+  )
+}
 export class ErrorBoundary extends Component<
   { children: ReactNode },
   { failed: boolean }

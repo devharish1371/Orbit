@@ -173,6 +173,7 @@ export function PostCard({
           </div>
           <span
             className={`expiry-ring ${post.keep ? 'is-kept' : ''}`}
+            role="img"
             style={
               { '--expiry': `${expiry.fraction * 360}deg` } as CSSProperties
             }

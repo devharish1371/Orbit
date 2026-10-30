@@ -31,8 +31,8 @@ Architecture notes and version records live in `docs/`.
 | M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Implementation/hosted tests complete; APK `333a4c6` installed; Dev confirms swiped-away test push arrived and opened Activity; partner/event-specific delivery checks pending |
 | M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Dev confirms voice, keyboard and background microphone stop pass on APK `2133d94`; automated/browser checks pass; partner-phone voice and 4G timing deferred; untagged |
 | M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Complete; APK `959314d` passes CI/browser/security checks; Dev confirms all privacy checks and native ZIP saving/opening; letter stays outside app; Telegram optional/unconfigured |
-| M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | In progress |
-| M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | Pending M8 |
+| M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | Complete; cold Login 98/100/100; all 32 rendered-screen theme audits 100/100; 68 regular captures; update recovery and wrapping fixed |
+| M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | In progress; release preparation next; deferred physical/soak gates remain open |
 
 ## Current next steps
 
@@ -47,6 +47,9 @@ Architecture notes and version records live in `docs/`.
    the personal letter stays outside the app per user instruction. Do not use Vidya's account for testing.
 5. M7 acceptance passed on Dev's device and in disposable browser/security tests. Begin
    M8 visual, accessibility and performance acceptance. Older deferred device gates stay open.
+6. M8 acceptance passed; prepare M9 CI/Pages/release artifacts and recovery documentation.
+   Do not call the whole app done or publish a final release before the deferred physical
+   gates and human signing-key backups/soak are resolved.
 
 ## Human dependencies observed
 

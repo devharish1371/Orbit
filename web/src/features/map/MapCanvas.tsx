@@ -94,6 +94,7 @@ function PersonMarker({
   return createPortal(
     <span
       className="map-marker-inner"
+      aria-hidden="true"
       style={
         {
           '--battery': `${battery ?? 0}%`,

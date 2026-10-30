@@ -41,6 +41,9 @@ test('custom accents retain readable foreground contrast in both appearances', (
       contrast(accessibleAccent(color, true), '#FFFFFF'),
     ).toBeGreaterThanOrEqual(4.5)
     expect(
+      contrast(accessibleAccent(color, true), '#F8F1F3'),
+    ).toBeGreaterThanOrEqual(4.5)
+    expect(
       contrast(accessibleAccent(color, false), '#22202E'),
     ).toBeGreaterThanOrEqual(4.5)
   }

@@ -636,3 +636,22 @@ focus rings, kept the Home greeting/countdown current across midnight, corrected
 loading/error states, added cursor-window capsule pagination and return-to-latest controls
 for capsules/keepsakes. Web **49**, worker **16**, lint/types/format/build pass. Preparing
 disposable-only dark/light phone screenshots and authenticated-screen accessibility audits.
+
+## 2026-10-31 — M8 acceptance passed
+
+Final mobile production Login Lighthouse: **98 performance / 100 accessibility / 100 best
+practices**; LCP 2.4s, CLS 0.002, TBT 0ms. All **32** rendered signed-in screen/theme audits
+score **100/100** for accessibility/best practices. These DOM audits are explicitly separate
+from actual authenticated load performance. All 64 live signed-in layout measurements fit
+360/412 widths, with zero steady-state console errors. Saved 68 regular screenshots,
+six enlarged-type/long-content fixtures and one update-recovery capture under docs/screens/m8.
+
+QA fixed tinted active-tab contrast, expiry-label roles, long names/Map selector wrapping,
+and confetti cleanup. A real two-build test caught an old lazy Map chunk failing after
+deployment; the update prompt now survives outside the error boundary and recovers without
+signing out. Added its regression test. Settings shows a public build identifier.
+
+Final web **50/50**, worker **16/16**, lint/types/format/build pass; source scan clean.
+Backend unchanged since full **58/58** hosted pass. Updated Android CI will package the
+final polish; no native behavior changed after M7's physical acceptance. M8 acceptance is
+complete; tag m8-done. See docs/QUALITY.md for exact scope and remaining hardware limits.

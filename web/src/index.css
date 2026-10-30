@@ -90,6 +90,10 @@ h1,
 h2,
 p {
   margin: 0;
+  overflow-wrap: anywhere;
+}
+h3 {
+  overflow-wrap: anywhere;
 }
 h1,
 h2 {
@@ -1126,6 +1130,8 @@ input::placeholder {
   margin-bottom: 20px;
 }
 .map-person-tabs button {
+  min-width: 0;
+  overflow-wrap: anywhere;
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -2292,6 +2298,13 @@ input::placeholder {
   color: var(--primary);
   font-size: 4rem;
   animation: capsule-unfold 0.9s ease-out;
+}
+.reveal-confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 .privacy-toggle {
   display: flex;

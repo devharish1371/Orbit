@@ -1,0 +1,208 @@
+{
+  "method": "Mobile Lighthouse on CUA-captured rendered DOM, scripts removed. Not an authenticated-load performance measurement.",
+  "screens": [
+    {
+      "name": "activity-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "activity-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "call-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "call-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "capsules-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "capsules-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "chat-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "chat-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "home-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "home-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "keepsakes-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "keepsakes-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "map-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": [
+        {
+          "id": "label-content-name-mismatch",
+          "title": "Elements with visible text labels do not have matching accessible names."
+        }
+      ]
+    },
+    {
+      "name": "map-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": [
+        {
+          "id": "label-content-name-mismatch",
+          "title": "Elements with visible text labels do not have matching accessible names."
+        }
+      ]
+    },
+    {
+      "name": "memory-map-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "memory-map-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "moments-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "moments-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "notifications-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "notifications-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "profile-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "profile-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "reveal-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "reveal-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "settings-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "settings-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "timeline-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "timeline-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "tracking-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "tracking-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "us-dark-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    },
+    {
+      "name": "us-light-360.html",
+      "accessibility": 100,
+      "bestPractices": 100,
+      "failures": []
+    }
+  ],
+  "manual_review": "Map marker visible avatar/battery graphics are decorative. Button names announce person and battery; label-content-name advisory reviewed."
+}

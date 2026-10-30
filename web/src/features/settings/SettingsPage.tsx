@@ -151,6 +151,12 @@ export default function SettingsPage() {
       <StorageStatus />
       <PrivacySettings />
       <ExportMemories />
+      <section className="glass settings-section">
+        <h2>Orbit, just for two.</h2>
+        <p className="muted small">
+          Build {__ORBIT_BUILD__} · Private accounts · No ads or analytics
+        </p>
+      </section>
       <section className="settings-section">
         <Button
           className="button-secondary"

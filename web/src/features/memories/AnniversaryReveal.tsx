@@ -7,6 +7,7 @@ import { isAnniversary, localDay } from '@/lib/memories'
 import { memories as text } from '@/copy/memories'
 function Reveal({ close }: { close: () => void }) {
   const button = useRef<HTMLButtonElement>(null)
+  const canvas = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
     const previous = document.activeElement
     const contain = (event: FocusEvent) => {
@@ -27,18 +28,23 @@ function Reveal({ close }: { close: () => void }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let active = true
+    let clear: (() => void) | undefined
     void import('canvas-confetti').then(({ default: confetti }) => {
-      if (active)
-        void confetti({
+      if (active && canvas.current) {
+        const burst = confetti.create(canvas.current, { resize: true })
+        clear = () => burst.reset()
+        void burst({
           particleCount: 70,
           spread: 65,
           origin: { y: 0.6 },
           disableForReducedMotion: true,
           colors: ['#FF6B8A', '#A98EFF', '#3DE0C5'],
         })
+      }
     })
     return () => {
       active = false
+      clear?.()
     }
   }, [])
   return (
@@ -55,6 +61,7 @@ function Reveal({ close }: { close: () => void }) {
         if (event.key === 'Escape') close()
       }}
     >
+      <canvas ref={canvas} className="reveal-confetti" aria-hidden="true" />
       <div className="reveal-orbit" aria-hidden="true">
         ✦
       </div>

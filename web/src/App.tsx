@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { OfflineBanner } from '@/components/OfflineBanner'
-import { UpdatePrompt } from '@/components/UpdatePrompt'
 import { copy } from '@/copy/en'
 const LoginPage = lazy(() => import('@/features/auth/LoginPage'))
 const Shell = lazy(() => import('@/app/Shell'))
@@ -88,7 +87,6 @@ export default function App() {
           </Routes>
         )}
       </Suspense>
-      <UpdatePrompt />
     </>
   )
 }
