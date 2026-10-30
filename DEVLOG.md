@@ -336,3 +336,27 @@ checks the queued account identity under the auth lock before HTTP. Added clock-
 feedback and removal of invalid future batches. Final build will include these corrections.
 Full web checks passed after changes; one targeted hosted privacy assertion is being verified.
 Physical screen-off/swipe-away/offline/native refresh behavior remains human #7; see TRACKING.md.
+
+
+## 2026-10-30 — M4 signed test APK ready; human #7 gate
+
+Final source `721f87e` [CI build](https://github.com/devharish1371/Orbit/actions/runs/41067142247) succeeded: 28 web tests, five worker tests,
+15 local Python checks (28 hosted intentionally skipped in CI), three native JVM policy
+checks, strict lint/typecheck/format/build, native sync/Java compilation, cryptographic
+apksigner verification, private foreground-service manifest checks and source secret scan.
+The complete hosted/local suite passed all 43 tests separately; the four native hosted
+checks passed again after the generation-column write restriction assertion was added.
+
+Downloaded `.artifacts/apk/721f87e/app-debug.apk`, 6,751,361 bytes. ZIP integrity and a scan
+of packaged web/Dex assets for configured private credentials/email identities pass.
+No keystore/env files are packaged. SHA256:
+`ad20212ec1450130f9bac2e64567f07f3ca50d777d6b406e36a6646ee9b82a18`.
+The APK/checksum/debug-key backup and screenshots remain ignored; private env/key files
+are owner-readable. Source scan is clean. Local user-facing preview remains on port 5173.
+
+**Stop only for human #7:** one-time uninstall M3 (different old debug signing key), install
+M4, sign in, complete Tracking health consent/permissions, and run the 30-minute screen-off,
+swipe-away and airplane-mode queue-recovery checks on the Nothing Phone (3a) / Nothing OS
+4.1. Also verify pause and surprise from the observer. Full steps: docs/TRACKING.md.
+M4 remains untagged; no claim of real background/OEM reliability is made before those results.
+M5–M9 remain pending. Firebase task #3 comes after M4 acceptance.

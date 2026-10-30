@@ -59,8 +59,9 @@ disabled, and selects an eight-digit code with a ten-minute expiry. It never pri
 credentials or sends mail by itself. `--check` reads safe readiness flags without making
 changes. Actual inbox delivery and Dev’s code login are verified. Vidya’s UI login was checked
 with an admin-generated one-use code (no additional email). Both sessions restored after
-reload; explicit logout returned to login. Native session storage uses Capacitor
-Preferences; APK behavior still requires human #7 testing.
+reload; explicit logout returned to login. M4 moves native sessions to Android Keystore encrypted storage and migrates the saved
+Capacitor Preferences login on an in-place upgrade. Native refresh behavior still needs
+human #7 / later soak verification. Browser storage behavior is unchanged.
 
 `tools/create_users.py` now defaults to passwordless provisioning and is safe to re-run.
 Legacy synthetic-email password provisioning remains available via `--mode password` and

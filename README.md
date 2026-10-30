@@ -3,16 +3,17 @@
 A private, two-person space for location sharing, disappearing moments, chat and connection.
 One React/TypeScript codebase targets the web and a sideloaded Capacitor Android app.
 
-**Status:** M0–M2 are implemented: secured hosted backend, passwordless email login with
-remembered sessions, private Home/settings, and editable personal profiles. Each person can
-set a photo, nickname, partner nickname, contact number, personal color, and app appearance.
-SMTP delivery and both web logins have been verified. The foreground realtime map and shared places are implemented; M3’s Android device
-performance check is next. M4’s native background tracker is implemented and undergoing phone reliability acceptance.
-See [tracking setup and test steps](docs/TRACKING.md). Remaining product features follow. See [authentication setup](docs/AUTHENTICATION.md).
+**Status:** M0–M3 are complete: secured hosted backend, remembered email login, private
+Home/settings, personal profiles, realtime map and shared places. The user accepted Profile
+and Map on Nothing Phone (3a), Nothing OS 4.1. M4’s native background tracker is implemented
+and awaiting its separate phone reliability tests. Push, moments/chat and the remaining
+product milestones follow.
+See [tracking setup and test steps](docs/TRACKING.md) and
+[authentication setup](docs/AUTHENTICATION.md).
 Follow [PLAN.md](PLAN.md) for the ordered milestones and [DEVLOG.md](DEVLOG.md) for evidence.
 
 See [local development](docs/DEVELOPMENT.md) for installation, verification, native builds,
-and human setup gates. Start the scaffold with `npm --prefix web run dev`.
+and human setup gates. Start the app with `npm --prefix web run dev`.
 All provider accounts must stay free and require no credit card. Never put secret keys,
 keystores, or Firebase account JSON in source control.
 
