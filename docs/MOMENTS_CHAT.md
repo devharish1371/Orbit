@@ -56,6 +56,24 @@ shows authoritative physical-media usage, keepsake quota, and latest cleanup sta
 - Selected photo preview measured **1600 × 1018 px** after local compression. Dark/light
   layouts passed at **412 × 915** and **360 × 800**, with no horizontal overflow. Private
   screenshots are ignored under `.artifacts/qa/`. No real partner message was sent.
+- Disposable accounts, their couple and all synthetic media were removed after browser
+  QA, deleting files through the Storage API before removing database fixtures.
+
+## Verified Android build
+
+Commit **2133d94**, [CI run 41111763994](https://github.com/devharish1371/Orbit/actions/runs/41111763994),
+passed web/worker checks, Python tools, three native policy tests, Android compilation,
+apksigner verification, tracker/Firebase manifest assertions, audio permissions and
+keyboard resize assertions. Artifact: `orbit-m6-debug` (retained seven days by Actions).
+Local copy: `.artifacts/apk/2133d94/app-debug.apk`, **6,781,149 bytes**.
+
+SHA256: `641b1032cff5da08db01b6c09f01eaee546d75921052c125b16274c8b37b7d24`.
+
+`python -m tools.verify_apk --apk <download> --baseline <installed-build>` confirmed
+ZIP integrity, the same v2 signer certificate as M5, and exclusion of configured private
+credentials/contact emails. Complete credential shapes are checked because the Supabase
+SDK itself contains a literal secret-key prefix for validation. Signature cryptography
+is verified by apksigner in CI; certificate comparison alone does not replace it.
 
 ## Remaining physical checks (human #7)
 

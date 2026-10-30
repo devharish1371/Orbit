@@ -552,10 +552,30 @@ Production browser QA on isolated port 4173 verified real text send, a synthetic
 compressed to 1600×1018 then uploaded/displayed, full-photo viewer, persisted reactions,
 Moment posting, comments and Keep. Dark/light layouts fit 412×915 and 360×800 without
 horizontal overflow. The normal Dev login stayed on port 5173. No real partner message
-was sent. Temporary preview/accounts/media are being cleaned using the Storage API.
+was sent. Temporary preview/accounts/media were cleaned using the Storage API.
 
 Fixed cached Chat entry scrolling (global route reset no longer overrides latest-message
 position), a transient 8d label for a freshly created 7d post, and closing composer More
 after a send. Added Android keyboard resize and native permission assertions to CI.
 Source scan: **277 files, zero findings**. Full implementation/check details and outstanding
 device voice/4G/reveal-phone gates are in docs/MOMENTS_CHAT.md. M6 stays untagged.
+
+
+## 2026-10-31 — M6 Android build verified and handed off
+
+Implementation commit **2133d94** is pushed. [Android CI run 41111763994](https://github.com/devharish1371/Orbit/actions/runs/41111763994)
+passed web/worker/Python checks, three native policy tests, compilation, apksigner,
+tracker/Firebase assertions, audio permissions and keyboard resize. Downloaded the
+**6,781,149-byte** APK; its v2 signing certificate matches M5 for an in-place update.
+SHA256: `641b1032cff5da08db01b6c09f01eaee546d75921052c125b16274c8b37b7d24`.
+
+Added a repeatable local APK verification helper. ZIP integrity and configured private
+material checks pass. An initial broad prefix check matched the Supabase SDK's literal
+secret-key rejection prefix; complete credential patterns resolve that false positive
+while retaining exact configured-secret checks. No private credential was found.
+
+The temporary QA server/tab, disposable accounts/couple and synthetic uploaded media
+are cleaned up; the normal Dev session is preserved. Requested human #7 to install the
+M6 update and check short voice preview/playback, composer visibility with keyboard,
+and microphone release on background. No message needs sending. Voice on both phones
+and 4G timing remain unverified; M6 is untagged and Vidya's tests stay deferred until reveal.

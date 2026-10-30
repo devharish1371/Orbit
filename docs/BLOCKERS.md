@@ -1,5 +1,11 @@
 # Orbit blockers
 
+M6 implementation, hosted/browser checks and Android CI pass. Signed APK `2133d94`
+matches the installed signing identity and passed ZIP/private-material checks. Human #7
+has been asked to install it and verify short voice preview/playback, keyboard visibility
+and microphone release on background. Real 4G timing and Vidya's device remain unverified;
+M6 stays untagged. See `docs/MOMENTS_CHAT.md` for the build and acceptance record.
+
 M6 typing diagnostic resolved: private-channel subscription raced initial Realtime
 authentication. Awaiting setAuth before subscribe fixes member joins. The disposable
 socket test confirms both members join and receive typing while strangers/other couples
@@ -19,7 +25,7 @@ configured privately. Signed Firebase APK `333a4c6` passed CI and matches M4's s
 identity; the live worker is deployed. The user installed the update, enabled notifications,
 and confirmed the labelled test push arrived while swiped away and opened Activity.
 Human #7 still needs partner-to-partner/event-specific delivery checks. See
-`docs/NOTIFICATIONS.md`; do not claim killed-app delivery before the phone check.
+`docs/NOTIFICATIONS.md`; the single direct test does not establish every alert path.
 
 The user clarified that the entire app is a surprise gift and Vidya's phone cannot be
 used before the reveal. Continue implementation/testing with disposable identities;
