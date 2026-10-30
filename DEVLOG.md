@@ -371,3 +371,15 @@ policy, so the human APK is being rebuilt from `42e45cb` with this correction. T
 While saving that correction, an extra write accidentally replaced DEVLOG with the native
 service source. Restored the complete log from the preceding documentation commit 79c04ac
 and appended this entry. No application source or private runtime data was lost.
+
+
+Final M4 handoff build **42e45cb** [passed CI](https://github.com/devharish1371/Orbit/actions/runs/41069740547) after the idle-policy correction.
+All web/Python/native policy, signature and merged-service checks passed. Downloaded
+`.artifacts/apk/42e45cb/app-debug.apk` (6,751,361 bytes); ZIP/private-data scan passed and
+its signing certificate matches the persistent debug key. SHA256: `15fa29f8f4a01bada10268969de01c4605054a5f8fe8e85de1a9cd41ea34a141`.
+The source of this APK supersedes the intermediate 721f87e handoff above.
+
+Final gate remains human #7 only: install and test 30-minute screen-off, swipe-away,
+airplane-mode recovery and visible pause/surprise behavior. M4 is untagged. The test APK,
+checksum, private debug-key backup and screenshots are excluded from Git; all intended
+source/docs are committed. Nothing Phone (3a), Nothing OS 4.1 feedback is recorded for M3.

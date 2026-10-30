@@ -37,8 +37,8 @@ Tracking health shows service state, GPS/upload times and queue count. Diagnosti
 200 event codes/timestamps without coordinates, keys or tokens. GPS timestamps remain the
 capture time; a stationary heartbeat does not pretend a new GPS fix happened.
 
-Verified [M4 build `721f87e`](https://github.com/devharish1371/Orbit/actions/runs/41067142247).
-Local APK: `.artifacts/apk/721f87e/app-debug.apk` with adjacent `.sha256` checksum.
+Verified [M4 build `42e45cb`](https://github.com/devharish1371/Orbit/actions/runs/41069740547).
+Local APK: `.artifacts/apk/42e45cb/app-debug.apk` with adjacent `.sha256` checksum.
 
 ## One-time M3 → M4 installation
 
