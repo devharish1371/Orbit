@@ -11,9 +11,15 @@ continuing to M5 while M4's remaining physical tests are deferred; no M4 complet
 
 M5 implementation and hosted tests pass. Firebase human #3 files are validated and
 configured privately. Signed Firebase APK `333a4c6` passed CI and matches M4's signing
-identity; the live worker is deployed. Human #7 now needs to install the update, enable
-notifications, and verify real background delivery/taps. See
+identity; the live worker is deployed. The user installed the update, enabled notifications,
+and confirmed the labelled test push arrived while swiped away and opened Activity.
+Human #7 still needs partner-to-partner/event-specific delivery checks. See
 `docs/NOTIFICATIONS.md`; do not claim killed-app delivery before the phone check.
+
+The user clarified that the entire app is a surprise gift and Vidya's phone cannot be
+used before the reveal. Continue implementation/testing with disposable identities;
+defer her onboarding and second-phone checks until then. Dev's swiped-away delivery and
+Activity tap passed. No additional notification was sent after the authorized test.
 
 ## Resolved — Email OTP sender and M2 logins
 

@@ -60,7 +60,26 @@ Android compilation, cryptographic APK signature verification, private tracking-
 manifest checks and Firebase native resource/messaging-service assertions. Local ZIP and
 private credential/contact scans passed; v2 signing certificate matches M4's APK.
 The complete hosted/local Python suite passed 47 tests separately. The notify worker
-is deployed in live mode; real phone receipt is still unverified.
+is deployed in live mode.
+
+### First real phone result — 2026-10-30
+
+The user confirmed the M5 update and notification readiness, swiped Orbit away, and
+explicitly authorized one labelled test push to Dev's registered Android device. FCM
+accepted that single push at **21:05:08 IST**. The user then confirmed **it arrived and
+tapping it opened Activity** on the Nothing Phone (3a), Nothing OS 4.1.
+
+This establishes registration, real FCM notification display with the app swiped away,
+and the Activity deep link. The helper used the production FCM sender with a generic
+Orbit test message; it did not create a partner event or exercise the outbox. Actual
+partner-to-partner/event-specific delivery, the Call/map tap routes and physical quiet-hour
+behavior remain open. Automated coverage of those policies is recorded above; M5 stays
+untagged until its remaining acceptance checks pass.
+
+The user clarified that Vidya's phone is unavailable because the app is a surprise gift.
+Her onboarding and partner-phone acceptance are deferred until the reveal. Continue
+development using disposable test accounts; do not send surprise test messages to her
+or modify her account as part of those tests.
 
 1. Update the installed M4 APK with the M5 build; the stable debug signing identity is
    preserved. Open Settings → Notifications → Enable notifications. Confirm ready.

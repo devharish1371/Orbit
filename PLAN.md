@@ -10,6 +10,9 @@ Architecture notes and version records live in `docs/`.
 - Complete each milestone's acceptance criteria before starting the next.
 - User exception (2026-10-30): proceed to M5 while the remaining M4 physical tests are
   deferred. M4 remains untagged; this does not waive release reliability checks.
+- The app is a surprise gift: Vidya's phone is unavailable before the reveal. Continue
+  implementation with disposable test identities; defer her onboarding and second-phone
+  acceptance until the reveal. Preserve incomplete device checks in the release checklist.
 - Implement, verify, update this plan and `DEVLOG.md`, then commit with Conventional Commits.
 - Tag completed milestones `m<N>-done` only when all acceptance criteria pass.
 - Use only free services without a credit card. Never commit secrets or personal credentials.
@@ -25,8 +28,8 @@ Architecture notes and version records live in `docs/`.
 | M2 | Design system, HashRouter/query/auth, config/copy, email OTP login with persistent refresh, home, PWA. Both users log in; themes persist; accessibility and unit checks pass. | Complete; `88ed64a` / `m2-done` pushed; login/profile/accessibility verified |
 | M3 | Foreground location, realtime map/trail, places, distance/midpoint, simulator. Smooth verified partner updates and map interactions. | Complete; user confirms Profile/Map work well on Nothing Phone (3a), Nothing OS 4.1; qualitative check |
 | M4 | Android permissions/tracker, native HTTP, offline queue, battery/geofences, pause/surprise, diagnostics. Unit tests and real-device screen-off/swipe/offline checks pass. Human #7. | APK `42e45cb`: short screen-off/swipe-away heartbeats, pause, surprise and resume verified; offline queue and full endurance gate open |
-| M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Implementation/hosted tests complete; live worker and signed APK `333a4c6` verified; human #7 delivery check pending |
-| M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Pending M5 |
+| M5 | FCM notify/push, preferences/quiet hours/dedupe, stale/resume, SOS/nudge. Alerts delivered to killed app and invalid tokens removed. Human #3. | Implementation/hosted tests complete; APK `333a4c6` installed; Dev confirms swiped-away test push arrived and opened Activity; partner/event-specific delivery checks pending |
+| M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | In progress; partner-phone acceptance deferred until gift reveal |
 | M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Pending M6 |
 | M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | Pending M7 |
 | M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | Pending M8 |

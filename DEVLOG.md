@@ -483,3 +483,27 @@ opt in to notifications and explicitly authorize one labelled test push to Dev's
 Prepared a test helper that targets only the most recently registered Android device of
 the requested person; it does not invent partner activity. A provider acceptance result
 will not be described as phone delivery without confirmation. M5 remains untagged.
+
+
+## 2026-10-30 — M5 real background push and Activity tap passed
+
+The user confirmed the M5 APK update and notification readiness, swiped Orbit away, and
+explicitly requested the single labelled Orbit test push. Ran the prepared helper for
+Dev's most recently registered Android device. FCM accepted the one notification at
+21:05:08 IST; no additional push or fabricated partner activity was sent.
+
+The user confirmed **“Arrived and opened Activity.”** This verifies real registration,
+background notification display after swipe-away and the Activity notification tap on
+Nothing Phone (3a), Nothing OS 4.1. Provider metadata is ignored under
+.artifacts/private/push-test; no token/credential appears in the public log.
+
+The test used the production FCM sender directly, so it does not establish real
+partner-event/outbox delivery or all alert types/routes/quiet-hour behavior on hardware.
+Requested the next human #7 partner-phone check. M5 stays untagged pending those results;
+M4 offline/endurance checks remain deferred. No application source changed in this check.
+
+The user clarified that Vidya's phone is unavailable because the whole app is a surprise
+gift. Her onboarding and second-phone acceptance will happen at the reveal. Continue
+the build with disposable identities, keeping those hardware checks open and her account
+untouched during further testing. Beginning M6 Moments/Chat implementation; M4 and M5
+remain untagged until their outstanding acceptance checks can be completed.
