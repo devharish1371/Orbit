@@ -1,362 +1,194 @@
-# Orbit development log
+package app.orbit.couple;
 
-## 2026-10-30 — M0 started
+import android.Manifest;
+import android.app.*;
+import android.content.*;
+import android.location.*;
+import android.net.*;
+import android.os.*;
+import android.provider.Settings;
+import androidx.core.app.NotificationCompat;
+import org.json.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.*;
 
-- Read all numbered documents (`00` → `09`) before implementation.
-- Inspected the workspace: ten supplied Markdown files, no application and no Git repository.
-- Created `PLAN.md`; using the existing folder as project root rather than nesting another app repo.
-- Detected macOS, Node 24.7.0, npm 11.5.1, Python 3.13.7, Git 2.51.0.
-- GitHub CLI exists, but its saved authentication is invalid. Human task #1 is required
-  before M0's first-push acceptance can pass. Local scaffold work can proceed.
-- No local Java runtime is installed. Local APK builds are optional; Android project
-  generation and Capacitor sync will be checked separately from APK compilation.
-- Verification and exact installed versions will be recorded after setup. M0 is not complete.
-
-## 2026-10-30 — M0 local verification complete
-
-Implemented:
-- Initialized Git on `main`; preserved the ten input specifications at the root.
-- Scaffolded Vite/React with strict TypeScript, unchecked-index checking, `@/` aliases,
-  Tailwind's Vite plugin, HashRouter, centralized welcome copy and self-hosted fonts.
-- Added credential-free welcome shell, Vitest/Testing Library, ESLint and Prettier.
-- Added PWA manifest/static-only precache generation; native builds use relative asset
-  paths with PWA disabled. Update registration UI belongs to M2.
-- Generated Capacitor Android project (`app.orbit.couple`), declared future feature
-  permissions, configured legacy bridge/native HTTP, disabled OS app backup, and created icons/splash.
-- Initialized pinned Supabase CLI config with signup disabled locally. No hosted Auth setting
-  has yet been changed or verified.
-- Installed the Python venv and requirements lock; added bootstrap, secret generation,
-  icons, secret scan and their applicable unit checks. Created ignored env copies and
-  initialized the internal function secret locally without displaying it.
-- Added development/decision/version records. TypeScript 6 is pinned because the generated
-  TypeScript 7 template conflicts with the installed ESLint tooling's declared support range.
-
-Verification:
-| Check | Result |
-| --- | --- |
-| Clean `npm ci --offline` at root and under `web/` | Passed against committed lockfiles |
-| `bootstrap_check.py` | 14 required checks passed; optional local JDK absent |
-| `pytest` | 7 passed |
-| Web ESLint / strict TypeScript / Prettier | Passed |
-| Vitest component smoke | 1 passed |
-| Web production build | Passed; entry JS ~82 KB gzip |
-| Dev server and browser inspection | Welcome screen visibly renders with local fonts/icon |
-| Native relative-base build + `cap sync android` | Passed; 9 plugins detected |
-| Production `npm audit --omit=dev` | 0 vulnerabilities |
-| Python dependency consistency | `pip check` passed |
-| Secret scan / Git whitespace check | Passed; env files, Firebase config, venv and dependencies ignored |
-| `bootstrap_check.py --require-config` | Expected failure: Supabase/account placeholders rejected |
-
-Corrected the generated Android instrumentation smoke's default package assertion to
-`app.orbit.couple`, and normalized Git line endings while retaining Windows batch checkout format.
-
-Limitations: no local JDK/SDK, native test execution or APK compilation, hosted integration tests, merged-manifest
-verification, live login, device background tracking or soak results yet. These belong to
-later milestones; no completion claim is made for them.
-
-GitHub correction: sandboxed auth status was misleading. Outside the sandbox, the existing
-keychain login works. Confirmed the public repository `https://github.com/devharish1371/Orbit`
-is empty and suitable for the initial push. Human #1 is satisfied. Publishing the initial
-scaffold is next; M0 remains open until push succeeds.
-
-## 2026-10-30 — M0 complete; stopped at human #2
-
-- Created scaffold commit `97bac05` (`chore: scaffold orbit web tools supabase and android`).
-- Successfully pushed `main` to `https://github.com/devharish1371/Orbit`; origin tracking is set.
-- All required local M0 acceptance checks passed as recorded above. A final documentation
-  commit records completion and will be tagged `m0-done` and pushed with that tag.
-- M1 has not started. Stopped at `08_HUMAN_TASKS.md` #2 because a real Supabase project
-  and populated local environment files are needed. The copies already exist:
-  `.env.tools` (server/admin/account configuration) and `web/.env.local` (public URL/key only).
-- Human next: create the Free project, configure Auth as documented in #2, fill those local
-  files, and say "env files are ready". Keep passwords out of files/chat; account creation
-  will prompt for them after the M1 admin tooling is implemented.
-- Native APK compilation/device tests remain unrun because the optional local JDK/SDK
-  is unavailable. No live integration, background tracking, push, or soak claim is made.
-
-## 2026-10-30 — M1 started with real Supabase connectivity
-
-- Stored user-supplied project credentials only in ignored `.env.tools` and public values
-  in ignored `web/.env.local`; set file permissions to owner-only. No credential values
-  are included in this log, source code, commits, or command output.
-- Verified both API keys against the hosted Auth settings and connected to PostgreSQL 17.11
-  over TLS through the session pooler. Hosted public signup is disabled.
-- Separate account access for Edge Function deployment and the two permanent names/phones
-  remain human #2 dependencies. Asked for those in the local environment file while building
-  migrations and integration checks. Do not substitute a project key for an account token.
-- Warned that deleting a chat does not revoke credentials; key/password rotation should
-  be performed by the account owner and replacements saved in the ignored files.
-
-## 2026-10-30 — M1 backend acceptance passed
-
-Implemented and deployed:
-- Five numbered migrations, applied atomically over TLS, checksum tracked and re-run
-  successfully to prove idempotency. Supabase project linked using local account access.
-- RLS and narrow grants on all tables; private security helpers; related-couple constraints;
-  concurrent membership/quota protection; immutable post media paths and actual file sizes.
-- Expiry, Keep/un-keep, visible modes, stale/resumed checks, daily summaries and durable capsule
-  notification dedupe. Five cron jobs are present. Notify delivery remains M5.
-- Private media bucket and deployed retention Edge Function. Real Storage API deletion,
-  recursive/paginated orphan listing, post leases and orphan tombstones prevent Keep/reference
-  races. Backend errors retain data for retry and produce an error status, not false success.
-- Admin tools for migration/Vault/deployment, interactive user creation/password reset and
-  manual retention. Current publishable/secret keys work; no project/CLI secrets are committed.
-- Secret scanner now also detects account PATs and password-bearing database URIs.
-
-Verification:
-- Full initial Python run: 33 passed, including 20 live Supabase checks. One additional scanner
-  regression was then added; the updated local Python suite passed all 14 checks (34 total
-  distinct checks across the current suite, 20 hosted and 14 local).
-- Live checks created disposable Auth users, tested isolation/column restrictions/quota/hidden
-  content/Storage access, proved expired rows AND physical files disappear while kept files,
-  avatars and fresh uploads survive, and verified cron/leases/stale/mode behavior.
-- All temporary Auth identities, couple rows and test media were torn down through their
-  corresponding admin/Storage APIs. No permanent users' data was used for test fixtures.
-- Five retention worker tests passed, including file-deletion failure, backend/status errors
-  and stale lease completion. Web smoke, strict TS (including function source), ESLint,
-  Prettier and production build passed. Bootstrap with real config: 16 required checks passed.
-- Secret scan passed with zero findings. The optional local Android JDK/SDK is still absent.
-
-Remaining human #2 step 8: run `.venv/bin/python tools/create_users.py` in a local terminal
-and privately choose the two permanent account passwords. Identities are already configured.
-The script requires an interactive terminal and never stores/echoes passwords. No password
-was invented. M1 backend acceptance criteria pass; M2's real two-user login depends on this
-human-only step. No M2 implementation has started.
-
-Password follow-up: the user supplied two four-digit choices. Read the actual hosted Auth
-configuration (only allowlisted policy flags were printed): minimum six characters, email
-provider enabled, email auto-confirm enabled, signup disabled. No permanent account was
-created with an altered or padded password. Updated admin tools to enforce the actual
-hosted policy; replacement password choice remains human #2. No passwords appear in this log.
-
-## 2026-10-30 — Email OTP request supersedes password setup
-
-- User chose passwordless OTP and provided both real email identities. Added the explicit
-  authentication amendment and human #2a SMTP setup instructions; the original password
-  requirement is superseded. Removed the password-choice blocker from the active plan.
-- Provisioned both permanent, confirmed passwordless Auth users and shared memberships;
-  a second run preserved them. No passwords were generated, stored or sent. No email was sent.
-- Verified hosted session timebox/inactivity limits are zero, single-session restriction is
-  disabled, JWT life is one hour, and existing code length is eight digits. M2 will persist
-  and refresh sessions, allowing normal reopens without OTP. Storage clearing/revocation
-  can still require another login.
-- Custom SMTP is absent. Prepared the free Gmail sender defaults locally, leaving only
-  SMTP_PASSWORD empty for the sender's Google app password. The configurator and safe
-  readiness check are implemented. Actual delivery/template configuration awaits human #2a.
-- Added a live disposable-user check for OTP verification, session refresh and explicit logout
-  without sending email. This tests backend token flows, not real email delivery or client UI.
-
-Final M1 verification after the OTP amendment: the complete updated Python suite passed
-**36 tests (21 live integration + 15 local)**. Both permanent passwordless users were created
-and idempotency verified separately. The five retention worker tests and web smoke passed;
-web and backend ESLint, strict typechecks, formatting, production build and real-config
-bootstrap passed. The final worker source was synchronized to the hosted function and a
-sanitized health run was requested. SMTP/inbox delivery and the M2 client remain unverified.
-
-M1 is ready for its Conventional Commit and `m1-done` tag. The current human gate is #2a,
-`SMTP_PASSWORD` in ignored `.env.tools`; no account passwords or email addresses are needed
-again. PLAN, BLOCKERS and authentication setup instructions reflect this latest scope.
-
-Final hosted cleanup health check passed with zero errors. A count-only audit confirmed
-exactly two permanent Auth users, one couple and two members; zero disposable test users,
-post rows, cleanup tombstones or media objects remain. The staged milestone will be
-published under `m1-done`; current SMTP setup instructions are ready for the owner-only step.
-
-## 2026-10-30 — SMTP configured; M2 implementation started
-
-- Stored the user-supplied app credential only in ignored owner-readable `.env.tools`,
-  removing Google's display spaces. Supabase SMTP/template configuration succeeded;
-  Gmail accepted SMTP authentication over TLS. The sender and credential were not printed.
-- Corrected a Management API format mismatch: `smtp_port` must be a string, as verified
-  by the current official reference and a sanitized HTTP 400 diagnostic.
-- A normal Supabase OTP request to the user returned HTTP 200; the user confirmed arrival
-  by supplying the eight-digit code. SMTP is no longer a human blocker.
-- Starting M2: real email OTP client, session persistence/refresh, auth-gated private data,
-  themeable shell, shared connection settings and Home. Generated types from live schema
-  metadata (no row data). Added `0006_couple_connect.sql` for the shared Meet URL behind RLS.
-
-
-## 2026-10-30 — M2 shell, login and personal profiles
-
-- Built the auth-gated, mobile-first shell, Home/Us/settings and personal profile editor,
-  with shared copy/config validation, offline/error/reconnect states, PWA update prompt,
-  self-hosted fonts, reduced motion and Day/Night/Match device appearance.
-- Verified actual Dev email OTP sign-in, session reload without OTP, explicit logout,
-  Vidya login (admin-generated one-use code, no email send), correct partner contact links,
-  and anniversary countdown. Saved the user-provided shared date/Meet URL behind RLS.
-- Added private avatar compression/upload/reference/cleanup/signing, editable identity and
-  nicknames, separate partner alias, personal color and synced app appearance. Browser test
-  saved nickname/Day/violet accent, reloaded successfully, then restored initial values.
-  Orbit icon upload/removal succeeded; no fabricated personal photo remains.
-- New migrations 0006/0007 applied and generated schema types refreshed. Full Python suite
-  **38 passed (23 live integration + 15 local)**, including self-only profile preferences,
-  validation and own-upload avatar references. Fixtures were torn down via admin/Storage APIs.
-- Web checks passed: 16 tests across 8 files, 5 worker tests, backend/web ESLint, strict
-  typechecks, formatting and production build. Initial JS is ~155 KB gzip; profile
-  compression is lazy. MapLibre remains outside first-load JS. Build warns on >500 KB raw
-  entry chunk; gzip is below the 250 KB budget.
-- Lighthouse: production login accessibility 100, best practices 100 after bundled-font CSP
-  fix; Home authenticated DOM snapshots accessibility 100 in dark and light. Snapshots and
-  screenshots containing private data stay ignored under .artifacts/qa, never public git.
-- Native sync and the final profile accessibility result are recorded below after verification.
-
-Final M2 checks: profile authenticated DOM accessibility **100**; Android native build/sync
-passed (Java compilation not attempted). Full web checks passed after the theme-save
-concurrency guard. Secret scan: 187 files, zero findings. The temporary profile nickname,
-accent/theme changes and icon photo were restored/removed. Milestone ready for `m2-done`.
-
-
-## 2026-10-30 — M2 published; M3 web map implemented
-
-- Published M2 as `88ed64a`, tagged/pushed `m2-done`.
-- Implemented lazy MapLibre with bundled Vite worker, OpenFreeMap Fiord/Liberty styles,
-  visible attribution, animated personal/photo markers with battery/heading, accuracy/place
-  radii, fit both, distance/midpoint directions, details sheet, connection status and trail.
-- Added shared places create/edit/delete, radius/emoji/alert preferences and keyboard-friendly
-  center selection. Alert copy states push is not yet active. Foreground sharing starts only
-  on tap and clears watchers on hide/stop/logout. Tested consent/visibility lifecycle and
-  filtering/throttling with mocked geolocation; actual browser GPS permission was not requested.
-- One Realtime channel batches snapshot invalidation at 250ms, refetches on reconnect/visibility,
-  and keeps Home location status current. Migration 0008 rejects precise history writes during
-  pause/surprise (including an in-flight sender race), and publishes shared couple settings.
-- Simulator creates disposable users/couple and synthetic public-area points, with private
-  one-use login handoff and automatic cleanup. Browser confirmed live marker, distance,
-  midpoint link and timestamp updates without reload; added a demo café and changed radius
-  from 150 to 200m. User profiles/history were not used as simulation fixtures.
-- Full checks: **22 web tests + 5 worker tests**, strict typechecks/lint/format/build pass;
-  **39 Python tests (24 live + 15 local)** pass. Android asset sync passes. The initial entry
-  is ~156 KB gzip; map engine ~292 KB gzip is lazy. Excluded map/worker from PWA precache.
-- Preparing a pinned GitHub Actions Java 21 debug build for the human #7 Android WebView
-  performance gate. Only public client variables configured on the existing repository.
-  M3 remains untagged until that hardware acceptance check; M4 has not started.
-
-
-M3 checkpoint `f8a34cd` and CI dependency correction `d04d921` are pushed. The first
-[debug build](https://github.com/devharish1371/Orbit/actions/runs/40967068486) succeeded,
-including Java/Gradle APK compilation, web checks, local Python checks and secret scan.
-The compiled production map/worker rendered under CSP with zero console warnings/errors.
-A local preview route briefly hit removed chunks during a concurrent dist rebuild; reloading
-the finished assets recovered. Do not rebuild dist while testing a loaded production preview.
-
-Authenticated map DOM accessibility scored 100. An additional label-content warning found
-battery text omitted from marker accessible names; corrected the accessible label to include
-battery/charging. Full web checks passed again after that fix (22 + 5 tests).
-The simulator finished and removed its disposable users, couple, places and history.
-A final APK build will include the accessibility correction; M3 still awaits human #7.
-
-
-## 2026-10-30 — Debug APK ready; human #7 handoff
-
-Final source build `d9fff3d` passed the [updated Android debug workflow](https://github.com/devharish1371/Orbit/actions/runs/41028725065): web
-lint/typecheck/format/build, 22 web + five worker tests, 15 local Python checks (24 hosted
-checks intentionally skipped in CI), secret scan, native sync and Java/Gradle compilation.
-The hosted suite was run locally with all **39 passing** before the checkpoint.
-
-Downloaded `.artifacts/apk/d9fff3d/app-debug.apk` (6,792,525 bytes). ZIP CRC integrity passes,
-Android's modern APK signing block is present, and scanning packaged web assets found no
-secret patterns or real email identities. This is a packaging sanity check, not an independent
-cryptographic apksigner verification; Android verifies the signature during human installation.
-SHA256: `baecc6c3c492531f7564cdefa75088b37801e5308a4ff7e0efdb08d1b76db80a`.
-The APK and checksum are ignored local artifacts; no binary/private screenshot enters git.
-
-Dev's preview session was restored with an admin-generated one-use code (no email sent),
-and the private handoff file was removed. The profile page is left open. Demo production
-session/tab and owned production/static QA servers were closed; the user-facing dev preview
-remains available. Temporary viewport override reset. Source scan: 207 files, zero findings.
-
-**Stop at human task #7:** install this debug APK on an Android phone and perform M3's
-mid-range WebView map performance check. Test profile editing/photo/theme persistence too.
-Report phone model and findings; do not infer hardware performance from desktop screenshots.
-M3 remains untagged; M4–M9 remain pending. No background tracking/push delivery claim is made.
-
-
-## 2026-10-30 — Human M3 phone check accepted; start M4
-
-The user reports Profile and Map work well on a Nothing Phone (3a), Nothing OS 4.1.
-Accepting that direct human usability/smoothness check to close M3 and tag `m3-done`.
-This is qualitative device feedback; no instrumented FPS measurement was supplied.
-Automated/source/APK evidence remains the verified M3 checks recorded above.
-
-Starting M4: explicit native permission onboarding, Android battery/settings helper,
-foreground-service tracker with native HTTP, bounded offline queue/backoff, adaptive
-location/battery modes, geofences and visible pause/surprise controls, tracking health
-and coordinate-free diagnostics. M4 screen-off/swipe-away/offline acceptance is separate
-and still requires human #7 using the next APK.
-
-
-## 2026-10-30 — M4 implementation checkpoint
-
-- Implemented an unbound Android location foreground service, native HTTP and bounded SQLite
-  queue (500 items). The community plugin stops its service in onUnbind; inspected installed
-  source and current maintainer docs, then replaced it rather than depending on WebView
-  callbacks after activity destruction. Runtime screen-off/swipe-away behavior is not yet
-  verified. Service is private, stopWithTask=false, with an ongoing visible notification.
-- Native session storage uses Android Keystore AES-GCM. An adapter migrates the existing
-  Capacitor Preferences session without OTP. Native service and JS refresh requests share
-  one synchronized refresh owner using standard Supabase refresh tokens, avoiding competing
-  token rotations. Logout stops tracking and clears native session/queue.
-- Added one-step permission onboarding, Nothing OS battery guidance, Tracking Health,
-  pause/surprise durations, degraded-state banner and coordinate-free diagnostics. Browser
-  tracking keeps its explicit foreground-only flow; sharing controls work from either client.
-- Native policies: fresh/accuracy/mock/GPS-jump filtering, movement/stillness/low-battery
-  modes, 30s moving upload floor (free-tier budget), five-minute heartbeat, native network
-  reconnect/backoff, hysteresis with two good geofence fixes and low-battery cycle handling.
-- Migrations 0009/0010 add privacy generations, atomic batch ingestion, retry-safe history
-  IDs, geofence state/events and server event dedupe. Pause/surprise transitions invalidate
-  old queued generations. Generated public schema metadata refreshed without row data.
-- 25 web tests and five worker tests passed, strict lint/typecheck/format/build passed.
-  New hosted ingestion tests passed; the full run had 41 passes and two old retention tests
-  hit connection resets. A full rerun outside the sandbox is in progress; not claiming green
-  until it completes. Native policy JVM tests and merged-service/signature checks are added
-  to debug CI and will be verified in the next build. M4 stays untagged pending human #7.
-
-
-M4 pre-build verification: complete live suite rerun outside sandbox **43 passed** (28 hosted,
-15 local); connection resets did not repeat. Updated web suite **28 passed** plus five worker
-tests, lint/strict typecheck/format/build pass. Native asset sync passed after removal of
-the community plugin. Added explicit, bounded upload wake locks and an inexact heartbeat
-alarm that wakes only an existing consented service; it never starts tracking after reboot.
-Alarm timing is OS-controlled, so real screen-off reliability remains a phone test.
-
-Debug signing is being made persistent in private CI secrets with an ignored encrypted
-PKCS12 backup. This is a debug identity only; release signing remains human #5. The earlier
-M3 runner used a disposable debug key that cannot be recovered, so the first M4 install
-requires uninstalling M3 once and signing in again. Later M4 debug builds will update in place.
-
-
-M4 first native CI build [0454671](https://github.com/devharish1371/Orbit/actions/runs/41066011969)
-succeeded: three native JVM policy tests, Android compilation, cryptographic apksigner
-verification and private foreground-service merged-manifest assertion all pass, along with
-web/Python/source checks. Browser Tracking health navigation and foreground-only copy render
-correctly; zero console warnings/errors observed. A screenshot is ignored under .artifacts/qa.
-
-Final review strengthened queued mode synchronization even before the service starts,
-retries on reconnect/resume, removes private native caches on logout/account change, and
-checks the queued account identity under the auth lock before HTTP. Added clock-skew
-feedback and removal of invalid future batches. Final build will include these corrections.
-Full web checks passed after changes; one targeted hosted privacy assertion is being verified.
-Physical screen-off/swipe-away/offline/native refresh behavior remains human #7; see TRACKING.md.
-
-
-## 2026-10-30 — M4 signed test APK ready; human #7 gate
-
-Final source `721f87e` [CI build](https://github.com/devharish1371/Orbit/actions/runs/41067142247) succeeded: 28 web tests, five worker tests,
-15 local Python checks (28 hosted intentionally skipped in CI), three native JVM policy
-checks, strict lint/typecheck/format/build, native sync/Java compilation, cryptographic
-apksigner verification, private foreground-service manifest checks and source secret scan.
-The complete hosted/local suite passed all 43 tests separately; the four native hosted
-checks passed again after the generation-column write restriction assertion was added.
-
-Downloaded `.artifacts/apk/721f87e/app-debug.apk`, 6,751,361 bytes. ZIP integrity and a scan
-of packaged web/Dex assets for configured private credentials/email identities pass.
-No keystore/env files are packaged. SHA256:
-`ad20212ec1450130f9bac2e64567f07f3ca50d777d6b406e36a6646ee9b82a18`.
-The APK/checksum/debug-key backup and screenshots remain ignored; private env/key files
-are owner-readable. Source scan is clean. Local user-facing preview remains on port 5173.
-
-**Stop only for human #7:** one-time uninstall M3 (different old debug signing key), install
-M4, sign in, complete Tracking health consent/permissions, and run the 30-minute screen-off,
-swipe-away and airplane-mode queue-recovery checks on the Nothing Phone (3a) / Nothing OS
-4.1. Also verify pause and surprise from the observer. Full steps: docs/TRACKING.md.
-M4 remains untagged; no claim of real background/OEM reliability is made before those results.
-M5–M9 remain pending. Firebase task #3 comes after M4 acceptance.
+/** Unbound foreground service: location, queue, HTTP and refresh never need a WebView. */
+public class OrbitTrackerService extends Service {
+    private static volatile OrbitTrackerService current;
+    private final Handler main=new Handler(Looper.getMainLooper());
+    private final ScheduledExecutorService worker=Executors.newSingleThreadScheduledExecutor();
+    private TrackerStore store; private LocationManager manager; private ConnectivityManager connectivity;
+    private JSONObject policy; private JSONArray places=new JSONArray(); private JSONObject presence=new JSONObject();
+    private TrackerPolicy.Fix latest,previous,history;
+    private long lastMovement=System.currentTimeMillis(),lastGood=System.currentTimeMillis(),lastAccepted=0,lastSent=0,lastSync=0,lastPlaces=0,lastSwitch=0,nextAttempt=0;
+    private long backoff=5000;private String adaptive="moving",watching="";private boolean lowArmed=true,destroyed=false;
+    private int battery=-1;private boolean charging=false;
+    private final LocationListener listener=new LocationListener(){
+        @Override public void onLocationChanged(Location location){if(!worker.isShutdown())submit(()->accept(location));}
+        @Override public void onProviderDisabled(String provider){TrackerStore.log(OrbitTrackerService.this,"location_disabled");}
+        @Override public void onProviderEnabled(String provider){}
+    };
+    private final ConnectivityManager.NetworkCallback network=new ConnectivityManager.NetworkCallback(){
+        @Override public void onAvailable(Network n){if(!worker.isShutdown())submit(()->{nextAttempt=0;tickCore();});}
+    };
+    public static boolean running(){return current!=null;}
+    public static void wake(){OrbitTrackerService service=current;if(service!=null){service.stopLocations();service.main.post(()->{try{service.showNotification(true);}catch(Exception ignored){}});if(!service.worker.isShutdown())service.submit(()->{service.lastSync=0;service.nextAttempt=0;service.tickCore();});}}
+    public static void heartbeat(){OrbitTrackerService service=current;if(service!=null){service.scheduleHeartbeat();service.submit(service::tickCore);}}
+    private void submit(Runnable task){
+        if(worker.isShutdown())return;
+        PowerManager.WakeLock lock=((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"orbit:upload");lock.acquire(90000);
+        try{worker.execute(()->{try{task.run();}finally{if(lock.isHeld())lock.release();}});}catch(RejectedExecutionException error){if(lock.isHeld())lock.release();}
+    }
+    private PendingIntent alarmIntent(){return PendingIntent.getBroadcast(this,1,new Intent(this,TrackerHeartbeat.class),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);}
+    private void scheduleHeartbeat(){((AlarmManager)getSystemService(ALARM_SERVICE)).setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime()+300000,alarmIntent());}
+    private android.content.SharedPreferences prefs(){return getSharedPreferences("OrbitTracking",0);}
+    static String iso(long time){SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.US);f.setTimeZone(TimeZone.getTimeZone("UTC"));return f.format(new Date(time));}
+    @Override public void onCreate(){super.onCreate();current=this;store=new TrackerStore(this);manager=(LocationManager)getSystemService(LOCATION_SERVICE);connectivity=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        try{policy=new JSONObject(prefs().getString("policy","null"));places=new JSONArray(prefs().getString("places","[]"));presence=new JSONObject(prefs().getString("presence","{}"));}catch(Exception ignored){}
+        try{connectivity.registerDefaultNetworkCallback(network);}catch(Exception ignored){}
+    }
+    @Override public int onStartCommand(Intent intent,int flags,int startId){
+        if(!prefs().getBoolean("enabled",false)||!TrackingPlugin.ready(this)){stopSelf();return START_NOT_STICKY;}
+        try{showNotification(false);}catch(Exception error){TrackerStore.log(this,"service_permission_error");stopSelf();return START_NOT_STICKY;}
+        if(intent!=null&&intent.getBooleanExtra("started",false))return START_STICKY;
+        prefs().edit().putInt("boot",Settings.Global.getInt(getContentResolver(),Settings.Global.BOOT_COUNT,-1)).apply();
+        TrackerStore.log(this,"service_started");watch();scheduleHeartbeat();
+        if(intent!=null)intent.putExtra("started",true);
+        // onStartCommand may be called again when reopening an already-running service.
+        if(lastAccepted==0){lastAccepted=-1;worker.scheduleWithFixedDelay(this::tick,0,15,TimeUnit.SECONDS);}
+        return START_STICKY;
+    }
+    private void showNotification(boolean paused){
+        NotificationManager notifications=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=26)notifications.createNotificationChannel(new NotificationChannel("orbit_tracking","Location sharing",NotificationManager.IMPORTANCE_LOW));
+        PendingIntent open=PendingIntent.getActivity(this,0,new Intent(this,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+        Notification notification=new NotificationCompat.Builder(this,"orbit_tracking").setSmallIcon(R.drawable.ic_tracking)
+            .setContentTitle(paused?"Orbit · sharing paused":"Orbit · staying connected")
+            .setContentText(paused?"Location is paused. Open Orbit to resume.":"Sharing location with your person. Open Orbit to pause.")
+            .setOngoing(true).setOnlyAlertOnce(true).setContentIntent(open).setCategory(NotificationCompat.CATEGORY_SERVICE).build();
+        if(Build.VERSION.SDK_INT>=29)startForeground(28352,notification,android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);else startForeground(28352,notification);
+    }
+    private void stopLocations(){main.post(()->{try{manager.removeUpdates(listener);}catch(Exception ignored){}watching="";});}
+    private void watch(){
+        if(policy==null||policy.optString("share_mode").equals("paused")||prefs().contains("pendingMode")){stopLocations();return;}
+        String desired=adaptive;
+        main.post(()->{
+            if(destroyed||watching.equals(desired)||prefs().contains("pendingMode"))return;
+            try{
+                manager.removeUpdates(listener);
+                long interval=desired.equals("low")?60000:desired.equals("still")?30000:15000;
+                for(String provider:new String[]{LocationManager.GPS_PROVIDER,LocationManager.NETWORK_PROVIDER})if(manager.isProviderEnabled(provider))manager.requestLocationUpdates(provider,interval,TrackerPolicy.displacement(desired),listener,Looper.getMainLooper());
+                watching=desired;TrackerStore.log(this,"watch_"+desired);
+            }catch(SecurityException error){TrackerStore.log(this,"location_permission_error");stopSelf();}
+        });
+    }
+    private JSONObject require(TrackerAuth.Reply reply) throws Exception {
+        if(reply.status()==401||reply.status()==403){TrackerStore.log(this,"auth_required");stopLocations();throw new Exception("auth");}
+        if(reply.status()<200||reply.status()>=300)throw new Exception("http");
+        return reply.body().startsWith("[")?new JSONObject().put("rows",new JSONArray(reply.body())):reply.json();
+    }
+    private static long parseTime(String text) {
+        try {String normalized=text.replaceAll("\\.([0-9]{3})[0-9]+",".$1");String pattern=normalized.contains(".")?"yyyy-MM-dd'T'HH:mm:ss.SSSXXX":"yyyy-MM-dd'T'HH:mm:ssXXX";return new SimpleDateFormat(pattern,Locale.US).parse(normalized).getTime();}catch(Exception ignored){return Long.MAX_VALUE;}
+    }
+    private void sync(long now) throws Exception {
+        String raw=TrackerAuth.read(this);if(raw==null){stopSelf();throw new Exception("auth");}
+        String uid=new JSONObject(raw).getJSONObject("user").getString("id");
+        if(prefs().contains("pendingMode")){
+            stopLocations();TrackerAuth.syncMode(this);lastSync=0;store.clear();
+        }
+        if(now-lastSync>=60000){
+            JSONArray rows=require(TrackerAuth.request(this,"GET","/rest/v1/members?user_id=eq."+uid+"&select=user_id,couple_id,share_mode,share_mode_until,location_epoch",null)).getJSONArray("rows");
+            if(rows.length()!=1){stopSelf();throw new Exception("membership");}
+            JSONObject next=rows.getJSONObject(0);
+            if(policy==null||policy.optLong("location_epoch")!=next.getLong("location_epoch")||!policy.optString("user_id").equals(uid)){
+                store.clear();latest=null;history=null;previous=null;lastSent=0;presence=new JSONObject();lastPlaces=0;
+                TrackerStore.log(this,"privacy_generation_changed");
+            }
+            String until=next.optString("share_mode_until","");
+            if(!next.optString("share_mode").equals("live")&&!until.isEmpty()&&!until.equals("null")&&parseTime(until)<=now){
+                prefs().edit().putString("pendingMode",new JSONObject().put("share_mode","live").put("share_mode_until",JSONObject.NULL).toString()).commit();store.clear();stopLocations();lastSync=0;return;
+            }
+            policy=next;prefs().edit().putString("policy",policy.toString()).apply();lastSync=now;
+            showNotification(policy.getString("share_mode").equals("paused"));
+        }
+        if(policy==null)return;
+        if(now-lastPlaces>=300000){
+            places=require(TrackerAuth.request(this,"GET","/rest/v1/places?couple_id=eq."+policy.getString("couple_id")+"&select=id,lat,lng,radius_m,notify_arrive,notify_leave",null)).getJSONArray("rows");
+            JSONArray rows=require(TrackerAuth.request(this,"GET","/rest/v1/place_presence?user_id=eq."+uid+"&select=place_id,inside",null)).getJSONArray("rows");
+            if(store.count()==0){presence=new JSONObject();for(int i=0;i<rows.length();i++){JSONObject row=rows.getJSONObject(i);presence.put(row.getString("place_id"),new JSONObject().put("inside",row.getBoolean("inside")).put("consecutive",0));}}
+            lastPlaces=now;prefs().edit().putString("places",places.toString()).putString("presence",presence.toString()).apply();
+        }
+        watch();
+    }
+    private void battery(){Intent info=registerReceiver(null,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));if(info!=null){int level=info.getIntExtra(BatteryManager.EXTRA_LEVEL,-1),scale=info.getIntExtra(BatteryManager.EXTRA_SCALE,100);battery=level<0?-1:Math.min(100,Math.round(level*100f/Math.max(1,scale)));charging=info.getIntExtra(BatteryManager.EXTRA_PLUGGED,0)!=0;}}
+    private void accept(Location location){
+        if(destroyed||policy==null||prefs().contains("pendingMode")||policy.optString("share_mode").equals("paused"))return;
+        long now=System.currentTimeMillis();boolean mocked=Build.VERSION.SDK_INT>=31?location.isMock():location.isFromMockProvider();
+        TrackerPolicy.Fix fix=new TrackerPolicy.Fix(location.getLatitude(),location.getLongitude(),location.getAccuracy(),location.hasSpeed()?location.getSpeed():-1,location.getTime(),mocked);
+        if(!TrackerPolicy.valid(fix,now,now-lastGood>600000)){TrackerStore.log(this,"fix_filtered");return;}
+        if(previous!=null&&fix.time()<=previous.time())return;
+        if(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())/((fix.time()-previous.time())/1000.0)>70){TrackerStore.log(this,"gps_jump_filtered");return;}
+        if(fix.accuracy()<=100)lastGood=now;
+        if(fix.speed()>=1||(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())>=50))lastMovement=now;
+        battery();adapt(fix,previous,now);
+        latest=fix;previous=fix;lastAccepted=now;prefs().edit().putLong("lastFix",fix.time()).apply();
+        try{
+            if(now-lastSent>=TrackerPolicy.gap(adaptive)){
+                boolean surprise=policy.optString("share_mode").equals("surprise");boolean record=!surprise&&TrackerPolicy.history(fix,history);
+                JSONObject row=row(fix,record,surprise,location.hasBearing()?location.getBearing():null);
+                store.add("fix",row);lastSent=now;if(record)history=fix;
+                if(!surprise)geofences(fix);
+                flush(now);
+            }
+        }catch(Exception error){failed(now);}
+    }
+    private void adapt(TrackerPolicy.Fix fix,TrackerPolicy.Fix previousFix,long now){
+        String desired=TrackerPolicy.mode(battery,charging,fix,previousFix,lastMovement,now);
+        if(!desired.equals(adaptive)&&now-lastSwitch>=60000){adaptive=desired;lastSwitch=now;prefs().edit().putString("adaptive",adaptive).apply();watch();}
+    }
+    private JSONObject row(TrackerPolicy.Fix fix,boolean record,boolean surprise,Float bearing) throws Exception {
+        return new JSONObject().put("client_id",UUID.randomUUID().toString()).put("lat",surprise?TrackerPolicy.snap(fix.lat()):fix.lat()).put("lng",surprise?TrackerPolicy.snap(fix.lng()):fix.lng())
+            .put("accuracy_m",surprise?2000:fix.accuracy()).put("speed_mps",surprise||fix.speed()<0||!adaptive.equals("moving")||System.currentTimeMillis()-fix.time()>60000?JSONObject.NULL:fix.speed()).put("heading",surprise||bearing==null?JSONObject.NULL:bearing)
+            .put("battery_pct",battery<0?JSONObject.NULL:battery).put("charging",charging).put("is_moving",adaptive.equals("moving")&&fix.speed()>=1&&System.currentTimeMillis()-fix.time()<=60000).put("fuzzed",surprise).put("recorded_at",iso(fix.time())).put("history",record);
+    }
+    private void geofences(TrackerPolicy.Fix fix) throws Exception {
+        for(int i=0;i<places.length();i++){
+            JSONObject place=places.getJSONObject(i);String id=place.getString("id");JSONObject old=presence.optJSONObject(id);
+            TrackerPolicy.Presence before=new TrackerPolicy.Presence(old!=null&&old.optBoolean("inside"),old==null?0:old.optInt("consecutive"));
+            var after=TrackerPolicy.evaluate(fix,place.getDouble("lat"),place.getDouble("lng"),place.getInt("radius_m"),before);
+            presence.put(id,new JSONObject().put("inside",after.inside()).put("consecutive",after.consecutive()));
+            if(after.inside()!=before.inside())store.add("transition",new JSONObject().put("id",UUID.randomUUID().toString()).put("place_id",id).put("inside",after.inside()).put("recorded_at",iso(fix.time())));
+        }
+        prefs().edit().putString("presence",presence.toString()).apply();
+    }
+    private void tick(){
+        PowerManager.WakeLock lock=((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"orbit:heartbeat");lock.acquire(90000);
+        try{tickCore();}finally{if(lock.isHeld())lock.release();}
+    }
+    private void tickCore(){
+        if(destroyed||!prefs().getBoolean("enabled",false)){stopSelf();return;}
+        long now=System.currentTimeMillis();if(now<nextAttempt)return;
+        try{
+            sync(now);
+            if(policy==null||policy.optString("share_mode").equals("paused")||prefs().contains("pendingMode"))return;
+            battery();adapt(latest!=null&&now-latest.time()<=60000?latest:null,null,now);
+            if(latest!=null&&now-lastSent>=300000){store.add("fix",row(latest,false,policy.optString("share_mode").equals("surprise"),null));lastSent=now;}
+            flush(now);
+        }catch(Exception error){failed(now);}
+    }
+    private void failed(long now){nextAttempt=now+backoff;backoff=Math.min(300000,backoff*2);TrackerStore.log(this,"network_retry");}
+    private void flush(long now) throws Exception {
+        if(now<nextAttempt||policy==null||prefs().contains("pendingMode"))return;
+        var items=store.batch();if(items.isEmpty())return;
+        JSONArray fixes=new JSONArray(),transitions=new JSONArray();for(var item:items){if(item.kind().equals("fix"))fixes.put(item.value());else transitions.put(item.value());}
+        boolean low=lowArmed&&battery>=0&&battery<=15&&!charging;if(battery>25||charging)lowArmed=true;
+        var response=TrackerAuth.requestAs(this,policy.getString("user_id"),"POST","/rest/v1/rpc/submit_locations",new JSONObject().put("p_epoch",policy.getLong("location_epoch")).put("p_fixes",fixes).put("p_transitions",transitions).put("p_low_battery",low));
+        if(response.status()==400&& (response.body().contains("LOCATION_EPOCH_CHANGED")||response.body().contains("SHARING_PAUSED"))){store.clear();lastSync=0;stopLocations();TrackerStore.log(this,"privacy_queue_discarded");return;}
+        if(response.status()==400&&response.body().contains("FUTURE_FIX")){store.acknowledge(items);prefs().edit().putString("issue","clock").apply();TrackerStore.log(this,"clock_check");nextAttempt=now+300000;return;}
+        require(response);prefs().edit().remove("issue").apply();store.acknowledge(items);if(low)lowArmed=false;nextAttempt=0;backoff=5000;prefs().edit().putLong("lastUpload",now).apply();TrackerStore.log(this,"upload_ok");
+    }
+    @Override public IBinder onBind(Intent intent){return null;}
+    @Override public void onTaskRemoved(Intent rootIntent){TrackerStore.log(this,"task_swiped_service_retained");super.onTaskRemoved(rootIntent);}
+    @Override public void onDestroy(){destroyed=true;current=null;((AlarmManager)getSystemService(ALARM_SERVICE)).cancel(alarmIntent());stopLocations();try{connectivity.unregisterNetworkCallback(network);}catch(Exception ignored){}worker.shutdownNow();new Thread(()->{try{worker.awaitTermination(35,TimeUnit.SECONDS);}catch(InterruptedException ignored){}finally{store.close();}},"orbit-tracker-close").start();TrackerStore.log(this,"service_stopped");super.onDestroy();}
+}

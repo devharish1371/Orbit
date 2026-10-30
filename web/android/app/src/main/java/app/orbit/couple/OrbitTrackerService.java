@@ -131,8 +131,7 @@ public class OrbitTrackerService extends Service {
         if(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())/((fix.time()-previous.time())/1000.0)>70){TrackerStore.log(this,"gps_jump_filtered");return;}
         if(fix.accuracy()<=100)lastGood=now;
         if(fix.speed()>=1||(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())>=50))lastMovement=now;
-        battery();String desired=TrackerPolicy.mode(battery,charging,fix,previous,lastMovement,now);
-        if(!desired.equals(adaptive)&&now-lastSwitch>=60000){adaptive=desired;lastSwitch=now;prefs().edit().putString("adaptive",adaptive).apply();watch();}
+        battery();adapt(fix,previous,now);
         latest=fix;previous=fix;lastAccepted=now;prefs().edit().putLong("lastFix",fix.time()).apply();
         try{
             if(now-lastSent>=TrackerPolicy.gap(adaptive)){
@@ -144,10 +143,14 @@ public class OrbitTrackerService extends Service {
             }
         }catch(Exception error){failed(now);}
     }
+    private void adapt(TrackerPolicy.Fix fix,TrackerPolicy.Fix previousFix,long now){
+        String desired=TrackerPolicy.mode(battery,charging,fix,previousFix,lastMovement,now);
+        if(!desired.equals(adaptive)&&now-lastSwitch>=60000){adaptive=desired;lastSwitch=now;prefs().edit().putString("adaptive",adaptive).apply();watch();}
+    }
     private JSONObject row(TrackerPolicy.Fix fix,boolean record,boolean surprise,Float bearing) throws Exception {
         return new JSONObject().put("client_id",UUID.randomUUID().toString()).put("lat",surprise?TrackerPolicy.snap(fix.lat()):fix.lat()).put("lng",surprise?TrackerPolicy.snap(fix.lng()):fix.lng())
-            .put("accuracy_m",surprise?2000:fix.accuracy()).put("speed_mps",surprise||fix.speed()<0?JSONObject.NULL:fix.speed()).put("heading",surprise||bearing==null?JSONObject.NULL:bearing)
-            .put("battery_pct",battery<0?JSONObject.NULL:battery).put("charging",charging).put("is_moving",fix.speed()>=1).put("fuzzed",surprise).put("recorded_at",iso(fix.time())).put("history",record);
+            .put("accuracy_m",surprise?2000:fix.accuracy()).put("speed_mps",surprise||fix.speed()<0||!adaptive.equals("moving")||System.currentTimeMillis()-fix.time()>60000?JSONObject.NULL:fix.speed()).put("heading",surprise||bearing==null?JSONObject.NULL:bearing)
+            .put("battery_pct",battery<0?JSONObject.NULL:battery).put("charging",charging).put("is_moving",adaptive.equals("moving")&&fix.speed()>=1&&System.currentTimeMillis()-fix.time()<=60000).put("fuzzed",surprise).put("recorded_at",iso(fix.time())).put("history",record);
     }
     private void geofences(TrackerPolicy.Fix fix) throws Exception {
         for(int i=0;i<places.length();i++){
@@ -169,7 +172,7 @@ public class OrbitTrackerService extends Service {
         try{
             sync(now);
             if(policy==null||policy.optString("share_mode").equals("paused")||prefs().contains("pendingMode"))return;
-            battery();
+            battery();adapt(latest!=null&&now-latest.time()<=60000?latest:null,null,now);
             if(latest!=null&&now-lastSent>=300000){store.add("fix",row(latest,false,policy.optString("share_mode").equals("surprise"),null));lastSent=now;}
             flush(now);
         }catch(Exception error){failed(now);}
