@@ -469,3 +469,17 @@ worker checks **15/15**. Source scan **254 files, zero findings**. Firebase OAut
 FCM API access also passed a validate-only probe with an intentionally invalid device
 token, which cannot deliver to a phone. Preferences and real activity loaded in the
 authenticated browser. No real attention request was sent during this browser check.
+
+M5 [CI run 41081000069](https://github.com/devharish1371/Orbit/actions/runs/41081000069)
+passed for commit **333a4c6**: web/worker/Python checks, three native policy tests,
+Android compilation, apksigner verification, private foreground-service manifest checks,
+and Firebase native resource/messaging-service assertions. Downloaded the 6,761,971-byte
+APK; ZIP integrity and private credential/contact scan passed. Its v2 signing certificate
+matches the installed M4 build, so an in-place update is supported.
+SHA256: `9a0ec62a3f09c49d4578602561e8ecddb087d4aa5c3b93a69451decfb0d094bb`.
+
+Deployed the tested notify worker in live mode. Requested human #7 to install the APK,
+opt in to notifications and explicitly authorize one labelled test push to Dev's phone.
+Prepared a test helper that targets only the most recently registered Android device of
+the requested person; it does not invent partner activity. A provider acceptance result
+will not be described as phone delivery without confirmation. M5 remains untagged.

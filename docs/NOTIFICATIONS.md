@@ -52,6 +52,16 @@ activity row confirms persistence, not delivery to another phone.
 
 ## Human #7 — delivery gate
 
+Verified [M5 build 333a4c6](https://github.com/devharish1371/Orbit/actions/runs/41081000069).
+Local APK: `.artifacts/apk/333a4c6/app-debug.apk`, 6,761,971 bytes.
+SHA256: `9a0ec62a3f09c49d4578602561e8ecddb087d4aa5c3b93a69451decfb0d094bb`.
+CI passed 33 web tests, 15 worker tests, Python checks, three native policy tests,
+Android compilation, cryptographic APK signature verification, private tracking-service
+manifest checks and Firebase native resource/messaging-service assertions. Local ZIP and
+private credential/contact scans passed; v2 signing certificate matches M4's APK.
+The complete hosted/local Python suite passed 47 tests separately. The notify worker
+is deployed in live mode; real phone receipt is still unverified.
+
 1. Update the installed M4 APK with the M5 build; the stable debug signing identity is
    preserved. Open Settings → Notifications → Enable notifications. Confirm ready.
 2. Repeat on the other phone/account when available. Swipe Orbit away on the receiver.

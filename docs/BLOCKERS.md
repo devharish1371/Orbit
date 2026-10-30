@@ -10,7 +10,9 @@ The earlier Profile/Map usability check completed M3. The user explicitly author
 continuing to M5 while M4's remaining physical tests are deferred; no M4 completion tag.
 
 M5 implementation and hosted tests pass. Firebase human #3 files are validated and
-configured privately. APK compilation/delivery acceptance is in progress. See
+configured privately. Signed Firebase APK `333a4c6` passed CI and matches M4's signing
+identity; the live worker is deployed. Human #7 now needs to install the update, enable
+notifications, and verify real background delivery/taps. See
 `docs/NOTIFICATIONS.md`; do not claim killed-app delivery before the phone check.
 
 ## Resolved — Email OTP sender and M2 logins
