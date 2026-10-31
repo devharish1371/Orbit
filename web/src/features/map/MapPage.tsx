@@ -1,3 +1,4 @@
+import { directionsTo, locationStatus } from '@/lib/location-status'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Link } from 'react-router-dom'
 import { nativeTracking } from '@/native/tracker'
@@ -82,6 +83,20 @@ export default function MapPage() {
   const currentLocation = live.locations.data?.find(
     (row) => row.user_id === current.user_id,
   )
+  const status = locationStatus(
+    current.share_mode,
+    currentLocation?.recorded_at,
+    now,
+  )
+  const directions = currentLocation
+    ? directionsTo(
+        currentLocation,
+        current.share_mode,
+        currentLocation.fuzzed,
+        currentLocation.recorded_at,
+        now,
+      )
+    : null
   const places = live.places.data ?? []
   const choose = (point: Point) => {
     setEditor({
@@ -236,6 +251,30 @@ export default function MapPage() {
                 current.display_name}
           </h2>
         </div>
+        <div
+          className="location-freshness"
+          data-state={status.state}
+          role="status"
+        >
+          <span aria-hidden="true" />
+          {status.label}
+        </div>
+        {directions && current.user_id !== data.self.user_id && (
+          <a
+            className="button directions-link"
+            href={directions}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Directions in Google Maps ↗
+          </a>
+        )}
+        {status.state === 'old' && (
+          <p className="muted small">
+            This is the last shared position. A new update needs location and an
+            internet connection on that phone.
+          </p>
+        )}
         {current.share_mode === 'paused' ? (
           <p>{copy.map.paused}</p>
         ) : currentLocation ? (

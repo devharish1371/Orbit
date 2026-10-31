@@ -2,11 +2,16 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { cursorFilter, type Channel, type Post } from '@/lib/posts'
-export function usePosts(channel: Channel, kept = false) {
+export function usePosts(
+  channel: Channel,
+  kept = false,
+  kind = 'all',
+  search = '',
+) {
   const { client } = useAuth(),
     { data: space } = useSpace()
   return useInfiniteQuery({
-    queryKey: ['posts', space?.couple.id, channel, kept],
+    queryKey: ['posts', space?.couple.id, channel, kept, kind, search],
     enabled: !!space,
     initialPageParam: null as Pick<Post, 'id' | 'created_at'> | null,
     maxPages: 3,
@@ -20,6 +25,12 @@ export function usePosts(channel: Channel, kept = false) {
         .order('created_at', { ascending: false })
         .order('id', { ascending: false })
         .limit(30)
+      if (kind !== 'all') query = query.eq('kind', kind)
+      if (search.trim())
+        query = query.ilike(
+          'body',
+          `%${search.trim().replace(/[\\%_]/g, '\\$&')}%`,
+        )
       if (kept) query = query.eq('keep', true)
       if (pageParam) query = query.or(cursorFilter(pageParam))
       const result = await query

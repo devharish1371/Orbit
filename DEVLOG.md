@@ -689,3 +689,13 @@ Web checks pass: 53 component/unit tests, 16 worker tests, lint/types/format/bui
 backend remains unchanged since the full 58-test pass. Final browser audits and Android
 packaging are underway. No messages or pushes sent to the partner. Physical phone review
 and previously deferred offline/endurance/partner checks remain open.
+
+## 2026-11-01 — Research-led daily flow improvements
+
+After further user direction, studied official Maps, Life360, Day One and WhatsApp flows
+(links and decisions in docs/DESIGN_DIRECTION.md). Added scoped server-side search/media
+filters for Chat and Moments; factual map freshness with guarded precise-location directions;
+and a tracking overview separating confirmed sharing mode, service health, setup and diagnostics.
+55 web tests and 16 worker tests pass, including stale/paused/fuzzed navigation guards.
+The prior visual commit e342cdc passed Android CI 41234683772. Packaging the flow additions
+requires a new build; final visual/interaction QA continues with disposable identities only.

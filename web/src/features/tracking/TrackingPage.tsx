@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -129,11 +130,31 @@ export default function TrackingPage() {
         <ArrowLeft size={18} aria-hidden="true" />
         {copy.common.back}
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">{copy.tracking.title}</p>
-        <h1>{copy.tracking.heading}</h1>
-        <p className="muted">{copy.tracking.description}</p>
-      </header>
+      <SectionHeading title={copy.tracking.heading} kind="map" />
+      <section className="sharing-signal" data-mode={data?.self.share_mode}>
+        <div className="signal-illustration" aria-hidden="true">
+          <i />
+          <i />
+          <span>↗</span>
+        </div>
+        <div>
+          <p className="eyebrow">Your location</p>
+          <h2>
+            {data?.self.share_mode === 'paused'
+              ? 'Sharing paused'
+              : data?.self.share_mode === 'surprise'
+                ? 'Surprise mode'
+                : 'Sharing on'}
+          </h2>
+          <p className="small muted">
+            {data?.self.share_mode === 'paused'
+              ? 'Your partner can see that sharing is paused.'
+              : data?.self.share_mode === 'surprise'
+                ? 'Your partner sees an approximate area.'
+                : 'Your partner can see your shared location.'}
+          </p>
+        </div>
+      </section>
       {!nativeTracking ? (
         <section className="glass settings-section">
           <ShieldCheck aria-hidden="true" />
@@ -216,33 +237,47 @@ export default function TrackingPage() {
                 </label>
               </section>
             )}
-            {steps.map((item) => (
-              <section key={item.key} className="glass tracking-step">
-                <div className="tracking-step-heading">
-                  <h2>{item.title}</h2>
-                  <span className={item.ready ? 'step-ready' : 'step-missing'}>
-                    {item.ready ? (
-                      <Check size={17} aria-label={copy.tracking.ready} />
-                    ) : (
-                      copy.tracking.missing
-                    )}
-                  </span>
-                </div>
-                <p className="muted small">{item.body}</p>
-                {!item.ready && (
-                  <Button
-                    disabled={
-                      busy || (!consent && !h.enabled) || !item.available
-                    }
-                    onClick={() => {
-                      void step(item.run)
-                    }}
-                  >
-                    {item.action}
-                  </Button>
-                )}
-              </section>
-            ))}
+            <details
+              className="tracking-setup"
+              open={!steps.every((item) => item.ready)}
+            >
+              <summary>
+                Phone setup{' '}
+                <span>
+                  {steps.filter((item) => item.ready).length}/{steps.length}{' '}
+                  ready
+                </span>
+              </summary>
+              {steps.map((item) => (
+                <section key={item.key} className="glass tracking-step">
+                  <div className="tracking-step-heading">
+                    <h2>{item.title}</h2>
+                    <span
+                      className={item.ready ? 'step-ready' : 'step-missing'}
+                    >
+                      {item.ready ? (
+                        <Check size={17} aria-label={copy.tracking.ready} />
+                      ) : (
+                        copy.tracking.missing
+                      )}
+                    </span>
+                  </div>
+                  <p className="muted small">{item.body}</p>
+                  {!item.ready && (
+                    <Button
+                      disabled={
+                        busy || (!consent && !h.enabled) || !item.available
+                      }
+                      onClick={() => {
+                        void step(item.run)
+                      }}
+                    >
+                      {item.action}
+                    </Button>
+                  )}
+                </section>
+              ))}
+            </details>
             <section className="settings-section">
               <p className="small muted">
                 {/nothing/i.test(h.manufacturer)

@@ -1,3 +1,4 @@
+import { PostExplorer, type PostFilter } from './PostExplorer'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import {
@@ -22,12 +23,20 @@ import { PostCard } from './PostCard'
 import { Avatar } from '@/components/ui/Avatar'
 import { callUrl } from '@/lib/connect'
 export default function PostsPage({ channel }: { channel: Channel }) {
+  const [search, setSearch] = useState('')
+  const [needle, setNeedle] = useState('')
+  const [kind, setKind] = useState<PostFilter>('all')
+  useEffect(() => {
+    const timer = setTimeout(() => setNeedle(search), 300)
+    return () => clearTimeout(timer)
+  }, [search])
+  const filtered = kind !== 'all' || !!needle.trim()
   const [composing, setComposing] = useState(false)
   const [composerBusy, setComposerBusy] = useState(false)
   const [away, setAway] = useState(false)
   const scrollArea = useRef<HTMLDivElement>(null)
   const [kept, setKept] = useState(false),
-    posts = usePosts(channel, kept),
+    posts = usePosts(channel, kept, kind, needle),
     now = useNow(),
     { data: space } = useSpace(),
     query = useQueryClient()
@@ -155,6 +164,13 @@ export default function PostsPage({ channel }: { channel: Channel }) {
           <div hidden={!composing}>{composer}</div>
         </section>
       )}
+      <PostExplorer
+        search={search}
+        onSearch={setSearch}
+        kind={kind}
+        onKind={setKind}
+        chat={channel === 'chat'}
+      />
       <div
         ref={scrollArea}
         className={channel === 'chat' ? 'chat-scroll' : 'moments-scroll'}
@@ -242,14 +258,20 @@ export default function PostsPage({ channel }: { channel: Channel }) {
             <section className="glass posts-empty">
               <span aria-hidden="true">{channel === 'chat' ? '💌' : '✦'}</span>
               <h2>
-                {kept
-                  ? copy.posts.noKept
-                  : channel === 'chat'
-                    ? copy.posts.chatEmpty
-                    : copy.posts.momentsEmpty}
+                {filtered
+                  ? 'No matches'
+                  : kept
+                    ? copy.posts.noKept
+                    : channel === 'chat'
+                      ? copy.posts.chatEmpty
+                      : copy.posts.momentsEmpty}
               </h2>
               <p className="muted">
-                {kept ? copy.posts.noKeptHint : copy.posts.emptyHint}
+                {filtered
+                  ? 'Try another word or clear your filters.'
+                  : kept
+                    ? copy.posts.noKeptHint
+                    : copy.posts.emptyHint}
               </p>
             </section>
           ) : (
