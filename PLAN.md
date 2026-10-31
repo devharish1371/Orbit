@@ -90,3 +90,8 @@ and local APK verification remain; download approval was declined. See docs/UI_R
 App-wide refinement: 48 px profile planets and smaller launcher planets, clear orbital paths,
 no redundant nav dots, quieter hierarchy and consistent native-modal choice sheets across
 retention/place/duration. Final phone-sized review and Android CI precede human #7 acceptance.
+
+Lock/loading extension: native orbital lock cover with authentication-busy state and scrolling;
+shared cold/session loading view; nested route Suspense retains Shell and navigation. 58 web
+and 16 worker tests pass. Final Android run 41236753394 passed for 266123d; physical
+lock cancellation/background-return/keyboard/sheet acceptance remains human #7.

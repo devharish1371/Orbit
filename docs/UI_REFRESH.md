@@ -63,3 +63,17 @@ Route loading now keeps Shell/navigation mounted, covered by a regression test. 
 loading uses the shared brand mark. The loading/lock additions require a newer Android run
 than e7b41e6 above. Updated run and final audit results are recorded in DEVLOG.md. Native
 visual acceptance and real unlock transition timing are not inferred from browser QA.
+
+Final cold-login Lighthouse after loading changes: **98 performance / 100 accessibility /
+100 best practices**, LCP 1.7 s, CLS 0, TBT 10 ms under simulated mobile conditions. These
+are browser measurements, not physical Android biometric/unlock timing. Web suite is now
+**58 tests**, worker suite **16**, with lint/types/format/build passing. Hosted suite remains
+58 passing from the prior full run; no backend schema or authorization change in this pass.
+The final refined-screen audits are separate from this cold-load measurement.
+
+Final Android build for the lock/loading update: [41236753394](https://github.com/devharish1371/Orbit/actions/runs/41236753394),
+code 266123d, passed native tests/compilation, signature and manifest checks. Artifact
+`orbit-ui-refresh`. All 26 final refined screen/theme audits are 100/100. New screenshots:
+[screens/refinement](screens/refinement/). Local APK signer-continuity/private-payload
+verification remains unperformed after the earlier download refusal. Human task #7 must
+review the native cover and real return-to-app flow; browser results do not replace this.

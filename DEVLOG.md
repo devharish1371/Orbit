@@ -740,3 +740,16 @@ Shell, retaining navigation instead of blanking the whole app. Added a regressio
 suspends a route and proves navigation retains its DOM identity through completion. No
 artificial progress percentage, forced reload or minimum loading delay. Native appearance
 and actual authentication-to-content smoothness require human task #7 on the phone.
+
+Loading checks: 58 web tests and 16 worker tests pass, plus lint/types/format/build. Cold
+production Login Lighthouse: 98 performance, 100 accessibility, 100 best practices; LCP
+1.7 s, CLS 0, TBT 10 ms in simulated mobile conditions. These do not measure hardware
+biometric timing. Native Android run 41236753394 is compiling the final 266123d update.
+
+Final verification: Android run [41236753394](https://github.com/devharish1371/Orbit/actions/runs/41236753394)
+passed for 266123d, including native compilation/tests, signature and manifest checks. All
+26 refined route/theme DOM audits score 100 accessibility / 100 best practices; 34 phone
+layouts fit, with expanded choice/composer captures. Test fixtures and Storage files removed.
+Prior local APK download refusal remains respected; local signer-continuity/private-payload
+verification is not newly claimed. Native lock visual/cancellation/background-return and
+sheet/back/keyboard acceptance remains human task #7. No partner contact or content sent.
