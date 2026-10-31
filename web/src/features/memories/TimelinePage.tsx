@@ -113,7 +113,11 @@ export default function TimelinePage() {
                 ],
               ].map(([value, label]) => (
                 <div key={label}>
-                  <strong title={String(value)}>
+                  <strong
+                    title={
+                      value === null ? 'No recorded locations' : String(value)
+                    }
+                  >
                     {typeof value === 'number'
                       ? new Intl.NumberFormat('en-IN', {
                           notation: 'compact',
