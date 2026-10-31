@@ -1109,9 +1109,9 @@ h2 {
 }
 .login-page .planet-pink,
 .login-page .planet-purple {
-  width: 68px;
-  height: 68px;
-  box-shadow: inset -9px -7px 0 #20263925;
+  width: 28px;
+  height: 28px;
+  box-shadow: inset -4px -3px 0 #20263925;
 }
 .login-page .planet-pink {
   background: #ff9b7d;

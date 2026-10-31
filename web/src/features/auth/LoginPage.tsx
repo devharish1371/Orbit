@@ -75,11 +75,6 @@ export default function LoginPage() {
         <div className="orbit-track orbit-track-two" />
         <span className="planet planet-pink" />
         <span className="planet planet-purple" />
-        <span className="orbit-heart">
-          <Heart size={26} fill="currentColor" />
-        </span>
-        <span className="star star-one">✦</span>
-        <span className="star star-two">✧</span>
       </div>
       <section className="login-copy">
         <h1>{step === 'email' ? copy.login.title : copy.login.codeTitle}</h1>
