@@ -1909,3 +1909,146 @@ html:has(.choice-sheet[open]) {
     animation: none;
   }
 }
+/* Bounded geometry: <=230px ellipse plus 44px targets and focus clearance fits the scene. */
+.portrait-universe {
+  height: 164px;
+}
+/* Both profiles follow the same tilted ellipse, half a revolution apart. */
+.portrait-motion-track {
+  position: absolute;
+  inset: auto;
+  width: min(68%, 230px);
+  height: 66px;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  rotate: -19deg;
+}
+.portrait-motion-track::before,
+.portrait-motion-track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--text-dim);
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.portrait-motion-track::after {
+  rotate: 38deg;
+  border-color: var(--secondary);
+  opacity: 0.22;
+}
+.portrait-motion-track .portrait-orb {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  left: 0;
+  top: 0;
+  right: auto;
+  offset-path: ellipse(50% 50% at 50% 50%);
+  offset-anchor: center;
+  offset-rotate: 19deg;
+  animation: profile-orbit 32s linear infinite;
+  offset-distance: var(--orbit-start);
+}
+.portrait-motion-track .portrait-orb .avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+  box-shadow: 0 0 0 3px var(--panel);
+}
+.portrait-motion-track .portrait-self {
+  --orbit-start: 50%;
+}
+.portrait-motion-track .portrait-partner {
+  --orbit-start: 0%;
+}
+.portrait-universe[data-running='false'] .portrait-orb,
+.portrait-universe:has(.portrait-orb:focus-visible) .portrait-orb {
+  animation-play-state: paused;
+}
+.portrait-motion-track .portrait-orb:hover {
+  translate: none;
+}
+.orbit-motion-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--text-dim);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+}
+.orbit-motion-toggle:hover {
+  background: var(--surface-strong);
+}
+@keyframes profile-orbit {
+  from {
+    offset-distance: var(--orbit-start);
+  }
+  to {
+    offset-distance: calc(var(--orbit-start) + 100%);
+  }
+}
+@media (hover: hover) {
+  .portrait-universe:hover .portrait-orb {
+    animation-play-state: paused;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-motion-track .portrait-orb {
+    animation: none !important;
+  }
+  .orbit-motion-toggle {
+    display: none;
+  }
+}
+@supports not (offset-path: ellipse(50% 50% at 50% 50%)) {
+  .portrait-motion-track .portrait-self {
+    left: -24px;
+    top: calc(50% - 24px);
+    rotate: 19deg;
+  }
+  .portrait-motion-track .portrait-partner {
+    left: calc(100% - 24px);
+    top: calc(50% - 24px);
+    rotate: 19deg;
+  }
+  .orbit-motion-toggle {
+    display: none;
+  }
+}
+.connection-card .quick-actions {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+.connection-card .quick-actions a {
+  min-width: 0;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+}
+.connection-card .quick-actions a > span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  line-height: 0;
+}
+.connection-card .quick-actions a svg {
+  width: 21px;
+  height: 21px;
+  margin: 0;
+}

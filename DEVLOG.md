@@ -753,3 +753,20 @@ layouts fit, with expanded choice/composer captures. Test fixtures and Storage f
 Prior local APK download refusal remains respected; local signer-continuity/private-payload
 verification is not newly claimed. Native lock visual/cancellation/background-return and
 sheet/back/keyboard acceptance remains human task #7. No partner contact or content sent.
+
+## 2026-11-01 — Compact moving profile orbit
+
+User requested the Home profiles orbit each other, then asked for a smaller composition with
+no clipped path. Added a shared CSS elliptical path, opposite phases, upright profiles and
+32-second revolution. Motion pauses on hover, touch hold, keyboard focus, hidden document,
+off-screen scene and an explicit pause control; reduced-motion retains a static composition.
+Bounded the path to at most 230×66 px in a 164 px scene, with 34 px portraits inside 44 px
+tap targets and clearance for the path/focus outline. Visual/geometry verification continues.
+
+Compact orbit verified: 36 authored geometry samples across 320/360/412/480 px show no
+clipped track bounds or 44 px tap targets. Actual CSS offsets advance in lockstep, half a
+revolution apart, with counter-rotation keeping profiles upright. Added pause/resume,
+touch-cancel and hidden-document coverage. Web 59, worker 16, lint/types/format/build pass.
+Home communication actions are now icon-only with accessible names/tooltips and a distinct
+phone-in-chat WhatsApp glyph. Live DOM checks confirm all icons fully contained and centered
+(to within 0.004 px), with 48 px-high targets. No call or external app was activated.

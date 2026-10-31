@@ -88,38 +88,63 @@ export default function HomePage() {
         </div>
         <div className="quick-actions">
           {callUrl(phone) && (
-            <a href={callUrl(phone)!}>
+            <a
+              href={callUrl(phone)!}
+              aria-label={copy.home.call}
+              title={copy.home.call}
+            >
               <span>
                 <Phone size={21} aria-hidden="true" />
               </span>
-              {copy.home.call}
             </a>
           )}
           {couple.meet_url ? (
-            <a href={couple.meet_url} target="_blank" rel="noopener noreferrer">
+            <a
+              href={couple.meet_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={copy.home.meet}
+              title="Google Meet"
+            >
               <span>
                 <Video size={22} aria-hidden="true" />
               </span>
-              {copy.home.meet}
             </a>
           ) : (
-            <Link to="/settings" title={copy.home.meetSetup}>
+            <Link
+              to="/settings"
+              title={copy.home.meetSetup}
+              aria-label={copy.home.meet}
+            >
               <span>
                 <Video size={22} aria-hidden="true" />
               </span>
-              {copy.home.meet}
             </Link>
           )}
           {whatsappUrl(phone) && (
             <a
               href={whatsappUrl(phone)!}
+              aria-label={copy.home.whatsapp}
+              title={copy.home.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
             >
               <span>
-                <MessageCircle size={22} aria-hidden="true" />
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 11.5a8.5 8.5 0 0 1-12.5 7.5L3 20.5l1.5-4.4A8.5 8.5 0 1 1 20 11.5Z" />
+                  <path d="m8 7 2 2-1 1c1 2 2 3 4 4l1-1 2 2c-1 2-3 1-5 0s-5-5-4-7Z" />
+                </svg>
               </span>
-              {copy.home.whatsapp}
             </a>
           )}
         </div>

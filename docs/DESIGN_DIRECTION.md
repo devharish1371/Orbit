@@ -93,3 +93,14 @@ arrow/Home/End navigation and focus restoration. This uses dialog/button semanti
 than pretending to be a native select or incomplete ARIA listbox. Native modal inertness
 keeps the background out of the interaction. Small screens use a bottom sheet; desktop uses
 a compact centered surface. No fake drag handle or unimplemented swipe affordance.
+
+## Compact orbital motion
+
+The user requested the profile planets move around each other, then reduced the desired
+scene size. The shared tilted ellipse is capped at 230×66 px in a 164 px scene. Portraits
+are 34 px within 44 px targets. They start half a path apart and make a 32-second revolution;
+CSS offset-rotate counteracts the track tilt so faces stay upright. Motion pauses during
+pointer/keyboard interaction, when hidden/off-screen, and via an explicit control. Reduced
+motion stays static. Geometry fixtures sampled nine phases at four widths (320/360/412/480):
+36 checks, no clipped path bounds or tap targets. Browser verified the actual motion-path
+animation and upright orientation. See [MDN motion paths](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/offset-path).
