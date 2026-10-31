@@ -49,3 +49,17 @@ rendered semantics and contrast, not authenticated load performance or Android f
 Native hardware smoothness, keyboard/gesture insets and updated launcher appearance require
 human task #7 on the Nothing Phone (3a). Earlier offline/endurance/partner/4G/soak gates are
 still open. M9 release acceptance is not claimed by this UI update.
+
+## App-wide refinement and return flow
+
+The later refinement (2f0f354, 493ce20 and subsequent loading change) further reduces boxed
+controls, tightens hierarchy across routes, removes nav dots and shrinks orbital planets.
+Retention, place and duration controls use a shared native-dialog choice sheet. Browser
+checks cover keyboard movement, Escape cancellation, return focus and actual duration/place
+selection; no content was sent. Native lock cover now has matching orbital artwork, busy
+state and large-text/short-screen scrolling. Authentication and privacy remain native.
+
+Route loading now keeps Shell/navigation mounted, covered by a regression test. Cold/session
+loading uses the shared brand mark. The loading/lock additions require a newer Android run
+than e7b41e6 above. Updated run and final audit results are recorded in DEVLOG.md. Native
+visual acceptance and real unlock transition timing are not inferred from browser QA.

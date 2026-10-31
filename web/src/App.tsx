@@ -1,3 +1,4 @@
+import { LoadingView } from '@/components/ui/LoadingView'
 import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
@@ -31,17 +32,9 @@ export default function App() {
     <>
       <div className="aurora" aria-hidden="true" />
       <OfflineBanner />
-      <Suspense
-        fallback={
-          <main className="loading-shell" role="status">
-            {copy.common.loading}
-          </main>
-        }
-      >
+      <Suspense fallback={<LoadingView />}>
         {restoring ? (
-          <main className="loading-shell" role="status">
-            {copy.common.loading}
-          </main>
+          <LoadingView />
         ) : restoreError ? (
           <main className="fallback">
             <h1>{copy.common.reconnectTitle}</h1>

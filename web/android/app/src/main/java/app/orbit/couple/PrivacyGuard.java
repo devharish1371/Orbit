@@ -3,15 +3,10 @@ package app.orbit.couple;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /** A native cover is installed before the first WebView frame, independent of JS timers. */
 final class PrivacyGuard {
@@ -20,7 +15,7 @@ final class PrivacyGuard {
     boolean locked;
     boolean authenticating;
     private long backgroundAt = -1;
-    private FrameLayout cover;
+    private OrbitLockCover cover;
     Runnable requestUnlock;
 
     PrivacyGuard(MainActivity activity) {
@@ -67,19 +62,10 @@ final class PrivacyGuard {
         }
         if (!visible) { if (cover != null) cover.setVisibility(View.GONE); return; }
         if (cover == null) {
-            cover = new FrameLayout(activity);
-            cover.setBackgroundColor(Color.rgb(11,11,18));
-            cover.setClickable(true); cover.setFocusable(true);
-            LinearLayout content = new LinearLayout(activity);
-            content.setOrientation(LinearLayout.VERTICAL); content.setGravity(Gravity.CENTER); content.setPadding(32,32,32,32);
-            TextView title = new TextView(activity);
-            title.setText("Orbit is locked"); title.setTextColor(Color.WHITE); title.setTextSize(26); title.setGravity(Gravity.CENTER);
-            Button unlock = new Button(activity); unlock.setText("Unlock Orbit");
-            unlock.setOnClickListener(v -> { if (requestUnlock != null) requestUnlock.run(); });
-            content.addView(title); content.addView(unlock);
-            cover.addView(content,new FrameLayout.LayoutParams(-1,-1));
+            cover = new OrbitLockCover(activity, () -> { if (requestUnlock != null) requestUnlock.run(); });
             activity.addContentView(cover,new FrameLayout.LayoutParams(-1,-1));
         }
+        cover.update(authenticating);
         cover.setVisibility(View.VISIBLE); cover.bringToFront();
         cover.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
     }

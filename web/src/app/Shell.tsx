@@ -1,7 +1,8 @@
 import { Settings } from 'lucide-react'
 import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
 import { surfaceFeedback } from '@/components/ui/surfaceFeedback'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
+import { LoadingView, RouteLoading } from '@/components/ui/LoadingView'
 import { setAppearance, normalizeTheme } from '@/hooks/useTheme'
 import { Avatar } from '@/components/ui/Avatar'
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
@@ -48,18 +49,7 @@ export default function Shell() {
   useEffect(() => {
     if (mode && accent) setAppearance(normalizeTheme(mode), accent)
   }, [mode, accent])
-  if (space.isPending)
-    return (
-      <main
-        className="loading-shell"
-        aria-busy="true"
-        aria-label={copy.common.loading}
-      >
-        <div className="skeleton skeleton-heading" />
-        <div className="skeleton skeleton-card" />
-        <div className="skeleton skeleton-card" />
-      </main>
-    )
+  if (space.isPending) return <LoadingView label="Opening your space…" />
   if (space.error)
     return (
       <main className="fallback">
@@ -130,7 +120,9 @@ export default function Shell() {
               </header>
             )}
             <main id="content">
-              <Outlet />
+              <Suspense fallback={<RouteLoading />}>
+                <Outlet />
+              </Suspense>
             </main>
             <nav className="bottom-nav glass" aria-label={copy.appName}>
               <span

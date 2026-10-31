@@ -726,3 +726,17 @@ Retention/place/duration choices now share a native-modal choice sheet with plai
 meaningful form-value, keyboard and focus-return coverage for the choice sheet. Browser
 keyboard checks verified arrow movement, Escape cancellation and trigger focus restoration.
 Final whole-app visual review and Android packaging follow. No backend schema changes.
+
+## 2026-11-01 — Lock cover and loading continuity
+
+User added lock-screen/loading polish to the ongoing app-wide pass. Native lock cover now
+uses original orbital Canvas artwork, clear unlock action, authentication-busy state and a
+scrollable layout for larger text/short viewports. It contains no names, photos, messages
+or account data. Android's real biometric/device-credential prompt still authenticates;
+WebView hiding, screenshot flags and the monotonic one-minute lock policy are preserved.
+
+Cold/session loading uses a restrained branded view. Route loading is now handled inside
+Shell, retaining navigation instead of blanking the whole app. Added a regression test that
+suspends a route and proves navigation retains its DOM identity through completion. No
+artificial progress percentage, forced reload or minimum loading delay. Native appearance
+and actual authentication-to-content smoothness require human task #7 on the phone.

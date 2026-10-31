@@ -54,7 +54,7 @@ public class PrivacyPlugin extends Plugin {
     private void authenticate(PluginCall call, Runnable ok, Runnable cancelled) {
         PrivacyGuard guard = guard();
         if (guard.authenticating || !guard.available()) { if (call != null) call.reject("Set up a device screen lock first"); return; }
-        guard.authenticating = true; success = ok; failure = cancelled;
+        guard.authenticating = true; guard.apply(); success = ok; failure = cancelled;
         if (Build.VERSION.SDK_INT >= 30) {
             authentication = new CancellationSignal();
             BiometricPrompt prompt = new BiometricPrompt.Builder(getContext()).setTitle("Unlock Orbit")
