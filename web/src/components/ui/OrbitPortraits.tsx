@@ -1,5 +1,4 @@
 import { useRef, type CSSProperties } from 'react'
-import { Heart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Avatar } from './Avatar'
 import { useSpace } from '@/hooks/useSpace'
@@ -52,16 +51,12 @@ export function OrbitPortraits() {
             ry="88"
             transform="rotate(18 180 105)"
           />
-          <path d="M72 143C135 165 216 59 284 62" strokeDasharray="2 7" />
-          <circle cx="39" cy="80" r="4" />
-          <circle cx="312" cy="139" r="3" />
-          <path d="M263 166v12m-6-6h12M115 30v8m-4-4h8" />
         </svg>
       </div>
       <Link
         className="portrait-orb portrait-self"
         to="/profile"
-        aria-label={copy.profile.title}
+        aria-label={`${copy.profile.title}: ${copy.posts.you}`}
       >
         <Avatar
           name={self.display_name}
@@ -82,13 +77,7 @@ export function OrbitPortraits() {
           path={partner?.avatar_path}
           large
         />
-        <span className="portrait-spark" aria-hidden="true">
-          ✦
-        </span>
       </Link>
-      <span className="orbit-knot" aria-hidden="true">
-        <Heart size={19} fill="currentColor" />
-      </span>
     </div>
   )
 }

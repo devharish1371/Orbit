@@ -71,3 +71,25 @@ The visual system remains geometric and code-native. No generated personal memor
 AI-written relationship messages, covert tracking or automatic partner communication.
 Existing voice preview/speed and memory-map browsing remain part of these flows. Further
 features should follow real use, rather than expanding the navigation indefinitely.
+
+## Refinement across the app, 1 November 2026
+
+The user specifically requested less boxed UI, a more visible orbit, smaller planets in
+both UI and logo, and removal of redundant selected-tab dots. Refined the whole system:
+heading weight/spacing, quiet route glyphs, consistent control corners, settings rows,
+reaction controls, disclosure chevrons and memory-card surfaces. The selection pill alone
+now communicates the active destination. Profile planets are 48 px, preserving 48 px touch
+targets while leaving both orbital paths visible; launcher planets use a 9/100 radius.
+
+Research:
+- [Apple menus](https://developer.apple.com/design/human-interface-guidelines/menus): short groups, clear labels, restrained icon use.
+- [Android supporting layouts](https://developer.android.com/design/ui/mobile/guides/layout-and-content/common-layouts): secondary choices can use a sheet to keep the main view focused.
+- [Radix select behavior](https://www.radix-ui.com/primitives/docs/components/select): keyboard selection, managed focus and return focus are essential.
+- [Vaul source](https://github.com/emilkowalski/vaul): reviewed drawer concerns including viewport, scroll and focus. No source was copied and no dependency added.
+
+Retention, shared-place and sharing-duration choices now use a common native-dialog sheet
+with plain rows, selection check, short explanatory notes, Escape/backdrop/close dismissal,
+arrow/Home/End navigation and focus restoration. This uses dialog/button semantics rather
+than pretending to be a native select or incomplete ARIA listbox. Native modal inertness
+keeps the background out of the interaction. Small screens use a bottom sheet; desktop uses
+a compact centered surface. No fake drag handle or unimplemented swipe affordance.

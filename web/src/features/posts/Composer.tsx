@@ -1,3 +1,4 @@
+import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { ImagePlus, Mic, Smile, Type, Plus, Send, X } from 'lucide-react'
@@ -65,6 +66,23 @@ export function Composer({
   useEffect(() => {
     onBusyChange?.(busy || recording)
   }, [busy, recording, onBusyChange])
+  const expiryChoices = [
+    {
+      value: 'default',
+      label: copy.posts.defaultExpiry.replace(
+        '{days}',
+        String(space?.couple.retention_days ?? 7),
+      ),
+      note: 'Use your shared setting',
+    },
+    { value: '24', label: copy.posts.day, note: 'Disappears after one day' },
+    { value: '7d', label: copy.posts.week, note: 'Disappears after one week' },
+    {
+      value: 'keep',
+      label: copy.posts.keep,
+      note: 'Saved until either of you removes it',
+    },
+  ]
   const photoInput = useRef<HTMLInputElement>(null)
   const id = useRef(crypto.randomUUID()),
     attempted = useRef(false)
@@ -173,23 +191,16 @@ export function Composer({
           <div className="messenger-more">
             <label>
               {copy.posts.expiry}
-              <select
+              <ChoiceSelect
+                label={copy.posts.expiry}
                 value={ttl}
-                onChange={(event) => {
+                options={expiryChoices}
+                disabled={busy || recording}
+                onChange={(value) => {
                   edited()
-                  setTtl(event.target.value)
+                  setTtl(value)
                 }}
-              >
-                <option value="default">
-                  {copy.posts.defaultExpiry.replace(
-                    '{days}',
-                    String(space?.couple.retention_days ?? 7),
-                  )}
-                </option>
-                <option value="24">{copy.posts.day}</option>
-                <option value="7d">{copy.posts.week}</option>
-                <option value="keep">{copy.posts.keep}</option>
-              </select>
+              />
             </label>
             <div className="mood-options">
               {['💛', '🥰', '🥺', '🫂', '✨'].map((emoji) => (
@@ -414,43 +425,36 @@ export function Composer({
       <div className="composer-options">
         <label>
           {copy.posts.expiry}
-          <select
+          <ChoiceSelect
+            label={copy.posts.expiry}
             value={ttl}
+            options={expiryChoices}
             disabled={busy || recording}
-            onChange={(event) => {
+            onChange={(value) => {
               edited()
-              setTtl(event.target.value)
+              setTtl(value)
             }}
-          >
-            <option value="default">
-              {copy.posts.defaultExpiry.replace(
-                '{days}',
-                String(space?.couple.retention_days ?? 7),
-              )}
-            </option>
-            <option value="24">{copy.posts.day}</option>
-            <option value="7d">{copy.posts.week}</option>
-            <option value="keep">{copy.posts.keep}</option>
-          </select>
+          />
         </label>
         {channel === 'moment' && (
           <label>
             {copy.posts.pin}
-            <select
+            <ChoiceSelect
+              label={copy.posts.pin}
               value={place}
               disabled={busy || recording}
-              onChange={(event) => {
+              options={[
+                { value: '', label: copy.posts.noPin },
+                ...(live.places.data ?? []).map((item) => ({
+                  value: item.id,
+                  label: `${item.emoji} ${item.name}`,
+                })),
+              ]}
+              onChange={(value) => {
                 edited()
-                setPlace(event.target.value)
+                setPlace(value)
               }}
-            >
-              <option value="">{copy.posts.noPin}</option>
-              {live.places.data?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.emoji} {item.name}
-                </option>
-              ))}
-            </select>
+            />
           </label>
         )}
         <Button type="submit" disabled={busy || recording}>

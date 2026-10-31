@@ -86,3 +86,7 @@ M9 release gates remain separate from this UI follow-up.
 UI follow-up implemented and committed (e342cdc, 0709bca, e7b41e6). Web/worker/hosted and
 26 rendered-screen audits pass; Android CI 41235338093 passes. Human task #7 phone review
 and local APK verification remain; download approval was declined. See docs/UI_REFRESH.md.
+
+App-wide refinement: 48 px profile planets and smaller launcher planets, clear orbital paths,
+no redundant nav dots, quieter hierarchy and consistent native-modal choice sheets across
+retention/place/duration. Final phone-sized review and Android CI precede human #7 acceptance.

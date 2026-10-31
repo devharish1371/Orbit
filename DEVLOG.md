@@ -713,3 +713,16 @@ scan and checksum verification are therefore outstanding; do not report them as 
 Artifact orbit-ui-refresh is available from the successful CI run. Human task #7 remains
 for the new icon, gesture/keyboard insets, touch interactions and voice controls on phone.
 No partner messages or pushes were sent. Previous offline/endurance/partner/soak gates remain.
+
+## 2026-11-01 — App-wide refinement after detailed user review
+
+Reduced the planets in both the profile scene and launcher mark, exposing the shared orbit;
+removed redundant navigation dots and ornamental stars/hearts in the orbital scene. Across
+all routes, tightened heading spacing/weight, quieted heading glyphs and settings rows,
+standardized corners, simplified reactions and replaced boxed disclosure markers with chevrons.
+Retention/place/duration choices now share a native-modal choice sheet with plain rows.
+
+57 web tests and 16 worker tests pass; lint/type/format/build and source scan pass. Added
+meaningful form-value, keyboard and focus-return coverage for the choice sheet. Browser
+keyboard checks verified arrow movement, Escape cancellation and trigger focus restoration.
+Final whole-app visual review and Android packaging follow. No backend schema changes.

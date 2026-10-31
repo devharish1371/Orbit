@@ -1,3 +1,4 @@
+import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -328,19 +329,16 @@ export default function TrackingPage() {
               : copy.tracking.live}
         </p>
         <label htmlFor="share-duration">{copy.tracking.duration}</label>
-        <select
+        <ChoiceSelect
           id="share-duration"
+          label={copy.tracking.duration}
           value={duration}
-          onChange={(e) => setDuration(e.target.value as Duration)}
-        >
-          {(['hour', 'fourHours', 'tomorrow', 'indefinite'] as const).map(
-            (value) => (
-              <option key={value} value={value}>
-                {copy.tracking[value]}
-              </option>
-            ),
-          )}
-        </select>
+          options={(
+            ['hour', 'fourHours', 'tomorrow', 'indefinite'] as const
+          ).map((value) => ({ value, label: copy.tracking[value] }))}
+          disabled={busy}
+          onChange={(value) => setDuration(value as Duration)}
+        />
         <div className="share-mode-options">
           <Button
             className="button-secondary"

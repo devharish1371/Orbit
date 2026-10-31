@@ -20,13 +20,10 @@ def orbit_mark(size: int, *, transparent: bool = False) -> Image.Image:
     draw.ellipse((size * .10, size * .27, size * .90, size * .73), outline="#F4E9D8", width=max(1, round(size * .028)))
     canvas.alpha_composite(ring.rotate(35, resample=Image.Resampling.BICUBIC))
     draw = ImageDraw.Draw(canvas)
-    for x,y,colour,shade,shine in [(.34,.61,"#FF9B7D","#D85B5D","#FFE4CF"),(.66,.39,"#A6B8FF","#6778D8","#DCE4FF")]:
-        box=((x-.17)*size,(y-.17)*size,(x+.17)*size,(y+.17)*size)
+    for x,y,colour,shade,shine in [(.20,.69,"#FF9B7D","#D85B5D","#FFE4CF"),(.80,.31,"#A6B8FF","#6778D8","#DCE4FF")]:
+        box=((x-.09)*size,(y-.09)*size,(x+.09)*size,(y+.09)*size)
         draw.ellipse(box,fill=colour)
-        draw.arc(box,65,200,fill=shade,width=max(1,round(size*.045)))
-        draw.ellipse(((x-.075)*size,(y-.085)*size,(x-.025)*size,(y-.035)*size),fill=shine)
-    # Shared path remains visible between the two equal planets.
-    draw.line([(size*.15,size*.70),(size*.28,size*.71),(size*.43,size*.67),(size*.58,size*.60),(size*.75,size*.49)],fill="#F4E9D8",width=max(1,round(size*.028)))
+        draw.arc(box,65,200,fill=shade,width=max(1,round(size*.025)))
     return canvas
 
 
