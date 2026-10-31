@@ -699,3 +699,17 @@ and a tracking overview separating confirmed sharing mode, service health, setup
 55 web tests and 16 worker tests pass, including stale/paused/fuzzed navigation guards.
 The prior visual commit e342cdc passed Android CI 41234683772. Packaging the flow additions
 requires a new build; final visual/interaction QA continues with disposable identities only.
+
+## 2026-11-01 — UI/flow verification and handoff
+
+Final code e7b41e6 passes Android CI 41235338093 (native tests, APK signature and manifest
+assertions). All 26 settled screen/theme audits score 100 accessibility / 100 best practices;
+34 phone layouts have no horizontal overflow. Hosted suite: 58 passed in 85.13 seconds.
+Search, literal wildcard handling, media filtering, capsule draft retention/focus and map
+rendering reviewed with disposable data. See docs/UI_REFRESH.md and its screen captures.
+
+Local APK download approval was declined. Local signer continuity, packaged-private-data
+scan and checksum verification are therefore outstanding; do not report them as passed.
+Artifact orbit-ui-refresh is available from the successful CI run. Human task #7 remains
+for the new icon, gesture/keyboard insets, touch interactions and voice controls on phone.
+No partner messages or pushes were sent. Previous offline/endurance/partner/soak gates remain.

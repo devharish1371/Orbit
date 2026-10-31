@@ -82,3 +82,7 @@ Implement the two-world system described in docs/DESIGN_DIRECTION.md across all 
 and secondary flows, regenerate every launcher icon, and retain saved personal settings.
 Final browser contrast/layout audit and Android build precede human task #7 review.
 M9 release gates remain separate from this UI follow-up.
+
+UI follow-up implemented and committed (e342cdc, 0709bca, e7b41e6). Web/worker/hosted and
+26 rendered-screen audits pass; Android CI 41235338093 passes. Human task #7 phone review
+and local APK verification remain; download approval was declined. See docs/UI_REFRESH.md.
