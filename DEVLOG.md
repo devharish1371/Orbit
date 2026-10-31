@@ -798,3 +798,9 @@ and reduced-motion remains respected. End-to-end checks and final test/build fol
 User reported a lock issue, then replied “okay it works cool.” This resolves that reported
 issue; no native lock-policy change was made in this journey pass. No new claims about the
 unspecified build or individual hardware test cases are inferred from that reply.
+
+User additionally reported the Today’s question Answer action overflowing. Replaced its
+fixed minimum-width / separate arrow bubble arrangement with one internally padded,
+wrapping content-sized button and a decorative SVG arrow. The expanded save action and
+form/grid children are constrained to the card width. Final browser and enlarged-text
+containment checks follow. Web 64 / worker 16 checks pass after this correction.

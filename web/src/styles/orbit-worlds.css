@@ -2419,3 +2419,49 @@ html:has(.photo-dialog[open]) {
     text-align: right;
   }
 }
+/* The question action fits its content, including larger text; no separate arrow bubble. */
+.daily-question,
+.daily-question > div,
+.daily-question form {
+  min-width: 0;
+  max-width: 100%;
+}
+.daily-question .question-answer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 11px 16px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.question-answer-button > .question-answer-label {
+  display: block;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  background: none;
+  border-radius: 0;
+  line-height: inherit;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.question-answer-button > svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+.daily-question form > .button {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding-inline: 16px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}

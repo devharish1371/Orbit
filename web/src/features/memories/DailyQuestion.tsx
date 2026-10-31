@@ -1,3 +1,4 @@
+import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
@@ -69,8 +70,8 @@ export function DailyQuestion() {
               type="button"
               onClick={() => setAnswering(true)}
             >
-              {text.answerAction}
-              <span aria-hidden="true">↗</span>
+              <span className="question-answer-label">{text.answerAction}</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
             </button>
           )}
           <form
