@@ -99,3 +99,6 @@ lock cancellation/background-return/keyboard/sheet acceptance remains human #7.
 Compact moving Home orbit and icon-only communication row implemented. 59 web/16 worker
 checks pass; 36 geometry samples fit across four widths. Follow-up Android build packages
 these web-only refinements; the lock/privacy policy is unchanged from 266123d.
+
+Android run 41237794055 passed for 9fff4b0. Compact orbit and Home-action update is ready
+for human #7 phone review. Existing deferred offline/endurance/partner tests remain open.
