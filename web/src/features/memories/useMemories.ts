@@ -70,11 +70,11 @@ export function useCapsules() {
       page.length === 30 ? page[page.length - 1] : undefined,
   })
 }
-export function useKeptMemories() {
+export function useKeptMemories(photosOnly = false) {
   const { client } = useAuth(),
     { data: space } = useSpace()
   return useInfiniteQuery({
-    queryKey: ['kept-memories', space?.couple.id],
+    queryKey: ['kept-memories', space?.couple.id, photosOnly],
     enabled: !!space,
     initialPageParam: null as Pick<Post, 'id' | 'created_at'> | null,
     maxPages: 3,
@@ -87,6 +87,7 @@ export function useKeptMemories() {
         .order('created_at', { ascending: false })
         .order('id', { ascending: false })
         .limit(30)
+      if (photosOnly) request = request.eq('kind', 'photo')
       if (pageParam) request = request.or(cursorFilter(pageParam))
       const result = await request
       if (result.error) throw result.error

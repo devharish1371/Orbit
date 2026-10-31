@@ -1,10 +1,10 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { ThemePicker } from '@/components/ui/ThemePicker'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent, type ChangeEvent } from 'react'
-import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import imageCompression from 'browser-image-compression'
-import { ArrowLeft, Camera, Check } from 'lucide-react'
+import { Camera, Check } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { normalizeTheme, setAppearance } from '@/hooks/useTheme'
@@ -175,10 +175,7 @@ function ProfileEditor({ member }: { member: Member }) {
   }
   return (
     <div className="page profile-page">
-      <Link to="/us" className="back-link">
-        <ArrowLeft size={18} aria-hidden="true" />
-        {copy.common.back}
-      </Link>
+      <BackLink fallback="/us" />
       <SectionHeading title={copy.profile.heading} kind="us" />
       <section
         className="glass profile-photo-section"

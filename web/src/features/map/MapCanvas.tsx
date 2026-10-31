@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { MapCameraContext } from '@/app/FlowContext'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import {
   Map,
@@ -143,6 +144,8 @@ export default function MapCanvas({
   onPerson: (id: string) => void
   onRetry: () => void
 }) {
+  const cameraRef = useContext(MapCameraContext)
+  const initiallyFitRef = useRef(false)
   const container = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<Map | null>(null)
   const [failed, setFailed] = useState(false)
@@ -159,13 +162,16 @@ export default function MapCanvas({
       instance = new Map({
         container: container.current,
         style: dark ? couple.mapStyleDarkUrl : couple.mapStyleUrl,
-        center: [78, 22],
-        zoom: 3.5,
+        center: cameraRef?.current?.center ?? [78, 22],
+        zoom: cameraRef?.current?.zoom ?? 3.5,
+        bearing: cameraRef?.current?.bearing ?? 0,
+        pitch: cameraRef?.current?.pitch ?? 0,
         attributionControl: false,
         renderWorldCopies: false,
         maxZoom: 18,
         canvasContextAttributes: { antialias: false },
       })
+      if (cameraRef?.current) initiallyFitRef.current = true
       instance.addControl(
         new AttributionControl({ compact: true }),
         'bottom-right',
@@ -184,12 +190,21 @@ export default function MapCanvas({
       observer.observe(container.current)
       return () => {
         observer.disconnect()
+        if (cameraRef && initiallyFitRef.current) {
+          const center = instance.getCenter()
+          cameraRef.current = {
+            center: [center.lng, center.lat],
+            zoom: instance.getZoom(),
+            bearing: instance.getBearing(),
+            pitch: instance.getPitch(),
+          }
+        }
         instance.remove()
       }
     } catch {
       queueMicrotask(() => setFailed(true))
     }
-  }, [dark])
+  }, [dark, cameraRef])
   useEffect(() => {
     if (!map || !map.isStyleLoaded()) return
     const polygons = {
@@ -268,10 +283,9 @@ export default function MapCanvas({
   useEffect(() => {
     points.current = people.map((p) => p.location)
   }, [people])
-  const initiallyFit = useRef(false)
   useEffect(() => {
-    if (!map || initiallyFit.current || !people.length) return
-    initiallyFit.current = true
+    if (!map || initiallyFitRef.current || !people.length) return
+    initiallyFitRef.current = true
     const bounds = new LngLatBounds()
     people.forEach(({ location }) =>
       bounds.extend([location.lng, location.lat]),

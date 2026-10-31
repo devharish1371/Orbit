@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { BackLink } from '@/components/ui/JourneyLink'
 import { useSpace } from '@/hooks/useSpace'
 import { callUrl } from '@/lib/connect'
 import { copy } from '@/copy/en'
@@ -7,9 +7,7 @@ export default function CallPage() {
   const phone = callUrl(space?.partner?.phone ?? '')
   return (
     <div className="page">
-      <Link className="back-link" to="/activity">
-        ← {copy.common.back}
-      </Link>
+      <BackLink fallback="/activity" />
       <header className="page-heading">
         <p className="eyebrow">{copy.alerts.callMe}</p>
         <h1>{copy.alerts.callTitle}</h1>

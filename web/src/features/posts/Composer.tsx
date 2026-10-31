@@ -1,3 +1,4 @@
+import { useComposerMemory } from '@/hooks/useComposerMemory'
 import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
@@ -53,16 +54,21 @@ export function Composer({
     { data: space } = useSpace(),
     live = useLiveData(),
     query = useQueryClient()
-  const [kind, setKind] = useState<PostDraft['kind']>('text'),
-    [body, setBody] = useState(''),
-    [mood, setMood] = useState('💛'),
-    [attachment, setAttachment] = useState<Attachment>(),
-    [ttl, setTtl] = useState('default'),
-    [place, setPlace] = useState(''),
-    [busy, setBusy] = useState(false),
-    [recording, setRecording] = useState(false),
-    [message, setMessage] = useState(''),
-    [more, setMore] = useState(false)
+  const {
+    field,
+    id: idRef,
+    attempted: attemptedRef,
+  } = useComposerMemory(channel)
+  const [kind, setKind] = field('kind'),
+    [body, setBody] = field('body'),
+    [mood, setMood] = field('mood'),
+    [attachment, setAttachment] = field('attachment'),
+    [ttl, setTtl] = field('ttl'),
+    [place, setPlace] = field('place'),
+    [busy, setBusy] = field('busy'),
+    [message, setMessage] = field('message'),
+    [more, setMore] = field('more')
+  const [recording, setRecording] = useState(false)
   useEffect(() => {
     onBusyChange?.(busy || recording)
   }, [busy, recording, onBusyChange])
@@ -84,12 +90,10 @@ export function Composer({
     },
   ]
   const photoInput = useRef<HTMLInputElement>(null)
-  const id = useRef(crypto.randomUUID()),
-    attempted = useRef(false)
   function edited() {
-    if (attempted.current) {
-      id.current = crypto.randomUUID()
-      attempted.current = false
+    if (attemptedRef.current) {
+      idRef.current = crypto.randomUUID()
+      attemptedRef.current = false
     }
   }
   function mode(next: PostDraft['kind']) {
@@ -122,13 +126,13 @@ export function Composer({
       setMessage(copy.posts.empty)
       return
     }
-    attempted.current = true
+    attemptedRef.current = true
     setBusy(true)
     setMessage('')
     onStopTyping()
     try {
       await sharePost(client, {
-        id: id.current,
+        id: idRef.current,
         couple: space.couple.id,
         author: space.self.user_id,
         channel,
@@ -142,8 +146,8 @@ export function Composer({
         place: place || null,
         attachment,
       })
-      id.current = crypto.randomUUID()
-      attempted.current = false
+      idRef.current = crypto.randomUUID()
+      attemptedRef.current = false
       setBody('')
       const text = form.querySelector('textarea')
       if (text) text.style.height = 'auto'

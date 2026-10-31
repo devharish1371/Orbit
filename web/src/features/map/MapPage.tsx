@@ -1,6 +1,6 @@
 import { directionsTo, locationStatus } from '@/lib/location-status'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { nativeTracking } from '@/native/tracker'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'

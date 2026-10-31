@@ -776,3 +776,25 @@ passed for 9fff4b0, packaging the compact orbit and centered icon-only Home acti
 with the previous native lock/loading update. Artifact: orbit-ui-refresh. Local downloaded
 APK continuity/private-payload checks remain unclaimed after the earlier download refusal.
 Human #7 phone review still applies to native unlock/cancel/back/keyboard behavior.
+
+## 2026-11-01 — Whole-app journey pass and timeline correction
+
+User clarified that the pass must include UI composition, app structure, navigation and
+fluid journeys, and reported timeline misalignment/overflow. Rebuilt timeline marker/date
+alignment as fixed marker + flexible content columns, contained the day count and recap
+numbers, and added explicit upcoming status. Browser at 320 px confirms aligned marker
+columns and contained recap cells; further theme/large-type checks continue.
+
+Implemented origin-aware internal links/back controls, per-route window scroll restoration,
+retained chat reading position, filters, draft text/media and active send/upload state in
+memory. Draft/view contexts are separate to avoid rerendering the message list on typing;
+all memory clears with the signed-in shell. Map camera survives route changes. Photo viewer
+has a full-screen stage, stable date/zoom/close controls and return focus. Browser testing
+caught a native-dialog Escape focus issue; explicit close/focus restoration is now tested.
+Keepsakes gains a paginated photo collection view; storage/export navigation replaces the
+operational storage panel in that browsing flow. Root/detail/back entrances are consistent
+and reduced-motion remains respected. End-to-end checks and final test/build follow.
+
+User reported a lock issue, then replied “okay it works cool.” This resolves that reported
+issue; no native lock-policy change was made in this journey pass. No new claims about the
+unspecified build or individual hardware test cases are inferred from that reply.

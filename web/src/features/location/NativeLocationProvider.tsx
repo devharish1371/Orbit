@@ -1,5 +1,6 @@
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useEffect, type ReactNode } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { tracker, trackingReady } from '@/native/tracker'
 import { useTrackingHealth } from '@/native/useTrackingHealth'

@@ -1,5 +1,5 @@
 import { ArrowUpRight, Heart } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { memories as text } from '@/copy/memories'
 
 export function MemoryDoors({ days }: { days: number | null }) {

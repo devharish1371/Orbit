@@ -1,6 +1,7 @@
-import { PostExplorer, type PostFilter } from './PostExplorer'
+import { usePostViewMemory } from '@/hooks/useComposerMemory'
+import { PostExplorer } from './PostExplorer'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import {
   Phone,
   Video,
@@ -23,26 +24,30 @@ import { PostCard } from './PostCard'
 import { Avatar } from '@/components/ui/Avatar'
 import { callUrl } from '@/lib/connect'
 export default function PostsPage({ channel }: { channel: Channel }) {
-  const [search, setSearch] = useState('')
-  const [needle, setNeedle] = useState('')
-  const [kind, setKind] = useState<PostFilter>('all')
+  const {
+    field,
+    scroll: savedScrollRef,
+    nearBottom: stickRef,
+  } = usePostViewMemory(channel)
+  const [search, setSearch] = field('search'),
+    [kind, setKind] = field('filter'),
+    [kept, setKept] = field('kept'),
+    [composing, setComposing] = field('composing')
+  const [needle, setNeedle] = useState(search)
   useEffect(() => {
     const timer = setTimeout(() => setNeedle(search), 300)
     return () => clearTimeout(timer)
   }, [search])
   const filtered = kind !== 'all' || !!needle.trim()
-  const [composing, setComposing] = useState(false)
   const [composerBusy, setComposerBusy] = useState(false)
   const [away, setAway] = useState(false)
   const scrollArea = useRef<HTMLDivElement>(null)
-  const [kept, setKept] = useState(false),
-    posts = usePosts(channel, kept, kind, needle),
+  const posts = usePosts(channel, kept, kind, needle),
     now = useNow(),
     { data: space } = useSpace(),
     query = useQueryClient()
   const typing = useTyping(channel === 'chat'),
-    anchor = useRef<HTMLDivElement>(null),
-    stick = useRef(true)
+    anchor = useRef<HTMLDivElement>(null)
   const rows =
     posts.data?.pages.flat().filter((post) => visiblePost(post, now)) ?? []
   const unique = [...new Map(rows.map((post) => [post.id, post])).values()]
@@ -54,18 +59,28 @@ export default function PostsPage({ channel }: { channel: Channel }) {
     const area = scrollArea.current
     if (!area) return
     const resize = new ResizeObserver(() => {
-      if (stick.current) area.scrollTop = area.scrollHeight
+      if (stickRef.current) area.scrollTop = area.scrollHeight
     })
     resize.observe(area)
     if (area.firstElementChild) resize.observe(area.firstElementChild)
     return () => resize.disconnect()
-  }, [channel])
+  }, [channel, stickRef])
   useEffect(() => {
-    if (channel === 'chat' && newest && stick.current) {
+    if (channel === 'chat' && newest && stickRef.current) {
       const area = scrollArea.current
       if (area) area.scrollTop = area.scrollHeight
     }
-  }, [channel, newest])
+  }, [channel, newest, stickRef])
+  useLayoutEffect(() => {
+    if (
+      channel === 'chat' &&
+      !posts.isPending &&
+      !stickRef.current &&
+      savedScrollRef.current !== null &&
+      scrollArea.current
+    )
+      scrollArea.current.scrollTop = savedScrollRef.current
+  }, [channel, posts.isPending, kept, kind, needle, savedScrollRef, stickRef])
   const cards = channel === 'chat' ? [...unique].reverse() : unique
   const partnerName =
     space?.self.partner_nickname ||
@@ -177,9 +192,10 @@ export default function PostsPage({ channel }: { channel: Channel }) {
         onScroll={(event) => {
           if (channel !== 'chat') return
           const node = event.currentTarget
-          stick.current =
+          savedScrollRef.current = node.scrollTop
+          stickRef.current =
             node.scrollHeight - node.scrollTop - node.clientHeight < 120
-          setAway(!stick.current)
+          setAway(!stickRef.current)
         }}
       >
         <div className="conversation-content">
@@ -208,7 +224,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                   className="text-button"
                   type="button"
                   onClick={() => {
-                    stick.current = true
+                    stickRef.current = true
                     void query.resetQueries({
                       queryKey: ['posts', space?.couple.id, channel, kept],
                     })
@@ -225,7 +241,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
               type="button"
               disabled={posts.isFetchingNextPage}
               onClick={() => {
-                stick.current = false
+                stickRef.current = false
                 void posts.fetchNextPage()
               }}
             >
@@ -339,7 +355,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                 className="chat-latest"
                 type="button"
                 onClick={() => {
-                  stick.current = true
+                  stickRef.current = true
                   if (scrollArea.current)
                     scrollArea.current.scrollTop =
                       scrollArea.current.scrollHeight

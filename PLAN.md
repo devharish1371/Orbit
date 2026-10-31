@@ -102,3 +102,8 @@ these web-only refinements; the lock/privacy policy is unchanged from 266123d.
 
 Android run 41237794055 passed for 9fff4b0. Compact orbit and Home-action update is ready
 for human #7 phone review. Existing deferred offline/endurance/partner tests remain open.
+
+Whole-app journey pass: timeline alignment/overflow, origin-aware Back, retained scroll and
+map camera, route-safe drafts/filters/media operations, full-screen photo viewing, a separate
+keepsake photo collection and consistent route motion. See docs/APP_JOURNEYS.md. 64 web / 16
+worker checks and full hosted 58 pass. Final visual stress/a11y and Android packaging follow.

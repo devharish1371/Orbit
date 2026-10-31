@@ -1,6 +1,6 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, useRef, useEffect, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { LockKeyhole, MailOpen } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
@@ -83,9 +83,7 @@ export default function CapsulesPage() {
     }).format(new Date(value))
   return (
     <div className="page memories-page capsules-page">
-      <Link className="back-link" to="/us">
-        ← Us
-      </Link>
+      <BackLink fallback="/us" />
       <SectionHeading title={text.capsules} kind="chat" />
       <button
         className="capsule-compose-toggle"

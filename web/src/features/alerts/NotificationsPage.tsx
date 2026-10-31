@@ -1,6 +1,6 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -59,9 +59,7 @@ export default function NotificationsPage() {
     prefs && typeof prefs === 'object' && !Array.isArray(prefs) ? prefs : {}
   return (
     <div className="page settings-page">
-      <Link className="back-link" to="/settings">
-        ← {copy.common.back}
-      </Link>
+      <BackLink fallback="/settings" />
       <SectionHeading title={copy.alerts.notificationTitle} kind="chat" />
       <section className="glass settings-section">
         <h2>{copy.alerts.thisDevice}</h2>

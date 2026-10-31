@@ -1,5 +1,6 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -35,9 +36,7 @@ export default function TimelinePage() {
     }).format(new Date(value))
   return (
     <div className="page memories-page timeline-page">
-      <Link className="back-link" to="/us">
-        ← Us
-      </Link>
+      <BackLink fallback="/us" />
       <SectionHeading title={text.timeline} kind="us" />
       {anniversary ? (
         <>
@@ -52,10 +51,12 @@ export default function TimelinePage() {
           </section>
           <ol className="story-timeline">
             <li>
-              <span>♡</span>
+              <span className="milestone-marker" aria-hidden="true">
+                ♡
+              </span>
               <div>
                 <strong>{text.started}</strong>
-                <p>{format(anniversary)}</p>
+                <time dateTime={anniversary}>{format(anniversary)}</time>
               </div>
             </li>
             {storyMilestones(anniversary, new Date(now), zone).map(
@@ -64,12 +65,17 @@ export default function TimelinePage() {
                   key={date}
                   className={date > today ? 'future-milestone' : ''}
                 >
-                  <span>✦</span>
+                  <span className="milestone-marker" aria-hidden="true">
+                    ✦
+                  </span>
                   <div>
                     <strong>
                       {text.anniversary} {index + 1}
                     </strong>
-                    <p>{format(date)}</p>
+                    <time dateTime={date}>{format(date)}</time>
+                    {date > today && (
+                      <small className="milestone-state">Upcoming</small>
+                    )}
                   </div>
                 </li>
               ),
@@ -79,7 +85,7 @@ export default function TimelinePage() {
       ) : (
         <p className="muted">{text.addDate}</p>
       )}
-      <section className="glass memory-section">
+      <section className="glass memory-section week-recap">
         <h2>{text.recap}</h2>
         {recap.isPending && <p role="status">Loading our week…</p>}
         {recap.error && (
@@ -102,14 +108,19 @@ export default function TimelinePage() {
                 [recap.data.moments, text.moments],
                 [recap.data.arrivals, text.arrivals],
                 [
-                  recap.data.location_points
-                    ? recap.data.recorded_km.toFixed(1)
-                    : '—',
+                  recap.data.location_points ? recap.data.recorded_km : null,
                   text.kilometres,
                 ],
               ].map(([value, label]) => (
                 <div key={label}>
-                  <strong>{value}</strong>
+                  <strong title={String(value)}>
+                    {typeof value === 'number'
+                      ? new Intl.NumberFormat('en-IN', {
+                          notation: 'compact',
+                          maximumFractionDigits: 1,
+                        }).format(value)
+                      : '—'}
+                  </strong>
                   <span>{label}</span>
                 </div>
               ))}

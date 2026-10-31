@@ -191,7 +191,9 @@ export function PostCard({
           </span>
         </header>
       )}
-      {['photo', 'voice'].includes(post.kind) && <PostMedia post={post} />}
+      {['photo', 'voice'].includes(post.kind) && (
+        <PostMedia post={post} timezone={space?.couple.timezone} />
+      )}
       {post.body && (
         <p className={`post-body ${post.kind === 'mood' ? 'post-mood' : ''}`}>
           {post.body}

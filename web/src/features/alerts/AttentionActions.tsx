@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useQueryClient } from '@tanstack/react-query'
 import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/hooks/useAuth'

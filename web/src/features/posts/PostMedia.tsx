@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom'
+import { X, ZoomIn, ZoomOut } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import type { Post } from '@/lib/posts'
 import { copy } from '@/copy/en'
@@ -61,13 +63,21 @@ function Asset({
     />
   )
 }
-export function PostMedia({ post }: { post: Post }) {
+export function PostMedia({
+  post,
+  timezone,
+}: {
+  post: Post
+  timezone?: string
+}) {
   const [visible, setVisible] = useState(
       typeof IntersectionObserver === 'undefined',
     ),
-    [open, setOpen] = useState(false)
+    [open, setOpen] = useState(false),
+    [zoomed, setZoomed] = useState(false)
   const node = useRef<HTMLDivElement>(null),
-    dialog = useRef<HTMLDialogElement>(null)
+    dialog = useRef<HTMLDialogElement>(null),
+    trigger = useRef<HTMLButtonElement>(null)
   useEffect(() => {
     if (visible || !node.current) return
     const observer = new IntersectionObserver(
@@ -87,6 +97,11 @@ export function PostMedia({ post }: { post: Post }) {
     if (open) element?.showModal()
     return () => element?.close()
   }, [open])
+  function closeViewer() {
+    dialog.current?.close()
+    setOpen(false)
+    trigger.current?.focus({ preventScroll: true })
+  }
   if (!post.media_path) return null
   return (
     <div
@@ -95,13 +110,17 @@ export function PostMedia({ post }: { post: Post }) {
     >
       {post.kind === 'photo' ? (
         <button
+          ref={trigger}
           type="button"
           className="photo-open"
           aria-label={copy.posts.openPhoto}
           style={{
             aspectRatio: `${post.media_width ?? 4} / ${post.media_height ?? 3}`,
           }}
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setZoomed(false)
+            setOpen(true)
+          }}
         >
           {visible ? (
             <Asset
@@ -125,23 +144,66 @@ export function PostMedia({ post }: { post: Post }) {
           )}
         </>
       )}
-      {open && (
-        <dialog
-          className="photo-dialog"
-          ref={dialog}
-          onCancel={() => setOpen(false)}
-        >
-          <button
-            autoFocus
-            type="button"
-            className="button button-secondary"
-            onClick={() => setOpen(false)}
+      {open &&
+        createPortal(
+          <dialog
+            className="photo-dialog"
+            ref={dialog}
+            aria-label="Shared photo"
+            onCancel={(event) => {
+              event.preventDefault()
+              closeViewer()
+            }}
+            onClose={() => {
+              setOpen(false)
+              trigger.current?.focus({ preventScroll: true })
+            }}
           >
-            {copy.posts.closePhoto}
-          </button>
-          <Asset path={post.media_path} alt={post.body ?? copy.posts.photo} />
-        </dialog>
-      )}
+            <header className="photo-viewer-header">
+              <div>
+                <strong>Photo</strong>
+                <time dateTime={post.created_at}>
+                  {new Intl.DateTimeFormat('en-IN', {
+                    dateStyle: 'medium',
+                    timeZone: timezone,
+                  }).format(new Date(post.created_at))}
+                </time>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="icon-button"
+                  aria-label={zoomed ? 'Fit photo' : 'Zoom photo'}
+                  aria-pressed={zoomed}
+                  onClick={() => setZoomed(!zoomed)}
+                >
+                  {zoomed ? <ZoomOut size={21} /> : <ZoomIn size={21} />}
+                </button>
+                <button
+                  autoFocus
+                  type="button"
+                  className="icon-button"
+                  aria-label={copy.posts.closePhoto}
+                  onClick={closeViewer}
+                >
+                  <X size={22} />
+                </button>
+              </div>
+            </header>
+            <div className="photo-viewer-stage">
+              <div
+                className={`photo-zoom-content ${zoomed ? 'is-zoomed' : ''}`}
+              >
+                <Asset
+                  path={post.media_path}
+                  alt={post.body ?? copy.posts.photo}
+                />
+              </div>
+            </div>
+            {post.body && <p className="photo-viewer-caption">{post.body}</p>}
+          </dialog>,
+          document.body,
+        )}
     </div>
   )
 }

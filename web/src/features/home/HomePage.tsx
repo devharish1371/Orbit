@@ -6,7 +6,7 @@ import {
   Phone,
   Video,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { copy } from '@/copy/en'
 import { useLiveData } from '@/features/map/LiveContext'
 import { useSpace } from '@/hooks/useSpace'

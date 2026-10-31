@@ -1,5 +1,5 @@
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { ArrowUpRight, Heart } from 'lucide-react'
 import { useSpace } from '@/hooks/useSpace'
 import { Avatar } from '@/components/ui/Avatar'

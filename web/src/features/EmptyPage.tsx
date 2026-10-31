@@ -1,5 +1,5 @@
 import { Heart, MapPin, MessageCircle, Sparkles } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { copy } from '@/copy/en'
 export default function EmptyPage({
   page,

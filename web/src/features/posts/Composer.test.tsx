@@ -1,3 +1,4 @@
+import { FlowProvider } from '@/app/FlowProvider'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -35,7 +36,9 @@ afterEach(() => {
 function mount() {
   return render(
     <QueryClientProvider client={new QueryClient()}>
-      <Composer channel="chat" onTyping={f.typing} onStopTyping={f.stopped} />
+      <FlowProvider>
+        <Composer channel="chat" onTyping={f.typing} onStopTyping={f.stopped} />
+      </FlowProvider>
     </QueryClientProvider>,
   )
 }

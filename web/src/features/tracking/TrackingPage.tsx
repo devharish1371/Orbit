@@ -1,9 +1,10 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Check, ShieldCheck } from 'lucide-react'
+import { Check, ShieldCheck } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { nativeTracking, tracker, trackingReady } from '@/native/tracker'
@@ -127,10 +128,7 @@ export default function TrackingPage() {
     : []
   return (
     <div className="page tracking-page">
-      <Link className="back-link" to="/settings">
-        <ArrowLeft size={18} aria-hidden="true" />
-        {copy.common.back}
-      </Link>
+      <BackLink fallback="/settings" />
       <SectionHeading title={copy.tracking.heading} kind="map" />
       <section className="sharing-signal" data-mode={data?.self.share_mode}>
         <div className="signal-illustration" aria-hidden="true">

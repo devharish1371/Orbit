@@ -1,10 +1,11 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { ThemePicker } from '@/components/ui/ThemePicker'
 import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, LogOut } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { LogOut } from 'lucide-react'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { copy } from '@/copy/en'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -76,10 +77,7 @@ export default function SettingsPage() {
   }
   return (
     <div className="page settings-page">
-      <Link className="back-link" to="/">
-        <ArrowLeft size={18} aria-hidden="true" />
-        {copy.common.back}
-      </Link>
+      <BackLink fallback="/" />
       <SectionHeading title={copy.settings.title} kind="us" />
       <Link className="profile-settings-link" to="/tracking">
         <OrbitGlyph name="map" width={26} height={26} />

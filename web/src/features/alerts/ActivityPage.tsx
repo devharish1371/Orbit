@@ -1,5 +1,5 @@
+import { BackLink } from '@/components/ui/JourneyLink'
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { Button } from '@/components/ui/Button'
@@ -25,9 +25,7 @@ export default function ActivityPage() {
   })
   return (
     <div className="page activity-page">
-      <Link className="back-link" to="/">
-        ← {copy.common.back}
-      </Link>
+      <BackLink fallback="/" />
       <header className="page-heading">
         <h1>{copy.alerts.activityTitle}</h1>
         <p className="muted">{copy.alerts.activityHint}</p>

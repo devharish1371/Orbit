@@ -1,5 +1,6 @@
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { useNow } from '@/hooks/useNow'

@@ -1,6 +1,7 @@
+import { ScrollContinuity } from '@/app/ScrollContinuity'
 import { LoadingView } from '@/components/ui/LoadingView'
-import { lazy, Suspense, useEffect } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { OfflineBanner } from '@/components/OfflineBanner'
 import { copy } from '@/copy/en'
@@ -24,18 +25,15 @@ const TimelinePage = lazy(() => import('@/features/memories/TimelinePage'))
 const ReplayReveal = lazy(() => import('@/features/memories/AnniversaryReveal'))
 export default function App() {
   const { session, restoring, restoreError, retryRestore } = useAuth()
-  const { pathname } = useLocation()
-  useEffect(() => {
-    if (pathname !== '/chat') window.scrollTo(0, 0)
-  }, [pathname, session?.user.id])
   return (
     <>
+      <ScrollContinuity userId={session?.user.id} />
       <div className="aurora" aria-hidden="true" />
       <OfflineBanner />
       <Suspense fallback={<LoadingView />}>
-        {restoring ? (
+        {restoring && !session ? (
           <LoadingView />
-        ) : restoreError ? (
+        ) : restoreError && !session ? (
           <main className="fallback">
             <h1>{copy.common.reconnectTitle}</h1>
             <p>{copy.common.reconnectBody}</p>
@@ -71,7 +69,10 @@ export default function App() {
                   path={page}
                   key={page}
                   element={
-                    <PostsPage channel={page === 'chat' ? 'chat' : 'moment'} />
+                    <PostsPage
+                      key={page}
+                      channel={page === 'chat' ? 'chat' : 'moment'}
+                    />
                   }
                 />
               ))}
