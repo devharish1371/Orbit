@@ -1393,3 +1393,13 @@ h2 {
 .tracking-step {
   margin-top: 10px;
 }
+.distance-card strong {
+  grid-column: 1;
+  justify-self: start;
+}
+.distance-card .card-link {
+  position: static;
+}
+.chat-message-meta time {
+  color: var(--text-dim);
+}
