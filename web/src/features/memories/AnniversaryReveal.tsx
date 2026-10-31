@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { useNow } from '@/hooks/useNow'
 import { isAnniversary, localDay } from '@/lib/memories'
+import { OrbitMark } from '@/components/ui/OrbitMark'
 import { memories as text } from '@/copy/memories'
 function Reveal({ close }: { close: () => void }) {
   const button = useRef<HTMLButtonElement>(null)
@@ -62,12 +63,9 @@ function Reveal({ close }: { close: () => void }) {
       }}
     >
       <canvas ref={canvas} className="reveal-confetti" aria-hidden="true" />
-      <div className="reveal-orbit" aria-hidden="true">
-        ✦
-      </div>
-      <p className="eyebrow">Happy anniversary</p>
+      <OrbitMark className="reveal-orbit" />
       <h1 id="reveal-title">{text.revealTitle}</h1>
-      <p>{text.revealBody}</p>
+
       <button ref={button} className="button" onClick={close}>
         {text.revealClose}
       </button>

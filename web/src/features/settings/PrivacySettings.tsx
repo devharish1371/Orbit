@@ -37,7 +37,7 @@ export function PrivacySettings() {
   }
   return (
     <section className="glass memory-section">
-      <h2>A little more privacy.</h2>
+      <h2>Privacy</h2>
       {!isAndroid() ? (
         <p className="muted small">
           App lock and screenshot protection are available in the Android app.

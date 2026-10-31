@@ -1,3 +1,6 @@
+import { ThemePicker } from '@/components/ui/ThemePicker'
+import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, LogOut } from 'lucide-react'
@@ -77,43 +80,35 @@ export default function SettingsPage() {
         <ArrowLeft size={18} aria-hidden="true" />
         {copy.common.back}
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">{copy.common.settings}</p>
-        <h1>{copy.settings.title}</h1>
-        <p className="muted">{copy.settings.description}</p>
-      </header>
+      <SectionHeading title={copy.settings.title} kind="us" />
       <Link className="profile-settings-link" to="/tracking">
-        {copy.tracking.title}
+        <OrbitGlyph name="map" width={26} height={26} />
+        <strong>{copy.tracking.title}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
       <Link className="profile-settings-link" to="/notifications">
-        {copy.alerts.notificationTitle}
+        <OrbitGlyph name="chat" width={26} height={26} />
+        <strong>{copy.alerts.notificationTitle}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
       <Link className="profile-settings-link" to="/activity">
-        {copy.alerts.activity}
+        <OrbitGlyph name="moments" width={26} height={26} />
+        <strong>{copy.alerts.activity}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
       <section className="glass settings-section">
         <h2>{copy.common.theme}</h2>
-        <div className="theme-options">
-          {(['system', 'dark', 'light'] as Theme[]).map((value) => (
-            <button
-              type="button"
-              key={value}
-              disabled={themeBusy}
-              aria-pressed={theme === value}
-              onClick={() => {
-                void changeTheme(value)
-              }}
-            >
-              {copy.common[value]}
-            </button>
-          ))}
-        </div>
+        <ThemePicker
+          value={theme}
+          disabled={themeBusy}
+          onChange={(value) => {
+            void changeTheme(value)
+          }}
+        />
       </section>
       <Link className="profile-settings-link" to="/profile">
-        {copy.profile.appearanceLink}
+        <OrbitGlyph name="us" width={26} height={26} />
+        <strong>{copy.profile.appearanceLink}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
       <form
@@ -138,7 +133,7 @@ export default function SettingsPage() {
           placeholder={copy.settings.meetPlaceholder}
           defaultValue={space?.couple.meet_url ?? ''}
         />
-        <p className="muted small">{copy.settings.private}</p>
+
         <Button disabled={busy}>
           {busy ? copy.common.saving : copy.common.save}
         </Button>
@@ -151,12 +146,12 @@ export default function SettingsPage() {
       <StorageStatus />
       <PrivacySettings />
       <ExportMemories />
-      <section className="glass settings-section">
-        <h2>Orbit, just for two.</h2>
+      <details className="settings-about">
+        <summary>About Orbit</summary>
         <p className="muted small">
-          Build {__ORBIT_BUILD__} · Private accounts · No ads or analytics
+          Version {__ORBIT_BUILD__ === 'local' ? 'Preview' : __ORBIT_BUILD__}
         </p>
-      </section>
+      </details>
       <section className="settings-section">
         <Button
           className="button-secondary"

@@ -6,6 +6,8 @@ import { MotionConfig } from 'motion/react'
 import { AppBoundary } from '@/components/ErrorBoundary'
 import { AuthProvider } from '@/app/AuthProvider'
 import './index.css'
+import './styles/orbit-studio.css'
+import './styles/orbit-worlds.css'
 import '@/hooks/useTheme'
 import App from './App'
 const query = new QueryClient({

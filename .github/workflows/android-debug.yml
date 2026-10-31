@@ -102,7 +102,7 @@ jobs:
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: orbit-m8-debug
+          name: orbit-ui-refresh
           path: web/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 7

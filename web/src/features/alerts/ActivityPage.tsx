@@ -24,12 +24,11 @@ export default function ActivityPage() {
     },
   })
   return (
-    <div className="page">
+    <div className="page activity-page">
       <Link className="back-link" to="/">
         ← {copy.common.back}
       </Link>
       <header className="page-heading">
-        <p className="eyebrow">{copy.alerts.activity}</p>
         <h1>{copy.alerts.activityTitle}</h1>
         <p className="muted">{copy.alerts.activityHint}</p>
       </header>

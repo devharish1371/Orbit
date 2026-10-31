@@ -44,7 +44,7 @@ test('requests a code only for an existing account and validates all eight digit
     options: { shouldCreateUser: false },
   })
   await user.type(screen.getByLabelText('Sign-in code'), '1234')
-  await user.click(screen.getByRole('button', { name: 'Open our space' }))
+  await user.click(screen.getByRole('button', { name: 'Sign in' }))
   expect(verify).not.toHaveBeenCalled()
   expect(screen.getByRole('alert')).toHaveTextContent('Enter all 8 digits')
 })
@@ -57,7 +57,7 @@ test('expired codes produce a recoverable error and can be replaced', async () =
     screen.getByRole('button', { name: 'I already have a code' }),
   )
   await user.type(screen.getByLabelText('Sign-in code'), '12345678')
-  await user.click(screen.getByRole('button', { name: 'Open our space' }))
+  await user.click(screen.getByRole('button', { name: 'Sign in' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('expired')
   expect(
     screen.getByRole('button', { name: 'Send another code' }),

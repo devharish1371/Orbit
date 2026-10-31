@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { lazy, Suspense, useMemo, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
@@ -26,14 +27,11 @@ export default function KeepsakesPage() {
       ? !window.matchMedia('(prefers-color-scheme: light)').matches
       : theme === 'dark'
   return (
-    <div className="page memories-page">
+    <div className="page memories-page keepsakes-page">
       <Link className="back-link" to="/us">
         ← Us
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">For as long as we like</p>
-        <h1>{text.keepsakes}</h1>
-      </header>
+      <SectionHeading title={text.keepsakes} kind="moments" />
       <div className="theme-options">
         <button aria-pressed={!map} onClick={() => setMap(false)}>
           {text.keepsakes}

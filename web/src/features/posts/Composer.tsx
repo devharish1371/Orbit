@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { ImagePlus, Mic, Smile, Type, Plus, Send, X } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
@@ -15,9 +15,10 @@ import {
   type PostDraft,
 } from '@/lib/posts'
 import { VoiceRecorder } from './VoiceRecorder'
+import { AudioPlayer } from '@/components/ui/AudioPlayer'
 function LocalPreview({ note }: { note: Attachment }) {
   const attach = useCallback(
-    (element: HTMLImageElement | HTMLAudioElement | null) => {
+    (element: HTMLImageElement | null) => {
       if (!element) return
       const url = URL.createObjectURL(note.blob)
       element.src = url
@@ -28,11 +29,11 @@ function LocalPreview({ note }: { note: Attachment }) {
   return note.extension === 'webp' ? (
     <img className="draft-photo" ref={attach} alt={copy.posts.photoPreview} />
   ) : (
-    <audio
-      controls
-      preload="metadata"
-      ref={attach}
-      aria-label={copy.posts.voicePreview}
+    <AudioPlayer
+      blob={note.blob}
+      label={copy.posts.voicePreview}
+      waveform={note.waveform}
+      duration={note.duration}
     />
   )
 }
@@ -40,10 +41,12 @@ export function Composer({
   channel,
   onTyping,
   onStopTyping,
+  onBusyChange,
 }: {
   channel: Channel
   onTyping: () => void
   onStopTyping: () => void
+  onBusyChange?: (busy: boolean) => void
 }) {
   const { client } = useAuth(),
     { data: space } = useSpace(),
@@ -59,6 +62,9 @@ export function Composer({
     [recording, setRecording] = useState(false),
     [message, setMessage] = useState(''),
     [more, setMore] = useState(false)
+  useEffect(() => {
+    onBusyChange?.(busy || recording)
+  }, [busy, recording, onBusyChange])
   const photoInput = useRef<HTMLInputElement>(null)
   const id = useRef(crypto.randomUUID()),
     attempted = useRef(false)
@@ -140,6 +146,7 @@ export function Composer({
     return (
       <form
         className="messenger-composer"
+        data-recording={recording}
         onSubmit={(event) => {
           void submit(event)
         }}
@@ -218,7 +225,7 @@ export function Composer({
         <div className="messenger-input-row">
           <button
             type="button"
-            className="icon-button"
+            className="icon-button composer-plus"
             aria-label={copy.posts.more}
             aria-expanded={more}
             disabled={busy || recording}

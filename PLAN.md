@@ -32,7 +32,7 @@ Architecture notes and version records live in `docs/`.
 | M6 | Moments/chat/media/voice, reactions/comments, expiry, keepsakes/quota, storage/cleanup status. End-to-end media/retention tests and real-device voice pass. | Dev confirms voice, keyboard and background microphone stop pass on APK `2133d94`; automated/browser checks pass; partner-phone voice and 4G timing deferred; untagged |
 | M7 | Memory map, capsules/questions/reveal/recap, app lock/privacy, export, optional Telegram. Unlock/reveal/export/lock acceptance passes. Human #6; optional #4. | Complete; APK `959314d` passes CI/browser/security checks; Dev confirms all privacy checks and native ZIP saving/opening; letter stays outside app; Telegram optional/unconfigured |
 | M8 | All states, motion/accessibility/performance, copy and visual QA. Lighthouse targets and dark/light screen captures pass. | Complete; cold Login 98/100/100; all 32 rendered-screen theme audits 100/100; 68 regular captures; update recovery and wrapping fixed |
-| M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | In progress; release preparation next; deferred physical/soak gates remain open |
+| M9 | CI/Pages/signed APK/keepalive, release docs, secret scan, manual QA and 24-hour soak. Full definition of done passes. Humans #1/#5/#7. | Release preparation held for user-requested UI redesign; deferred physical/soak gates remain open |
 
 ## Current next steps
 
@@ -62,3 +62,23 @@ Architecture notes and version records live in `docs/`.
 - #2a satisfied: free Gmail SMTP configured; actual inbox delivery and Dev's code login
   verified. Both users logged in on web; sessions restore without a fresh OTP. See
   `docs/AUTHENTICATION.md`. Default sessions have no timebox or inactivity expiry.
+
+## 2026-10-31 — UI redesign requested after M8
+
+The user found mismatched Chat surfaces, generic voice controls and square typing focus,
+and asked for a substantially more creative interface with natural, concise copy. M8's
+prior tag records the old acceptance; this follow-up does not overwrite it. M9 release
+work is held until the redesign is checked and its APK is available.
+
+- Rework Chat layout and voice playback; preserve media/privacy behavior.
+- Replace decorative slogans and footers with concise labels and useful instructions.
+- Create a couple-focused orbital Home, illustrated memory navigation, and photo-led Moments.
+- Recheck both themes/responsive layouts, accessibility, unit/hosted tests, and Android CI.
+- Human #7: verify the new keyboard/gesture edges and player on the actual Nothing phone.
+
+### 2026-11-01 — App-wide visual direction
+
+Implement the two-world system described in docs/DESIGN_DIRECTION.md across all primary
+and secondary flows, regenerate every launcher icon, and retain saved personal settings.
+Final browser contrast/layout audit and Android build precede human task #7 review.
+M9 release gates remain separate from this UI follow-up.

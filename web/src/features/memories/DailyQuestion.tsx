@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -11,6 +11,11 @@ export function DailyQuestion() {
   const { client, session } = useAuth(),
     { data: space } = useSpace(),
     query = useQueryClient()
+  const [answering, setAnswering] = useState(false)
+  const answerField = useRef<HTMLTextAreaElement>(null)
+  useEffect(() => {
+    if (answering) answerField.current?.focus()
+  }, [answering])
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState('')
   const own = answers.data?.find((row) => row.user_id === session?.user.id)
@@ -37,6 +42,9 @@ export function DailyQuestion() {
   }
   return (
     <section className="glass memory-section daily-question">
+      <span className="question-watermark" aria-hidden="true">
+        ?
+      </span>
       <p className="eyebrow">{text.question}</p>
       {daily.data && <h2>{dailyQuestions[daily.data.question_idx]}</h2>}
       {(daily.isPending || (daily.data && answers.isPending)) && (
@@ -54,23 +62,39 @@ export function DailyQuestion() {
         </button>
       )}
       {daily.data && !answers.isPending && !answers.error && !own && (
-        <form
-          key={daily.data.day}
-          onSubmit={(event) => {
-            void submit(event)
-          }}
-        >
-          <label htmlFor="daily-answer">{text.answer}</label>
-          <textarea
-            id="daily-answer"
-            name="answer"
-            required
-            maxLength={1000}
-            rows={3}
-          />
-          <p className="muted small">{text.answerHint}</p>
-          <Button disabled={busy}>{busy ? 'Saving…' : text.sealAnswer}</Button>
-        </form>
+        <div>
+          {!answering && (
+            <button
+              className="question-answer-button"
+              type="button"
+              onClick={() => setAnswering(true)}
+            >
+              {text.answerAction}
+              <span aria-hidden="true">↗</span>
+            </button>
+          )}
+          <form
+            hidden={!answering}
+            key={daily.data.day}
+            onSubmit={(event) => {
+              void submit(event)
+            }}
+          >
+            <label htmlFor="daily-answer">{text.answer}</label>
+            <textarea
+              ref={answerField}
+              id="daily-answer"
+              name="answer"
+              required
+              maxLength={1000}
+              rows={3}
+            />
+            <p className="muted small">{text.answerHint}</p>
+            <Button disabled={busy}>
+              {busy ? 'Saving…' : text.sealAnswer}
+            </Button>
+          </form>
+        </div>
       )}
       {answers.data?.map((row) => (
         <div key={row.user_id} className="daily-answer">

@@ -1,3 +1,5 @@
+import { ThemePicker } from '@/components/ui/ThemePicker'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent, type ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
@@ -177,11 +179,7 @@ function ProfileEditor({ member }: { member: Member }) {
         <ArrowLeft size={18} aria-hidden="true" />
         {copy.common.back}
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">{copy.profile.title}</p>
-        <h1>{copy.profile.heading}</h1>
-        <p className="muted">{copy.profile.description}</p>
-      </header>
+      <SectionHeading title={copy.profile.heading} kind="us" />
       <section
         className="glass profile-photo-section"
         aria-labelledby="photo-heading"
@@ -193,7 +191,9 @@ function ProfileEditor({ member }: { member: Member }) {
           path={member.avatar_path}
         />
         <div>
-          <h2 id="photo-heading">{copy.profile.photo}</h2>
+          <h2 id="photo-heading">
+            {draft.nickname || draft.name || copy.profile.photo}
+          </h2>
           <p className="muted small">{copy.profile.photoNote}</p>
         </div>
         <label
@@ -300,18 +300,11 @@ function ProfileEditor({ member }: { member: Member }) {
         <section className="glass settings-section">
           <h2>{copy.profile.appearance}</h2>
           <p className="muted small">{copy.profile.appearanceNote}</p>
-          <div className="theme-options">
-            {(['system', 'dark', 'light'] as const).map((mode) => (
-              <button
-                key={mode}
-                type="button"
-                aria-pressed={draft.theme === mode}
-                onClick={() => update('theme', mode)}
-              >
-                {copy.common[mode]}
-              </button>
-            ))}
-          </div>
+          <ThemePicker
+            value={normalizeTheme(draft.theme)}
+            accent={draft.accent}
+            onChange={(value) => update('theme', value)}
+          />
           <h3 className="profile-subheading">{copy.profile.accent}</h3>
           <ColorChoices
             value={draft.accent}

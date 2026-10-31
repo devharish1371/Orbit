@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { useState, useRef, useEffect, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { LockKeyhole, MailOpen } from 'lucide-react'
@@ -15,6 +16,11 @@ export default function CapsulesPage() {
     capsules = useCapsules(),
     now = useNow()
   const rows = capsules.data?.pages.flat() ?? []
+  const [writing, setWriting] = useState(false)
+  const titleField = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    if (writing) titleField.current?.focus()
+  }, [writing])
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState('')
   const [draft, setDraft] = useState(() => crypto.randomUUID())
@@ -44,6 +50,7 @@ export default function CapsulesPage() {
       form.reset()
       setDraft(crypto.randomUUID())
       setMessage(text.sealed)
+      setWriting(false)
       await query.invalidateQueries({ queryKey: ['capsules'] })
     } catch {
       setMessage(text.failed)
@@ -75,16 +82,24 @@ export default function CapsulesPage() {
       timeStyle: 'short',
     }).format(new Date(value))
   return (
-    <div className="page memories-page">
+    <div className="page memories-page capsules-page">
       <Link className="back-link" to="/us">
         ← Us
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">For another day</p>
-        <h1>{text.capsules}</h1>
-      </header>
+      <SectionHeading title={text.capsules} kind="chat" />
+      <button
+        className="capsule-compose-toggle"
+        type="button"
+        aria-expanded={writing}
+        disabled={busy}
+        onClick={() => setWriting(!writing)}
+      >
+        <span aria-hidden="true">{writing ? '−' : '+'}</span>
+        {text.newCapsule}
+      </button>
       <form
-        className="glass memory-section"
+        hidden={!writing}
+        className="glass memory-section capsule-compose"
         onSubmit={(event) => {
           void submit(event)
         }}
@@ -93,7 +108,13 @@ export default function CapsulesPage() {
         <h2>{text.newCapsule}</h2>
         <p className="muted small">{text.capsuleHint}</p>
         <label htmlFor="capsule-title">{text.titleLabel}</label>
-        <input id="capsule-title" name="title" required maxLength={80} />
+        <input
+          ref={titleField}
+          id="capsule-title"
+          name="title"
+          required
+          maxLength={80}
+        />
         <label htmlFor="capsule-body">{text.bodyLabel}</label>
         <textarea
           id="capsule-body"
@@ -145,6 +166,9 @@ export default function CapsulesPage() {
             className={`glass memory-section capsule-card ${showBody ? 'capsule-open' : ''}`}
             key={row.id}
           >
+            <span className="capsule-stamp" aria-hidden="true">
+              ✦
+            </span>
             {showBody ? (
               <MailOpen aria-hidden="true" />
             ) : (

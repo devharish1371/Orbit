@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { copy } from '@/copy/en'
 import { useLiveData } from '@/features/map/LiveContext'
 import { useSpace } from '@/hooks/useSpace'
-import { Avatar } from '@/components/ui/Avatar'
+import { OrbitPortraits } from '@/components/ui/OrbitPortraits'
 import { callUrl, whatsappUrl } from '@/lib/connect'
 import { anniversaryDays, localDateParts } from '@/lib/calendar'
 import { AttentionActions } from '@/features/alerts/AttentionActions'
@@ -38,25 +38,16 @@ export default function HomePage() {
   return (
     <div className="page home-page">
       <header className="page-heading">
-        <p className="muted">
-          {greeting}, {self.nickname || self.display_name}{' '}
-          <span aria-hidden="true">☾</span>
-        </p>
-        <h1>{copy.home.title}</h1>
-        <span className="heading-star" aria-hidden="true">
-          ✦
-        </span>
+        <p className="eyebrow">{greeting}</p>
+        <h1>{self.nickname || self.display_name}</h1>
       </header>
-      <section className="partner-card glass" aria-label={copy.home.yourPerson}>
+      <section
+        className="partner-card connection-card"
+        aria-label={copy.home.yourPerson}
+      >
+        <OrbitPortraits />
         <div className="partner-heading">
-          <Avatar
-            name={partner?.display_name ?? '?'}
-            color={partner?.color ?? '#FF6B8A'}
-            large
-            path={partner?.avatar_path}
-          />
           <div>
-            <p className="eyebrow">{copy.home.yourPerson}</p>
             <h2>
               {self.partner_nickname ||
                 partner?.nickname ||
@@ -72,7 +63,13 @@ export default function HomePage() {
                   : copy.home.live}
             </p>
           </div>
-          <Heart className="partner-heart" size={22} aria-hidden="true" />
+          <Link
+            className="partner-chat-link"
+            to="/chat"
+            aria-label={copy.nav.chat}
+          >
+            <MessageCircle size={21} />
+          </Link>
         </div>
         <div className="location-status">
           <MapPin size={18} aria-hidden="true" />
@@ -84,13 +81,9 @@ export default function HomePage() {
                   ? copy.home.paused
                   : copy.home.waiting}
             </p>
-            <p className="muted small">
-              {locationAvailable
-                ? partnerLocation.fuzzed
-                  ? copy.map.surprise
-                  : copy.home.openMap
-                : copy.home.waitingDetail}
-            </p>
+            {locationAvailable && partnerLocation.fuzzed && (
+              <p className="muted small">{copy.map.surprise}</p>
+            )}
           </div>
         </div>
         <div className="quick-actions">
@@ -132,53 +125,50 @@ export default function HomePage() {
         </div>
       </section>
       <AttentionActions />
-      <ExpiringSoon />
+      <div className="home-tiles">
+        <Link className="map-preview glass" to="/map">
+          <div className="map-lines" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <i />
+          </div>
+          <MapPin size={21} aria-hidden="true" />
+          <h2>{copy.home.mapTitle}</h2>
+
+          <span className="card-link">
+            {copy.home.openMap}
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </span>
+        </Link>
+        <section className="anniversary-card glass">
+          <div>
+            <p className="eyebrow">{copy.home.together}</p>
+            {days === null ? (
+              <>
+                <h2>{copy.home.addDate}</h2>
+                <Link to="/settings" className="card-link">
+                  {copy.home.addDateAction}
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+              </>
+            ) : days === 0 ? (
+              <h2>{copy.home.today}</h2>
+            ) : (
+              <>
+                <p className="countdown-number">
+                  {days}
+                  <span>✦</span>
+                </p>
+                <p className="muted small">{copy.home.countdown}</p>
+              </>
+            )}
+          </div>
+          <Heart size={44} strokeWidth={1} aria-hidden="true" />
+        </section>
+      </div>
       <DailyQuestion />
-      <Link className="map-preview glass" to="/map">
-        <div className="map-lines" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <i />
-        </div>
-        <MapPin size={21} aria-hidden="true" />
-        <h2>{copy.home.mapTitle}</h2>
-        <p>{copy.home.mapDescription}</p>
-        <span className="card-link">
-          {copy.home.openMap}
-          <ArrowUpRight size={17} aria-hidden="true" />
-        </span>
-      </Link>
-      <section className="anniversary-card glass">
-        <div>
-          <p className="eyebrow">{copy.home.together}</p>
-          {days === null ? (
-            <>
-              <h2>{copy.home.addDate}</h2>
-              <Link to="/settings" className="card-link">
-                {copy.home.addDateAction}
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </Link>
-            </>
-          ) : days === 0 ? (
-            <h2>{copy.home.today}</h2>
-          ) : (
-            <>
-              <p className="countdown-number">
-                {days}
-                <span>✦</span>
-              </p>
-              <p className="muted small">{copy.home.countdown}</p>
-            </>
-          )}
-        </div>
-        <Heart size={44} strokeWidth={1} aria-hidden="true" />
-      </section>
-      <section className="little-things">
-        <p className="eyebrow">{copy.home.smallThings}</p>
-        <h2>{copy.home.smallTitle}</h2>
-        <p className="muted">{copy.home.smallBody}</p>
-      </section>
+      <ExpiringSoon />
     </div>
   )
 }

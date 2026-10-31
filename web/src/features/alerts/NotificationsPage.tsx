@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
@@ -61,11 +62,7 @@ export default function NotificationsPage() {
       <Link className="back-link" to="/settings">
         ← {copy.common.back}
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">{copy.alerts.preferences}</p>
-        <h1>{copy.alerts.notificationTitle}</h1>
-        <p className="muted">{copy.alerts.description}</p>
-      </header>
+      <SectionHeading title={copy.alerts.notificationTitle} kind="chat" />
       <section className="glass settings-section">
         <h2>{copy.alerts.thisDevice}</h2>
         <p role="status">{copy.alerts.pushState[push.state]}</p>

@@ -118,7 +118,11 @@ export function PostCard({
         }
       }}
       onPointerDown={(event) => {
-        if (chat && event.pointerType === 'touch') {
+        if (
+          chat &&
+          event.pointerType === 'touch' &&
+          !(event.target as HTMLElement).closest('button, input, a, audio')
+        ) {
           held.current = false
           origin.current = { x: event.clientX, y: event.clientY }
           press.current = setTimeout(() => {
@@ -187,17 +191,6 @@ export function PostCard({
           </span>
         </header>
       )}
-      {chat && (
-        <button
-          className="chat-message-menu"
-          type="button"
-          aria-label={copy.posts.messageOptions}
-          aria-expanded={actions}
-          onClick={() => setActions(!actions)}
-        >
-          <MoreHorizontal size={16} />
-        </button>
-      )}
       {['photo', 'voice'].includes(post.kind) && <PostMedia post={post} />}
       {post.body && (
         <p className={`post-body ${post.kind === 'mood' ? 'post-mood' : ''}`}>
@@ -220,6 +213,17 @@ export function PostCard({
               minute: '2-digit',
             }).format(new Date(post.created_at))}
           </time>
+          {chat && (
+            <button
+              className="chat-message-menu"
+              type="button"
+              aria-label={copy.posts.messageOptions}
+              aria-expanded={actions}
+              onClick={() => setActions(!actions)}
+            >
+              <MoreHorizontal size={16} />
+            </button>
+          )}
         </div>
       )}
       {(emojiChoices.length > 0 || !chat || actions) && (

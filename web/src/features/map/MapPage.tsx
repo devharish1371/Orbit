@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Link } from 'react-router-dom'
 import { nativeTracking } from '@/native/tracker'
 import { useState } from 'react'
@@ -129,52 +130,50 @@ export default function MapPage() {
     : null
   return (
     <div className="page map-page">
-      <header className="page-heading">
-        <p className="eyebrow">{copy.map.eyebrow}</p>
-        <h1>{copy.map.title}</h1>
-        <p className="muted">{copy.map.description}</p>
-      </header>
+      <SectionHeading title={copy.map.title} kind="map" />
       <div className="map-connection" role="status">
         <span
           className={`status-dot ${live.connection !== 'live' ? 'is-old' : ''}`}
         />
         {live.connection === 'live' ? copy.map.live : copy.map.reconnecting}
       </div>
-      <MapCanvas
-        key={`${dark ? 'dark' : 'light'}-${mapAttempt}`}
-        dark={dark}
-        people={people}
-        places={places}
-        trail={
-          showTrail && data.partner?.share_mode === 'live'
-            ? (trail.data ?? [])
-            : []
-        }
-        fit={fit}
-        adding={adding}
-        onPick={choose}
-        onPerson={setSelected}
-        onRetry={() => setMapAttempt((value) => value + 1)}
-      />
-      <div className="map-toolbar">
-        <button
-          className="button button-secondary"
-          onClick={() => setFit((n) => n + 1)}
-          disabled={!people.length}
-        >
-          <Crosshair size={18} aria-hidden="true" />
-          {copy.map.fit}
-        </button>
-        <button
-          className="button button-secondary"
-          onClick={() => {
-            setAdding((value) => !value)
-            setEditor(null)
-          }}
-        >
-          <Plus size={18} aria-hidden="true" />
-          {adding ? copy.map.cancel : copy.map.add}
-        </button>
+      <div className="atlas-frame">
+        <MapCanvas
+          key={`${dark ? 'dark' : 'light'}-${mapAttempt}`}
+          dark={dark}
+          people={people}
+          places={places}
+          trail={
+            showTrail && data.partner?.share_mode === 'live'
+              ? (trail.data ?? [])
+              : []
+          }
+          fit={fit}
+          adding={adding}
+          onPick={choose}
+          onPerson={setSelected}
+          onRetry={() => setMapAttempt((value) => value + 1)}
+        />
+        <div className="map-toolbar">
+          <button
+            className="button button-secondary"
+            onClick={() => setFit((n) => n + 1)}
+            disabled={!people.length}
+          >
+            <Crosshair size={18} aria-hidden="true" />
+            {copy.map.fit}
+          </button>
+          <button
+            className="button button-secondary"
+            onClick={() => {
+              setAdding((value) => !value)
+              setEditor(null)
+            }}
+          >
+            <Plus size={18} aria-hidden="true" />
+            {adding ? copy.map.cancel : copy.map.add}
+          </button>
+        </div>
       </div>
       {adding && (
         <p className="map-add-hint" role="status">
@@ -199,31 +198,6 @@ export default function MapPage() {
       ) : (
         <p className="muted small map-waiting">{copy.map.waiting}</p>
       )}
-      <section className="glass map-sharing">
-        <p className="muted small">
-          {nativeTracking ? copy.tracking.nativeNotice : copy.map.webNotice}
-        </p>
-        {nativeTracking ? (
-          <Link className="button" to="/tracking">
-            {copy.tracking.manage}
-          </Link>
-        ) : (
-          <Button
-            type="button"
-            onClick={sharing.enabled ? sharing.stop : sharing.start}
-            disabled={data.self.share_mode === 'paused'}
-          >
-            {sharing.enabled ? copy.map.stop : copy.map.start}
-          </Button>
-        )}
-        {(sharing.message || data.self.share_mode === 'paused') && (
-          <p className="small" role="status">
-            {data.self.share_mode === 'paused'
-              ? copy.map.paused
-              : sharing.message}
-          </p>
-        )}
-      </section>
       <details className="glass location-sheet" open>
         <summary>{copy.map.expand}</summary>
         <div className="map-person-tabs">
@@ -233,11 +207,18 @@ export default function MapPage() {
               aria-pressed={current.user_id === member.user_id}
               onClick={() => setSelected(member.user_id)}
             >
-              {member.user_id === data.self.user_id
-                ? copy.map.you
-                : data.self.partner_nickname ||
-                  member.nickname ||
-                  member.display_name}
+              <Avatar
+                name={member.display_name}
+                color={member.color}
+                path={member.avatar_path}
+              />
+              <span>
+                {member.user_id === data.self.user_id
+                  ? copy.map.you
+                  : data.self.partner_nickname ||
+                    member.nickname ||
+                    member.display_name}
+              </span>
             </button>
           ))}
         </div>
@@ -333,6 +314,31 @@ export default function MapPage() {
         <p className="small muted">{copy.map.trailHint}</p>
         {trail.error && <p role="status">{copy.common.error}</p>}
       </details>
+      <section className="glass map-sharing">
+        <p className="muted small">
+          {nativeTracking ? copy.tracking.nativeNotice : copy.map.webNotice}
+        </p>
+        {nativeTracking ? (
+          <Link className="button" to="/tracking">
+            {copy.tracking.manage}
+          </Link>
+        ) : (
+          <Button
+            type="button"
+            onClick={sharing.enabled ? sharing.stop : sharing.start}
+            disabled={data.self.share_mode === 'paused'}
+          >
+            {sharing.enabled ? copy.map.stop : copy.map.start}
+          </Button>
+        )}
+        {(sharing.message || data.self.share_mode === 'paused') && (
+          <p className="small" role="status">
+            {data.self.share_mode === 'paused'
+              ? copy.map.paused
+              : sharing.message}
+          </p>
+        )}
+      </section>
       {editor && (
         <PlaceEditor
           key={editor.id ?? `${editor.draft.lat},${editor.draft.lng}`}

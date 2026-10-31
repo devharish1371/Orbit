@@ -14,14 +14,19 @@ app = typer.Typer(add_completion=False)
 
 
 def orbit_mark(size: int, *, transparent: bool = False) -> Image.Image:
-    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0) if transparent else "#181526")
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0) if transparent else "#151A2D")
     ring = Image.new("RGBA", (size, size))
     draw = ImageDraw.Draw(ring)
-    draw.ellipse((size * .19, size * .33, size * .81, size * .67), outline="#A76AE0", width=max(1, round(size * .04)))
+    draw.ellipse((size * .10, size * .27, size * .90, size * .73), outline="#F4E9D8", width=max(1, round(size * .028)))
     canvas.alpha_composite(ring.rotate(35, resample=Image.Resampling.BICUBIC))
     draw = ImageDraw.Draw(canvas)
-    draw.ellipse((size * .41, size * .41, size * .59, size * .59), fill="#FF6B8A")
-    draw.ellipse((size * .70, size * .25, size * .82, size * .37), fill="#3DE0C5")
+    for x,y,colour,shade,shine in [(.34,.61,"#FF9B7D","#D85B5D","#FFE4CF"),(.66,.39,"#A6B8FF","#6778D8","#DCE4FF")]:
+        box=((x-.17)*size,(y-.17)*size,(x+.17)*size,(y+.17)*size)
+        draw.ellipse(box,fill=colour)
+        draw.arc(box,65,200,fill=shade,width=max(1,round(size*.045)))
+        draw.ellipse(((x-.075)*size,(y-.085)*size,(x-.025)*size,(y-.035)*size),fill=shine)
+    # Shared path remains visible between the two equal planets.
+    draw.line([(size*.15,size*.70),(size*.28,size*.71),(size*.43,size*.67),(size*.58,size*.60),(size*.75,size*.49)],fill="#F4E9D8",width=max(1,round(size*.028)))
     return canvas
 
 
@@ -34,8 +39,8 @@ def main(
     public = ROOT / "web/public/icons"
     public.mkdir(parents=True, exist_ok=True)
     for size in (192, 512):
-        ImageOps.pad(art, (size, size), color="#181526").save(public / f"orbit-{size}.png")
-    maskable = Image.new("RGBA", (512, 512), "#181526")
+        ImageOps.pad(art, (size, size), color="#151A2D").save(public / f"orbit-{size}.png")
+    maskable = Image.new("RGBA", (512, 512), "#151A2D")
     mark = ImageOps.contain(art, (384, 384))
     maskable.alpha_composite(mark, ((512 - mark.width) // 2, (512 - mark.height) // 2))
     maskable.save(public / "orbit-maskable-512.png")
@@ -44,7 +49,7 @@ def main(
         for density, size in {"mdpi": 48, "hdpi": 72, "xhdpi": 96, "xxhdpi": 144, "xxxhdpi": 192}.items():
             folder = resources / f"mipmap-{density}"
             folder.mkdir(exist_ok=True)
-            icon = ImageOps.pad(art, (size, size), color="#181526")
+            icon = ImageOps.pad(art, (size, size), color="#151A2D")
             icon.save(folder / "ic_launcher.png")
             icon.save(folder / "ic_launcher_round.png")
             foreground = Image.new("RGBA", (round(size * 2.25), round(size * 2.25)))
@@ -53,7 +58,7 @@ def main(
             foreground.save(folder / "ic_launcher_foreground.png")
         for path in resources.glob("drawable*/splash.png"):
             with Image.open(path) as old:
-                splash = Image.new("RGBA", old.size, "#0B0B12")
+                splash = Image.new("RGBA", old.size, "#10131E")
             mark_size = max(48, round(min(splash.size) * .22))
             mark = ImageOps.contain(art, (mark_size, mark_size))
             splash.alpha_composite(mark, ((splash.width - mark.width) // 2, (splash.height - mark.height) // 2))

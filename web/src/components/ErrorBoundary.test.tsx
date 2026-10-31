@@ -18,7 +18,7 @@ it('keeps the update action usable when a lazy route fails', () => {
     )
     expect(
       screen.getByText(
-        'We couldn’t load your space. Check your connection and try again.',
+        'Couldn’t load this. Check your connection and try again.',
       ),
     ).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Update Orbit' }))

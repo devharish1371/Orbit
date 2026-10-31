@@ -28,7 +28,7 @@ function apply() {
   root.style.setProperty('--button-to', blend(accent, '#C8A8F8', 0.55))
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', light ? '#FBF7FA' : '#0B0B12')
+    ?.setAttribute('content', light ? '#F5F2EA' : '#10131E')
 }
 function notify() {
   apply()

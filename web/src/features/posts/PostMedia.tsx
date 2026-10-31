@@ -2,14 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import type { Post } from '@/lib/posts'
 import { copy } from '@/copy/en'
 import { useSignedMedia } from './usePosts'
+import { AudioPlayer } from '@/components/ui/AudioPlayer'
 function Asset({
   path,
   alt,
   audio = false,
+  waveform,
+  duration,
 }: {
   path: string
   alt: string
   audio?: boolean
+  waveform?: number[] | null
+  duration?: number | null
 }) {
   const url = useSignedMedia(path),
     [failed, setFailed] = useState(false)
@@ -38,11 +43,12 @@ function Asset({
       />
     )
   return audio ? (
-    <audio
-      controls
-      preload="none"
+    <AudioPlayer
+      key={url.data}
       src={url.data}
-      aria-label={alt}
+      label={alt}
+      waveform={waveform}
+      duration={duration}
       onError={() => setFailed(true)}
     />
   ) : (
@@ -108,24 +114,15 @@ export function PostMedia({ post }: { post: Post }) {
         </button>
       ) : (
         <>
-          <div className="voice-wave" aria-hidden="true">
-            {(post.waveform?.length
-              ? post.waveform
-              : Array.from({ length: 40 }, () => 0.15)
-            ).map((n, index) => (
-              <i key={index} style={{ height: `${Math.max(8, n * 100)}%` }} />
-            ))}
-          </div>
           {visible && (
-            <Asset path={post.media_path} alt={copy.posts.voice} audio />
+            <Asset
+              path={post.media_path}
+              alt={copy.posts.voice}
+              audio
+              waveform={post.waveform}
+              duration={post.media_duration_s}
+            />
           )}
-          <span className="muted small">
-            {Math.floor((post.media_duration_s ?? 0) / 60)}:
-            {String(Math.floor(post.media_duration_s ?? 0) % 60).padStart(
-              2,
-              '0',
-            )}
-          </span>
         </>
       )}
       {open && (

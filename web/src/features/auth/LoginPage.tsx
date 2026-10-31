@@ -82,7 +82,6 @@ export default function LoginPage() {
         <span className="star star-two">✧</span>
       </div>
       <section className="login-copy">
-        <p className="eyebrow">{copy.login.eyebrow}</p>
         <h1>{step === 'email' ? copy.login.title : copy.login.codeTitle}</h1>
         <p className="muted">
           {step === 'email' ? (
@@ -197,10 +196,6 @@ export default function LoginPage() {
           </div>
         )}
       </form>
-      <footer className="login-footer">
-        {copy.login.privacy}
-        <span>✦</span>
-      </footer>
     </main>
   )
 }

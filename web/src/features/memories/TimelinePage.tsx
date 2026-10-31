@@ -1,3 +1,4 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
@@ -33,14 +34,11 @@ export default function TimelinePage() {
       timeZone: 'UTC',
     }).format(new Date(value))
   return (
-    <div className="page memories-page">
+    <div className="page memories-page timeline-page">
       <Link className="back-link" to="/us">
         ← Us
       </Link>
-      <header className="page-heading">
-        <p className="eyebrow">One day at a time</p>
-        <h1>{text.timeline}</h1>
-      </header>
+      <SectionHeading title={text.timeline} kind="us" />
       {anniversary ? (
         <>
           <section className="glass memory-section story-count">

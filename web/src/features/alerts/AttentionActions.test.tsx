@@ -34,7 +34,7 @@ test('urgent attention needs its explicit in-app confirmation and persists throu
     }),
   )
   expect(await screen.findByRole('status')).toHaveTextContent(
-    'notification will be attempted',
+    'Delivery depends on their connection',
   )
 })
 test('a server cooldown is shown without claiming that delivery occurred', async () => {

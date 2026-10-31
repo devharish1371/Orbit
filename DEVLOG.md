@@ -655,3 +655,37 @@ Final web **50/50**, worker **16/16**, lint/types/format/build pass; source scan
 Backend unchanged since full **58/58** hosted pass. Updated Android CI will package the
 final polish; no native behavior changed after M7's physical acceptance. M8 acceptance is
 complete; tag m8-done. See docs/QUALITY.md for exact scope and remaining hardware limits.
+
+## 2026-10-31 — UI redesign following user review
+
+Release preparation paused for the user's UI feedback and full creative direction. Chat
+now uses a bounded conversation scroll region with continuous rounded header/composer
+surfaces. Voice notes and previews share a custom waveform player with seeking, speed,
+retry, exclusive playback, background pause and Blob cleanup. A rounded composer-level
+focus treatment replaces the square textarea outline. Message menus no longer cover text.
+
+Removed repeated sentimental headings, decorative footers and implementation chatter from
+the main flows. Home uses the member profiles in an interactive orbital scene; Us has a
+combined couple header and illustrated photo-stack/envelope/timeline navigation. Moments
+has a collapsible composer that retains drafts, full-width photos, and daily questions now
+expand on request. Appearance continues to use each user's saved theme/accent.
+
+First pass: 53 web tests, 16 worker tests and the full 58-test hosted suite pass. Initial
+26 rendered-screen audits are 100/100; 34 layout captures have no horizontal overflow.
+The second, more substantial visual pass is implemented and passes web checks; final
+screenshots/audits and Android packaging are underway. No real partner messages sent.
+
+## 2026-11-01 — Two-world visual system
+
+User requested a more distinctive app-wide direction after reviewing the prior pass.
+Research and screen decisions are recorded in docs/DESIGN_DIRECTION.md. Replaced pale glass
+styling with solid paper/ink surfaces, bold sans headings, paired custom navigation glyphs,
+and two equal planets across SVG/PWA/Android launcher assets. Home, Moments, Chat, Us,
+Map, Profile, Settings, notifications, capsules and timeline share the new geometry.
+Appearance controls now show miniature previews; capsule creation expands with retained
+draft and focus; map tools sit within the atlas; press feedback follows contact position.
+
+Web checks pass: 53 component/unit tests, 16 worker tests, lint/types/format/build. Hosted
+backend remains unchanged since the full 58-test pass. Final browser audits and Android
+packaging are underway. No messages or pushes sent to the partner. Physical phone review
+and previously deferred offline/endurance/partner checks remain open.

@@ -1,5 +1,14 @@
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { Phone, Video, Bookmark } from 'lucide-react'
+import {
+  Phone,
+  Video,
+  Bookmark,
+  ArrowDown,
+  Plus,
+  X,
+  Sparkles,
+} from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useSpace } from '@/hooks/useSpace'
 import { useNow } from '@/hooks/useNow'
@@ -13,6 +22,10 @@ import { PostCard } from './PostCard'
 import { Avatar } from '@/components/ui/Avatar'
 import { callUrl } from '@/lib/connect'
 export default function PostsPage({ channel }: { channel: Channel }) {
+  const [composing, setComposing] = useState(false)
+  const [composerBusy, setComposerBusy] = useState(false)
+  const [away, setAway] = useState(false)
+  const scrollArea = useRef<HTMLDivElement>(null)
   const [kept, setKept] = useState(false),
     posts = usePosts(channel, kept),
     now = useNow(),
@@ -29,19 +42,20 @@ export default function PostsPage({ channel }: { channel: Channel }) {
     newest = unique[0]?.id
   useEffect(() => {
     if (channel !== 'chat') return
-    const scroll = () => {
-      stick.current =
-        document.documentElement.scrollHeight -
-          window.scrollY -
-          window.innerHeight <
-        360
-    }
-    window.addEventListener('scroll', scroll, { passive: true })
-    return () => window.removeEventListener('scroll', scroll)
+    const area = scrollArea.current
+    if (!area) return
+    const resize = new ResizeObserver(() => {
+      if (stick.current) area.scrollTop = area.scrollHeight
+    })
+    resize.observe(area)
+    if (area.firstElementChild) resize.observe(area.firstElementChild)
+    return () => resize.disconnect()
   }, [channel])
   useEffect(() => {
-    if (channel === 'chat' && newest && stick.current)
-      anchor.current?.scrollIntoView({ block: 'center' })
+    if (channel === 'chat' && newest && stick.current) {
+      const area = scrollArea.current
+      if (area) area.scrollTop = area.scrollHeight
+    }
   }, [channel, newest])
   const cards = channel === 'chat' ? [...unique].reverse() : unique
   const partnerName =
@@ -61,6 +75,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
       channel={channel}
       onTyping={typing.changed}
       onStopTyping={typing.stopped}
+      onBusyChange={setComposerBusy}
     />
   )
   return (
@@ -75,6 +90,14 @@ export default function PostsPage({ channel }: { channel: Channel }) {
           <div>
             <h1>{partnerName}</h1>
             <p className="muted small" role="status">
+              <span
+                className={`chat-presence ${typing.typing ? 'is-typing' : ''}`}
+                aria-hidden="true"
+              >
+                <i />
+                <i />
+                <i />
+              </span>
               {typing.typing
                 ? copy.posts.typing.replace('{name}', partnerName)
                 : copy.posts.privateChat}
@@ -107,139 +130,174 @@ export default function PostsPage({ channel }: { channel: Channel }) {
           </button>
         </header>
       ) : (
-        <header className="page-heading">
-          <p className="eyebrow">{copy.posts.momentsEyebrow}</p>
-          <h1>{copy.posts.momentsTitle}</h1>
-          <p className="muted">{copy.posts.momentsDescription}</p>
-        </header>
+        <SectionHeading title={copy.posts.momentsTitle} kind="moments" />
       )}
-      {channel === 'moment' && composer}
-      {(channel === 'moment' || (posts.data?.pages.length ?? 0) > 1) && (
-        <div className="post-filters">
-          {channel === 'moment' && (
-            <>
-              <button
-                type="button"
-                aria-pressed={!kept}
-                onClick={() => setKept(false)}
-              >
-                {copy.posts.all}
-              </button>
-              <button
-                type="button"
-                aria-pressed={kept}
-                onClick={() => setKept(true)}
-              >
-                {copy.posts.kept}
-              </button>
-            </>
+      {channel === 'moment' && (
+        <section
+          className={`moment-create glass ${composing ? 'is-open' : ''}`}
+        >
+          <button
+            type="button"
+            className="moment-create-toggle"
+            aria-expanded={composing}
+            disabled={composerBusy}
+            onClick={() => setComposing(!composing)}
+          >
+            <span className="moment-create-icon" aria-hidden="true">
+              {composing ? <X size={22} /> : <Plus size={24} />}
+            </span>
+            <span>
+              <strong>{copy.posts.createMoment}</strong>
+              <small>{copy.posts.createMomentHint}</small>
+            </span>
+            <Sparkles size={20} aria-hidden="true" />
+          </button>
+          <div hidden={!composing}>{composer}</div>
+        </section>
+      )}
+      <div
+        ref={scrollArea}
+        className={channel === 'chat' ? 'chat-scroll' : 'moments-scroll'}
+        onScroll={(event) => {
+          if (channel !== 'chat') return
+          const node = event.currentTarget
+          stick.current =
+            node.scrollHeight - node.scrollTop - node.clientHeight < 120
+          setAway(!stick.current)
+        }}
+      >
+        <div className="conversation-content">
+          {(channel === 'moment' || (posts.data?.pages.length ?? 0) > 1) && (
+            <div className="post-filters">
+              {channel === 'moment' && (
+                <>
+                  <button
+                    type="button"
+                    aria-pressed={!kept}
+                    onClick={() => setKept(false)}
+                  >
+                    {copy.posts.all}
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={kept}
+                    onClick={() => setKept(true)}
+                  >
+                    {copy.posts.kept}
+                  </button>
+                </>
+              )}
+              {(posts.data?.pages.length ?? 0) > 1 && (
+                <button
+                  className="text-button"
+                  type="button"
+                  onClick={() => {
+                    stick.current = true
+                    void query.resetQueries({
+                      queryKey: ['posts', space?.couple.id, channel, kept],
+                    })
+                  }}
+                >
+                  {copy.posts.latest}
+                </button>
+              )}
+            </div>
           )}
-          {(posts.data?.pages.length ?? 0) > 1 && (
-            <button
-              className="text-button"
+          {posts.hasNextPage && channel === 'chat' && (
+            <Button
+              className="button-secondary load-older"
               type="button"
+              disabled={posts.isFetchingNextPage}
               onClick={() => {
-                stick.current = true
-                void query.resetQueries({
-                  queryKey: ['posts', space?.couple.id, channel, kept],
-                })
+                stick.current = false
+                void posts.fetchNextPage()
               }}
             >
-              {copy.posts.latest}
-            </button>
+              {copy.posts.older}
+            </Button>
           )}
+          {posts.isPending ? (
+            <div
+              className="post-list"
+              role="status"
+              aria-label={copy.common.loading}
+            >
+              {[0, 1].map((n) => (
+                <div className="skeleton skeleton-card" key={n} />
+              ))}
+            </div>
+          ) : posts.error ? (
+            <section className="glass settings-section">
+              <p>{copy.common.error}</p>
+              <Button
+                type="button"
+                onClick={() => {
+                  void posts.refetch()
+                }}
+              >
+                {copy.common.retry}
+              </Button>
+            </section>
+          ) : !cards.length ? (
+            <section className="glass posts-empty">
+              <span aria-hidden="true">{channel === 'chat' ? '💌' : '✦'}</span>
+              <h2>
+                {kept
+                  ? copy.posts.noKept
+                  : channel === 'chat'
+                    ? copy.posts.chatEmpty
+                    : copy.posts.momentsEmpty}
+              </h2>
+              <p className="muted">
+                {kept ? copy.posts.noKeptHint : copy.posts.emptyHint}
+              </p>
+            </section>
+          ) : (
+            <div
+              className={`post-list ${channel === 'chat' ? 'chat-list' : ''}`}
+              aria-label={channel === 'chat' ? copy.nav.chat : copy.nav.moments}
+            >
+              {cards.map((post, index) => (
+                <Fragment key={post.id}>
+                  {channel === 'chat' &&
+                    (index === 0 ||
+                      day(cards[index - 1]!.created_at) !==
+                        day(post.created_at)) && (
+                      <div className="chat-day">
+                        {day(post.created_at) === day(now)
+                          ? copy.posts.today
+                          : day(post.created_at)}
+                      </div>
+                    )}
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    reactions={
+                      reactions.data?.filter(
+                        (row) => row.post_id === post.id,
+                      ) ?? []
+                    }
+                    now={now}
+                  />
+                </Fragment>
+              ))}
+            </div>
+          )}
+          {posts.hasNextPage && channel === 'moment' && (
+            <Button
+              type="button"
+              className="button-secondary load-older"
+              disabled={posts.isFetchingNextPage}
+              onClick={() => {
+                void posts.fetchNextPage()
+              }}
+            >
+              {copy.posts.older}
+            </Button>
+          )}
+          <div ref={anchor} />
         </div>
-      )}
-      {posts.hasNextPage && channel === 'chat' && (
-        <Button
-          className="button-secondary load-older"
-          type="button"
-          disabled={posts.isFetchingNextPage}
-          onClick={() => {
-            stick.current = false
-            void posts.fetchNextPage()
-          }}
-        >
-          {copy.posts.older}
-        </Button>
-      )}
-      {posts.isPending ? (
-        <div
-          className="post-list"
-          role="status"
-          aria-label={copy.common.loading}
-        >
-          {[0, 1].map((n) => (
-            <div className="skeleton skeleton-card" key={n} />
-          ))}
-        </div>
-      ) : posts.error ? (
-        <section className="glass settings-section">
-          <p>{copy.common.error}</p>
-          <Button
-            type="button"
-            onClick={() => {
-              void posts.refetch()
-            }}
-          >
-            {copy.common.retry}
-          </Button>
-        </section>
-      ) : !cards.length ? (
-        <section className="glass posts-empty">
-          <span aria-hidden="true">{channel === 'chat' ? '💌' : '✦'}</span>
-          <h2>
-            {kept
-              ? copy.posts.noKept
-              : channel === 'chat'
-                ? copy.posts.chatEmpty
-                : copy.posts.momentsEmpty}
-          </h2>
-          <p className="muted">
-            {kept ? copy.posts.noKeptHint : copy.posts.emptyHint}
-          </p>
-        </section>
-      ) : (
-        <div
-          className={`post-list ${channel === 'chat' ? 'chat-list' : ''}`}
-          aria-label={channel === 'chat' ? copy.nav.chat : copy.nav.moments}
-        >
-          {cards.map((post, index) => (
-            <Fragment key={post.id}>
-              {channel === 'chat' &&
-                (index === 0 ||
-                  day(cards[index - 1]!.created_at) !==
-                    day(post.created_at)) && (
-                  <div className="chat-day">
-                    {day(post.created_at) === day(now)
-                      ? copy.posts.today
-                      : day(post.created_at)}
-                  </div>
-                )}
-              <PostCard
-                key={post.id}
-                post={post}
-                reactions={
-                  reactions.data?.filter((row) => row.post_id === post.id) ?? []
-                }
-                now={now}
-              />
-            </Fragment>
-          ))}
-        </div>
-      )}
-      {posts.hasNextPage && channel === 'moment' && (
-        <Button
-          type="button"
-          className="button-secondary load-older"
-          disabled={posts.isFetchingNextPage}
-          onClick={() => {
-            void posts.fetchNextPage()
-          }}
-        >
-          {copy.posts.older}
-        </Button>
-      )}
+      </div>
       {channel === 'chat' && (
         <>
           <p className="sr-only" role="status">
@@ -253,8 +311,25 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                 )
               : '\u00a0'}
           </p>
-          <div ref={anchor} />
-          <div className="chat-composer">{composer}</div>
+          <div className="chat-composer">
+            {away && (
+              <button
+                className="chat-latest"
+                type="button"
+                onClick={() => {
+                  stick.current = true
+                  if (scrollArea.current)
+                    scrollArea.current.scrollTop =
+                      scrollArea.current.scrollHeight
+                  setAway(false)
+                }}
+              >
+                <ArrowDown size={16} />
+                {copy.posts.jumpLatest}
+              </button>
+            )}
+            {composer}
+          </div>
         </>
       )}
     </div>

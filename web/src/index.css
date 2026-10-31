@@ -19,6 +19,8 @@
   --accent: #6fe0c8;
   --danger: #ffa4ad;
   --shadow: 0 12px 44px #0002;
+  --panel: #191821;
+  --ease-orbit: cubic-bezier(0.22, 1, 0.36, 1);
   font-family: var(--font-sans);
   color: var(--text);
   background: var(--bg);
@@ -42,6 +44,7 @@
   --accent: #197863;
   --danger: #b32145;
   --shadow: 0 12px 44px #39204009;
+  --panel: #fffafc;
   color-scheme: light;
 }
 * {
@@ -50,6 +53,7 @@
 body {
   margin: 0;
   min-width: 320px;
+  overscroll-behavior-y: none;
 }
 button,
 input {
@@ -57,7 +61,9 @@ input {
 }
 button,
 a,
-input {
+input,
+textarea,
+select {
   -webkit-tap-highlight-color: transparent;
 }
 button,
@@ -136,6 +142,7 @@ strong {
   box-shadow: var(--shadow);
   border-radius: 24px;
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .aurora {
   position: fixed;
@@ -143,8 +150,16 @@ strong {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 7% 5%, #7c5cff19, transparent 48%),
-    radial-gradient(ellipse at 98% 65%, #ff6b8a10, transparent 55%);
+    radial-gradient(
+      ellipse at 12% 0%,
+      color-mix(in srgb, var(--primary) 9%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 95% 60%,
+      color-mix(in srgb, var(--secondary) 7%, transparent),
+      transparent 60%
+    );
 }
 .button {
   min-height: 52px;
@@ -633,7 +648,7 @@ input::placeholder {
   flex-direction: column;
   gap: 5px;
   color: var(--text-dim);
-  font-size: 9px;
+  font-size: 11px;
   min-width: 55px;
   min-height: 48px;
   justify-content: center;
@@ -641,7 +656,7 @@ input::placeholder {
 }
 .bottom-nav a.active {
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary), transparent 92%);
+  background: transparent;
 }
 .settings-section {
   padding: 22px;
@@ -1877,7 +1892,7 @@ input::placeholder {
   position: sticky;
   top: 0;
   z-index: 12;
-  background: var(--bg);
+  background: transparent;
 }
 .chat-heading > div {
   min-width: 0;
@@ -1961,7 +1976,7 @@ input::placeholder {
   align-items: center;
   justify-content: flex-end;
   color: var(--text-faint);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   margin-top: 0.2rem;
 }
 .chat-message-menu {
@@ -2032,7 +2047,7 @@ input::placeholder {
   line-height: 1.45;
   padding: 0.55rem 0.3rem;
   margin: 0;
-  border-radius: 0;
+  border-radius: 18px;
 }
 .messenger-input-row .icon-button,
 .compact-recorder .button {
