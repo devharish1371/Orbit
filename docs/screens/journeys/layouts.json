@@ -1,0 +1,254 @@
+[
+  {
+    "name": "home",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "moments",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "chat",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "us",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "settings",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "profile",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "capsules",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "timeline",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "keepsakes",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "notifications",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "activity",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "tracking",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "map",
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "home",
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "moments",
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "chat",
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "us",
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "home",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "moments",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "chat",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "us",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "settings",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "profile",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "capsules",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "timeline",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "keepsakes",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "notifications",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "activity",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "tracking",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "map",
+    "scroll": 360,
+    "theme": "light",
+    "width": 360,
+    "y": 0
+  },
+  {
+    "name": "home",
+    "scroll": 412,
+    "theme": "light",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "moments",
+    "scroll": 412,
+    "theme": "light",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "chat",
+    "scroll": 412,
+    "theme": "light",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "us",
+    "scroll": 412,
+    "theme": "light",
+    "width": 412,
+    "y": 0
+  },
+  {
+    "name": "timeline",
+    "scroll": 320,
+    "theme": "light",
+    "width": 320,
+    "y": 0
+  },
+  {
+    "name": "timeline",
+    "scroll": 480,
+    "theme": "light",
+    "width": 480,
+    "y": 0
+  }
+]

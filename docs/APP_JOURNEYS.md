@@ -44,3 +44,10 @@ Primary implementation references:
 - [React Router navigation type](https://reactrouter.com/api/hooks/useNavigationType)
 - [Native dialog behavior](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
 - [Dialog focus requirements](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/dialog_role)
+
+Final results: all 26 route/theme accessibility/best-practice audits are 100/100. Timeline
+long-label / 130% authored-text fixtures fit four widths; question actions also fit with
+larger authored button text in collapsed and expanded states. Hidden form buttons are
+excluded from visible-control containment checks. These are layout stress cases, not an
+Android text-zoom acceptance claim. Final Android run 41240931505 passed for 7e43813;
+local APK ZIP/signing continuity/private-material checks now also pass. See DEVLOG.md.

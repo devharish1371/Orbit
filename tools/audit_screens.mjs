@@ -10,8 +10,13 @@ if (!/^[a-z0-9-]+$/.test(suite)) throw new Error('Invalid audit suite name');
 const input = path.join(root, `.artifacts/qa/${suite}-audit`);
 const output = path.join(root, `.artifacts/qa/${suite}-reports`);
 await mkdir(output, { recursive: true });
-const queue = (await readdir(input)).filter(name => name.endsWith('-360.html')).sort();
-const results = [];
+const prefixes = process.argv[3]?.split(',') ?? [];
+if (prefixes.some(prefix => !/^[a-z0-9-]+$/.test(prefix))) throw new Error('Invalid screen prefix');
+const queue = (await readdir(input)).filter(name => name.endsWith('-360.html') && (!prefixes.length || prefixes.some(prefix => name.startsWith(prefix+'-')))).sort();
+if (!queue.length) throw new Error('No matching screen captures');
+// A targeted rerun retains the unchanged screens from the completed full-suite summary.
+const previous = prefixes.length ? JSON.parse(await readFile(path.join(output,'summary.json'),'utf8')) : [];
+const results = previous.filter(result => !queue.includes(result.name));
 async function audit(name) {
   const report = path.join(output, name.replace('.html', '.json'));
   await new Promise((resolve, reject) => {

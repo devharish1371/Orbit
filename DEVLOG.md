@@ -804,3 +804,20 @@ fixed minimum-width / separate arrow bubble arrangement with one internally padd
 wrapping content-sized button and a decorative SVG arrow. The expanded save action and
 form/grid children are constrained to the card width. Final browser and enlarged-text
 containment checks follow. Web 64 / worker 16 checks pass after this correction.
+
+## 2026-11-01 — Whole-app pass verified; latest APK handed over
+
+Final code 7e43813 passed Android [run 41240931505](https://github.com/devharish1371/Orbit/actions/runs/41240931505).
+All 26 route/theme DOM audits score 100 accessibility / 100 best practices, including a
+targeted Home/Us rerun after the question-button fix. Normal timeline/question containment
+and authored larger-text fixtures fit 320/360/412/480 px; timeline markers share a fixed
+column. Eight collapsed/expanded question checks and eight larger-text checks have no
+visible control or content overflow. Authored stress fixtures are not physical Android font
+zoom measurements. See docs/screens/journeys and docs/APP_JOURNEYS.md.
+
+The user's request for the latest APK renewed download authorization. Downloaded and verified
+.artifacts/apk/7e43813/app-debug.apk: 6,895,139 bytes; SHA256
+4bc731922d3b0afa193f3c15ce9b3cce45b4f7cf9e8d50bd81ff38b6b2d7fbad.
+ZIP integrity, signing identity against M7 baseline and configured-private-material scan pass.
+Artifact 13057396978 (orbit-ui-refresh) handed over for phone review. This supersedes the
+previous pending local APK verification for this build. Older deferred hardware gates remain.

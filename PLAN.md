@@ -107,3 +107,8 @@ Whole-app journey pass: timeline alignment/overflow, origin-aware Back, retained
 map camera, route-safe drafts/filters/media operations, full-screen photo viewing, a separate
 keepsake photo collection and consistent route motion. See docs/APP_JOURNEYS.md. 64 web / 16
 worker checks and full hosted 58 pass. Final visual stress/a11y and Android packaging follow.
+
+Whole-app journey pass and timeline/question overflow corrections verified. Android run
+41240931505 and local APK checks pass for 7e43813; artifact handed over for phone review.
+26 screen audits are 100/100; authored larger-text checks fit all four widths. Deferred
+background/offline/partner/soak gates are unchanged.

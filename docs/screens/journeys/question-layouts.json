@@ -1,0 +1,54 @@
+[
+  {
+    "width": 320,
+    "actualWidth": 320,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 360,
+    "actualWidth": 360,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 412,
+    "actualWidth": 412,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 480,
+    "actualWidth": 480,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 320,
+    "expanded": true,
+    "actualWidth": 320,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 360,
+    "expanded": true,
+    "actualWidth": 360,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 412,
+    "expanded": true,
+    "actualWidth": 412,
+    "contained": true,
+    "contentFits": true
+  },
+  {
+    "width": 480,
+    "expanded": true,
+    "actualWidth": 480,
+    "contained": true,
+    "contentFits": true
+  }
+]

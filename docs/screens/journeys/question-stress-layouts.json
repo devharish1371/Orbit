@@ -1,0 +1,98 @@
+[
+  {
+    "width": 320,
+    "state": "collapsed",
+    "actualWidth": 320,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 360,
+    "state": "collapsed",
+    "actualWidth": 360,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 412,
+    "state": "collapsed",
+    "actualWidth": 412,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 480,
+    "state": "collapsed",
+    "actualWidth": 480,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "state": "expanded",
+    "actualWidth": 320,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 360,
+    "state": "expanded",
+    "actualWidth": 360,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 412,
+    "state": "expanded",
+    "actualWidth": 412,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 480,
+    "state": "expanded",
+    "actualWidth": 480,
+    "buttons": [
+      {
+        "contained": true,
+        "contentFits": true
+      }
+    ],
+    "overflow": false
+  }
+]
