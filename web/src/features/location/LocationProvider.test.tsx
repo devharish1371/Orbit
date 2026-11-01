@@ -8,11 +8,22 @@ const api = vi.hoisted(() => ({
   insert: vi.fn().mockResolvedValue({ error: null }),
 }))
 const auth = vi.hoisted(() => ({ client: { from: () => api } }))
+const refreshRequests = vi.hoisted(() => ({
+  data: [] as {
+    user_id: string
+    location_epoch: number
+    requested_at: string
+    expires_at: string
+  }[],
+}))
+vi.mock('@/features/map/LiveContext', () => ({
+  useLiveData: () => ({ refreshRequests }),
+}))
 vi.mock('@/hooks/useAuth', () => ({ useAuth: () => auth }))
 vi.mock('@/hooks/useSpace', () => ({
   useSpace: () => ({
     data: {
-      self: { user_id: 'self', share_mode: 'live' },
+      self: { user_id: 'self', share_mode: 'live', location_epoch: 0 },
       couple: { id: 'space' },
     },
   }),
@@ -29,9 +40,40 @@ function Controls() {
 }
 afterEach(() => {
   cleanup()
+  vi.unstubAllGlobals()
   vi.restoreAllMocks()
   api.upsert.mockClear()
   api.insert.mockClear()
+  refreshRequests.data = []
+})
+test('a refresh never starts browser sharing without consent, and asks for an uncached fix after consent', async () => {
+  refreshRequests.data = [
+    {
+      user_id: 'self',
+      location_epoch: 0,
+      requested_at: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 120_000).toISOString(),
+    },
+  ]
+  const watch = vi.fn().mockReturnValue(15)
+  vi.stubGlobal(
+    'navigator',
+    Object.assign(Object.create(navigator), {
+      geolocation: { watchPosition: watch, clearWatch: vi.fn() },
+    }),
+  )
+  render(
+    <LocationProvider>
+      <Controls />
+    </LocationProvider>,
+  )
+  expect(watch).not.toHaveBeenCalled()
+  await userEvent.click(screen.getByText('Start'))
+  expect(watch).toHaveBeenCalledWith(
+    expect.any(Function),
+    expect.any(Function),
+    expect.objectContaining({ maximumAge: 0 }),
+  )
 })
 test('web location starts only after consent and clears its watcher when hidden or stopped', async () => {
   let receive: PositionCallback | undefined
@@ -95,5 +137,4 @@ test('web location starts only after consent and clears its watcher when hidden 
   expect(watch).toHaveBeenCalledTimes(2)
   await userEvent.click(screen.getByText('Stop'))
   expect(clear).toHaveBeenCalledTimes(2)
-  vi.unstubAllGlobals()
 })

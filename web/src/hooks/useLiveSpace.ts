@@ -22,6 +22,19 @@ export function useLiveSpace() {
       return result.data
     },
   })
+  const refreshRequests = useQuery({
+    queryKey: ['location-refresh', id],
+    enabled: Boolean(id),
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const result = await client
+        .from('location_refresh')
+        .select('*')
+        .eq('couple_id', id!)
+      if (result.error) throw result.error
+      return result.data
+    },
+  })
   const places = useQuery({
     queryKey: ['places', id],
     enabled: Boolean(id),
@@ -50,6 +63,16 @@ export function useLiveSpace() {
     }
     const channel = client
       .channel(`space:${id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'location_refresh',
+          filter: `couple_id=eq.${id}`,
+        },
+        () => mark('location-refresh'),
+      )
       .on(
         'postgres_changes',
         {
@@ -114,6 +137,7 @@ export function useLiveSpace() {
       .subscribe((status) => {
         setConnection(status === 'SUBSCRIBED' ? 'live' : 'reconnecting')
         if (status === 'SUBSCRIBED') {
+          mark('location-refresh')
           mark('locations')
           mark('places')
           mark('space')
@@ -135,6 +159,7 @@ export function useLiveSpace() {
       })
     const refresh = () => {
       if (!document.hidden) {
+        mark('location-refresh')
         mark('locations')
         mark('places')
         mark('space')
@@ -165,5 +190,5 @@ export function useLiveSpace() {
       void client.removeChannel(channel)
     }
   }, [client, id, query])
-  return { locations, places, connection }
+  return { locations, places, refreshRequests, connection }
 }

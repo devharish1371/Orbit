@@ -528,6 +528,77 @@ h2 {
 .map-page .section-heading h1 {
   font-size: 44px;
 }
+.location-refresh {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  padding: 14px 0;
+  margin-bottom: 4px;
+  border-block: 1px solid var(--border);
+}
+.location-refresh-button {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  padding: 11px 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 180ms,
+    transform 180ms;
+}
+.location-refresh-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.location-refresh-button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.location-refresh-button > svg {
+  flex: none;
+}
+.location-refresh-button > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.location-refresh p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.location-refresh p > svg {
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+.refresh-wait-hint {
+  display: block;
+}
+.refresh-turning {
+  animation: refresh-turn 1.8s linear infinite;
+}
+@keyframes refresh-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .refresh-turning {
+    animation: none;
+  }
+}
 .map-connection {
   margin-top: -12px;
   margin-bottom: 14px;
@@ -631,13 +702,60 @@ h2 {
   border-color: var(--border);
   box-shadow: 0 2px 3px #0001;
 }
+.map-person-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-block: 20px 14px;
+  min-width: 0;
+}
+.map-person-title > .avatar {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+.map-person-heading {
+  min-width: 0;
+}
+.map-person-heading h2 {
+  margin: 0 0 3px;
+  overflow-wrap: anywhere;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+}
+.map-person-heading .location-freshness {
+  margin: 0;
+}
+.map-connect {
+  display: flex;
+  gap: 8px;
+  margin-block: 16px;
+}
+.map-connect > a {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  border-radius: 16px;
+  color: var(--text);
+}
 .location-metrics {
   gap: 8px;
 }
 .location-metrics > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   border-radius: 12px;
   padding: 12px;
   background: var(--surface-strong);
+}
+.location-metrics > span > svg {
+  flex: none;
+  color: var(--text-dim);
 }
 .our-places h2 {
   margin-block: 24px 12px;

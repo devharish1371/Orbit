@@ -18,6 +18,7 @@ import { callUrl, whatsappUrl } from '@/lib/connect'
 import { type PlaceDraft } from '@/lib/place'
 import MapCanvas from './MapCanvas'
 import PlaceEditor from './PlaceEditor'
+import { LocationRefresh } from './LocationRefresh'
 import {
   Crosshair,
   Plus,
@@ -25,6 +26,10 @@ import {
   Phone,
   Video,
   MessageCircle,
+  Battery,
+  Navigation,
+  Gauge,
+  LocateFixed,
 } from 'lucide-react'
 import type { Database } from '@/lib/database.types'
 type Place = Database['public']['Tables']['places']['Row']
@@ -243,22 +248,29 @@ export default function MapPage() {
             color={current.color}
             path={current.avatar_path}
           />
-          <h2>
-            {current.user_id === data.self.user_id
-              ? current.nickname || current.display_name
-              : data.self.partner_nickname ||
-                current.nickname ||
-                current.display_name}
-          </h2>
+          <div className="map-person-heading">
+            <h2>
+              {current.user_id === data.self.user_id
+                ? current.nickname || current.display_name
+                : data.self.partner_nickname ||
+                  current.nickname ||
+                  current.display_name}
+            </h2>
+            <div
+              className="location-freshness"
+              data-state={status.state}
+              role="status"
+            >
+              <span aria-hidden="true" />
+              {status.label}
+            </div>
+          </div>
         </div>
-        <div
-          className="location-freshness"
-          data-state={status.state}
-          role="status"
-        >
-          <span aria-hidden="true" />
-          {status.label}
-        </div>
+        <LocationRefresh
+          key={current.user_id}
+          member={current}
+          recordedAt={currentLocation?.recorded_at}
+        />
         {directions && current.user_id !== data.self.user_id && (
           <a
             className="button directions-link"
@@ -269,12 +281,6 @@ export default function MapPage() {
             Directions in Google Maps ↗
           </a>
         )}
-        {status.state === 'old' && (
-          <p className="muted small">
-            This is the last shared position. A new update needs location and an
-            internet connection on that phone.
-          </p>
-        )}
         {current.share_mode === 'paused' ? (
           <p>{copy.map.paused}</p>
         ) : currentLocation ? (
@@ -283,28 +289,28 @@ export default function MapPage() {
             <p className="small muted">
               {copy.map.lastFix}: {stamp}
             </p>
-            {now - Date.parse(currentLocation.recorded_at) > 300_000 && (
-              <p className="stale-label">{copy.map.old}</p>
-            )}
             <div className="location-metrics">
               <span>
+                <Battery size={16} aria-hidden="true" />
                 {currentLocation.battery_pct === null
                   ? copy.map.batteryUnknown
                   : `${currentLocation.battery_pct}% ${currentLocation.charging ? 'ϟ' : ''}`}
               </span>
               <span>
+                <Navigation size={16} aria-hidden="true" />
                 {currentLocation.is_moving ? copy.map.moving : copy.map.still}
               </span>
               {!currentLocation.fuzzed &&
                 currentLocation.speed_mps !== null && (
                   <span>
+                    <Gauge size={16} aria-hidden="true" />
                     {Math.round(currentLocation.speed_mps * 3.6)} km/h
                   </span>
                 )}
               {currentLocation.accuracy_m !== null && (
                 <span>
-                  ±{Math.round(currentLocation.accuracy_m)} m{' '}
-                  {copy.map.accuracy}
+                  <LocateFixed size={16} aria-hidden="true" />±
+                  {Math.round(currentLocation.accuracy_m)} m {copy.map.accuracy}
                 </span>
               )}
             </div>
@@ -315,9 +321,12 @@ export default function MapPage() {
         {current.user_id !== data.self.user_id && (
           <div className="map-connect">
             {callUrl(current.phone ?? '') && (
-              <a href={callUrl(current.phone ?? '')!}>
+              <a
+                href={callUrl(current.phone ?? '')!}
+                aria-label={copy.home.call}
+                title={copy.home.call}
+              >
                 <Phone size={18} aria-hidden="true" />
-                {copy.home.call}
               </a>
             )}
             {data.couple.meet_url && (
@@ -325,9 +334,10 @@ export default function MapPage() {
                 href={data.couple.meet_url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={copy.home.meet}
+                title={copy.home.meet}
               >
                 <Video size={18} aria-hidden="true" />
-                {copy.home.meet}
               </a>
             )}
             {whatsappUrl(current.phone ?? '') && (
@@ -335,9 +345,10 @@ export default function MapPage() {
                 href={whatsappUrl(current.phone ?? '')!}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={copy.home.whatsapp}
+                title={copy.home.whatsapp}
               >
                 <MessageCircle size={18} aria-hidden="true" />
-                {copy.home.whatsapp}
               </a>
             )}
           </div>

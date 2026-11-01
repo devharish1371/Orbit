@@ -36,6 +36,11 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
+User follow-up (2026-11-01): implement mutual manual location refresh and continue map UI
+refinement. Private request API deployed; 72 web / 16 worker / 60 hosted tests pass. Verify
+responsive states and package the updated native tracker. Remote phone fresh-fix acceptance
+remains human #7; preserve all earlier deferred gates. See docs/LOCATION_REFRESH.md.
+
 1. M3 is tagged `m3-done`; the Nothing Phone (3a) / Nothing OS 4.1 usability check is recorded.
 2. Human #7: the verified M4 APK is installed. Complete offline queue/recovery and full
    screen-off/moving endurance tests in `docs/TRACKING.md`. Short screen-off/swipe-away

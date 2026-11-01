@@ -821,3 +821,27 @@ The user's request for the latest APK renewed download authorization. Downloaded
 ZIP integrity, signing identity against M7 baseline and configured-private-material scan pass.
 Artifact 13057396978 (orbit-ui-refresh) handed over for phone review. This supersedes the
 previous pending local APK verification for this build. Older deferred hardware gates remain.
+
+## 2026-11-01 — Mutual location refresh and map refinement
+
+User requested manual current-location refresh for either person and continued UI work.
+Deployed 0016: private, recipient-bounded refresh requests, one row per member, one-minute
+deduplication and two-minute expiry. The RPC checks couple membership and paused sharing;
+clients cannot write the table directly. No real-person request, notification or message
+was generated during testing.
+
+Android checks requests on its existing minute policy sync and makes a bounded 30-second
+GPS/network attempt, bypassing stationary upload throttling only for a fresh fix. Local
+refresh can wake that sync but never enables a stopped service. Privacy changes cancel
+the attempt; expired/old-generation requests are ignored. Browser sharing remains opt-in,
+foreground-only and requests uncached fixes after receiving a valid request.
+
+The map now has a compact Refresh action with waiting/success/unavailable states and
+actual recorded fix time. It cannot mark an unchanged baseline as a successful refresh.
+Person heading/freshness are grouped, repeated stale paragraphs removed, metrics gain
+small semantic icons, and Call/Meet/WhatsApp are centered accessible icon actions.
+
+72 web / 16 worker tests, lint/types/format/production build and all 60 hosted Python tests
+pass. Added regression coverage for mutual/isolated requests, dedupe, privacy generations,
+uncached opt-in browser requests, timeout polling cleanup and honest success state.
+Browser responsive checks and Android CI follow; hardware fresh-fix delivery is unclaimed.

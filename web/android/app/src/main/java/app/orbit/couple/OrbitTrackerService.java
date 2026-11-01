@@ -24,6 +24,11 @@ public class OrbitTrackerService extends Service {
     private long lastMovement=System.currentTimeMillis(),lastGood=System.currentTimeMillis(),lastAccepted=0,lastSent=0,lastSync=0,lastPlaces=0,lastSwitch=0,nextAttempt=0;
     private long backoff=5000;private String adaptive="moving",watching="";private boolean lowArmed=true,destroyed=false;
     private int battery=-1;private boolean charging=false;
+    private long seenRefresh=0;private volatile long refreshAfter=0,refreshUntil=0;
+    private final LocationListener refreshListener=new LocationListener(){
+        @Override public void onLocationChanged(Location location){if(!worker.isShutdown())submit(()->accept(location));}
+    };
+    private final Runnable endRefresh=()->{refreshUntil=0;try{manager.removeUpdates(refreshListener);}catch(Exception ignored){}};
     private final LocationListener listener=new LocationListener(){
         @Override public void onLocationChanged(Location location){if(!worker.isShutdown())submit(()->accept(location));}
         @Override public void onProviderDisabled(String provider){TrackerStore.log(OrbitTrackerService.this,"location_disabled");}
@@ -33,6 +38,7 @@ public class OrbitTrackerService extends Service {
         @Override public void onAvailable(Network n){if(!worker.isShutdown())submit(()->{nextAttempt=0;tickCore();});}
     };
     public static boolean running(){return current!=null;}
+    public static boolean refreshLocation(){OrbitTrackerService service=current;if(service==null||service.worker.isShutdown())return false;service.submit(()->{service.lastSync=0;service.nextAttempt=0;service.tickCore();});return true;}
     public static void wake(){OrbitTrackerService service=current;if(service!=null){service.stopLocations();service.main.post(()->{try{service.showNotification(true);}catch(Exception ignored){}});if(!service.worker.isShutdown())service.submit(()->{service.lastSync=0;service.nextAttempt=0;service.tickCore();});}}
     public static void heartbeat(){OrbitTrackerService service=current;if(service!=null){service.scheduleHeartbeat();service.submit(service::tickCore);}}
     private void submit(Runnable task){
@@ -69,7 +75,22 @@ public class OrbitTrackerService extends Service {
             .setOngoing(true).setOnlyAlertOnce(true).setContentIntent(open).setCategory(NotificationCompat.CATEGORY_SERVICE).build();
         if(Build.VERSION.SDK_INT>=29)startForeground(28352,notification,android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);else startForeground(28352,notification);
     }
-    private void stopLocations(){main.post(()->{try{manager.removeUpdates(listener);}catch(Exception ignored){}watching="";});}
+    private void stopLocations(){refreshUntil=0;main.post(()->{main.removeCallbacks(endRefresh);endRefresh.run();try{manager.removeUpdates(listener);}catch(Exception ignored){}watching="";});}
+    private void refresh(JSONObject request,long now){
+        long requested=parseTime(request.optString("requested_at")),expires=parseTime(request.optString("expires_at"));
+        if(!TrackerPolicy.refreshEligible(requested,expires,request.optLong("location_epoch",-1),policy.optLong("location_epoch"),policy.optString("share_mode"),now)||requested<=seenRefresh)return;
+        seenRefresh=requested;refreshAfter=requested;refreshUntil=Math.min(expires,now+30000);
+        main.post(()->{
+            if(destroyed||refreshUntil<=System.currentTimeMillis()||prefs().contains("pendingMode"))return;
+            main.removeCallbacks(endRefresh);
+            try{
+                manager.removeUpdates(refreshListener);
+                for(String provider:new String[]{LocationManager.GPS_PROVIDER,LocationManager.NETWORK_PROVIDER})if(manager.isProviderEnabled(provider))manager.requestLocationUpdates(provider,0,0,refreshListener,Looper.getMainLooper());
+                main.postDelayed(endRefresh,Math.max(1,refreshUntil-System.currentTimeMillis()));
+                TrackerStore.log(this,"refresh_requested");
+            }catch(SecurityException error){endRefresh.run();TrackerStore.log(this,"location_permission_error");}
+        });
+    }
     private void watch(){
         if(policy==null||policy.optString("share_mode").equals("paused")||prefs().contains("pendingMode")){stopLocations();return;}
         String desired=adaptive;
@@ -102,6 +123,7 @@ public class OrbitTrackerService extends Service {
             if(rows.length()!=1){stopSelf();throw new Exception("membership");}
             JSONObject next=rows.getJSONObject(0);
             if(policy==null||policy.optLong("location_epoch")!=next.getLong("location_epoch")||!policy.optString("user_id").equals(uid)){
+                stopLocations();
                 store.clear();latest=null;history=null;previous=null;lastSent=0;presence=new JSONObject();lastPlaces=0;
                 TrackerStore.log(this,"privacy_generation_changed");
             }
@@ -111,6 +133,10 @@ public class OrbitTrackerService extends Service {
             }
             policy=next;prefs().edit().putString("policy",policy.toString()).apply();lastSync=now;
             showNotification(policy.getString("share_mode").equals("paused"));
+            if(!policy.optString("share_mode").equals("paused")&&!prefs().contains("pendingMode")){
+                JSONArray requests=require(TrackerAuth.request(this,"GET","/rest/v1/location_refresh?user_id=eq."+uid+"&select=requested_at,expires_at,location_epoch",null)).getJSONArray("rows");
+                if(requests.length()==1)refresh(requests.getJSONObject(0),now);
+            }
         }
         if(policy==null)return;
         if(now-lastPlaces>=300000){
@@ -134,12 +160,14 @@ public class OrbitTrackerService extends Service {
         battery();adapt(fix,previous,now);
         latest=fix;previous=fix;lastAccepted=now;prefs().edit().putLong("lastFix",fix.time()).apply();
         try{
-            if(now-lastSent>=TrackerPolicy.gap(adaptive)){
+            boolean freshRequest=refreshUntil>now&&fix.time()>=refreshAfter;
+            if(freshRequest||now-lastSent>=TrackerPolicy.gap(adaptive)){
                 boolean surprise=policy.optString("share_mode").equals("surprise");boolean record=!surprise&&TrackerPolicy.history(fix,history);
                 JSONObject row=row(fix,record,surprise,location.hasBearing()?location.getBearing():null);
                 store.add("fix",row);lastSent=now;if(record)history=fix;
                 if(!surprise)geofences(fix);
                 flush(now);
+                if(freshRequest){refreshUntil=0;main.post(()->{main.removeCallbacks(endRefresh);endRefresh.run();});TrackerStore.log(this,"refresh_fix");}
             }
         }catch(Exception error){failed(now);}
     }

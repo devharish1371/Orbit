@@ -2,7 +2,13 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { blur } from '@/lib/geo'
-import { shouldPublish, shouldRecord, type Fix } from '@/lib/location-policy'
+import {
+  shouldPublish,
+  shouldRecord,
+  validFix,
+  type Fix,
+} from '@/lib/location-policy'
+import { useLiveData } from '@/features/map/LiveContext'
 import { copy } from '@/copy/en'
 import { nativeTracking } from '@/native/tracker'
 import { NativeLocationProvider } from './NativeLocationProvider'
@@ -17,11 +23,18 @@ export function LocationProvider({ children }: { children: ReactNode }) {
 function WebLocationProvider({ children }: { children: ReactNode }) {
   const { client } = useAuth()
   const { data } = useSpace()
+  const { refreshRequests } = useLiveData()
   const [enabled, setEnabled] = useState(false)
   const [message, setMessage] = useState('')
   const userId = data?.self.user_id,
     coupleId = data?.couple.id,
     mode = data?.self.share_mode
+  const refresh = refreshRequests.data?.find((row) => row.user_id === userId)
+  const requestedAt =
+    refresh?.location_epoch === data?.self.location_epoch
+      ? refresh?.requested_at
+      : undefined
+  const expiresAt = refresh?.expires_at
   useEffect(() => {
     if (!enabled || !userId || !coupleId || mode === 'paused') return
     let watcher: number | undefined,
@@ -31,12 +44,21 @@ function WebLocationProvider({ children }: { children: ReactNode }) {
       history: Fix | null = null,
       sent = 0,
       latest: Fix | null = null
+    let refreshed = false
     async function publish(fix: Fix) {
       if (
         disposed ||
         busy ||
         document.hidden ||
-        !shouldPublish(fix, last, Date.now(), sent)
+        !(
+          shouldPublish(fix, last, Date.now(), sent) ||
+          (!refreshed &&
+            requestedAt &&
+            expiresAt &&
+            Date.now() < Date.parse(expiresAt) &&
+            fix.timestamp >= Date.parse(requestedAt) &&
+            validFix(fix))
+        )
       )
         return
       busy = true
@@ -60,6 +82,8 @@ function WebLocationProvider({ children }: { children: ReactNode }) {
         if (result.error) throw result.error
         last = fix
         sent = Date.now()
+        if (requestedAt && fix.timestamp >= Date.parse(requestedAt))
+          refreshed = true
         if (
           mode === 'live' &&
           shouldRecord(fix, history) &&
@@ -121,7 +145,11 @@ function WebLocationProvider({ children }: { children: ReactNode }) {
           if (!disposed)
             setMessage(error.code === 1 ? copy.map.denied : copy.map.noFix)
         },
-        { enableHighAccuracy: true, maximumAge: 5000, timeout: 20_000 },
+        {
+          enableHighAccuracy: true,
+          maximumAge: requestedAt ? 0 : 5000,
+          timeout: 20_000,
+        },
       )
     }
     const visibility = () => {
@@ -141,7 +169,7 @@ function WebLocationProvider({ children }: { children: ReactNode }) {
       clearInterval(tick)
       document.removeEventListener('visibilitychange', visibility)
     }
-  }, [enabled, userId, coupleId, mode, client])
+  }, [enabled, userId, coupleId, mode, client, requestedAt, expiresAt])
   return (
     <LocationContext.Provider
       value={{

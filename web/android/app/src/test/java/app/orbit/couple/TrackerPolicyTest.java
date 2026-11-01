@@ -2,6 +2,15 @@ package app.orbit.couple;
 import org.junit.Test;
 import static org.junit.Assert.*;
 public class TrackerPolicyTest {
+    @Test public void refreshIsBoundedAndCannotCrossPrivacyChanges(){
+        assertTrue(TrackerPolicy.refreshEligible(1000000,1120000,2,2,"live",1010000));
+        assertTrue(TrackerPolicy.refreshEligible(1000000,1120000,2,2,"surprise",1010000));
+        assertFalse(TrackerPolicy.refreshEligible(1000000,1120000,2,2,"paused",1010000));
+        assertFalse(TrackerPolicy.refreshEligible(1000000,1120000,2,3,"live",1010000));
+        assertFalse(TrackerPolicy.refreshEligible(1000000,1120000,2,2,"live",1120000));
+        assertFalse(TrackerPolicy.refreshEligible(1200000,1320000,2,2,"live",1010000));
+        assertFalse(TrackerPolicy.refreshEligible(1000000,2000000,2,2,"live",1010000));
+    }
     private TrackerPolicy.Fix f(double lat,double lng,double accuracy,long time){return new TrackerPolicy.Fix(lat,lng,accuracy,0,time,false);}
     @Test public void hysteresisRequiresTwoGoodFixesAndRejectsPoorAccuracy(){
         var old=new TrackerPolicy.Presence(false,0);var near=f(13,80,10,1000);

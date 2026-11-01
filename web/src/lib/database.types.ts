@@ -416,6 +416,48 @@ export type Database = {
           },
         ]
       }
+      location_refresh: {
+        Row: {
+          baseline_at: string | null
+          couple_id: string
+          expires_at: string
+          location_epoch: number
+          requested_at: string
+          user_id: string
+        }
+        Insert: {
+          baseline_at?: string | null
+          couple_id: string
+          expires_at: string
+          location_epoch: number
+          requested_at: string
+          user_id: string
+        }
+        Update: {
+          baseline_at?: string | null
+          couple_id?: string
+          expires_at?: string
+          location_epoch?: number
+          requested_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'location_refresh_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'location_refresh_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: true
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       media_gc: {
         Row: {
           claimed_at: string
@@ -988,6 +1030,23 @@ export type Database = {
         SetofOptions: {
           from: '*'
           to: 'capsules'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      request_location_refresh: {
+        Args: { p_user_id: string }
+        Returns: {
+          baseline_at: string | null
+          couple_id: string
+          expires_at: string
+          location_epoch: number
+          requested_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'location_refresh'
           isOneToOne: true
           isSetofReturn: false
         }

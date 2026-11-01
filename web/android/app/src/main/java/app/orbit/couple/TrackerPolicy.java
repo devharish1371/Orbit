@@ -30,5 +30,8 @@ public final class TrackerPolicy {
     public static long gap(String mode) {return mode.equals("low")?120000:mode.equals("still")?300000:30000;}
     public static float displacement(String mode){return mode.equals("low")?100:mode.equals("still")?75:25;}
     public static boolean history(Fix f,Fix previous){return previous==null||f.time-previous.time>=300000||distance(f.lat,f.lng,previous.lat,previous.lng)>=30;}
+    public static boolean refreshEligible(long requested,long expires,long epoch,long currentEpoch,String mode,long now){
+        return !mode.equals("paused")&&epoch==currentEpoch&&requested>0&&requested<=now+10000&&expires>now&&expires-requested<=120000;
+    }
     private TrackerPolicy() {}
 }

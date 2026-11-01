@@ -40,6 +40,10 @@ public class TrackingPlugin extends Plugin {
         getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",true).commit();
         try{ContextCompat.startForegroundService(getContext(),new Intent(getContext(),OrbitTrackerService.class));call.resolve();}catch(Exception error){getContext().getSharedPreferences("OrbitTracking",0).edit().putBoolean("enabled",false).commit();call.reject("TRACKING_START_FAILED");}
     }
+    @PluginMethod public void refreshLocation(PluginCall call){
+        if(!getContext().getSharedPreferences("OrbitTracking",0).getBoolean("enabled",false)||!OrbitTrackerService.refreshLocation())call.reject("TRACKING_NOT_RUNNING");
+        else call.resolve();
+    }
     @PluginMethod public void mode(PluginCall call){try{
         String mode=call.getString("mode","");if(!mode.equals("live")&&!mode.equals("paused")&&!mode.equals("surprise"))throw new Exception();
         JSONObject pending=new JSONObject().put("share_mode",mode).put("share_mode_until",call.getString("until")==null?JSONObject.NULL:call.getString("until"));

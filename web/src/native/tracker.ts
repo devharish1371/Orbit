@@ -35,6 +35,7 @@ export interface TrackingPlugin {
   health(): Promise<TrackingHealth>
   diagnostics(): Promise<{ entries: Diagnostic[] }>
   start(): Promise<void>
+  refreshLocation(): Promise<void>
   mode(options: {
     mode: 'live' | 'paused' | 'surprise'
     until?: string
