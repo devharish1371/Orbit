@@ -37,9 +37,14 @@ Architecture notes and version records live in `docs/`.
 ## Current next steps
 
 User follow-up (2026-11-01): implement mutual manual location refresh and continue map UI
-refinement. Private request API deployed; 72 web / 16 worker / 60 hosted tests pass. Verify
-responsive states and package the updated native tracker. Remote phone fresh-fix acceptance
+refinement. Private request API deployed; 72 web / 16 worker / 60 hosted tests pass.
+Responsive verification and native packaging are complete. Remote phone fresh-fix acceptance
 remains human #7; preserve all earlier deferred gates. See docs/LOCATION_REFRESH.md.
+
+Follow-up verified (2026-11-03): final c575f08 Android run 41506678950 and local APK
+integrity/signing/private-data checks pass. Eight map layouts fit 320–480 px, including
+both themes; updated map audits are 100/100. APK handed over. Human #7 fresh-GPS delivery
+on the updated sharing phone remains; partner-phone access stays deferred for the surprise.
 
 1. M3 is tagged `m3-done`; the Nothing Phone (3a) / Nothing OS 4.1 usability check is recorded.
 2. Human #7: the verified M4 APK is installed. Complete offline queue/recovery and full

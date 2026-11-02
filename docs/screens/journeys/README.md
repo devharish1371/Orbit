@@ -3,7 +3,7 @@
 Disposable identities and synthetic content only. Base routes cover 360 px light/dark;
 Home/Moments/Chat/Us also cover 412 px. Additional timeline captures cover 320/480 px.
 Updated Home/Us captures include the corrected question action. layouts.json records the
-measurements; duplicate capture keys may represent before/after the question correction.
+measurements, with the latest result retained for each route/theme/width.
 
 The timeline-stress capture uses authored long titles/dates, a five-digit day count, compact
 large stats and 130% of measured text sizes. Question stress captures enlarge button text

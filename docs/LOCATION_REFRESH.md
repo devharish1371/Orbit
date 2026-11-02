@@ -29,9 +29,14 @@ does not mean a new GPS location was obtained.
 
 Verification: 72 web tests, 16 worker tests and the complete 60-test hosted Python suite
 pass with lint, types, formatting and production build. Tests use disposable identities.
-Android build and browser geometry results are recorded in DEVLOG.md after completion.
+Android build and browser geometry results are recorded in DEVLOG.md.
 Actual remote fresh-GPS delivery on a sharing phone remains human task #7; existing offline,
 screen-off endurance, second-phone and soak gates remain open.
+
+Final build `c575f08` passes Android run 41506678950. Its downloaded APK passes ZIP
+integrity, signing continuity against the accepted M7 build and the configured private-data
+scan. Eight light/dark layouts fit all four widths; both updated map DOM audits score
+100/100. Screens and limitations: `docs/screens/refresh/README.md`.
 
 References: [Android LocationManager](https://developer.android.com/reference/android/location/LocationManager)
 for bounded listener lifecycle; [Life360 location accuracy guidance](https://support.life360.com/hc/en-us/articles/23053384044311-Improve-Location-Accuracy)

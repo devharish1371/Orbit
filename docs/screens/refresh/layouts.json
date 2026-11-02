@@ -1,0 +1,282 @@
+[
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 41,
+        "right": 279
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 41,
+        "right": 204.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 92,
+        "left": 41,
+        "right": 279
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 41,
+        "right": 279
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 41,
+        "right": 319
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 41,
+        "right": 204.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 92,
+        "left": 41,
+        "right": 319
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 41,
+        "right": 319
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 46,
+        "right": 366
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 46,
+        "right": 209.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 42,
+        "left": 46,
+        "right": 366
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 46,
+        "right": 366
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 46,
+        "right": 434
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 46,
+        "right": 209.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 42,
+        "left": 46,
+        "right": 434
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 46,
+        "right": 434
+      }
+    ],
+    "scroll": 480,
+    "theme": "dark",
+    "width": 480
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 41,
+        "right": 279
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 41,
+        "right": 204.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 92,
+        "left": 41,
+        "right": 279
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 41,
+        "right": 279
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 41,
+        "right": 319
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 41,
+        "right": 204.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 92,
+        "left": 41,
+        "right": 319
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 41,
+        "right": 319
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 46,
+        "right": 366
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 46,
+        "right": 209.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 42,
+        "left": 46,
+        "right": 366
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 46,
+        "right": 366
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "items": [
+      {
+        "class": "map-person-title",
+        "contained": true,
+        "height": 72.515625,
+        "left": 46,
+        "right": 434
+      },
+      {
+        "class": "location-refresh-button",
+        "contained": true,
+        "height": 44,
+        "left": 46,
+        "right": 209.765625
+      },
+      {
+        "class": "location-metrics",
+        "contained": true,
+        "height": 42,
+        "left": 46,
+        "right": 434
+      },
+      {
+        "class": "map-connect",
+        "contained": true,
+        "height": 48,
+        "left": 46,
+        "right": 434
+      }
+    ],
+    "scroll": 480,
+    "theme": "light",
+    "width": 480
+  }
+]

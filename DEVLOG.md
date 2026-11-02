@@ -853,3 +853,25 @@ Final review found that a stored request could leave its success/timeout message
 on a much later visit. Added an explicit feedback lifetime (request expiry plus one minute)
 and clock updates; the stored row remains bounded and reusable. Final checks and rebuilt
 APK follow. No real partner phone/account is used for QA.
+
+Final c575f08 passes 72 web / 16 worker tests, lint/types/format/build. Hosted suite remains
+60 passed; no backend change followed that run. Android run 41506678950 passed, including
+native unit tests, signing and manifest checks. Downloaded .artifacts/apk/c575f08/app-debug.apk
+is 6,897,295 bytes, SHA256 f0b1a80b74206ae7af1047dfece17576a96cca1d7c3ffd5a5646b514b7dcf649.
+ZIP integrity, stable signing against 959314d and configured-private-data scan pass.
+Artifact 13172040414 (orbit-ui-refresh) handed over for install-over review.
+
+Eight actual viewport layouts (320/360/412/480, light/dark) and a narrow pending-state check
+fit without horizontal/control overflow; refresh is 44 px tall, communication actions 48 px.
+Both updated map DOM audits score 100 accessibility / 100 best practices. The initial
+snapshot audit caught an absolute preview-origin stylesheet blocked on the separate static
+audit origin; normalized captured asset paths and reran successfully. App CSP is unchanged.
+The remaining non-scoring marker-initial advisory was reviewed against full-name/battery
+accessible labels. Screens and scope are in docs/screens/refresh/README.md.
+
+Old-request feedback clearing, request waiting with unchanged fix time, and a synthetic
+new-fix success transition are verified. This does not claim real remote GPS delivery.
+Human #7: install this APK and check manual refresh on the sharing phone. Existing offline,
+endurance, second-phone and soak gates remain open; no contact with Vidya was made.
+Disposable browser identities/media were deleted through the normal admin/Storage APIs;
+the QA tab and its preview/audit servers were closed. Source scan: 559 files, zero findings.
