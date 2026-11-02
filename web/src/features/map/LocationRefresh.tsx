@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { RefreshCw, Check, Clock3 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
+import { useNow } from '@/hooks/useNow'
 import { nativeTracking, tracker } from '@/native/tracker'
 import { useLocationSharing } from '@/features/location/LocationContext'
 import { refreshState } from '@/lib/location-refresh'
@@ -23,7 +24,9 @@ export function LocationRefresh({
   const query = useQueryClient()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const [now, setNow] = useState(Date.now)
+  const [checkedAt, setNow] = useState(Date.now)
+  const clock = useNow()
+  const now = Math.max(clock, checkedAt)
   const own = member.user_id === data?.self.user_id
   const request = live.refreshRequests.data?.find(
     (row) => row.user_id === member.user_id,

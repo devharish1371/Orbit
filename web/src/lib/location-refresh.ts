@@ -13,6 +13,8 @@ export function refreshState(
     request.location_epoch !== member.location_epoch
   )
     return 'idle'
+  // A stored request is not a permanent success/error banner on later visits.
+  if (now > Date.parse(request.expires_at) + 60_000) return 'idle'
   const fix = recordedAt ? Date.parse(recordedAt) : 0
   if (
     fix >= Date.parse(request.requested_at) &&

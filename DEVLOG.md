@@ -845,3 +845,11 @@ small semantic icons, and Call/Meet/WhatsApp are centered accessible icon action
 pass. Added regression coverage for mutual/isolated requests, dedupe, privacy generations,
 uncached opt-in browser requests, timeout polling cleanup and honest success state.
 Browser responsive checks and Android CI follow; hardware fresh-fix delivery is unclaimed.
+
+## 2026-11-03 — Refresh build verification and finishing checks
+
+Android run 41302912043 passed for 0392aec, including native unit tests and APK signing.
+Final review found that a stored request could leave its success/timeout message visible
+on a much later visit. Added an explicit feedback lifetime (request expiry plus one minute)
+and clock updates; the stored row remains bounded and reusable. Final checks and rebuilt
+APK follow. No real partner phone/account is used for QA.

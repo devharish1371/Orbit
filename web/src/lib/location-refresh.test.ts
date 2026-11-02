@@ -22,6 +22,8 @@ test('a refresh waits for a new fix, not a refetch of the old timestamp', () => 
   )
 })
 test('future-dated baseline and privacy changes cannot create false refresh success', () => {
+  expect(refreshState(request, member, iso(1000), now + 180_001)).toBe('idle')
+  expect(refreshState(request, member, undefined, now + 180_001)).toBe('idle')
   expect(
     refreshState(
       { ...request, baseline_at: iso(30_000) },
