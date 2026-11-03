@@ -1,0 +1,22 @@
+[
+  {
+    "from": "/",
+    "profile": "http://127.0.0.1:4173/#/person/00200da1-6280-4921-9b51-a9f6dcd93f10",
+    "back": "#/"
+  },
+  {
+    "from": "/moments",
+    "profile": "http://127.0.0.1:4173/#/person/00200da1-6280-4921-9b51-a9f6dcd93f10",
+    "back": "#/moments"
+  },
+  {
+    "from": "/chat",
+    "profile": "http://127.0.0.1:4173/#/person/00200da1-6280-4921-9b51-a9f6dcd93f10",
+    "back": "#/chat"
+  },
+  {
+    "from": "/us",
+    "profile": "http://127.0.0.1:4173/#/person/00200da1-6280-4921-9b51-a9f6dcd93f10",
+    "back": "#/us"
+  }
+]

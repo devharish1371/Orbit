@@ -1,0 +1,1358 @@
+[
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 20,
+        "right": 246
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 20,
+        "right": 286
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 25,
+        "right": 333
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 310
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 350
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 402
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "home",
+    "controls": [],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 13.198719024658203,
+        "right": 239.1987190246582
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 14.302335739135742,
+        "right": 280.30233573913574
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "moments",
+    "controls": [
+      {
+        "class": "moment-create glass ",
+        "contained": true,
+        "left": 19.302335739135746,
+        "right": 327.30233573913574
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 0,
+        "right": 0
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 310
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 350
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "chat",
+    "controls": [
+      {
+        "class": "chat-heading",
+        "contained": true,
+        "left": 10,
+        "right": 402
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 12,
+        "right": 292
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 13.13017463684082,
+        "right": 333.1301746368408
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "us",
+    "controls": [
+      {
+        "class": "bond-portraits",
+        "contained": true,
+        "left": 19.23847007751465,
+        "right": 381.23847007751465
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 12,
+        "right": 292
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 13.191926956176758,
+        "right": 333.19192695617676
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "map",
+    "controls": [
+      {
+        "class": "atlas-person-summary",
+        "contained": true,
+        "left": 19.298179626464844,
+        "right": 381.2981796264648
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 12,
+        "right": 292
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 12,
+        "right": 332
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "person",
+    "controls": [
+      {
+        "class": "person-actions",
+        "contained": true,
+        "left": 17,
+        "right": 379
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "keepsakes",
+    "controls": [],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "composer-note",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "composer-photo-empty",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "composer-photo-preview",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "composer-voice",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 300
+      }
+    ],
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 20,
+        "right": 340
+      }
+    ],
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "composer-mood",
+    "controls": [
+      {
+        "class": "moment-create glass is-open",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "compose-dock",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      },
+      {
+        "class": "composer-options",
+        "contained": true,
+        "left": 25,
+        "right": 387
+      }
+    ],
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  }
+]

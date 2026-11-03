@@ -126,3 +126,16 @@ Whole-app journey pass and timeline/question overflow corrections verified. Andr
 41240931505 and local APK checks pass for 7e43813; artifact handed over for phone review.
 26 screen audits are 100/100; authored larger-text checks fit all four widths. Deferred
 background/offline/partner/soak gates are unchanged.
+
+### 2026-11-03 — Atelier follow-up delivered
+
+Implemented the user's app-wide brief: custom Orbit cartography and compact map instruments,
+portrait action menus, last-day journey estimates, consistent person profiles, roomier Home/Us,
+editorial Moments, animated reactions/replies and compact photo/voice composition. Ink/Glow/Paper
+note styles persist through additive migration 0017; older clients default to Ink.
+
+82 web / 16 worker / 61 hosted tests pass, with lint/types/format/build and Android CI
+41635237900. Local a06b7df APK integrity, signing continuity and private-material scan pass.
+See docs/ATELIER_PASS.md and docs/screens/atelier/README.md for visual evidence and limits.
+Preview fixture remains available while the user reviews it. Next human #7 step is install-over
+phone review of this build; offline/endurance/second-phone/soak and release gates remain open.

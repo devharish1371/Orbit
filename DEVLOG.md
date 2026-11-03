@@ -923,3 +923,35 @@ Human #7: install this APK and check manual refresh on the sharing phone. Existi
 endurance, second-phone and soak gates remain open; no contact with Vidya was made.
 Disposable browser identities/media were deleted through the normal admin/Storage APIs;
 the QA tab and its preview/audit servers were closed. Source scan: 559 files, zero findings.
+
+## 2026-11-03 — Orbit atelier and media composition
+
+User requested a complete creative pass and then refined map identity, profile navigation,
+reactions and the photo/voice/text composer. Implemented original theme-aware cartography,
+compact controls/compass and paired-location tether, explicit person/place directions,
+last-day GPS journey estimates, read-only person/full-photo pages and consistent portrait
+links. Home signals and Us have more space. Moments gains an editorial feed, animated
+reaction palette and conversation sheet; photo/voice entry uses a compact shared dock.
+
+Added Ink/Glow/Paper writing canvases and persisted note_style through migration 0017. The
+RPC retains identity, retry, quota, media and retention checks; old clients default to Ink.
+Long notes have More/Less. The anniversary letter remains outside the app.
+
+Browser testing found and fixed a saved-place marker intercepting a co-located person tap;
+the regression test checks stopped map bubbling. Corrected the light metadata token's
+contrast and profile labels. Verified profile return flows, dummy reply/focus behavior,
+local photo preview/removal, reactions, both map menus and saved Glow/Paper styles on reload.
+
+Final runtime a06b7df: 82 web / 16 worker tests, lint/types/format/build and all 61 hosted
+tests pass. An earlier hosted run hit a network reset; its complete retry passed and the
+failed run's guarded disposable records were cleaned. 72 measured 320/360/412 px layouts
+fit in both themes. The final extension's viewport override did not apply; its eight
+additional captures honestly record 460 px instead of claiming new narrow-width checks.
+
+Android run 41635237900 passed. APK artifact 13230242454 is 6,914,115 bytes, SHA256
+8f20bf46d06345a0e6b22f8c69728784f0b9977d0e9805e1ec13375eb2a28058. Local ZIP/signing/private
+checks pass. Preview accounts/media and port 4173 remain available for the user's active
+review. No real partner contact. Existing physical/offline/endurance/partner/soak gates remain.
+
+Final static audit: 32 screens scored 100 accessibility / 100 best practices.
+Source secret scan: 660 files, zero findings.

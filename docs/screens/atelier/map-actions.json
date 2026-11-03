@@ -1,0 +1,36 @@
+[
+  {
+    "person": "self",
+    "links": [
+      {
+        "href": "https://www.google.com/maps/dir/?api=1&destination=13.080000,80.270000",
+        "label": "Directions"
+      },
+      {
+        "href": "#/person/4608e2f9-07a8-4750-8d63-6d0ba7937e08",
+        "label": "Profile"
+      },
+      {
+        "href": "#/chat",
+        "label": "Message"
+      }
+    ]
+  },
+  {
+    "person": "partner",
+    "links": [
+      {
+        "href": "https://www.google.com/maps/dir/?api=1&destination=13.100000,80.290000",
+        "label": "Directions"
+      },
+      {
+        "href": "#/person/00200da1-6280-4921-9b51-a9f6dcd93f10",
+        "label": "Profile"
+      },
+      {
+        "href": "#/chat",
+        "label": "Message"
+      }
+    ]
+  }
+]

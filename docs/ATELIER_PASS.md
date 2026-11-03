@@ -30,3 +30,38 @@ References: [MapLibre](https://maplibre.org/maplibre-style-spec/layers/),
 [OpenFreeMap](https://openfreemap.org/quick_start/),
 [OpenMapTiles](https://openmaptiles.org/docs/schema/),
 [Life360 detection](https://support.life360.com/hc/en-us/articles/23053499870487-Drive-Detection-Analysis).
+
+## Verification and handover
+
+Runtime commit: `a06b7df`. Migration 0017 deployed; hosted coverage checks default/valid/invalid
+note styles, partner visibility, membership boundaries and existing post behavior. Web tests
+also cover the composer, journey math and overlapping map-marker selection. All 82 web and
+16 worker tests pass, with lint, types, formatting and production build; all 61 hosted Python
+tests pass. One earlier full-suite attempt hit a network connection reset; the complete retry
+passed, and its abandoned disposable records were removed with identity/time guards.
+
+CUA verified Home/Moments/Chat/Us profile routes and return navigation, modal reply posting
+and removal on dummy accounts, Escape/focus restoration, photo selection/preview/removal,
+reaction feedback, journey selection and both portrait menus. The directions URLs match each
+selected synthetic coordinate. Glow/Paper posts retain their style after reload. No real
+partner messages, notifications or location requests were sent. Microphone recording was not
+repeated in browser; the existing native recording/background-stop path is unchanged.
+
+72 responsive captures cover seven routes and five composer states at 320/360/412 px in both
+themes with no horizontal/control overflow. Eight additional map/note-style captures record
+their actual 460 px viewport: a browser viewport override did not apply, so they are not
+claimed as extra narrow-phone measurements. See the screen README for audit scope.
+
+Android workflow [41635237900](https://github.com/devharish1371/Orbit/actions/runs/41635237900)
+passed native tests, signing and manifest checks. Latest [APK artifact](https://github.com/devharish1371/Orbit/actions/runs/41635237900/artifacts/13230242454)
+contains `a06b7df`, including the portrait-overlap fix and saved note treatments. Local
+`.artifacts/apk/a06b7df/app-debug.apk`: 6,914,115 bytes; SHA256
+`8f20bf46d06345a0e6b22f8c69728784f0b9977d0e9805e1ec13375eb2a28058`.
+ZIP integrity, signing identity against the M7 baseline and configured-private-data scan pass.
+
+The user-facing preview and its disposable fixture are retained for review. Day journeys are
+GPS estimates from existing samples, not verified driving recognition. Physical refresh,
+offline/endurance, second-phone, soak and release gates remain open; no final release claim.
+
+Final static audit: 32 screens scored 100 accessibility / 100 best practices.
+Source secret scan: 660 files, zero findings.

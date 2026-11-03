@@ -1,0 +1,114 @@
+[
+  {
+    "name": "note-ink",
+    "theme": "dark",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-ink-dark-460.png"
+  },
+  {
+    "name": "note-glow",
+    "theme": "dark",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-glow-dark-460.png"
+  },
+  {
+    "name": "note-paper",
+    "theme": "dark",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-paper-dark-460.png"
+  },
+  {
+    "name": "orbit-map",
+    "theme": "dark",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "orbit-map-dark-460.png"
+  },
+  {
+    "name": "note-ink",
+    "theme": "light",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-ink-light-460.png"
+  },
+  {
+    "name": "note-glow",
+    "theme": "light",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-glow-light-460.png"
+  },
+  {
+    "name": "note-paper",
+    "theme": "light",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "note-paper-light-460.png"
+  },
+  {
+    "name": "orbit-map",
+    "theme": "light",
+    "controls": [],
+    "overflow": false,
+    "captureWidth": 460,
+    "requestedWidths": [
+      320,
+      360,
+      412
+    ],
+    "viewportOverrideApplied": false,
+    "file": "orbit-map-light-460.png"
+  }
+]
