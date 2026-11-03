@@ -4,6 +4,7 @@ import { beginVoice } from '@/lib/media'
 import type { Attachment } from '@/lib/posts'
 import { copy } from '@/copy/en'
 import { Button } from '@/components/ui/Button'
+import { useBackLayer } from '@/app/backLayers'
 export function VoiceRecorder({
   onReady,
   onBusy,
@@ -24,6 +25,15 @@ export function VoiceRecorder({
   const abort = useRef<AbortController | null>(null),
     capture = useRef<Awaited<ReturnType<typeof beginVoice>> | null>(null)
   useEffect(() => () => abort.current?.abort(), [])
+  function stopOrCancel() {
+    if (state === 'recording') capture.current?.stop()
+    else if (state === 'starting') {
+      abort.current?.abort()
+      setState('idle')
+      onBusy(false)
+    }
+  }
+  useBackLayer(state !== 'idle', stopOrCancel)
   async function start() {
     if (state !== 'idle') return
     const controller = new AbortController()
@@ -83,12 +93,8 @@ export function VoiceRecorder({
                 : copy.posts.stop
           }
           onClick={() => {
-            if (state === 'recording') capture.current?.stop()
-            else if (state === 'starting') {
-              abort.current?.abort()
-              setState('idle')
-              onBusy(false)
-            } else void start()
+            if (state !== 'idle') stopOrCancel()
+            else void start()
           }}
         >
           {state === 'idle' ? (

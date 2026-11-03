@@ -1140,3 +1140,28 @@ Local ZIP integrity, baseline signing continuity and configured-private-material
 pass. Source scan: 900 files, zero findings. 117 web / 16 worker checks are green; last full
 backend regression remains all 67 passing. V2.1 software slice and first V2.2 Back/place-sheet
 slice are verified; physical gates and remaining V2 phases stay open in PLAN_V2.md.
+
+## 2026-11-04 — V2.2 connected portraits, viewer and media shelf
+
+Portrait links carry per-link, document-namespaced identities into the profile, preventing
+repeated-author and post-reload header collisions. React 19.3's installed ViewTransition API
+handles warm shared images; cold/reduced-motion/unsupported paths remain immediate. Photo
+controls can interrupt ongoing motion; native handle and pseudo-animation cleanup cover
+logout/hiding/Back. One viewer now serves profile/shared photos with preview, full-image
+retry, zoom, caption and focus/scroll return. Removed old photo CSS rather than stacking
+another global override. Unified signed media queries explicitly include session owner;
+removed/replaced avatars remount/clear an open profile preview.
+
+Chat + is a three-action Photo/Voice/expiry shelf. Voice selection keeps typed text and
+requires an explicit Record action. Cancel restores typing; Back stops into a local preview
+or cancels a pending microphone request. Eight-line drafts resize correctly after navigation.
+No microphone request, media upload, new message, real partner contact or APK handover in QA.
+
+125 web / 16 worker tests, lint/types/format/build pass. Full backend run validates all 67
+checks across 66 passes and the isolated retry of one connection-reset read (retry 6.61s).
+Production audit: zero vulnerabilities. Browser: six repeated portrait keys all unique;
+selected identity survives reload alongside a new header with no collision/console errors.
+Shared/profile viewer loads and zooms; Escape returns focus, feed scroll 1237 px retained.
+Eight-line draft returns as eight lines at 132 px. Voice cancel keeps text/focus; tool buttons
+are 72 px and voice Record is 44 px high. Final responsive/native/a11y rollup follows.
+See docs/V2_CONNECTED_IMAGES.md. Physical keyboard/predictive Back/gestures remain deferred.

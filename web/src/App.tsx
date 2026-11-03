@@ -1,5 +1,6 @@
 import { ScrollContinuity } from '@/app/ScrollContinuity'
 import { NativeNavigation } from '@/app/NativeNavigation'
+import { MotionSafety } from '@/app/MotionSafety'
 import { LoadingView } from '@/components/ui/LoadingView'
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -31,6 +32,7 @@ export default function App() {
     <>
       <ScrollContinuity userId={session?.user.id} />
       <NativeNavigation enabled={Boolean(session)} />
+      <MotionSafety />
       <div className="aurora" aria-hidden="true" />
       <OfflineBanner />
       <Suspense fallback={<LoadingView />}>

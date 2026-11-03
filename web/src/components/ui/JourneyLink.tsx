@@ -2,9 +2,12 @@ import {
   Link,
   useLocation,
   useNavigate,
+  useResolvedPath,
   type LinkProps,
 } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import { useId } from 'react'
+import { PortraitContext, createPortraitName } from '@/app/PortraitContext'
 
 const routes = new Set([
   '/',
@@ -24,9 +27,29 @@ const routes = new Set([
   '/reveal',
 ])
 /** Record the actual entry point for secondary screens, without persisting personal data. */
-export function JourneyLink({ state, ...props }: LinkProps) {
+export function JourneyLink({ state, children, ...props }: LinkProps) {
   const location = useLocation()
-  return <Link {...props} state={{ ...state, orbitFrom: location.pathname }} />
+  const target = useResolvedPath(props.to),
+    uid = useId()
+  const portrait = /^\/person\/[0-9a-f-]{36}$/i.test(target.pathname)
+    ? createPortraitName(uid)
+    : null
+  return (
+    <Link
+      {...props}
+      state={{
+        ...state,
+        orbitFrom: location.pathname,
+        orbitPortrait: portrait,
+      }}
+    >
+      <PortraitContext.Provider
+        value={location.pathname !== target.pathname ? portrait : null}
+      >
+        {children}
+      </PortraitContext.Provider>
+    </Link>
+  )
 }
 export function BackLink({
   fallback,

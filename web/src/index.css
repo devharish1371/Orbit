@@ -1652,25 +1652,6 @@ input::placeholder {
   font-size: 0.8rem;
   color: var(--text-dim);
 }
-.photo-dialog {
-  max-width: 95vw;
-  max-height: 90dvh;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: var(--bg-2);
-  color: var(--text);
-  padding: 1rem;
-}
-.photo-dialog::backdrop {
-  background: #080810dd;
-}
-.photo-dialog img {
-  max-height: 75dvh;
-  max-width: 100%;
-  object-fit: contain;
-  display: block;
-  margin-top: 1rem;
-}
 .post-pin {
   display: flex;
   align-items: center;

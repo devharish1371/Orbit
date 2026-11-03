@@ -10,6 +10,14 @@ const signed = vi.hoisted(() =>
     error: null,
   }),
 )
+const partner = vi.hoisted(() => ({
+  user_id: 'b',
+  display_name: 'Vidya',
+  nickname: 'V',
+  color: '#e786a1',
+  avatar_path: 'couple/b/avatar.webp' as string | null,
+  share_mode: 'live',
+}))
 vi.mock('@/hooks/useAuth', () => ({
   useAuth: () => ({
     client: { storage: { from: () => ({ createSignedUrl: signed }) } },
@@ -22,19 +30,13 @@ vi.mock('@/hooks/useSpace', () => ({
   useSpace: () => ({
     data: {
       self: { user_id: 'a', display_name: 'Dev' },
-      partner: {
-        user_id: 'b',
-        display_name: 'Vidya',
-        nickname: 'V',
-        color: '#e786a1',
-        avatar_path: 'couple/b/avatar.webp',
-        share_mode: 'live',
-      },
+      partner,
       couple: {},
     },
   }),
 }))
 beforeEach(() => {
+  partner.avatar_path = 'couple/b/avatar.webp'
   HTMLDialogElement.prototype.showModal = function () {
     this.setAttribute('open', '')
   }
@@ -47,15 +49,18 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 function open(id = 'b') {
-  render(
-    <QueryClientProvider client={new QueryClient()}>
+  const query = new QueryClient()
+  const app = () => (
+    <QueryClientProvider client={query}>
       <MemoryRouter initialEntries={['/person/' + id]}>
         <Routes>
           <Route path="/person/:id" element={<PersonPage />} />
         </Routes>
       </MemoryRouter>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   )
+  const view = render(app())
+  return { refresh: () => view.rerender(app()) }
 }
 test('partner profile is read-only and opens the full authorized profile photo', async () => {
   open()
@@ -72,6 +77,9 @@ test('partner profile is read-only and opens the full authorized profile photo',
     'https://example.com/photo.webp',
   )
   expect(signed).toHaveBeenCalledWith('couple/b/avatar.webp', 3600)
+  expect(screen.getByRole('button', { name: 'Zoom photo' })).toBeVisible()
+  await userEvent.click(screen.getByRole('button', { name: 'Close photo' }))
+  expect(screen.getByRole('button', { name: 'View V’s photo' })).toHaveFocus()
 })
 test('unknown person IDs cannot load photos or become editable', () => {
   open('stranger')
@@ -79,4 +87,14 @@ test('unknown person IDs cannot load photos or become editable', () => {
     screen.getByRole('heading', { name: 'Profile unavailable' }),
   ).toBeVisible()
   expect(signed).not.toHaveBeenCalled()
+})
+test('an avatar removed on another device closes its viewer and clears the old preview', async () => {
+  const view = open()
+  await userEvent.click(screen.getByRole('button', { name: 'View V’s photo' }))
+  await screen.findByRole('img', { name: 'V' })
+  partner.avatar_path = null
+  view.refresh()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(screen.queryByRole('img', { name: 'V' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'View V’s photo' })).toBeDisabled()
 })

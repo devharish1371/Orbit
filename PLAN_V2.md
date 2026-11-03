@@ -90,6 +90,12 @@ Primary references, verified 3 November 2026:
   checks and final Android CI 41687906057 pass for code head 4c5ff9b. The small Map route
   now stays cached across web updates; tiles stay network-only. Native gestures and the
   remaining avatar/photo/keyboard work stay open. Build retained privately, no handover.
+- V2.2 connected-image/media software slice: unique portrait→profile handoffs, shared
+  profile/post photo viewer with preview/retry/zoom and focus/scroll return; interruption and
+  reduced-motion fallbacks; three-action media shelf, voice cancel/Back and restored draft
+  sizing. 125 web/16 worker checks and all 67 backend checks validated (one network retry).
+  Physical keyboard/predictive-Back/gesture tests remain for the user's batch. See
+  docs/V2_CONNECTED_IMAGES.md and DEVLOG.md for final browser/Android results.
 - V2.3–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

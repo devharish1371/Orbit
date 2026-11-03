@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Check, ChevronDown, X } from 'lucide-react'
 
@@ -18,6 +18,7 @@ export function ChoiceSelect({
   options,
   onChange,
   disabled = false,
+  icon,
 }: {
   id?: string
   name?: string
@@ -26,6 +27,7 @@ export function ChoiceSelect({
   options: Choice[]
   onChange: (value: string) => void
   disabled?: boolean
+  icon?: ReactNode
 }) {
   const uid = useId()
   const [open, setOpen] = useState(false)
@@ -55,6 +57,11 @@ export function ChoiceSelect({
             ?.focus()
         }}
       >
+        {icon && (
+          <span className="choice-trigger-icon" aria-hidden="true">
+            {icon}
+          </span>
+        )}
         <span>{selected?.label ?? 'Choose'}</span>
         <ChevronDown size={16} aria-hidden="true" />
       </button>

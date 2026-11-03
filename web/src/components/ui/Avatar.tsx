@@ -1,21 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
-import { useAuth } from '@/hooks/useAuth'
+import { useContext } from 'react'
+import { usePrivateMedia } from '@/hooks/usePrivateMedia'
+import { PortraitContext } from '@/app/PortraitContext'
+import { SharedImage } from './SharedImage'
 function Photo({ path }: { path: string }) {
-  const { client } = useAuth()
-  const query = useQuery({
-    queryKey: ['avatar', path],
-    staleTime: 50 * 60_000,
-    gcTime: 60 * 60_000,
-    queryFn: async () => {
-      const result = await client.storage
-        .from('media')
-        .createSignedUrl(path, 3600)
-      if (result.error) throw result.error
-      return result.data.signedUrl
-    },
-  })
+  const query = usePrivateMedia(path)
   return query.data ? (
     <img
+      key={query.data}
       src={query.data}
       alt=""
       decoding="async"
@@ -31,20 +22,27 @@ export function Avatar({
   color,
   large = false,
   path,
+  transitionName,
 }: {
   name: string
   color: string
   large?: boolean
   path?: string | null
+  transitionName?: string | null
 }) {
+  const inherited = useContext(PortraitContext)
+  const motionName = transitionName === undefined ? inherited : transitionName
   return (
-    <span
-      className={`avatar ${large ? 'avatar-large' : ''}`}
-      style={{ '--person-color': color } as React.CSSProperties}
-      aria-hidden="true"
-    >
-      {name.trim().slice(0, 1).toUpperCase()}
-      {path && <Photo key={path} path={path} />}
-    </span>
+    <SharedImage name={motionName}>
+      <span
+        className={`avatar ${large ? 'avatar-large' : ''}`}
+        style={{ '--person-color': color } as React.CSSProperties}
+        aria-hidden="true"
+        data-portrait-key={motionName ?? undefined}
+      >
+        {name.trim().slice(0, 1).toUpperCase()}
+        {path && <Photo key={path} path={path} />}
+      </span>
+    </SharedImage>
   )
 }

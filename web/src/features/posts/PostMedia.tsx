@@ -1,6 +1,8 @@
-import { createPortal } from 'react-dom'
-import { X, ZoomIn, ZoomOut } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { ImageViewer } from '@/components/ui/ImageViewer'
+import { imagePreview, type ImagePreview } from '@/components/ui/imagePreview'
+import { SharedImage } from '@/components/ui/SharedImage'
+import { changeImageSurface } from '@/app/imageMotion'
 import type { Post } from '@/lib/posts'
 import { copy } from '@/copy/en'
 import { useSignedMedia } from './usePosts'
@@ -74,10 +76,15 @@ export function PostMedia({
       typeof IntersectionObserver === 'undefined',
     ),
     [open, setOpen] = useState(false),
-    [zoomed, setZoomed] = useState(false)
+    [preview, setPreview] = useState<ImagePreview>()
   const node = useRef<HTMLDivElement>(null),
-    dialog = useRef<HTMLDialogElement>(null),
     trigger = useRef<HTMLButtonElement>(null)
+  const uid = useId(),
+    transitionName = `orbit-photo-${uid.replace(/[^a-zA-Z0-9_-]/g, '')}`
+  const full = useSignedMedia(
+    post.kind === 'photo' ? post.media_path : null,
+    open,
+  )
   useEffect(() => {
     if (visible || !node.current) return
     const observer = new IntersectionObserver(
@@ -92,15 +99,8 @@ export function PostMedia({
     observer.observe(node.current)
     return () => observer.disconnect()
   }, [visible])
-  useEffect(() => {
-    const element = dialog.current
-    if (open) element?.showModal()
-    return () => element?.close()
-  }, [open])
-  function closeViewer() {
-    dialog.current?.close()
-    setOpen(false)
-    trigger.current?.focus({ preventScroll: true })
+  function closeViewer(animate = false) {
+    changeImageSurface(() => setOpen(false), animate)
   }
   if (!post.media_path) return null
   return (
@@ -120,18 +120,21 @@ export function PostMedia({
             aspectRatio: `${post.media_width ?? 4} / ${post.media_height ?? 3}`,
           }}
           onClick={() => {
-            setZoomed(false)
-            setOpen(true)
+            const ready = imagePreview(trigger.current)
+            setPreview(ready)
+            changeImageSurface(() => setOpen(true), Boolean(ready))
           }}
         >
-          {visible ? (
-            <Asset
-              path={post.thumb_path ?? post.media_path}
-              alt={post.body ?? copy.posts.photo}
-            />
-          ) : (
-            <div className="skeleton media-skeleton" />
-          )}
+          <SharedImage name={open ? null : transitionName}>
+            {visible ? (
+              <Asset
+                path={post.thumb_path ?? post.media_path}
+                alt={post.body ?? copy.posts.photo}
+              />
+            ) : (
+              <div className="skeleton media-skeleton" />
+            )}
+          </SharedImage>
         </button>
       ) : (
         <>
@@ -146,66 +149,31 @@ export function PostMedia({
           )}
         </>
       )}
-      {open &&
-        createPortal(
-          <dialog
-            className="photo-dialog"
-            ref={dialog}
-            aria-label="Shared photo"
-            onCancel={(event) => {
-              event.preventDefault()
-              closeViewer()
-            }}
-            onClose={() => {
-              setOpen(false)
-              trigger.current?.focus({ preventScroll: true })
-            }}
-          >
-            <header className="photo-viewer-header">
-              <div>
-                <strong>Photo</strong>
-                <time dateTime={post.created_at}>
-                  {new Intl.DateTimeFormat('en-IN', {
-                    dateStyle: 'medium',
-                    timeZone: timezone,
-                  }).format(new Date(post.created_at))}
-                </time>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="icon-button"
-                  aria-label={zoomed ? 'Fit photo' : 'Zoom photo'}
-                  aria-pressed={zoomed}
-                  onClick={() => setZoomed(!zoomed)}
-                >
-                  {zoomed ? <ZoomOut size={21} /> : <ZoomIn size={21} />}
-                </button>
-                <button
-                  autoFocus
-                  type="button"
-                  className="icon-button"
-                  aria-label={copy.posts.closePhoto}
-                  onClick={closeViewer}
-                >
-                  <X size={22} />
-                </button>
-              </div>
-            </header>
-            <div className="photo-viewer-stage">
-              <div
-                className={`photo-zoom-content ${zoomed ? 'is-zoomed' : ''}`}
-              >
-                <Asset
-                  path={post.media_path}
-                  alt={post.body ?? copy.posts.photo}
-                />
-              </div>
-            </div>
-            {post.body && <p className="photo-viewer-caption">{post.body}</p>}
-          </dialog>,
-          document.body,
-        )}
+      {open && (
+        <ImageViewer
+          title="Photo"
+          alt={post.body ?? copy.posts.photo}
+          src={full.data}
+          preview={preview}
+          width={post.media_width}
+          height={post.media_height}
+          error={Boolean(full.error)}
+          caption={post.body}
+          date={{
+            iso: post.created_at,
+            label: new Intl.DateTimeFormat('en-IN', {
+              dateStyle: 'medium',
+              timeZone: timezone,
+            }).format(new Date(post.created_at)),
+          }}
+          transitionName={transitionName}
+          returnFocus={trigger}
+          onRetry={() => {
+            void full.refetch()
+          }}
+          onClose={closeViewer}
+        />
+      )}
     </div>
   )
 }

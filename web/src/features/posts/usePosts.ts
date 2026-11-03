@@ -2,6 +2,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { cursorFilter, type Channel, type Post } from '@/lib/posts'
+export { usePrivateMedia as useSignedMedia } from '@/hooks/usePrivateMedia'
 export function usePosts(
   channel: Channel,
   kept = false,
@@ -39,22 +40,6 @@ export function usePosts(
     },
     getNextPageParam: (page) =>
       page.length === 30 ? page[page.length - 1] : undefined,
-  })
-}
-export function useSignedMedia(path: string | null, enabled = true) {
-  const { client, session } = useAuth()
-  return useQuery({
-    queryKey: ['signed-media', session?.user.id, path],
-    enabled: !!path && enabled,
-    staleTime: 50 * 60000,
-    gcTime: 55 * 60000,
-    queryFn: async () => {
-      const result = await client.storage
-        .from('media')
-        .createSignedUrl(path!, 3600)
-      if (result.error) throw result.error
-      return result.data.signedUrl
-    },
   })
 }
 export function usePostReactions(ids: string[]) {

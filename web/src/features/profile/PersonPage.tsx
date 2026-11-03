@@ -1,31 +1,39 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useId, useRef, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import { ArrowUpRight, MapPin, MessageCircle, Phone, Image } from 'lucide-react'
 import { BackLink, JourneyLink as Link } from '@/components/ui/JourneyLink'
-import { DialogSheet } from '@/components/ui/DialogSheet'
+import { ImageViewer } from '@/components/ui/ImageViewer'
+import { imagePreview, type ImagePreview } from '@/components/ui/imagePreview'
 import { Avatar } from '@/components/ui/Avatar'
 import { useSpace } from '@/hooks/useSpace'
-import { useAuth } from '@/hooks/useAuth'
+import { usePrivateMedia } from '@/hooks/usePrivateMedia'
+import { useMotionAllowed } from '@/hooks/useMotionAllowed'
+import { portraitName, createPortraitName } from '@/app/PortraitContext'
+import { changeImageSurface } from '@/app/imageMotion'
 import { callUrl } from '@/lib/connect'
 export default function PersonPage() {
-  const { id } = useParams(),
-    { data } = useSpace(),
-    { client } = useAuth()
+  const { id } = useParams()
+  const { data } = useSpace()
+  const path = [data?.self, data?.partner].find(
+    (member) => member?.user_id === id,
+  )?.avatar_path
+  return <PersonProfile key={`${id}:${path ?? ''}`} id={id} />
+}
+function PersonProfile({ id }: { id?: string }) {
+  const { data } = useSpace(),
+    { state } = useLocation(),
+    uid = useId()
+  const trigger = useRef<HTMLButtonElement>(null)
+  const motion = useMotionAllowed()
   const [photo, setPhoto] = useState(false)
+  const [preview, setPreview] = useState<ImagePreview>()
+  const transitionName =
+    portraitName(state?.orbitPortrait) ?? createPortraitName(uid)
   const person = [data?.self, data?.partner].find((m) => m?.user_id === id)
-  const image = useQuery({
-    queryKey: ['person-photo', person?.avatar_path],
-    enabled: Boolean(photo && person?.avatar_path),
-    staleTime: 50 * 60_000,
-    queryFn: async () => {
-      const result = await client.storage
-        .from('media')
-        .createSignedUrl(person!.avatar_path!, 3600)
-      if (result.error) throw result.error
-      return result.data.signedUrl
-    },
-  })
+  const image = usePrivateMedia(person?.avatar_path ?? null, photo)
+  function closePhoto(animate = false) {
+    changeImageSurface(() => setPhoto(false), animate)
+  }
   if (!data) return null
   if (!person)
     return (
@@ -40,7 +48,7 @@ export default function PersonPage() {
     : data.self.partner_nickname || person.nickname || person.display_name
   const phone = callUrl(person.phone ?? '')
   return (
-    <div className="page person-page">
+    <div className="page person-page" data-image-flow={motion}>
       <BackLink fallback={own ? '/us' : '/chat'} />
       <section
         className="person-cover"
@@ -52,18 +60,24 @@ export default function PersonPage() {
           <i />
         </div>
         <button
+          ref={trigger}
           className="person-photo-trigger"
           disabled={!person.avatar_path}
           aria-label={`View ${name}’s photo`}
           aria-haspopup="dialog"
           aria-expanded={photo}
-          onClick={() => setPhoto(true)}
+          onClick={() => {
+            const ready = imagePreview(trigger.current)
+            setPreview(ready)
+            changeImageSurface(() => setPhoto(true), Boolean(ready))
+          }}
         >
           <Avatar
             name={person.display_name}
             color={person.color}
             path={person.avatar_path}
             large
+            transitionName={photo ? null : transitionName}
           />
           {person.avatar_path && (
             <span>
@@ -111,19 +125,22 @@ export default function PersonPage() {
         </Link>
       )}
       {photo && (
-        <DialogSheet
-          title={`${name}’s photo`}
-          className="person-photo-sheet"
-          onClose={() => setPhoto(false)}
-        >
-          {image.data ? (
-            <img src={image.data} alt={name} />
-          ) : (
-            <p role="status">
-              {image.error ? 'Couldn’t load the photo.' : 'Loading photo…'}
-            </p>
-          )}
-        </DialogSheet>
+        <ImageViewer
+          title={name}
+          label={`${name}’s photo`}
+          alt={name}
+          src={image.data}
+          preview={preview}
+          width={1}
+          height={1}
+          error={Boolean(image.error)}
+          transitionName={transitionName}
+          returnFocus={trigger}
+          onRetry={() => {
+            void image.refetch()
+          }}
+          onClose={closePhoto}
+        />
       )}
     </div>
   )

@@ -1,0 +1,190 @@
+/* One photographic surface for portraits, chat, Moments and Keepsakes. */
+.photo-dialog {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  background: #0b0e17;
+  color: #f6f1e9;
+  overflow: hidden;
+}
+.photo-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.photo-dialog::backdrop {
+  background: #0b0e17;
+}
+.photo-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: max(14px, env(safe-area-inset-top)) 16px 12px;
+  flex: none;
+}
+.photo-viewer-header > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.photo-viewer-header > div:first-child {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.photo-viewer-header strong {
+  color: inherit;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.photo-viewer-header time {
+  color: #bec7db;
+  font-size: 11px;
+}
+.photo-dialog .icon-button {
+  flex: none;
+  background: #242b3a;
+  color: #f6f1e9;
+  border: 0;
+  border-radius: 50%;
+}
+.photo-viewer-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+.photo-zoom-content {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.viewer-image-pair {
+  position: relative;
+  width: min(100%, calc(72dvh * var(--photo-ratio)));
+  aspect-ratio: var(--photo-ratio);
+  flex: none;
+  border-radius: 18px;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+.viewer-image-pair > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+.viewer-full {
+  transition: opacity 160ms ease;
+}
+.photo-zoom-content.is-zoomed {
+  width: 200%;
+  align-items: flex-start;
+}
+.is-zoomed .viewer-image-pair {
+  width: 100%;
+  border-radius: 0;
+}
+.photo-viewer-caption {
+  flex: none;
+  max-height: 20dvh;
+  overflow: auto;
+  margin: 0;
+  padding: 16px 20px max(20px, env(safe-area-inset-bottom));
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.viewer-image-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: #f6f1e9;
+  font-size: 13px;
+}
+.viewer-image-state.has-preview {
+  inset: auto 12px 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #0b0e17d9;
+  backdrop-filter: blur(8px);
+}
+.viewer-loading-orbit {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 16px;
+  border: 1px solid #bfc8dd70;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+}
+.viewer-loading-orbit i {
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f6f1e9;
+  transform: translateY(-50%);
+}
+.viewer-loading-orbit i:first-child {
+  left: -2px;
+}
+.viewer-loading-orbit i:last-child {
+  right: -2px;
+  background: #ff98ba;
+}
+.person-page[data-image-flow='true'] {
+  animation: none;
+}
+html:has(.photo-dialog[open]) {
+  overflow: hidden;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-group(.orbit-image) {
+  animation-duration: 240ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-old(.orbit-image),
+::view-transition-new(.orbit-image) {
+  height: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: reduce) {
+  .viewer-full {
+    transition: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

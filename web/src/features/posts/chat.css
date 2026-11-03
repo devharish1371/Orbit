@@ -201,3 +201,91 @@
   margin-left: auto;
   font-size: 10px;
 }
+
+/* A small tool shelf leaves the typing row to text and its primary action. */
+.chat-page .messenger-more.chat-media-tray {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 4px;
+  padding: 10px 4px 12px;
+}
+.chat-media-tray .chat-tray-action,
+.chat-media-tray .choice-trigger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 72px;
+  width: 100%;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 11px;
+}
+.chat-media-tray .chat-tray-action > span:first-child,
+.chat-media-tray .choice-trigger-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--text);
+  background: color-mix(in srgb, var(--secondary) 10%, transparent);
+}
+.chat-media-tray .chat-tray-action:first-child > span:first-child {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.chat-media-tray .choice-trigger > svg {
+  display: none;
+}
+.chat-voice-draft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+}
+.chat-voice-draft .voice-recorder {
+  flex: 1;
+  min-width: 0;
+}
+.chat-voice-draft .voice-capture {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 48px;
+  gap: 10px;
+}
+.chat-voice-draft .voice-capture > button {
+  width: auto;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  gap: 8px;
+  padding: 0 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.chat-voice-draft .voice-capture > button > svg {
+  flex: none;
+}
+.chat-voice-draft
+  .voice-recorder[data-state='recording']
+  .voice-capture
+  > button {
+  width: 44px;
+  font-size: 0;
+  padding: 0;
+}
+.chat-voice-draft .studio-levels {
+  flex: 1;
+  min-width: 0;
+  max-width: 70px;
+  overflow: hidden;
+}

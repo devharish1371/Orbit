@@ -1,6 +1,14 @@
 import { useComposerMemory } from '@/hooks/useComposerMemory'
 import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   ImagePlus,
@@ -33,6 +41,7 @@ import { ReplyPreview } from './ReplyPreview'
 import { useQuotedPosts } from './usePosts'
 import { useOutbox } from '@/features/outbox/OutboxContext'
 import { useBackLayer } from '@/app/backLayers'
+import { useAutoSizeTextArea } from '@/hooks/useAutoSizeTextArea'
 function LocalPreview({ note }: { note: Attachment }) {
   const attach = useCallback(
     (element: HTMLImageElement | null) => {
@@ -88,8 +97,22 @@ export function Composer({
     [retryable, setRetryable] = field('retryable')
   const quoted = useQuotedPosts(channel === 'chat' ? [replyId] : [])
   const formRef = useRef<HTMLFormElement>(null)
+  const textarea = useRef<HTMLTextAreaElement>(null),
+    trayId = useId()
+  useAutoSizeTextArea(textarea, body)
+  const voiceDraft = kind === 'voice' && !attachment
+  const wasVoice = useRef(voiceDraft)
+  useLayoutEffect(() => {
+    if (wasVoice.current && !voiceDraft)
+      textarea.current?.focus({ preventScroll: true })
+    wasVoice.current = voiceDraft
+  }, [voiceDraft])
   const outbox = useOutbox()
   const [recording, setRecording] = useState(false)
+  useBackLayer(channel === 'chat' && voiceDraft, () => {
+    setKind('text')
+    setRecording(false)
+  })
   useBackLayer(more, () => {
     setMore(false)
     formRef.current
@@ -255,6 +278,7 @@ export function Composer({
                 edited()
                 setAttachment(undefined)
                 setKind('text')
+                textarea.current?.focus({ preventScroll: true })
               }}
             >
               <X size={18} />
@@ -262,35 +286,76 @@ export function Composer({
           </div>
         )}
         {more && (
-          <div className="messenger-more">
-            <label>
-              {copy.posts.expiry}
-              <ChoiceSelect
-                label={copy.posts.expiry}
-                value={ttl}
-                options={expiryChoices}
-                disabled={busy || recording}
-                onChange={(value) => {
-                  edited()
-                  setTtl(value)
-                }}
-              />
-            </label>
-            <div className="mood-options">
-              {['💛', '🥰', '🥺', '🫂', '✨'].map((emoji) => (
-                <button
-                  type="button"
-                  key={emoji}
-                  onClick={() => {
-                    edited()
-                    setBody((value) => value + emoji)
-                    setMore(false)
-                  }}
-                >
-                  {emoji}
-                </button>
-              ))}
-            </div>
+          <div
+            className="messenger-more chat-media-tray"
+            id={trayId}
+            role="group"
+            aria-label="Message tools"
+          >
+            <button
+              className="chat-tray-action"
+              type="button"
+              aria-label={copy.posts.choosePhoto}
+              disabled={busy || recording}
+              onClick={() => photoInput.current?.click()}
+            >
+              <span aria-hidden="true">
+                <ImagePlus size={21} />
+              </span>
+              <span>Photo</span>
+            </button>
+            <button
+              className="chat-tray-action"
+              type="button"
+              aria-label="Voice note"
+              disabled={busy || recording || Boolean(attachment)}
+              onClick={() => {
+                mode('voice')
+                setMore(false)
+              }}
+            >
+              <span aria-hidden="true">
+                <Mic size={21} />
+              </span>
+              <span>Voice</span>
+            </button>
+            <ChoiceSelect
+              label={copy.posts.expiry}
+              icon={<Clock3 size={21} />}
+              value={ttl}
+              options={expiryChoices}
+              disabled={busy || recording}
+              onChange={(value) => {
+                edited()
+                setTtl(value)
+              }}
+            />
+          </div>
+        )}
+        {voiceDraft && (
+          <div className="chat-voice-draft">
+            <VoiceRecorder
+              studio
+              compact
+              disabled={busy}
+              onReady={(note) => {
+                edited()
+                setKind('voice')
+                setAttachment(note)
+              }}
+              onBusy={setRecording}
+            />
+            <button
+              className="icon-button"
+              type="button"
+              aria-label="Cancel voice note"
+              onClick={() => {
+                setKind('text')
+                setRecording(false)
+              }}
+            >
+              <X size={18} />
+            </button>
           </div>
         )}
         <input
@@ -302,6 +367,7 @@ export function Composer({
             const file = event.target.files?.[0]
             if (file) {
               mode('photo')
+              setMore(false)
               void photo(file)
             }
             event.target.value = ''
@@ -313,6 +379,7 @@ export function Composer({
             className="icon-button composer-plus"
             aria-label={copy.posts.more}
             aria-expanded={more}
+            aria-controls={more ? trayId : undefined}
             disabled={busy || recording}
             onClick={() => setMore(!more)}
           >
@@ -322,6 +389,7 @@ export function Composer({
             {copy.posts.write}
           </label>
           <textarea
+            ref={textarea}
             id="chat-message"
             rows={1}
             value={body}
@@ -335,15 +403,13 @@ export function Composer({
               edited()
               setBody(event.target.value)
               onTyping()
-              event.target.style.height = 'auto'
-              event.target.style.height =
-                Math.min(event.target.scrollHeight, 132) + 'px'
             }}
             onKeyDown={(event) => {
               if (
                 event.key === 'Enter' &&
                 !event.shiftKey &&
                 !event.nativeEvent.isComposing &&
+                !voiceDraft &&
                 body.trim()
               ) {
                 event.preventDefault()
@@ -351,19 +417,12 @@ export function Composer({
               }
             }}
           />
-          <button
-            type="button"
-            className="icon-button"
-            aria-label={copy.posts.choosePhoto}
-            disabled={busy || recording}
-            onClick={() => photoInput.current?.click()}
+          <div
+            hidden={(!!(body.trim() || attachment) && !recording) || voiceDraft}
           >
-            <ImagePlus size={21} />
-          </button>
-          <div hidden={!!(body.trim() || attachment) && !recording}>
             <VoiceRecorder
               compact
-              disabled={busy}
+              disabled={busy || voiceDraft}
               onReady={(note) => {
                 edited()
                 setKind('voice')
@@ -376,7 +435,7 @@ export function Composer({
             <button
               type="submit"
               className="chat-send"
-              disabled={busy}
+              disabled={busy || voiceDraft}
               aria-label={busy ? copy.posts.sending : copy.posts.send}
             >
               <Send size={20} />

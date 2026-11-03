@@ -3,6 +3,7 @@ import { App } from '@capacitor/app'
 import { Capacitor } from '@capacitor/core'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { dismissBackLayer, dismissDialog } from './backLayers'
+import { cancelImageMotion } from './imageMotion'
 
 const roots = new Set(['/', '/map', '/moments', '/chat', '/us'])
 export function NativeNavigation({ enabled }: { enabled: boolean }) {
@@ -25,6 +26,8 @@ export function NativeNavigation({ enabled }: { enabled: boolean }) {
     if (!enabled || Capacitor.getPlatform() !== 'android') return
     let active = true
     const listener = App.addListener('backButton', () => {
+      if (!active) return
+      cancelImageMotion()
       if (!active || dismissDialog() || dismissBackLayer()) return
       // A WebView can have history unrelated to Orbit. Only traverse our router entries.
       const index: unknown = window.history.state?.idx
