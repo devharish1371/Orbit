@@ -40,9 +40,8 @@ export function PrivacySettings() {
       <h2>Privacy</h2>
       {!isAndroid() ? (
         <p className="muted small">
-          App lock and screenshot protection are available in the Android app.
-          On the web, use your device’s screen lock and sign out on shared
-          devices.
+          App lock is available on Android. On shared browsers, log out when
+          you’re done.
         </p>
       ) : (
         <>

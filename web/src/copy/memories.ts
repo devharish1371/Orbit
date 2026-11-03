@@ -12,7 +12,7 @@ export const memories = {
   answerHint: 'Final for today. Revealed once you both reply.',
   waiting: 'Waiting for their answer.',
   saved: 'Saved',
-  failed: 'That didn’t go through. Please try again.',
+  failed: 'Couldn’t save. Try again.',
   empty: 'Saved moments and messages appear here.',
   mapEmpty: 'Keep a moment with a place pin to start your Memory Map.',
   more: 'Show earlier keepsakes',
@@ -47,7 +47,7 @@ export const memories = {
   addDate: 'Set your anniversary in Settings to start your timeline.',
   export: 'Export our memories',
   exportHint:
-    'Download saved posts, photos, voice notes and available memories as a ZIP. Unopened partner capsules stay private.',
+    'Saved memories in one ZIP. Sealed partner capsules stay private.',
   exportStart: 'Download ZIP',
   exportDone: 'Your ZIP is ready.',
   exportFailed:

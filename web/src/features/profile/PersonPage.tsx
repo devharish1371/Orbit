@@ -91,7 +91,7 @@ export default function PersonPage() {
             <span>Message</span>
           </Link>
         )}
-        {phone && (
+        {!own && phone && (
           <a href={phone}>
             <Phone size={21} />
             <span>Call</span>

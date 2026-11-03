@@ -161,7 +161,6 @@ export default function SettingsPage() {
           <LogOut size={17} aria-hidden="true" />
           {copy.common.signOut}
         </Button>
-        <p className="muted small">{copy.settings.signOutHint}</p>
       </section>
     </div>
   )

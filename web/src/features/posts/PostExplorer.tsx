@@ -1,4 +1,4 @@
-import { Search, X, SlidersHorizontal } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import { useState } from 'react'
 export type PostFilter = 'all' | 'text' | 'photo' | 'voice'
 export function PostExplorer({
@@ -33,12 +33,6 @@ export function PostExplorer({
         onClick={() => setOpen(!open)}
       >
         <Search size={17} />
-        {chat && (
-          <>
-            Find a message
-            <SlidersHorizontal size={16} />
-          </>
-        )}
         {active && <span className="filter-dot" aria-label="Filters applied" />}
       </button>
       <div className="explorer-panel" hidden={!open}>
@@ -48,7 +42,7 @@ export function PostExplorer({
             autoComplete="off"
             type="search"
             aria-label={chat ? 'Search messages' : 'Search moments'}
-            placeholder={chat ? 'A word you remember…' : 'Find a caption…'}
+            placeholder={chat ? 'Search messages' : 'Search moments'}
             value={search}
             onChange={(e) => onSearch(e.target.value)}
             maxLength={120}

@@ -139,3 +139,12 @@ note styles persist through additive migration 0017; older clients default to In
 See docs/ATELIER_PASS.md and docs/screens/atelier/README.md for visual evidence and limits.
 Preview fixture remains available while the user reviews it. Next human #7 step is install-over
 phone review of this build; offline/endurance/second-phone/soak and release gates remain open.
+
+### 2026-11-03 — Full-app audit and cleanup
+
+User requested a complete audit/cleanup, then detailed feature and design proposals before
+the next expansion. Remove secondary-screen panel framing, soften abrupt media corners,
+trim redundant copy, retain necessary privacy/permission labels and unify reading surfaces.
+Audit all 14 reachable pages in both themes at 320/360/412 px, expanded forms/sheets and
+existing regression checks. Record recommendations in docs/FULL_APP_AUDIT.md; proposed
+features and major art-direction changes require the user's selection before implementation.

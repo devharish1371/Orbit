@@ -38,18 +38,14 @@ export function StorageStatus() {
             value={usage.data.kept_bytes}
             aria-label={copy.posts.quota}
           />
-          <p className="muted small">
-            {copy.posts.totalStorage.replace(
-              '{size}',
-              mb(usage.data.total_bytes),
-            )}
-          </p>
-          <p className="muted small">
-            {copy.posts.expiringCount.replace(
-              '{count}',
-              String(usage.data.expiring_soon),
-            )}
-          </p>
+          {usage.data.expiring_soon > 0 && (
+            <p className="muted small">
+              {copy.posts.expiringCount.replace(
+                '{count}',
+                String(usage.data.expiring_soon),
+              )}
+            </p>
+          )}
         </>
       ) : (
         <button
@@ -62,14 +58,25 @@ export function StorageStatus() {
           {usage.error ? copy.common.retry : copy.common.loading}
         </button>
       )}
-      <p className="muted small">
-        {cleanup.data
-          ? `${copy.posts.lastCleanup}: ${new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: space?.couple.timezone }).format(new Date(cleanup.data.ran_at))}${cleanup.data.error ? ' · ' + copy.posts.cleanupDelayed : ''}`
-          : cleanup.error
-            ? copy.posts.cleanupUnavailable
-            : copy.posts.cleanupPending}
-      </p>
-      <p className="muted small">{copy.posts.cleanupHint}</p>
+      <details className="storage-details">
+        <summary>{copy.posts.storageDetails}</summary>
+        {usage.data && (
+          <p className="muted small">
+            {copy.posts.totalStorage.replace(
+              '{size}',
+              mb(usage.data.total_bytes),
+            )}
+          </p>
+        )}
+        <p className="muted small">
+          {cleanup.data
+            ? `${copy.posts.lastCleanup}: ${new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: space?.couple.timezone }).format(new Date(cleanup.data.ran_at))}${cleanup.data.error ? ' · ' + copy.posts.cleanupDelayed : ''}`
+            : cleanup.error
+              ? copy.posts.cleanupUnavailable
+              : copy.posts.cleanupPending}
+        </p>
+        <p className="muted small">{copy.posts.cleanupHint}</p>
+      </details>
     </section>
   )
 }

@@ -22,13 +22,13 @@
   padding: 14px 4px;
   border: 0;
   background: var(--surface-strong);
-  border-radius: 28px 28px 12px 28px;
+  border-radius: 28px;
   font-size: 11px;
   font-weight: 650;
   color: var(--text);
 }
 .home-page .attention-actions > .attention-buttons .button:nth-child(2) {
-  border-radius: 28px 12px 28px 28px;
+  border-radius: 28px;
 }
 .home-page .attention-actions > .attention-buttons .button:nth-child(3) {
   background: color-mix(in srgb, var(--primary) 10%, var(--panel));
@@ -103,7 +103,7 @@
   margin-bottom: 18px;
 }
 .atlas-page .atlas-frame {
-  border-radius: 30px 30px 12px 30px;
+  border-radius: 30px;
   isolation: isolate;
 }
 .atlas-page .atlas-frame .map-stage {
@@ -664,7 +664,7 @@
   gap: 12px;
   background: color-mix(in srgb, var(--primary) 7%, var(--panel));
   border: 0;
-  border-radius: 36px 8px 36px 8px;
+  border-radius: 28px;
   color: var(--text);
   font-size: 13px;
 }
@@ -680,7 +680,7 @@
 .posts-page:not(.chat-page) .post-list {
   gap: 40px;
 }
-.posts-page:not(.chat-page) .post-card {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-card {
   position: relative;
   border: 0;
   background: none;
@@ -690,20 +690,20 @@
   border-bottom: 1px solid var(--border);
   overflow: visible;
 }
-.posts-page:not(.chat-page) .post-author {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-author {
   margin: 0;
   padding: 0 0 14px;
   gap: 10px;
 }
-.posts-page:not(.chat-page) .post-author .avatar {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-author .avatar {
   width: 30px;
   height: 30px;
   font-size: 13px;
 }
-.posts-page:not(.chat-page) .post-author strong {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-author strong {
   font-size: 12px;
 }
-.posts-page:not(.chat-page) .post-author time {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-author time {
   font-size: 10px;
 }
 .posts-page:not(.chat-page) .expiry-ring {
@@ -716,33 +716,37 @@
   background: none;
   border: 1px solid var(--border);
 }
-.posts-page:not(.chat-page) .post-photo {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-photo {
   margin: 0;
   width: 100%;
   max-width: 100%;
   border: 0;
-  border-radius: 36px 8px 36px 8px;
+  border-radius: 28px;
   overflow: hidden;
 }
-.posts-page:not(.chat-page) .post-photo img {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-photo img {
   width: 100%;
   max-height: 70dvh;
   object-fit: cover;
 }
-.posts-page:not(.chat-page) .post-body {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-body {
   margin: 15px 2px 12px;
   font-size: 16px;
   line-height: 1.65;
 }
-.posts-page:not(.chat-page) .post-card[data-kind='text'] .post-body,
-.posts-page:not(.chat-page) .post-card[data-kind='mood'] .post-body {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-card[data-kind='text']
+  .post-body,
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-card[data-kind='mood']
+  .post-body {
   font-family: 'Fraunces Variable', serif;
   font-size: clamp(25px, 7vw, 36px);
   line-height: 1.35;
   letter-spacing: -0.025em;
   padding: 28px 24px 36px;
   margin: 0 0 14px;
-  border-radius: 8px 38px 8px 38px;
+  border-radius: 28px;
   background: color-mix(in srgb, var(--bubble-color) 12%, var(--panel));
   background-image: repeating-linear-gradient(
     0deg,
@@ -752,7 +756,7 @@
     transparent 39px
   );
 }
-.posts-page:not(.chat-page) .post-actions {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-actions {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -761,7 +765,7 @@
   padding: 0;
   margin-top: 10px;
 }
-.posts-page:not(.chat-page) .post-actions button {
+:is(.posts-page:not(.chat-page), .keepsakes-page) .post-actions button {
   display: grid;
   place-items: center;
   width: 44px;
@@ -770,13 +774,19 @@
   border-radius: 50%;
   color: var(--text-dim);
 }
-.posts-page:not(.chat-page) .post-actions .moment-react-trigger {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-actions
+  .moment-react-trigger {
   color: var(--primary);
 }
-.posts-page:not(.chat-page) .post-actions button[aria-pressed='true'] {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-actions
+  button[aria-pressed='true'] {
   color: var(--primary);
 }
-.posts-page:not(.chat-page) .post-actions button:last-child:not(:first-child) {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-actions
+  button:last-child:not(:first-child) {
   margin-left: auto;
 }
 .moment-reaction-palette {
@@ -1467,10 +1477,10 @@
 .us-page .memory-door {
   min-height: 220px;
   padding: 20px;
-  border-radius: 30px 30px 12px 30px;
+  border-radius: 30px;
 }
 .us-page .door-capsules {
-  border-radius: 30px 12px 30px 30px;
+  border-radius: 30px;
 }
 .us-page .door-timeline {
   min-height: 160px;
@@ -1564,7 +1574,7 @@
 }
 .moment-create .moment-studio[data-kind='text'] textarea {
   border: 0;
-  border-radius: 28px 6px 28px 6px;
+  border-radius: 28px;
   padding: 24px;
   min-height: 180px;
   transition:
@@ -1580,7 +1590,9 @@
 .moment-create
   .moment-studio[data-kind='text'][data-note-style='glow']
   textarea,
-.posts-page:not(.chat-page) .post-card .post-body[data-note-style='glow'] {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-card
+  .post-body[data-note-style='glow'] {
   background: #172237;
   background-image: radial-gradient(
     ellipse at 90% 0%,
@@ -1598,7 +1610,9 @@
 .moment-create
   .moment-studio[data-kind='text'][data-note-style='paper']
   textarea,
-.posts-page:not(.chat-page) .post-card .post-body[data-note-style='paper'] {
+:is(.posts-page:not(.chat-page), .keepsakes-page)
+  .post-card
+  .post-body[data-note-style='paper'] {
   background-color: #f3e7ce;
   background-image: repeating-linear-gradient(
     0deg,
@@ -1610,7 +1624,7 @@
   color: #383344;
   font-family: 'Fraunces Variable', serif;
   line-height: 1.4;
-  border-radius: 5px 30px 5px 30px;
+  border-radius: 28px;
 }
 .moment-studio[data-note-style='glow'] textarea::placeholder {
   color: #cbbfce;
@@ -1618,13 +1632,13 @@
 .moment-studio[data-note-style='paper'] textarea::placeholder {
   color: #6c6270;
 }
-.posts-page:not(.chat-page)
+:is(.posts-page:not(.chat-page), .keepsakes-page)
   .post-card
   .post-body[data-note-style][data-long='true'] {
   font-size: 20px;
   line-height: 1.5;
 }
-.posts-page:not(.chat-page)
+:is(.posts-page:not(.chat-page), .keepsakes-page)
   .post-body[data-note-style][data-long='true'][data-expanded='false'] {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -1635,4 +1649,199 @@
   min-height: 44px;
   font-size: 12px;
   padding: 8px 0;
+}
+
+/* Full-app cleanup: whitespace groups content; only controls carry a surface. */
+.page :is(.settings-section, .memory-section, .profile-photo-section),
+.page .place-editor {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 24px 0;
+}
+.page
+  :is(.settings-section, .memory-section)
+  + :is(.settings-section, .memory-section) {
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+}
+.page :is(.settings-section, .memory-section) h2 {
+  font-family: var(--font-sans);
+  font-size: 21px;
+  letter-spacing: -0.035em;
+}
+.page
+  :is(.settings-section, .memory-section, .place-editor)
+  :is(
+    input:not([type='checkbox']):not([type='color']):not([type='range']),
+    textarea
+  ),
+.page .choice-trigger {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  box-shadow: none;
+}
+.page :is(input, textarea):focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+.page .button {
+  border-radius: 999px;
+}
+.page .button-secondary {
+  border-color: transparent;
+}
+.page .back-link {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+.page .profile-photo-section {
+  padding-top: 8px;
+}
+.page .color-choice {
+  border-radius: 50%;
+}
+.page .theme-sample {
+  border: 0;
+  border-radius: 24px;
+  background: none;
+  padding: 10px 4px;
+}
+.page .theme-sample[aria-pressed='true'] {
+  background: none;
+  box-shadow: none;
+}
+.page .theme-miniature {
+  width: min(76px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  margin: 5px auto 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  outline: 1px solid var(--border);
+  outline-offset: 4px;
+}
+.page .theme-sample[aria-pressed='true'] .theme-miniature {
+  outline: 2px solid var(--primary);
+}
+.page .theme-miniature :is(.mini-line, .mini-dock) {
+  display: none;
+}
+.page .theme-miniature .mini-planet {
+  width: 24%;
+  height: 24%;
+  top: 25%;
+  left: 20%;
+}
+.page .theme-miniature .mini-planet + .mini-planet {
+  top: 50%;
+  left: 55%;
+}
+.page .quiet-hours {
+  padding: 12px 0;
+  background: none;
+}
+.storage-details {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+.storage-details > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+}
+.storage-details > summary::-webkit-details-marker {
+  display: none;
+}
+.storage-details > summary::after {
+  content: '+';
+  font-size: 18px;
+}
+.storage-details[open] > summary::after {
+  content: '−';
+}
+.storage-details > p {
+  margin-bottom: 10px;
+}
+.page .capsule-compose-toggle {
+  border: 0;
+  padding: 8px 0;
+  min-height: 60px;
+}
+.page .capsule-card {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+}
+.page .capsule-card time {
+  border: 0;
+}
+.page .capsule-card .capsule-stamp {
+  right: 0;
+}
+.page .activity-list {
+  padding: 0;
+  border: 0;
+  gap: 0;
+}
+.page .activity-list li {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: none;
+  padding: 24px 0;
+  box-shadow: none;
+}
+.page .posts-empty {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.chat-page .explorer-toggle {
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  border-radius: 50%;
+}
+.chat-page .post-explorer {
+  margin-block: 0 4px;
+}
+.page .explorer-panel {
+  border: 0;
+  background: var(--panel);
+  border-radius: 28px;
+}
+.explorer-panel .explorer-search input {
+  border: 0;
+  background: none;
+}
+.choice-sheet,
+.orbit-sheet {
+  border: 0;
+}
+.post-author .profile-face,
+.post-comments .profile-face {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+
+.keepsakes-page .keepsake-photo-card {
+  border: 0;
+  background: none;
+  box-shadow: none;
 }

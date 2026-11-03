@@ -198,7 +198,6 @@ function ProfileEditor({ member }: { member: Member }) {
           <h2 id="photo-heading">
             {draft.nickname || draft.name || copy.profile.photo}
           </h2>
-          <p className="muted small">{copy.profile.photoNote}</p>
         </div>
         <label
           className={`button button-secondary photo-upload ${photoBusy ? 'is-disabled' : ''}`}
@@ -294,7 +293,6 @@ function ProfileEditor({ member }: { member: Member }) {
         </section>
         <section className="glass settings-section">
           <h2>{copy.profile.color}</h2>
-          <p className="muted small">{copy.profile.colorNote}</p>
           <ColorChoices
             value={draft.color}
             onChange={(value) => update('color', value)}
@@ -303,7 +301,6 @@ function ProfileEditor({ member }: { member: Member }) {
         </section>
         <section className="glass settings-section">
           <h2>{copy.profile.appearance}</h2>
-          <p className="muted small">{copy.profile.appearanceNote}</p>
           <ThemePicker
             value={normalizeTheme(draft.theme)}
             accent={draft.accent}

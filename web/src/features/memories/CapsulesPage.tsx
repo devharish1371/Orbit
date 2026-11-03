@@ -103,7 +103,6 @@ export default function CapsulesPage() {
         }}
         onChange={() => setDraft(crypto.randomUUID())}
       >
-        <h2>{text.newCapsule}</h2>
         <p className="muted small">{text.capsuleHint}</p>
         <label htmlFor="capsule-title">{text.titleLabel}</label>
         <input

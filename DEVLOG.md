@@ -955,3 +955,20 @@ review. No real partner contact. Existing physical/offline/endurance/partner/soa
 
 Final static audit: 32 screens scored 100 accessibility / 100 best practices.
 Source secret scan: 660 files, zero findings.
+
+## 2026-11-03 — Full-app audit and cleanup
+
+User authorized cleanup first, then asked for detailed feature/design proposals before the
+next expansion. Flattened Settings/Profile/Tracking/Notifications/memory sections, removed
+hard panel borders, softened media/map/note corners and made theme samples paired circular
+worlds. Kept labelled inputs, focus indicators, privacy instructions and destructive labels.
+Back/search use accessible icon controls. Storage's routine cleanup detail is disclosed on
+request; zero-expiry/redundant profile/logout prose is removed. Own profile no longer offers
+a call to oneself. Moments and Keepsakes share reading treatments and portrait tap targets.
+
+82 web / 16 worker tests, lint/types/format/build pass. Hosted run: 60 passed and one network
+connection reset; the interrupted test passed on targeted retry (1 passed, 11.54 s), with normal
+fixture teardown. Production npm audit: zero published vulnerabilities. CUA measured 150
+phone layouts across 14 pages plus 11 expanded states in both themes at 320/360/412 px;
+no horizontal/control overflow. Static accessibility audits and Android packaging follow.
+Proposed product features and the next visual direction remain unimplemented pending selection.

@@ -4,6 +4,7 @@ import {
   useNavigate,
   type LinkProps,
 } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 const routes = new Set([
   '/',
@@ -44,6 +45,8 @@ export function BackLink({
   return (
     <Link
       className="back-link"
+      aria-label={label}
+      title={label}
       replace={!canReturn}
       to={canReturn ? from : fallback}
       onClick={(event) => {
@@ -60,8 +63,7 @@ export function BackLink({
         }
       }}
     >
-      <span aria-hidden="true">←</span>
-      {label}
+      <ArrowLeft size={20} aria-hidden="true" />
     </Link>
   )
 }
