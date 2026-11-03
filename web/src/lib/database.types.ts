@@ -672,6 +672,7 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          note_style: string
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
@@ -699,6 +700,7 @@ export type Database = {
           media_height?: number | null
           media_path?: string | null
           media_width?: number | null
+          note_style?: string
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
@@ -726,6 +728,7 @@ export type Database = {
           media_height?: number | null
           media_path?: string | null
           media_width?: number | null
+          note_style?: string
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
@@ -919,6 +922,7 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          note_style: string
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
@@ -991,6 +995,7 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          note_style: string
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null

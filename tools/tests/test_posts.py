@@ -9,6 +9,19 @@ def create(backend,actor=0,**values):
     body.update(values)
     return backend.clients[actor].client.post('/rest/v1/rpc/create_shared_post',json={'p_post':body})
 
+def test_saved_text_styles_are_backwards_compatible_validated_and_immutable(backend):
+    legacy=create(backend).json()
+    assert legacy['note_style']=='ink'
+    for style in ('ink','glow','paper'):
+        response=create(backend,note_style=style)
+        assert response.status_code==200 and response.json()['note_style']==style
+        row=response.json()
+        partner=backend.rest(backend.clients[1],'GET','posts',id='eq.'+row['id']).json()
+        assert partner[0]['note_style']==style
+        assert backend.rest(backend.clients[1],'PATCH','posts',{'note_style':'paper'},id='eq.'+row['id']).status_code>=400
+    assert create(backend,note_style='unvalidated-style').status_code>=400
+    assert create(backend,actor=2,note_style='glow').status_code>=400
+
 def test_post_rpc_derives_identity_and_is_idempotent_with_atomic_keep(backend):
     identity=str(uuid.uuid4())
     result=create(backend,id=identity,author_id=backend.users[1],couple_id=backend.couples[1],keep=True)

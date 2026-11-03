@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  Crosshair,
   Plus,
   X,
   MapPin,
@@ -217,7 +216,25 @@ export default function MapPage() {
               setSpot(null)
             }}
           >
-            <Crosshair size={20} />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 32 32"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <ellipse
+                cx="16"
+                cy="16"
+                rx="14"
+                ry="7"
+                transform="rotate(-32 16 16)"
+              />
+              <circle cx="9" cy="20" r="2.8" fill="currentColor" />
+              <circle cx="23" cy="12" r="2.8" fill="currentColor" />
+            </svg>
           </button>
           <button
             className="atlas-tool"

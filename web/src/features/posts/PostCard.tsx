@@ -45,6 +45,7 @@ export function PostCard({
     [custom, setCustom] = useState(''),
     [actions, setActions] = useState(false)
   const [reacting, setReacting] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   const [burst, setBurst] = useState<{ emoji: string; key: number } | null>(
     null,
   )
@@ -256,9 +257,27 @@ export function PostCard({
         <PostMedia post={post} timezone={space?.couple.timezone} />
       )}
       {post.body && (
-        <p className={`post-body ${post.kind === 'mood' ? 'post-mood' : ''}`}>
+        <p
+          className={`post-body ${post.kind === 'mood' ? 'post-mood' : ''}`}
+          data-note-style={
+            !chat && post.kind === 'text'
+              ? (post.note_style ?? 'ink')
+              : undefined
+          }
+          data-long={post.body.length > 180}
+          data-expanded={expanded}
+        >
           {post.body}
         </p>
+      )}
+      {!chat && post.kind === 'text' && post.body && post.body.length > 280 && (
+        <button
+          className="note-expand text-button"
+          aria-expanded={expanded}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ? 'Less' : 'More'}
+        </button>
       )}
       {post.lat !== null && post.lng !== null && (
         <p className="post-pin muted small">

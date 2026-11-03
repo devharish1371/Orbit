@@ -192,7 +192,7 @@ export default function MapCanvas({
         'bottom-right',
       )
       instance.addControl(
-        new NavigationControl({ showCompass: false }),
+        new NavigationControl({ showCompass: true, visualizePitch: true }),
         'top-right',
       )
       instance.on('load', () => setMap(instance))
@@ -235,6 +235,46 @@ export default function MapCanvas({
   }, [dark, accent, cameraRef])
   useEffect(() => {
     if (!map || !map.isStyleLoaded()) return
+    const tether = {
+      type: 'FeatureCollection' as const,
+      features:
+        people.length === 2 &&
+        Math.abs(people[0]!.location.lng - people[1]!.location.lng) <= 180 &&
+        people.every(
+          (p) => Date.now() - Date.parse(p.location.recorded_at) < 300_000,
+        )
+          ? [
+              {
+                type: 'Feature' as const,
+                properties: {},
+                geometry: {
+                  type: 'LineString' as const,
+                  coordinates: people.map((p) => [
+                    p.location.lng,
+                    p.location.lat,
+                  ]),
+                },
+              },
+            ]
+          : [],
+    }
+    const connection = map.getSource('orbit-tether') as
+      GeoJSONSource | undefined
+    if (connection) connection.setData(tether)
+    else {
+      map.addSource('orbit-tether', { type: 'geojson', data: tether })
+      map.addLayer({
+        id: 'orbit-tether-line',
+        type: 'line',
+        source: 'orbit-tether',
+        paint: {
+          'line-color': accent ?? '#c3addb',
+          'line-width': 1.5,
+          'line-opacity': 0.5,
+          'line-dasharray': [1, 3],
+        },
+      })
+    }
     const polygons = {
       type: 'FeatureCollection' as const,
       features: [

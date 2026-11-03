@@ -4,7 +4,7 @@ import {
   type SetStateAction,
   type RefObject,
 } from 'react'
-import type { Attachment, Channel, PostDraft } from '@/lib/posts'
+import type { Attachment, Channel, PostDraft, NoteStyle } from '@/lib/posts'
 export interface ComposerMemory {
   kind: PostDraft['kind']
   body: string
@@ -15,6 +15,7 @@ export interface ComposerMemory {
   busy: boolean
   message: string
   more: boolean
+  noteStyle: NoteStyle
 }
 export const freshComposer = (): ComposerMemory => ({
   kind: 'text',
@@ -26,6 +27,7 @@ export const freshComposer = (): ComposerMemory => ({
   busy: false,
   message: '',
   more: false,
+  noteStyle: 'ink',
 })
 export type DraftHandles = {
   id: { current: string }

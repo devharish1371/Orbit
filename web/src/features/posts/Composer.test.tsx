@@ -146,3 +146,22 @@ test('a failed send preserves the draft and permits an explicit retry', async ()
   )
   expect(input).toHaveValue('Still here')
 })
+test('text treatment previews locally and is sent only with the explicit post', async () => {
+  f.share.mockResolvedValue({ id: 'styled' })
+  mount('moment')
+  await userEvent.click(screen.getByRole('button', { name: 'Paper' }))
+  expect(screen.getByRole('button', { name: 'Paper' })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  )
+  const input = screen.getByRole('textbox', { name: 'Your note' })
+  await userEvent.type(input, 'A note in paper.')
+  expect(f.share).not.toHaveBeenCalled()
+  await userEvent.click(screen.getByRole('button', { name: 'Post moment' }))
+  await waitFor(() =>
+    expect(f.share).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ noteStyle: 'paper', body: 'A note in paper.' }),
+    ),
+  )
+})

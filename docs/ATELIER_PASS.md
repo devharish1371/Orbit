@@ -15,6 +15,17 @@ Verify journey math/privacy, modal focus, routes, themes/widths, all automated c
 hosted regression and Android build. Use disposable accounts; no real partner contact.
 Existing physical/offline/endurance/soak gates remain open.
 
+Further user steering: Orbit-specific map controls and a dotted paired-location connection
+(decorative relationship between current fixes, never a route); real north-reset compass;
+Ink/Glow/Paper text treatments previewed in the writing canvas and persisted per post.
+The additive schema defaults older clients to Ink, validates style names and keeps the
+existing post identity, retry, media, quota and retention checks. Long notes can expand from
+a compact reading preview. No anniversary letter content is introduced.
+
+Additional references: [Meta text-style engineering](https://engineering.fb.com/2022/07/18/developer-tools/building-text-animations-for-instagram-stories/),
+[MapLibre navigation controls](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/NavigationControlOptions/),
+[Material motion](https://m3.material.io/styles/motion).
+
 References: [MapLibre](https://maplibre.org/maplibre-style-spec/layers/),
 [OpenFreeMap](https://openfreemap.org/quick_start/),
 [OpenMapTiles](https://openmaptiles.org/docs/schema/),

@@ -2,6 +2,7 @@ import type { Database, Json } from './database.types'
 import type { OrbitClient } from './supabase'
 export type Post = Database['public']['Tables']['posts']['Row']
 export type Channel = 'moment' | 'chat'
+export type NoteStyle = 'ink' | 'glow' | 'paper'
 export interface Attachment {
   blob: Blob
   extension: 'webp' | 'webm' | 'ogg' | 'm4a'
@@ -22,6 +23,7 @@ export interface PostDraft {
   keep: boolean
   place: string | null
   attachment?: Attachment
+  noteStyle?: NoteStyle
 }
 export function visiblePost(
   post: Pick<Post, 'unsent_at' | 'keep' | 'expires_at'>,
@@ -120,6 +122,10 @@ export async function sharePost(
       channel: draft.channel,
       kind: draft.kind,
       body: draft.body.trim() || null,
+      note_style:
+        draft.channel === 'moment' && draft.kind === 'text'
+          ? (draft.noteStyle ?? 'ink')
+          : 'ink',
       ttl_hours: draft.ttl,
       keep: draft.keep,
       place_id: draft.place,

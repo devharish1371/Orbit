@@ -2,6 +2,17 @@
 
 ## 2026-11-03 — App-wide visual and interaction pass
 
+Further research/implementation requested during review: saved Ink/Glow/Paper text styles
+with a live writing canvas and compact long-note expansion. Added 0017 and regenerated
+schema types. Old clients default to Ink; style values are constrained; existing creation
+identity, idempotency, TTL/media/quota checks are preserved. Text stays text (no rasterized
+accessibility loss). Draft style remains in the same route-safe composer memory.
+
+Map controls now use the app theme, a real north-reset compass and paired-planet focus
+glyph. A subtle dotted connection links recent shared fixes; it is never used as a route
+or recorded history, and disappears when a fix is old or sharing is unavailable. No real
+GPS marker is animated to an invented position. References are in docs/ATELIER_PASS.md.
+
 Additional media-flow correction requested during review: hide the native file input and
 replace the stacked photo/voice form with one shared media tray, compact preview/caption,
 aligned action dock and quiet expiry/place metadata. Photo selection is local-only until

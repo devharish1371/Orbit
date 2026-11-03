@@ -6,7 +6,7 @@ import {
   ImagePlus,
   Mic,
   Smile,
-  Type,
+  PenLine,
   Plus,
   Send,
   X,
@@ -78,7 +78,8 @@ export function Composer({
     [place, setPlace] = field('place'),
     [busy, setBusy] = field('busy'),
     [message, setMessage] = field('message'),
-    [more, setMore] = field('more')
+    [more, setMore] = field('more'),
+    [noteStyle, setNoteStyle] = field('noteStyle')
   const [recording, setRecording] = useState(false)
   useEffect(() => {
     onBusyChange?.(busy || recording)
@@ -156,6 +157,7 @@ export function Composer({
         keep: ttl === 'keep',
         place: place || null,
         attachment,
+        noteStyle,
       })
       idRef.current = crypto.randomUUID()
       attemptedRef.current = false
@@ -335,6 +337,8 @@ export function Composer({
     <form
       className="composer moment-studio"
       data-kind={kind}
+      data-note-style={noteStyle}
+      data-long={body.length > 180}
       onSubmit={(event) => {
         void submit(event)
       }}
@@ -422,6 +426,27 @@ export function Composer({
           )}
         </div>
       )}
+      {kind === 'text' && (
+        <div className="note-style-picker" role="group" aria-label="Text style">
+          {(['ink', 'glow', 'paper'] as const).map((value) => (
+            <button
+              key={value}
+              type="button"
+              disabled={busy}
+              title={value[0]!.toUpperCase() + value.slice(1)}
+              aria-label={value[0]!.toUpperCase() + value.slice(1)}
+              aria-pressed={noteStyle === value}
+              data-style={value}
+              onClick={() => {
+                edited()
+                setNoteStyle(value)
+              }}
+            >
+              <span>{value[0]!.toUpperCase() + value.slice(1)}</span>
+            </button>
+          ))}
+        </div>
+      )}
       {(kind === 'text' || kind === 'mood' || attachment) && (
         <>
           <label className="sr-only" htmlFor={`compose-${channel}`}>
@@ -450,7 +475,7 @@ export function Composer({
         <div className="composer-modes" aria-label={copy.posts.addSomething}>
           {(
             [
-              ['text', Type],
+              ['text', PenLine],
               ['photo', ImagePlus],
               ['voice', Mic],
               ['mood', Smile],
