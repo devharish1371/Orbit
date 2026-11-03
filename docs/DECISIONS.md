@@ -290,3 +290,13 @@ M6 retention tightens partner access to referenced visible files. Uploaders can 
 their own pending files; neither client can delete a currently referenced shared asset.
 Unsend uses a tombstone plus the existing API deletion worker, keeping file/row cleanup
 retryable. Signed URLs cannot revoke already downloaded copies; document that limit.
+
+## 3 November 2026 — Precache the small Map route
+
+A deployment rollover reproduced a missing lazy MapPage chunk: it was explicitly excluded
+from the service worker precache, so an older loaded app could ask the updated host for a
+removed route hash. Include the small MapPage JS/CSS in ordinary application precaching,
+which keeps the route shell with its matching app version. The much larger MapLibre renderer
+and worker stay deferred, and map tile requests stay network-only. This does not promise an
+offline basemap or store personal location responses. The explicit Update Orbit action remains;
+no forced reload that would discard a draft. The native build does not register a service worker.

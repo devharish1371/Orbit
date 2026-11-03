@@ -1107,3 +1107,12 @@ cases and three place cancel/error/retry cases cover this slice. Browser/native 
 follows below. No database change: prior full 67-hosted pass remains applicable. Native
 keyboard/predictive-Back gestures stay in the user's batch; avatar/photo handoff and the
 rest of V2.2 remain planned, not declared complete. See docs/V2_FLOW.md.
+
+Refinements: round place-alert controls and a quiet radius track use the theme, with native
+input semantics, keyboard focus and forced-colors fallback. Feature-specific CSS lives in
+map/place-editor.css, outside the shared foundation. Visual review caught inherited text-input
+padding/min-height stretching the round checkboxes; scoped dimensions/padding now fix that.
+A web deployment rollover also reproduced a missing MapPage route hash. Removed that small
+route from the precache exclusion; MapLibre renderer/worker remain deferred and tiles stay
+network-only. Final generated service worker includes MapPage JS and CSS. See DECISIONS.
+117 web / 16 worker checks and full lint/types/format/build pass after these changes.

@@ -74,8 +74,9 @@ export default defineConfig(({ mode }) => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-          // Defer the map and its worker until Map opens; tiles remain network-only.
-          globIgnores: ['**/maplibre*', '**/MapPage-*'],
+          // Cache the small route bundle across deployments. Defer the renderer/worker;
+          // tile requests remain network-only and never enter an application cache.
+          globIgnores: ['**/maplibre*'],
           runtimeCaching: [],
           navigateFallback: 'index.html',
           navigateFallbackDenylist: [
