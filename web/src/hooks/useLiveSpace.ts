@@ -122,6 +122,7 @@ export function useLiveSpace() {
             'space',
             'posts',
             'reply-posts',
+            'chat-pin',
             'post-reactions',
             'post-comments',
             'storage-summary',
@@ -146,6 +147,7 @@ export function useLiveSpace() {
           for (const key of [
             'posts',
             'reply-posts',
+            'chat-pin',
             'post-reactions',
             'post-comments',
             'storage-summary',
@@ -169,6 +171,7 @@ export function useLiveSpace() {
         for (const key of [
           'posts',
           'reply-posts',
+          'chat-pin',
           'post-reactions',
           'post-comments',
           'storage-summary',

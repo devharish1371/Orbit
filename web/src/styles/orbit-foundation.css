@@ -359,3 +359,39 @@
     animation: none;
   }
 }
+
+.chat-pin-strip {
+  flex: none;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.chat-pin-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.open-pin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 4px;
+  color: var(--text-dim);
+  background: none;
+  border: 0;
+  border-radius: 20px;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+}
+.open-pin > svg {
+  flex: none;
+  color: var(--secondary);
+}
+.open-pin > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,69 @@
+{
+  "persisted": true,
+  "target": [
+    "Made it home. How was your day?"
+  ],
+  "layouts": [
+    {
+      "theme": "dark",
+      "requestedWidth": 320,
+      "buttonHeight": 44,
+      "document": 320,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 284,
+      "width": 320
+    },
+    {
+      "theme": "dark",
+      "requestedWidth": 360,
+      "buttonHeight": 44,
+      "document": 360,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 324,
+      "width": 360
+    },
+    {
+      "theme": "dark",
+      "requestedWidth": 412,
+      "buttonHeight": 44,
+      "document": 412,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 376,
+      "width": 412
+    },
+    {
+      "theme": "light",
+      "requestedWidth": 320,
+      "buttonHeight": 44,
+      "document": 320,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 284,
+      "width": 320
+    },
+    {
+      "theme": "light",
+      "requestedWidth": 360,
+      "buttonHeight": 44,
+      "document": 360,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 324,
+      "width": 360
+    },
+    {
+      "theme": "light",
+      "requestedWidth": 412,
+      "buttonHeight": 44,
+      "document": 412,
+      "height": 860,
+      "overflow": false,
+      "pinWidth": 376,
+      "width": 412
+    }
+  ],
+  "unpinned": true
+}

@@ -83,6 +83,45 @@ export type Database = {
           },
         ]
       }
+      chat_pins: {
+        Row: {
+          couple_id: string
+          created_at: string
+          created_by: string
+          expires_at: string
+          post_id: string
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          created_by: string
+          expires_at: string
+          post_id: string
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'chat_pins_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: true
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'chat_pins_post_id_couple_id_fkey'
+            columns: ['post_id', 'couple_id']
+            isOneToOne: false
+            referencedRelation: 'posts'
+            referencedColumns: ['id', 'couple_id']
+          },
+        ]
+      }
       comments: {
         Row: {
           author_id: string
@@ -1119,6 +1158,10 @@ export type Database = {
       send_attention: {
         Args: { p_id: string; p_type: string }
         Returns: string
+      }
+      set_chat_pin: {
+        Args: { p_post_id: string; p_remove?: boolean }
+        Returns: undefined
       }
       set_post_reaction: {
         Args: { p_emoji?: string; p_id: string }

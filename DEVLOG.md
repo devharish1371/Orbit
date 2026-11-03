@@ -1036,3 +1036,23 @@ lint/types/format/build checks pass again. Native modal stacking was absent from
 HTML captures; replayed its top layer in the audit harness without changing application
 stacking. All eight new states pass 100/100 after that correction; final labelled captures
 and Android rollup follow.
+
+## 2026-11-03 — Shared expiring chat pin
+
+Added 0019/0020: one membership-scoped shared pin per couple, explicit read-only table
+privileges and scoped RPC. Pin lasts at most 24 hours and never beyond message expiry;
+unsent/expired originals disappear immediately under ordinary RLS. Pinning never sets Keep.
+An old unpin action is conditional on the selected post ID, so cannot clear a replacement.
+Social revision invalidates the shared row without exposing deleted message content.
+
+91 web/16 worker checks, lint/types/format/build pass. Browser pin/reload/open-original/
+unpin verified on disposable data only. Six settled 320/360/412 px light/dark layouts fit;
+44 px pin control, no overflow. Replaced transient viewport captures after checking actual
+dimensions; unpinned afterward. Full hosted regression and Android rollup recorded below.
+
+User explicitly deferred APK handovers and phone installs until they request a larger test
+batch. Retain verified builds internally; do not send APK links or ask for installation meanwhile.
+
+Pin full hosted suite: 66 passed in 137.00s. Earlier reply/edit Android run 41646856489 and
+local APK integrity/signing/private scan pass; retained privately. Eight reply/edit static
+audits score 100/100. Pin follow-up rolls into the next verified build without a handover.

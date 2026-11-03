@@ -19,6 +19,8 @@ the original PLAN.md and deferred physical release gates remain valid.
 - Each milestone requires relevant unit/hosted tests, lint/types/format/build, phone-sized
   browser verification, Android CI and current docs. Never equate a server acknowledgement
   with recipient delivery, a GPS estimate with driving recognition, or an impact with a fall.
+- User preference: continue building/automated verification, retain verified builds internally,
+  and do not hand over APKs or request a phone install until the user asks for their test batch.
 
 ## Milestones
 
@@ -74,8 +76,10 @@ Primary references, verified 3 November 2026:
   cancellation restores focus. Remaining legacy screen rules migrate during subsequent phases.
 - V2.1 reply/edit slice implemented: menu reply, live quote references/tap-to-original,
   author-only 15-minute edits with version checks, edited/sent-to-server indicators and
-  retained-draft retry. Durable encrypted outbox and expiring pin remain next in this phase.
+  retained-draft retry. One shared 24-hour pin now follows original expiry/unsend and protects
+  a replacement from a stale unpin. Durable encrypted outbox remains next in this phase.
   89 web/16 worker checks and all 64 hosted tests pass; browser quote/edit/reload verified.
+  Pin follow-up passes 91 web/16 worker checks and all 66 hosted tests.
 - V2.2–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

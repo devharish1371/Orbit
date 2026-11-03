@@ -17,6 +17,7 @@ import {
   Reply,
   Pencil,
   Check,
+  Pin,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -45,6 +46,8 @@ export function PostCard({
   quoteLoading,
   onReply,
   onOpenQuote,
+  enablePin = false,
+  pinned = false,
 }: {
   post: Post
   reactions: Reaction[]
@@ -53,6 +56,8 @@ export function PostCard({
   quoteLoading?: boolean
   onReply?: (post: Post) => void
   onOpenQuote?: (id: string) => void
+  enablePin?: boolean
+  pinned?: boolean
 }) {
   const { client, session } = useAuth(),
     { data: space } = useSpace(),
@@ -124,6 +129,7 @@ export function PostCard({
       setBusy(false)
       for (const key of [
         'posts',
+        'chat-pin',
         'post-reactions',
         'storage-summary',
         'expiring',
@@ -398,6 +404,24 @@ export function PostCard({
       )}
       {(!chat || actions) && (
         <footer className="post-actions">
+          {chat && enablePin && (
+            <button
+              type="button"
+              className="text-button"
+              disabled={busy}
+              onClick={() => {
+                void action(() =>
+                  client.rpc('set_chat_pin', {
+                    p_post_id: post.id,
+                    p_remove: pinned,
+                  }),
+                )
+              }}
+            >
+              <Pin size={16} />
+              {pinned ? 'Unpin' : 'Pin for 24h'}
+            </button>
+          )}
           {chat && onReply && (
             <button
               type="button"

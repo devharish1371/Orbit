@@ -92,6 +92,24 @@ export function useQuotedPosts(ids: (string | null | undefined)[]) {
     },
   })
 }
+export function useChatPin(enabled = true) {
+  const { client } = useAuth(),
+    { data: space } = useSpace()
+  return useQuery({
+    queryKey: ['chat-pin', space?.couple.id],
+    enabled: enabled && !!space,
+    refetchInterval: enabled ? 30000 : false,
+    queryFn: async () => {
+      const result = await client
+        .from('chat_pins')
+        .select('*')
+        .eq('couple_id', space!.couple.id)
+        .maybeSingle()
+      if (result.error) throw result.error
+      return result.data
+    },
+  })
+}
 export interface StorageUsage {
   total_bytes: number
   kept_bytes: number

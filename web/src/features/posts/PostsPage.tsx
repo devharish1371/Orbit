@@ -17,7 +17,12 @@ import { useNow } from '@/hooks/useNow'
 import { Button } from '@/components/ui/Button'
 import { copy } from '@/copy/en'
 import { visiblePost, type Channel, type Post } from '@/lib/posts'
-import { usePostReactions, usePosts, useQuotedPosts } from './usePosts'
+import {
+  useChatPin,
+  usePostReactions,
+  usePosts,
+  useQuotedPosts,
+} from './usePosts'
 import { useTyping } from './useTyping'
 import { Composer } from './Composer'
 import { PostCard } from './PostCard'
@@ -26,6 +31,7 @@ import { callUrl } from '@/lib/connect'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { DialogSheet } from '@/components/ui/DialogSheet'
 import { PostMedia } from './PostMedia'
+import { PinnedMessage } from './PinnedMessage'
 export default function PostsPage({ channel }: { channel: Channel }) {
   const {
     field,
@@ -64,7 +70,12 @@ export default function PostsPage({ channel }: { channel: Channel }) {
   const ids = unique.map((post) => post.id),
     reactions = usePostReactions(ids),
     newest = unique[0]?.id
-  const quotes = useQuotedPosts(unique.map((post) => post.reply_to_id))
+  const pin = useChatPin(channel === 'chat')
+  const quotes = useQuotedPosts([
+    ...unique.map((post) => post.reply_to_id),
+    pin.data?.post_id,
+    originalId,
+  ])
   const original = quotes.data?.find((post) => post.id === originalId)
   function reply(post: Post) {
     if (replyAttemptedRef.current) {
@@ -202,6 +213,13 @@ export default function PostsPage({ channel }: { channel: Channel }) {
         </header>
       ) : (
         <SectionHeading title={copy.posts.momentsTitle} kind="moments" />
+      )}
+      {channel === 'chat' && pin.data && (
+        <PinnedMessage
+          pin={pin.data}
+          post={quotes.data?.find((post) => post.id === pin.data?.post_id)}
+          onOpen={openQuote}
+        />
       )}
       {channel === 'moment' && (
         <section
@@ -361,6 +379,8 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                     quoteLoading={quotes.isFetching}
                     onReply={channel === 'chat' ? reply : undefined}
                     onOpenQuote={openQuote}
+                    enablePin={channel === 'chat'}
+                    pinned={pin.data?.post_id === post.id}
                   />
                 </Fragment>
               ))}

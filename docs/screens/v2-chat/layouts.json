@@ -1,0 +1,272 @@
+[
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 320
+      }
+    ],
+    "focus": null,
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 360
+      }
+    ],
+    "focus": null,
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 412
+      }
+    ],
+    "focus": null,
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 320
+      }
+    ],
+    "focus": null,
+    "scroll": 320,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 360
+      }
+    ],
+    "focus": null,
+    "scroll": 360,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 412
+      }
+    ],
+    "focus": null,
+    "scroll": 412,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "chat",
+    "dialogs": [],
+    "focus": null,
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "reply-draft",
+    "dialogs": [],
+    "focus": {
+      "outline": "none",
+      "shadow": "none"
+    },
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 320
+      }
+    ],
+    "focus": null,
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 360
+      }
+    ],
+    "focus": null,
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "edit",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 412
+      }
+    ],
+    "focus": null,
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 320
+      }
+    ],
+    "focus": null,
+    "scroll": 320,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 360
+      }
+    ],
+    "focus": null,
+    "scroll": 360,
+    "theme": "light",
+    "width": 360
+  },
+  {
+    "name": "confirm",
+    "dialogs": [
+      {
+        "overflow": false,
+        "width": 412
+      }
+    ],
+    "focus": null,
+    "scroll": 412,
+    "theme": "light",
+    "width": 412
+  }
+]

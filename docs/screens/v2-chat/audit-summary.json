@@ -1,0 +1,90 @@
+[
+  {
+    "name": "chat-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "chat-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "confirm-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "confirm-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "edit-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "edit-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "reply-draft-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  },
+  {
+    "name": "reply-draft-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": [
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names."
+      }
+    ]
+  }
+]

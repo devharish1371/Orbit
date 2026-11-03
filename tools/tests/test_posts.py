@@ -140,3 +140,40 @@ def test_chat_edit_window_expiry_unsend_and_validation_are_enforced(backend):
     assert backend.clients[0].client.post('/rest/v1/rpc/request_unsend',json={'p_id':unsent['id']}).status_code==200
     assert create(backend,channel='chat',reply_to_id=unsent['id']).status_code>=400
     assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_id':unsent['id']}).status_code>=400
+
+def test_chat_pin_is_shared_bounded_and_stale_unpin_does_not_remove_replacement(backend):
+    first=create(backend,channel='chat',ttl_hours=1).json()
+    args={'p_post_id':first['id']}
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code==204
+    pin=backend.rest(backend.clients[1],'GET','chat_pins').json()[0]
+    assert pin['post_id']==first['id'] and pin['expires_at']==first['expires_at']
+    assert backend.rest(backend.clients[3],'GET','chat_pins').json()==[]
+    assert backend.clients[3].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code>=400
+    assert backend.clients[2].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code>=400
+    second=create(backend,channel='chat',keep=True).json()
+    assert backend.clients[1].client.post('/rest/v1/rpc/set_chat_pin',json={'p_post_id':second['id']}).status_code==204
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json={**args,'p_remove':True}).status_code==204
+    pin=backend.rest(backend.clients[0],'GET','chat_pins').json()[0]
+    assert pin['post_id']==second['id']
+    assert (datetime.fromisoformat(pin['expires_at'])-datetime.fromisoformat(pin['created_at'])).total_seconds()==86400
+    assert backend.rest(backend.clients[0],'POST','chat_pins',{'couple_id':backend.couples[0],'post_id':first['id'],'created_by':backend.users[0],'expires_at':pin['expires_at']}).status_code>=400
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json={'p_post_id':second['id'],'p_remove':True}).status_code==204
+    assert backend.rest(backend.clients[1],'GET','chat_pins').json()==[]
+
+
+def test_chat_pin_hides_with_message_expiry_unsend_or_pin_timeout(backend):
+    moment=create(backend).json()
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json={'p_post_id':moment['id']}).status_code>=400
+    row=create(backend,channel='chat').json()
+    args={'p_post_id':row['id']}
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code==204
+    with backend.db() as db: db.execute("update public.chat_pins set expires_at=now()-interval '1 second' where couple_id=%s",(backend.couples[0],))
+    assert backend.rest(backend.clients[1],'GET','chat_pins').json()==[]
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code==204
+    with backend.db() as db: db.execute("update public.posts set expires_at=now()-interval '1 second' where id=%s",(row['id'],))
+    assert backend.rest(backend.clients[1],'GET','chat_pins').json()==[]
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json=args).status_code>=400
+    fresh=create(backend,channel='chat').json()
+    assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json={'p_post_id':fresh['id']}).status_code==204
+    assert backend.clients[0].client.post('/rest/v1/rpc/request_unsend',json={'p_id':fresh['id']}).status_code==200
+    assert backend.rest(backend.clients[1],'GET','chat_pins').json()==[]
