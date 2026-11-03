@@ -21,7 +21,7 @@ setWorkerUrl(workerUrl)
 type Member = Database['public']['Tables']['members']['Row']
 type Location = Database['public']['Tables']['live_location']['Row']
 type Place = Database['public']['Tables']['places']['Row']
-function PersonMarker({
+export function PersonMarker({
   map,
   member,
   location,
@@ -42,7 +42,10 @@ function PersonMarker({
     element.setAttribute('type', 'button')
     element.setAttribute('class', 'person-map-marker')
     element.setAttribute('aria-label', member.nickname || member.display_name)
-    const click = () => select.current()
+    const click = (event: MouseEvent) => {
+      event.stopPropagation()
+      select.current()
+    }
     element.addEventListener('click', click)
     const instance = new Marker({ element, anchor: 'center' })
       .setLngLat([location.lng, location.lat])

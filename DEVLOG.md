@@ -9,6 +9,10 @@ posting; replace/remove remain explicit. Studio voice capture reuses the existin
 and real level samples, preserving foreground/background microphone cleanup. Verification
 of picker, preview and recording states follows before the final APK handover.
 
+Final browser check found overlapping saved-place/person markers could send a portrait tap
+to the place underneath. Person markers now paint above saved places and stop click bubbling
+to POI hit testing. Verify the co-located synthetic café/profile case before packaging.
+
 Implemented the user's detailed Home/Map/Moments/Chat/Us brief. Home signals are separated
 from the profile composition. Original OpenMapTiles-based light/dark cartography replaces
 stock styles; compact refresh and instruments replace stacked location panels. Last-24-hour

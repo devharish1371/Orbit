@@ -483,6 +483,7 @@
   font-size: 13px;
 }
 .place-map-marker {
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 44px;
@@ -494,6 +495,9 @@
   box-shadow: 0 3px 12px #0003;
   font-size: 24px;
   cursor: pointer;
+}
+.person-map-marker {
+  z-index: 2;
 }
 
 /* Moments: a photographic journal, interrupted by expressive handwritten-size notes. */
