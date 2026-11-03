@@ -1,38 +1,43 @@
-import { directionsTo, locationStatus } from '@/lib/location-status'
+import { useMemo, useState } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  Crosshair,
+  Plus,
+  X,
+  MapPin,
+  Navigation,
+  Pencil,
+  Trash2,
+  Battery,
+  Gauge,
+  ShieldCheck,
+  Route,
+  LocateFixed,
+  UserRound,
+  MessageCircle,
+} from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
+import { DialogSheet } from '@/components/ui/DialogSheet'
+import { Avatar } from '@/components/ui/Avatar'
 import { nativeTracking } from '@/native/tracker'
-import { useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNow } from '@/hooks/useNow'
 import { useSpace } from '@/hooks/useSpace'
 import { useAuth } from '@/hooks/useAuth'
 import { useTheme } from '@/hooks/useTheme'
-import { useLiveData } from './LiveContext'
 import { useLocationSharing } from '@/features/location/LocationContext'
-import { Avatar } from '@/components/ui/Avatar'
-import { Button } from '@/components/ui/Button'
-import { copy } from '@/copy/en'
+import { locationStatus, directionsTo } from '@/lib/location-status'
 import { distance, distanceLabel, middleUrl, type Point } from '@/lib/geo'
-import { callUrl, whatsappUrl } from '@/lib/connect'
-import { type PlaceDraft } from '@/lib/place'
+import { journeysFromFixes, type TrailFix, type Journey } from '@/lib/journeys'
+import type { PlaceDraft } from '@/lib/place'
+import { useLiveData } from './LiveContext'
+import { LocationRefresh } from './LocationRefresh'
+import { JourneyList } from './JourneyList'
 import MapCanvas from './MapCanvas'
 import PlaceEditor from './PlaceEditor'
-import { LocationRefresh } from './LocationRefresh'
-import {
-  Crosshair,
-  Plus,
-  MapPin,
-  Phone,
-  Video,
-  MessageCircle,
-  Battery,
-  Navigation,
-  Gauge,
-  LocateFixed,
-} from 'lucide-react'
-import type { Database } from '@/lib/database.types'
-type Place = Database['public']['Tables']['places']['Row']
+type Spot = Point & { name: string; emoji?: string; id?: string }
+const navigateUrl = (p: Point) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${p.lat.toFixed(6)},${p.lng.toFixed(6)}`
 export default function MapPage() {
   const { data } = useSpace(),
     { client } = useAuth(),
@@ -40,73 +45,100 @@ export default function MapPage() {
     sharing = useLocationSharing(),
     query = useQueryClient()
   useTheme()
-  const now = useNow()
-  const [mapAttempt, setMapAttempt] = useState(0)
-  const dark = document.documentElement.dataset.theme !== 'light'
+  const now = useNow(),
+    dark = document.documentElement.dataset.theme !== 'light'
+  const [selected, setSelected] = useState<string | null>(null),
+    [view, setView] = useState<'now' | 'day'>('now')
+  const [personMenu, setPersonMenu] = useState(false)
   const [fit, setFit] = useState(0),
-    [adding, setAdding] = useState(false),
+    [attempt, setAttempt] = useState(0),
+    [adding, setAdding] = useState(false)
+  const [spot, setSpot] = useState<Spot | null>(null),
     [editor, setEditor] = useState<{ draft: PlaceDraft; id?: string } | null>(
       null,
     )
-  const [selected, setSelected] = useState<string | null>(null),
-    [confirmDelete, setConfirmDelete] = useState<string | null>(null),
+  const [focus, setFocus] = useState<{ points: Point[]; key: number } | null>(
+      null,
+    ),
+    [journeyId, setJourneyId] = useState<string>()
+  const [deleting, setDeleting] = useState(false),
     [busy, setBusy] = useState(false),
-    [message, setMessage] = useState(''),
-    [showTrail, setShowTrail] = useState(false)
-  const trail = useQuery({
-    queryKey: ['trail', data?.partner?.user_id],
-    enabled: Boolean(showTrail && data?.partner?.share_mode === 'live'),
+    [error, setError] = useState('')
+  const members = data
+    ? [data.self, ...(data.partner ? [data.partner] : [])]
+    : []
+  const current =
+    members.find((m) => m.user_id === selected) ?? data?.partner ?? data?.self
+  const history = useQuery({
+    queryKey: ['journeys', current?.user_id, current?.location_epoch],
+    enabled: Boolean(view === 'day' && current?.share_mode === 'live'),
     staleTime: 60_000,
+    refetchInterval: view === 'day' ? 60_000 : false,
     queryFn: async () => {
-      const result = await client
-        .from('location_history')
-        .select('lat,lng,recorded_at')
-        .eq('user_id', data!.partner!.user_id)
-        .gte('recorded_at', new Date(Date.now() - 86400_000).toISOString())
-        .order('recorded_at', { ascending: false })
-        .limit(2000)
-      if (result.error) throw result.error
-      return result.data.reverse()
+      const fixes: TrailFix[] = []
+      for (let offset = 0; offset < 6000; offset += 1000) {
+        const result = await client
+          .from('location_history')
+          .select('lat,lng,recorded_at,accuracy_m,speed_mps')
+          .eq('user_id', current!.user_id)
+          .gte('recorded_at', new Date(Date.now() - 86400_000).toISOString())
+          .order('recorded_at', { ascending: false })
+          .range(offset, offset + 999)
+        if (result.error) throw result.error
+        fixes.push(...result.data)
+        if (result.data.length < 1000) return { fixes, partial: false }
+      }
+      return { fixes, partial: true }
     },
   })
-  if (!data) return null
-  const members = [data.self, ...(data.partner ? [data.partner] : [])]
+  const journeys = useMemo(
+    () => journeysFromFixes(history.data?.fixes ?? [], now),
+    [history.data, now],
+  )
+  if (!data || !current) return null
   const people = members.flatMap((member) => {
     const location = live.locations.data?.find(
-      (row) => row.user_id === member.user_id,
+      (l) => l.user_id === member.user_id,
     )
     return location && member.share_mode !== 'paused'
       ? [{ member, location }]
       : []
   })
+  const location = live.locations.data?.find(
+    (l) => l.user_id === current.user_id,
+  )
+  const status = locationStatus(current.share_mode, location?.recorded_at, now)
+  const selectedJourney = journeys.find((j) => j.id === journeyId)
+  const trail =
+    view === 'day' && current.share_mode === 'live'
+      ? (selectedJourney?.points ?? [])
+      : []
   const a = people.find((p) => p.member.user_id === data.self.user_id),
     b = people.find((p) => p.member.user_id === data.partner?.user_id)
-  const both = a && b
-  const approximate = Boolean(a?.location.fuzzed || b?.location.fuzzed)
-  const current =
-    members.find((m) => m.user_id === selected) ?? data.partner ?? data.self
-  const currentLocation = live.locations.data?.find(
-    (row) => row.user_id === current.user_id,
-  )
-  const status = locationStatus(
-    current.share_mode,
-    currentLocation?.recorded_at,
-    now,
-  )
-  const directions = currentLocation
+  const directions = location
     ? directionsTo(
-        currentLocation,
+        location,
         current.share_mode,
-        currentLocation.fuzzed,
-        currentLocation.recorded_at,
+        location.fuzzed,
+        location.recorded_at,
         now,
       )
     : null
+  const stamp = location
+    ? new Intl.DateTimeFormat('en-IN', {
+        timeZone: data.couple.timezone,
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }).format(new Date(location.recorded_at))
+    : undefined
   const places = live.places.data ?? []
-  const choose = (point: Point) => {
+  function focusPoints(points: Point[]) {
+    setFocus((previous) => ({ points, key: (previous?.key ?? 0) + 1 }))
+  }
+  function choose(p: Point) {
     setEditor({
       draft: {
-        ...point,
+        ...p,
         name: '',
         emoji: '📍',
         radius_m: 150,
@@ -116,277 +148,384 @@ export default function MapPage() {
     })
     setAdding(false)
   }
-  const edit = (place: Place) => {
-    setEditor({ draft: place, id: place.id })
-    setAdding(false)
+  function chooseJourney(j: Journey) {
+    setJourneyId(j.id)
+    focusPoints(j.points)
   }
-  async function remove(id: string) {
+  async function remove() {
+    if (!spot?.id || busy) return
     setBusy(true)
-    setMessage('')
+    setError('')
     try {
       const result = await client
         .from('places')
         .delete()
-        .eq('id', id)
+        .eq('id', spot.id)
         .select('id')
         .single()
       if (result.error) throw result.error
       await query.invalidateQueries({ queryKey: ['places'] })
-      setConfirmDelete(null)
+      setSpot(null)
+      setDeleting(false)
     } catch {
-      setMessage(copy.map.failed)
+      setError('Couldn’t delete this place.')
     } finally {
       setBusy(false)
     }
   }
-  const stamp = currentLocation
-    ? new Intl.DateTimeFormat('en-IN', {
-        timeZone: data.couple.timezone,
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-      }).format(new Date(currentLocation.recorded_at))
-    : null
   return (
-    <div className="page map-page">
-      <SectionHeading title={copy.map.title} kind="map" />
-      <div className="map-connection" role="status">
-        <span
-          className={`status-dot ${live.connection !== 'live' ? 'is-old' : ''}`}
-        />
-        {live.connection === 'live' ? copy.map.live : copy.map.reconnecting}
-      </div>
+    <div className="page map-page atlas-page">
+      <SectionHeading title="Map" kind="map" />
       <div className="atlas-frame">
         <MapCanvas
-          key={`${dark ? 'dark' : 'light'}-${mapAttempt}`}
+          key={`${dark}-${attempt}`}
           dark={dark}
+          accent={data.self.theme_accent}
           people={people}
           places={places}
-          trail={
-            showTrail && data.partner?.share_mode === 'live'
-              ? (trail.data ?? [])
-              : []
-          }
+          trail={trail}
           fit={fit}
           adding={adding}
+          focus={focus}
           onPick={choose}
-          onPerson={setSelected}
-          onRetry={() => setMapAttempt((value) => value + 1)}
+          onPerson={(id) => {
+            setSelected(id)
+            setPersonMenu(true)
+            setJourneyId(undefined)
+            setSpot(null)
+          }}
+          onPlace={(place) => {
+            setPersonMenu(false)
+            setSpot(place)
+            focusPoints([place])
+          }}
+          onLandmark={(place) => {
+            setPersonMenu(false)
+            setSpot(place)
+          }}
+          onRetry={() => setAttempt((n) => n + 1)}
         />
         <div className="map-toolbar">
           <button
-            className="button button-secondary"
-            onClick={() => setFit((n) => n + 1)}
+            className="atlas-tool"
+            aria-label="Show both of us"
+            title="Show both of us"
             disabled={!people.length}
-          >
-            <Crosshair size={18} aria-hidden="true" />
-            {copy.map.fit}
-          </button>
-          <button
-            className="button button-secondary"
             onClick={() => {
-              setAdding((value) => !value)
-              setEditor(null)
+              setFit((n) => n + 1)
+              setPersonMenu(false)
+              setSpot(null)
             }}
           >
-            <Plus size={18} aria-hidden="true" />
-            {adding ? copy.map.cancel : copy.map.add}
+            <Crosshair size={20} />
+          </button>
+          <button
+            className="atlas-tool"
+            aria-label={adding ? 'Cancel adding place' : 'Add a place'}
+            title={adding ? 'Cancel' : 'Add a place'}
+            onClick={() => {
+              setAdding(!adding)
+              setPersonMenu(false)
+              setSpot(null)
+            }}
+          >
+            {adding ? <X size={20} /> : <Plus size={20} />}
           </button>
         </div>
-      </div>
-      {adding && (
-        <p className="map-add-hint" role="status">
-          {copy.map.addHint}
-        </p>
-      )}
-      {both ? (
-        <div className="glass distance-card">
-          <p className="eyebrow">
-            {approximate ? copy.map.approximate : copy.map.apart}
+        {adding && (
+          <p className="atlas-map-hint" role="status">
+            Tap the map to pin a place
           </p>
-          <strong>{distanceLabel(distance(a.location, b.location))}</strong>
+        )}
+        {personMenu && (
+          <div
+            className="map-person-menu"
+            role="group"
+            aria-label="Person actions"
+          >
+            {directions ? (
+              <a
+                href={directions}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Directions"
+                title="Directions"
+              >
+                <Navigation size={21} />
+              </a>
+            ) : (
+              <button
+                disabled
+                aria-label="Directions unavailable"
+                title="Needs a recent precise location"
+              >
+                <Navigation size={21} />
+              </button>
+            )}
+            <Link
+              to={`/person/${current.user_id}`}
+              aria-label="Profile"
+              title="Profile"
+            >
+              <UserRound size={21} />
+            </Link>
+            <Link to="/chat" aria-label="Message" title="Message">
+              <MessageCircle size={21} />
+            </Link>
+            <button
+              onClick={() => setPersonMenu(false)}
+              aria-label="Close person actions"
+              title="Close"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+      </div>
+      <div className="atlas-distance">
+        {a && b ? (
+          <>
+            <span>
+              <strong>{distanceLabel(distance(a.location, b.location))}</strong>{' '}
+              {a.location.fuzzed || b.location.fuzzed
+                ? 'approximately apart'
+                : 'apart'}
+            </span>
+            <a
+              href={middleUrl(a.location, b.location)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Meet in the middle"
+              title="Meet in the middle"
+            >
+              <Route size={18} />
+            </a>
+          </>
+        ) : (
+          <span className="muted">{status.label}</span>
+        )}
+        <span
+          className={`atlas-connection ${live.connection === 'live' ? 'is-live' : ''}`}
+          title={live.connection === 'live' ? 'Connected' : 'Reconnecting'}
+          aria-label={live.connection === 'live' ? 'Connected' : 'Reconnecting'}
+        />
+      </div>
+      {spot && (
+        <section className="atlas-spot">
+          <span className="spot-symbol" aria-hidden="true">
+            {spot.emoji ?? '⌖'}
+          </span>
+          <h2>{spot.name}</h2>
           <a
-            className="card-link"
-            href={middleUrl(a.location, b.location)}
+            className="icon-button"
+            href={navigateUrl(spot)}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Navigate to ${spot.name}`}
+            title="Open Google Maps"
           >
-            {copy.map.middle} ↗
+            <Navigation size={19} />
           </a>
-        </div>
-      ) : (
-        <p className="muted small map-waiting">{copy.map.waiting}</p>
+          {spot.id && (
+            <>
+              <button
+                className="icon-button"
+                aria-label="Edit place"
+                onClick={() => {
+                  const place = places.find((p) => p.id === spot.id)
+                  if (place) setEditor({ draft: place, id: place.id })
+                }}
+              >
+                <Pencil size={17} />
+              </button>
+              <button
+                className="icon-button"
+                aria-label="Delete place"
+                onClick={() => setDeleting(true)}
+              >
+                <Trash2 size={17} />
+              </button>
+            </>
+          )}
+          <button
+            className="icon-button"
+            aria-label="Close place"
+            onClick={() => setSpot(null)}
+          >
+            <X size={17} />
+          </button>
+        </section>
       )}
-      <details className="glass location-sheet" open>
-        <summary>{copy.map.expand}</summary>
-        <div className="map-person-tabs">
-          {members.map((member) => (
+      <section className="atlas-person">
+        <div className="atlas-people" aria-label="Choose a person">
+          {members.map((m) => (
             <button
-              key={member.user_id}
-              aria-pressed={current.user_id === member.user_id}
-              onClick={() => setSelected(member.user_id)}
+              key={m.user_id}
+              aria-pressed={current.user_id === m.user_id}
+              onClick={() => {
+                setSelected(m.user_id)
+                setSpot(null)
+                setPersonMenu(true)
+                setJourneyId(undefined)
+              }}
             >
               <Avatar
-                name={member.display_name}
-                color={member.color}
-                path={member.avatar_path}
+                name={m.display_name}
+                color={m.color}
+                path={m.avatar_path}
               />
               <span>
-                {member.user_id === data.self.user_id
-                  ? copy.map.you
-                  : data.self.partner_nickname ||
-                    member.nickname ||
-                    member.display_name}
+                {m.user_id === data.self.user_id
+                  ? 'You'
+                  : data.self.partner_nickname || m.nickname || m.display_name}
               </span>
             </button>
           ))}
         </div>
-        <div className="map-person-title">
-          <Avatar
-            name={current.display_name}
-            color={current.color}
-            path={current.avatar_path}
-          />
-          <div className="map-person-heading">
-            <h2>
-              {current.user_id === data.self.user_id
-                ? current.nickname || current.display_name
-                : data.self.partner_nickname ||
-                  current.nickname ||
-                  current.display_name}
-            </h2>
-            <div
-              className="location-freshness"
-              data-state={status.state}
-              role="status"
-            >
-              <span aria-hidden="true" />
-              {status.label}
-            </div>
+        <div className="atlas-person-summary">
+          <div className="atlas-fix" data-state={status.state} title={stamp}>
+            <span className="status-dot" />
+            <span>{status.label}</span>
           </div>
+          <LocationRefresh
+            key={current.user_id}
+            member={current}
+            recordedAt={location?.recorded_at}
+          />
         </div>
-        <LocationRefresh
-          key={current.user_id}
-          member={current}
-          recordedAt={currentLocation?.recorded_at}
-        />
-        {directions && current.user_id !== data.self.user_id && (
-          <a
-            className="button directions-link"
-            href={directions}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Directions in Google Maps ↗
-          </a>
-        )}
-        {current.share_mode === 'paused' ? (
-          <p>{copy.map.paused}</p>
-        ) : currentLocation ? (
-          <>
-            {current.share_mode === 'surprise' && <p>{copy.map.surprise}</p>}
-            <p className="small muted">
-              {copy.map.lastFix}: {stamp}
-            </p>
-            <div className="location-metrics">
-              <span>
-                <Battery size={16} aria-hidden="true" />
-                {currentLocation.battery_pct === null
-                  ? copy.map.batteryUnknown
-                  : `${currentLocation.battery_pct}% ${currentLocation.charging ? 'ϟ' : ''}`}
+        {current.share_mode !== 'paused' && location && (
+          <div className="atlas-instruments">
+            <span title="Battery">
+              <Battery size={16} />
+              {location.battery_pct === null ? '—' : `${location.battery_pct}%`}
+            </span>
+            {!location.fuzzed && location.speed_mps !== null && (
+              <span title="Speed">
+                <Gauge size={16} />
+                {Math.round(location.speed_mps * 3.6)} km/h
               </span>
-              <span>
-                <Navigation size={16} aria-hidden="true" />
-                {currentLocation.is_moving ? copy.map.moving : copy.map.still}
-              </span>
-              {!currentLocation.fuzzed &&
-                currentLocation.speed_mps !== null && (
-                  <span>
-                    <Gauge size={16} aria-hidden="true" />
-                    {Math.round(currentLocation.speed_mps * 3.6)} km/h
-                  </span>
-                )}
-              {currentLocation.accuracy_m !== null && (
-                <span>
-                  <LocateFixed size={16} aria-hidden="true" />±
-                  {Math.round(currentLocation.accuracy_m)} m {copy.map.accuracy}
-                </span>
-              )}
-            </div>
-          </>
-        ) : (
-          <p className="muted">{copy.map.waiting}</p>
-        )}
-        {current.user_id !== data.self.user_id && (
-          <div className="map-connect">
-            {callUrl(current.phone ?? '') && (
-              <a
-                href={callUrl(current.phone ?? '')!}
-                aria-label={copy.home.call}
-                title={copy.home.call}
-              >
-                <Phone size={18} aria-hidden="true" />
-              </a>
             )}
-            {data.couple.meet_url && (
+            <span title="GPS accuracy">
+              <LocateFixed size={16} />
+              {location.fuzzed
+                ? 'Approximate'
+                : `±${Math.round(location.accuracy_m ?? 0)} m`}
+            </span>
+            {directions && (
               <a
-                href={data.couple.meet_url}
+                href={directions}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={copy.home.meet}
-                title={copy.home.meet}
+                aria-label="Navigate to this location"
+                title="Google Maps"
               >
-                <Video size={18} aria-hidden="true" />
-              </a>
-            )}
-            {whatsappUrl(current.phone ?? '') && (
-              <a
-                href={whatsappUrl(current.phone ?? '')!}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={copy.home.whatsapp}
-                title={copy.home.whatsapp}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
+                <Navigation size={18} />
               </a>
             )}
           </div>
         )}
-        <label className="check-row">
-          <input
-            type="checkbox"
-            checked={showTrail}
-            onChange={(event) => setShowTrail(event.target.checked)}
-          />
-          {copy.map.trail}
-        </label>
-        <p className="small muted">{copy.map.trailHint}</p>
-        {trail.error && <p role="status">{copy.common.error}</p>}
-      </details>
-      <section className="glass map-sharing">
-        <p className="muted small">
-          {nativeTracking ? copy.tracking.nativeNotice : copy.map.webNotice}
-        </p>
+      </section>
+      <div className="atlas-section-head">
+        <div className="atlas-view-switch" aria-label="Map view">
+          <button aria-pressed={view === 'now'} onClick={() => setView('now')}>
+            Now
+          </button>
+          <button aria-pressed={view === 'day'} onClick={() => setView('day')}>
+            24 hours
+          </button>
+        </div>
         {nativeTracking ? (
-          <Link className="button" to="/tracking">
-            {copy.tracking.manage}
+          <Link
+            className="icon-button"
+            to="/tracking"
+            aria-label="Tracking settings"
+            title="Tracking settings"
+          >
+            <ShieldCheck size={20} />
           </Link>
         ) : (
-          <Button
-            type="button"
-            onClick={sharing.enabled ? sharing.stop : sharing.start}
+          <button
+            className="text-button"
             disabled={data.self.share_mode === 'paused'}
+            onClick={sharing.enabled ? sharing.stop : sharing.start}
           >
-            {sharing.enabled ? copy.map.stop : copy.map.start}
-          </Button>
+            {sharing.enabled ? 'Stop sharing' : 'Share while open'}
+          </button>
         )}
-        {(sharing.message || data.self.share_mode === 'paused') && (
-          <p className="small" role="status">
-            {data.self.share_mode === 'paused'
-              ? copy.map.paused
-              : sharing.message}
+      </div>
+      {view === 'day' &&
+        (current.share_mode !== 'live' ? (
+          <p className="atlas-empty">
+            History hidden in{' '}
+            {current.share_mode === 'paused' ? 'Pause' : 'Surprise'} mode
           </p>
+        ) : history.isPending ? (
+          <p role="status" className="atlas-empty">
+            Loading journeys…
+          </p>
+        ) : history.error ? (
+          <button
+            className="text-button"
+            onClick={() => {
+              void history.refetch()
+            }}
+          >
+            Retry journeys
+          </button>
+        ) : (
+          <>
+            {history.data?.partial && (
+              <p className="small muted">Latest samples</p>
+            )}
+            <JourneyList
+              journeys={journeys}
+              timezone={data.couple.timezone}
+              selected={journeyId}
+              onSelect={chooseJourney}
+            />
+          </>
+        ))}
+      <section className="atlas-places">
+        <div className="atlas-section-head">
+          <h2>Our places</h2>
+          <button
+            className="icon-button"
+            aria-label="Add a saved place"
+            onClick={() => setAdding(!adding)}
+          >
+            <Plus size={19} />
+          </button>
+        </div>
+        {live.places.error ? (
+          <button
+            className="text-button"
+            onClick={() => {
+              void live.places.refetch()
+            }}
+          >
+            Retry places
+          </button>
+        ) : !places.length ? (
+          <button className="atlas-empty-place" onClick={() => setAdding(true)}>
+            <MapPin size={20} />
+            Pin somewhere
+          </button>
+        ) : (
+          <div className="atlas-place-list">
+            {places.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => {
+                  setSpot(p)
+                  focusPoints([p])
+                }}
+              >
+                <span aria-hidden="true">{p.emoji}</span>
+                <strong>{p.name}</strong>
+                <Navigation size={15} aria-hidden="true" />
+              </button>
+            ))}
+          </div>
         )}
       </section>
       {editor && (
@@ -397,70 +536,41 @@ export default function MapPage() {
           onClose={() => setEditor(null)}
         />
       )}
-      <section className="our-places">
-        <h2>{copy.map.places}</h2>
-        {live.places.isPending ? (
-          <p role="status">{copy.common.loading}</p>
-        ) : live.places.error || live.locations.error ? (
-          <p role="alert">
-            {copy.common.error}
+      {deleting && (
+        <DialogSheet
+          title="Delete this place?"
+          onClose={() => setDeleting(false)}
+        >
+          <div className="sheet-actions">
             <button
-              className="text-button"
+              className="button"
+              disabled={busy}
               onClick={() => {
-                void live.places.refetch()
-                void live.locations.refetch()
+                void remove()
               }}
             >
-              {copy.common.retry}
+              Delete place
             </button>
-          </p>
-        ) : !places.length ? (
-          <p className="muted">{copy.map.noPlaces}</p>
-        ) : (
-          places.map((place) => (
-            <article key={place.id} className="glass place-row">
-              <MapPin size={20} aria-hidden="true" />
-              <div>
-                <h3>
-                  {place.emoji} {place.name}
-                </h3>
-                <p className="muted small">{place.radius_m} m</p>
-              </div>
-              <button className="text-button" onClick={() => edit(place)}>
-                {copy.map.edit}
-              </button>
-              <button
-                className="text-button"
-                onClick={() => setConfirmDelete(place.id)}
-              >
-                {copy.map.remove}
-              </button>
-              {confirmDelete === place.id && (
-                <div className="place-delete">
-                  <p>{copy.map.removeConfirm}</p>
-                  <button
-                    className="button button-secondary"
-                    disabled={busy}
-                    onClick={() => {
-                      void remove(place.id)
-                    }}
-                  >
-                    {copy.map.remove}
-                  </button>
-                  <button
-                    className="text-button"
-                    disabled={busy}
-                    onClick={() => setConfirmDelete(null)}
-                  >
-                    {copy.map.cancel}
-                  </button>
-                </div>
-              )}
-            </article>
-          ))
-        )}
-        {message && <p role="alert">{message}</p>}
-      </section>
+            <button className="text-button" onClick={() => setDeleting(false)}>
+              Cancel
+            </button>
+            {error && <p role="alert">{error}</p>}
+          </div>
+        </DialogSheet>
+      )}
+      {live.locations.error && (
+        <p role="status" className="atlas-error">
+          Couldn’t update locations.{' '}
+          <button
+            className="text-button"
+            onClick={() => {
+              void live.locations.refetch()
+            }}
+          >
+            Retry
+          </button>
+        </p>
+      )}
     </div>
   )
 }

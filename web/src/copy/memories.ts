@@ -9,8 +9,7 @@ export const memories = {
   answer: 'Your answer',
   answerAction: 'Answer',
   sealAnswer: 'Save my answer',
-  answerHint:
-    'Your answer is final for today. You’ll see each other’s answers once you both reply.',
+  answerHint: 'Final for today. Revealed once you both reply.',
   waiting: 'Waiting for their answer.',
   saved: 'Saved',
   failed: 'That didn’t go through. Please try again.',
@@ -18,8 +17,7 @@ export const memories = {
   mapEmpty: 'Keep a moment with a place pin to start your Memory Map.',
   more: 'Show earlier keepsakes',
   newCapsule: 'New capsule',
-  capsuleHint:
-    'Only you can read it until the unlock time. Your partner can open it after that.',
+  capsuleHint: 'Your partner can read it after it opens.',
   titleLabel: 'Title',
   bodyLabel: 'Message',
   unlockLabel: 'Open on',
@@ -38,7 +36,7 @@ export const memories = {
   moments: 'moments shared',
   arrivals: 'arrivals logged',
   kilometres: 'km recorded',
-  recapHint: 'Last 7 full days. Distance uses recorded locations only.',
+  recapHint: 'Last 7 days · recorded locations',
   replay: 'Replay our anniversary',
   revealTitle: 'Happy anniversary.',
   revealBody: '',

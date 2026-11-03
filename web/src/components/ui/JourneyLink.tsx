@@ -38,7 +38,9 @@ export function BackLink({
     navigate = useNavigate()
   const from = location.state?.orbitFrom
   const canReturn =
-    typeof from === 'string' && routes.has(from) && from !== location.pathname
+    typeof from === 'string' &&
+    (routes.has(from) || /^\/person\/[0-9a-f-]{36}$/i.test(from)) &&
+    from !== location.pathname
   return (
     <Link
       className="back-link"

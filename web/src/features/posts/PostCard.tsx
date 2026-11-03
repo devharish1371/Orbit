@@ -13,6 +13,7 @@ import {
   Undo2,
   MoreHorizontal,
   Copy,
+  Heart,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -22,6 +23,7 @@ import { mediaError, remaining, validReaction, type Post } from '@/lib/posts'
 import type { Database } from '@/lib/database.types'
 import { PostMedia } from './PostMedia'
 import { Comments } from './Comments'
+import { PersonLink } from '@/components/ui/PersonLink'
 type Reaction = Database['public']['Tables']['reactions']['Row']
 export function PostCard({
   post,
@@ -42,6 +44,30 @@ export function PostCard({
     [picker, setPicker] = useState(false),
     [custom, setCustom] = useState(''),
     [actions, setActions] = useState(false)
+  const [reacting, setReacting] = useState(false)
+  const [burst, setBurst] = useState<{ emoji: string; key: number } | null>(
+    null,
+  )
+  useEffect(() => {
+    if (!burst) return
+    const timer = setTimeout(() => setBurst(null), 950)
+    return () => clearTimeout(timer)
+  }, [burst])
+  const card = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!reacting) return
+    const dismiss = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !card.current?.contains(event.target)
+      ) {
+        setReacting(false)
+        setPicker(false)
+      }
+    }
+    document.addEventListener('pointerdown', dismiss)
+    return () => document.removeEventListener('pointerdown', dismiss)
+  }, [reacting])
   const press = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
     origin = useRef({ x: 0, y: 0 }),
     held = useRef(false)
@@ -53,6 +79,12 @@ export function PostCard({
   const selected = reactions.find(
     (row) => row.user_id === session?.user.id,
   )?.emoji
+  const authorName = own
+    ? copy.posts.you
+    : space?.self.partner_nickname ||
+      author?.nickname ||
+      author?.display_name ||
+      'your person'
   async function action(run: () => PromiseLike<{ error: unknown }>) {
     if (busy) return
     setBusy(true)
@@ -63,6 +95,7 @@ export function PostCard({
       setConfirm(false)
       setPicker(false)
       setActions(false)
+      setReacting(false)
     } catch (error) {
       setMessage(copy.posts.errors[mediaError(error)])
     } finally {
@@ -78,6 +111,8 @@ export function PostCard({
     }
   }
   function react(emoji: string) {
+    if (busy) return
+    setBurst((previous) => ({ emoji, key: (previous?.key ?? 0) + 1 }))
     void action(() =>
       client.rpc('set_post_reaction', {
         p_id: post.id,
@@ -94,7 +129,7 @@ export function PostCard({
     } else setMessage(copy.posts.invalidEmoji)
   }
   const emojiChoices =
-    chat && !actions
+    (chat && !actions) || (!chat && !reacting)
       ? [...new Set(reactions.map((row) => row.emoji))]
       : [
           ...new Set([
@@ -102,14 +137,24 @@ export function PostCard({
             '😂',
             '🥺',
             '🔥',
-            '👏',
-            ...reactions.map((row) => row.emoji),
+            ...(chat ? ['👏'] : []),
+            ...(chat ? reactions.map((row) => row.emoji) : []),
           ]),
         ]
   return (
     <article
+      ref={card}
       className={`glass post-card ${chat ? `chat-bubble ${own ? 'chat-own' : 'chat-partner'}` : ''}`}
       id={`post-${post.id}`}
+      data-kind={post.kind}
+      data-own={own}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          setReacting(false)
+          setPicker(false)
+          setActions(false)
+        }
+      }}
       style={{ '--bubble-color': author?.color ?? '#FF6B8A' } as CSSProperties}
       onContextMenu={(event) => {
         if (chat) {
@@ -150,20 +195,36 @@ export function PostCard({
         }
       }}
     >
+      {!chat && burst && (
+        <span className="reaction-burst" aria-hidden="true" key={burst.key}>
+          <span>{burst.emoji}</span>
+          {Array.from({ length: 6 }, (_, i) => (
+            <i key={i} style={{ '--petal': i } as CSSProperties} />
+          ))}
+        </span>
+      )}
       {!chat && (
         <header className="post-author">
-          <Avatar
-            name={author?.display_name ?? '?'}
-            color={author?.color ?? '#FF6B8A'}
-            path={author?.avatar_path}
-          />
+          <PersonLink
+            id={author?.user_id}
+            name={authorName}
+            className="profile-face"
+          >
+            <Avatar
+              name={author?.display_name ?? '?'}
+              color={author?.color ?? '#FF6B8A'}
+              path={author?.avatar_path}
+            />
+          </PersonLink>
           <div>
             <strong>
-              {own
-                ? copy.posts.you
-                : space?.self.partner_nickname ||
-                  author?.nickname ||
-                  author?.display_name}
+              <PersonLink id={author?.user_id} name={authorName}>
+                {own
+                  ? copy.posts.you
+                  : space?.self.partner_nickname ||
+                    author?.nickname ||
+                    author?.display_name}
+              </PersonLink>
             </strong>
             <time dateTime={post.created_at}>
               {new Intl.DateTimeFormat('en-IN', {
@@ -228,9 +289,9 @@ export function PostCard({
           )}
         </div>
       )}
-      {(emojiChoices.length > 0 || !chat || actions) && (
+      {(emojiChoices.length > 0 || reacting || actions) && (
         <div
-          className={`post-reactions ${chat && !actions ? 'reaction-summary' : ''}`}
+          className={`post-reactions ${!chat && reacting ? 'moment-reaction-palette' : (chat && !actions) || !chat ? 'reaction-summary' : ''}`}
           aria-label={copy.posts.reactions}
         >
           {emojiChoices.map((emoji) => {
@@ -249,13 +310,16 @@ export function PostCard({
               </button>
             )
           })}
-          {(!chat || actions) && (
+          {((!chat && reacting) || actions) && (
             <button
               type="button"
               disabled={busy}
               aria-label={copy.posts.customReaction}
               aria-expanded={picker}
-              onClick={() => setPicker(!picker)}
+              onClick={() => {
+                setPicker(!picker)
+                if (!chat) setReacting(false)
+              }}
             >
               +
             </button>
@@ -281,11 +345,27 @@ export function PostCard({
       )}
       {(!chat || actions) && (
         <footer className="post-actions">
+          {!chat && (
+            <button
+              type="button"
+              className="text-button moment-react-trigger"
+              aria-label="React"
+              aria-expanded={reacting}
+              onClick={() => {
+                setReacting(!reacting)
+                setPicker(false)
+              }}
+            >
+              <Heart size={20} fill={selected ? 'currentColor' : 'none'} />
+              <span className="sr-only">React</span>
+            </button>
+          )}
           <button
             type="button"
             disabled={busy}
             className={`text-button ${post.keep ? 'is-kept' : ''}`}
             aria-pressed={post.keep}
+            aria-label={post.keep ? copy.posts.unkeep : copy.posts.keep}
             onClick={() => {
               void action(() =>
                 client
@@ -298,17 +378,17 @@ export function PostCard({
             }}
           >
             <Sparkles size={16} />
-            {post.keep ? copy.posts.unkeep : copy.posts.keep}
+            {chat && (post.keep ? copy.posts.unkeep : copy.posts.keep)}
           </button>
           {!chat && (
             <button
               className="text-button"
               type="button"
               aria-expanded={comments}
+              aria-label="Reply to moment"
               onClick={() => setComments(!comments)}
             >
               <MessageCircle size={16} />
-              {copy.posts.comments}
             </button>
           )}
           {chat && post.body && (
@@ -331,10 +411,11 @@ export function PostCard({
               className="text-button"
               type="button"
               disabled={busy}
+              aria-label={copy.posts.unsend}
               onClick={() => setConfirm(true)}
             >
               <Undo2 size={15} />
-              {copy.posts.unsend}
+              {chat && copy.posts.unsend}
             </button>
           )}
         </footer>
@@ -377,7 +458,9 @@ export function PostCard({
           {message}
         </p>
       )}
-      {comments && !chat && <Comments post={post} />}
+      {comments && !chat && (
+        <Comments post={post} onClose={() => setComments(false)} />
+      )}
     </article>
   )
 }

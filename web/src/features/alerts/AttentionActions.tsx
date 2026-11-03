@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { copy } from '@/copy/en'
+import { Heart, PhoneCall, Siren } from 'lucide-react'
 type Attention = 'nudge' | 'call_request' | 'sos'
 export function AttentionActions() {
   const { client } = useAuth()
@@ -59,7 +60,8 @@ export function AttentionActions() {
             void send('nudge')
           }}
         >
-          {copy.alerts.nudge}
+          <Heart size={20} aria-hidden="true" />
+          <span>{copy.alerts.nudge}</span>
         </Button>
         <Button
           type="button"
@@ -69,7 +71,8 @@ export function AttentionActions() {
             void send('call_request')
           }}
         >
-          {copy.alerts.callMe}
+          <PhoneCall size={20} aria-hidden="true" />
+          <span>{copy.alerts.callMe}</span>
         </Button>
         <Button
           type="button"
@@ -77,7 +80,8 @@ export function AttentionActions() {
           disabled={busy || !space?.partner}
           onClick={() => setConfirm(true)}
         >
-          {copy.alerts.sos}
+          <Siren size={20} aria-hidden="true" />
+          <span>{copy.alerts.sos}</span>
         </Button>
       </div>
       {confirm && (

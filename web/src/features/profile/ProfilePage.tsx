@@ -1,4 +1,5 @@
 import { BackLink } from '@/components/ui/JourneyLink'
+import { PersonLink } from '@/components/ui/PersonLink'
 import { ThemePicker } from '@/components/ui/ThemePicker'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent, type ChangeEvent } from 'react'
@@ -181,12 +182,18 @@ function ProfileEditor({ member }: { member: Member }) {
         className="glass profile-photo-section"
         aria-labelledby="photo-heading"
       >
-        <Avatar
-          name={draft.name || member.display_name}
-          color={draft.color}
-          large
-          path={member.avatar_path}
-        />
+        <PersonLink
+          id={member.user_id}
+          name={member.display_name}
+          className="profile-face"
+        >
+          <Avatar
+            name={draft.name || member.display_name}
+            color={draft.color}
+            large
+            path={member.avatar_path}
+          />
+        </PersonLink>
         <div>
           <h2 id="photo-heading">
             {draft.nickname || draft.name || copy.profile.photo}

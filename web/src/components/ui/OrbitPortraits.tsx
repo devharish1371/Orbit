@@ -48,7 +48,7 @@ export function OrbitPortraits() {
       <div className="portrait-motion-track">
         <Link
           className="portrait-orb portrait-self"
-          to="/profile"
+          to={`/person/${self.user_id}`}
           aria-label={`${copy.profile.title}: ${copy.posts.you}`}
         >
           <Avatar
@@ -60,8 +60,8 @@ export function OrbitPortraits() {
         </Link>
         <Link
           className="portrait-orb portrait-partner"
-          to="/chat"
-          aria-label={copy.nav.chat}
+          to={`/person/${partner?.user_id ?? ''}`}
+          aria-label={`View ${self.partner_nickname || partner?.nickname || partner?.display_name || 'your person'}’s profile`}
         >
           <Avatar
             name={partner?.display_name ?? '?'}

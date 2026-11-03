@@ -28,7 +28,9 @@ test('orbit can pause and resume, stays still during touch and when the document
   expect(scene).toHaveAttribute('data-running', 'false')
   await user.click(screen.getByRole('button', { name: 'Animate orbit' }))
   expect(scene).toHaveAttribute('data-running', 'true')
-  fireEvent.pointerDown(screen.getByRole('link', { name: 'Chat' }))
+  fireEvent.pointerDown(
+    screen.getByRole('link', { name: 'View Partner’s profile' }),
+  )
   expect(scene).toHaveAttribute('data-running', 'false')
   fireEvent.pointerCancel(scene)
   expect(scene).toHaveAttribute('data-running', 'true')

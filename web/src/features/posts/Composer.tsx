@@ -327,29 +327,9 @@ export function Composer({
         void submit(event)
       }}
     >
-      <div className="composer-modes" aria-label={copy.posts.addSomething}>
-        {(
-          [
-            ['text', Type],
-            ['photo', ImagePlus],
-            ['voice', Mic],
-            ['mood', Smile],
-          ] as const
-        ).map(([value, Icon]) => (
-          <button
-            key={value}
-            type="button"
-            disabled={busy || recording}
-            aria-pressed={kind === value}
-            onClick={() => mode(value)}
-          >
-            <Icon size={18} aria-hidden="true" />
-            {copy.posts.kinds[value]}
-          </button>
-        ))}
-      </div>
       {kind === 'photo' && (
         <label className="file-picker">
+          <ImagePlus size={30} aria-hidden="true" />
           {copy.posts.choosePhoto}
           <input
             type="file"
@@ -426,9 +406,32 @@ export function Composer({
           onTyping()
         }}
       />
+      <div className="composer-modes" aria-label={copy.posts.addSomething}>
+        {(
+          [
+            ['text', Type],
+            ['photo', ImagePlus],
+            ['voice', Mic],
+            ['mood', Smile],
+          ] as const
+        ).map(([value, Icon]) => (
+          <button
+            key={value}
+            type="button"
+            disabled={busy || recording}
+            aria-pressed={kind === value}
+            aria-label={copy.posts.kinds[value]}
+            title={copy.posts.kinds[value]}
+            onClick={() => mode(value)}
+          >
+            <Icon size={18} aria-hidden="true" />
+            <span className="sr-only">{copy.posts.kinds[value]}</span>
+          </button>
+        ))}
+      </div>
       <div className="composer-options">
         <label>
-          {copy.posts.expiry}
+          <span className="sr-only">{copy.posts.expiry}</span>
           <ChoiceSelect
             label={copy.posts.expiry}
             value={ttl}
@@ -442,7 +445,7 @@ export function Composer({
         </label>
         {channel === 'moment' && (
           <label>
-            {copy.posts.pin}
+            <span className="sr-only">{copy.posts.pin}</span>
             <ChoiceSelect
               label={copy.posts.pin}
               value={place}
@@ -465,9 +468,7 @@ export function Composer({
           {busy ? copy.posts.sharing : copy.posts.share}
         </Button>
       </div>
-      <p className="muted small">
-        {ttl === 'keep' ? copy.posts.keepHint : copy.posts.expiryHint}
-      </p>
+      {ttl === 'keep' && <p className="muted small">{copy.posts.keepHint}</p>}
       {message && (
         <p role="status" className="form-message">
           {message}

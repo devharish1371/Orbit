@@ -31,7 +31,6 @@ export function ExpiringSoon() {
   return (
     <section className="glass expiring-strip">
       <h2>{copy.posts.expiringTitle}</h2>
-      <p className="muted small">{copy.posts.expiringHint}</p>
       <div>
         {rows.map((post) => (
           <Link

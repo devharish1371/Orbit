@@ -20,16 +20,25 @@ export function PostExplorer({
     <section
       className="post-explorer"
       aria-label={chat ? 'Find messages' : 'Explore moments'}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') setOpen(false)
+      }}
     >
       <button
         className="explorer-toggle"
         type="button"
         aria-expanded={open}
+        aria-label={chat ? 'Find a message' : 'Find moments'}
+        title={chat ? 'Find a message' : 'Find moments'}
         onClick={() => setOpen(!open)}
       >
         <Search size={17} />
-        {chat ? 'Find a message' : 'Explore moments'}
-        <SlidersHorizontal size={16} />
+        {chat && (
+          <>
+            Find a message
+            <SlidersHorizontal size={16} />
+          </>
+        )}
         {active && <span className="filter-dot" aria-label="Filters applied" />}
       </button>
       <div className="explorer-panel" hidden={!open}>

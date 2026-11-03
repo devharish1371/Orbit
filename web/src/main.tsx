@@ -8,6 +8,7 @@ import { AuthProvider } from '@/app/AuthProvider'
 import './index.css'
 import './styles/orbit-studio.css'
 import './styles/orbit-worlds.css'
+import './styles/orbit-atelier.css'
 import '@/hooks/useTheme'
 import App from './App'
 const query = new QueryClient({

@@ -96,6 +96,14 @@ export function LocationRefresh({
     <div className="location-refresh" data-state={state}>
       <button
         className="location-refresh-button"
+        title={detail || 'Refresh location'}
+        aria-label={
+          busy
+            ? 'Requesting…'
+            : waiting
+              ? 'Updating location'
+              : 'Refresh location'
+        }
         disabled={paused || busy || waiting}
         onClick={() => {
           void refresh()
@@ -110,7 +118,7 @@ export function LocationRefresh({
             className={busy || waiting ? 'refresh-turning' : undefined}
           />
         )}
-        <span>
+        <span className="sr-only">
           {busy
             ? 'Requesting…'
             : waiting
@@ -120,13 +128,23 @@ export function LocationRefresh({
       </button>
       {detail && (
         <p role="status">
-          {state === 'unavailable' && <Clock3 size={14} aria-hidden="true" />}
-          {detail}
-          {waiting && !own && (
-            <span className="refresh-wait-hint">
-              This can take a minute. Sharing needs to be on.
-            </span>
-          )}
+          {state === 'unavailable' && <Clock3 size={12} aria-hidden="true" />}
+          <span className="sr-only">{detail}</span>
+          <span aria-hidden="true">
+            {error
+              ? 'Try again'
+              : paused
+                ? 'Paused'
+                : waiting
+                  ? own && !sharing.enabled
+                    ? 'Sharing is off'
+                    : 'Waiting…'
+                  : state === 'updated'
+                    ? 'Updated'
+                    : state === 'unavailable'
+                      ? 'No new fix'
+                      : ''}
+          </span>
         </p>
       )}
     </div>

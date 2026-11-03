@@ -1,5 +1,31 @@
 # Orbit development log
 
+## 2026-11-03 — App-wide visual and interaction pass
+
+Implemented the user's detailed Home/Map/Moments/Chat/Us brief. Home signals are separated
+from the profile composition. Original OpenMapTiles-based light/dark cartography replaces
+stock styles; compact refresh and instruments replace stacked location panels. Last-24-hour
+journeys are derived from existing reliable fixes, with explicit GPS-estimate labelling,
+confirmed dwell completion and disconnected gaps. Places/POIs offer Google Maps navigation.
+
+Moments uses a photographic/note composition, summoned reaction palette and native modal
+reply conversation with avatar, time and send/removal actions. Partner profiles are read-only
+and support full authorized photo viewing. Us separates portraits and memory objects. Copy
+that repeats visible states is removed; permission/privacy/destructive-action information stays.
+
+Follow-up steering: profile taps should be consistent everywhere; map portraits open three
+icon actions (Directions, Profile, Message), including navigation to the user's own recent
+shared location. Home/header/Moments/comment/profile-editor portraits link to the person view.
+Reactions gain a compact one-row palette, pointer/focus movement and a reduced-motion-aware
+confirmation burst. Posting becomes a quieter Post action and open writing canvas.
+
+Initial browser tests use only disposable identities/photos/GPS. Verified walking/driving
+sample segmentation, journey selection, saved-place Google Maps URL, reaction mutation,
+reply posting/removal, Escape return focus, chat→profile→full photo→Back to chat, and Us.
+Final responsive/a11y checks, full tests and Android packaging follow. Physical GPS activity
+classification/delivery remains unclaimed. The user is actively reviewing the local preview;
+retain its disposable fixture while that review continues, rather than invalidate their tab.
+
 ## 2026-10-30 — M0 started
 
 - Read all numbered documents (`00` → `09`) before implementation.

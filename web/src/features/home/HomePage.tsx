@@ -17,6 +17,7 @@ import { AttentionActions } from '@/features/alerts/AttentionActions'
 import { ExpiringSoon } from '@/features/posts/ExpiringSoon'
 import { DailyQuestion } from '@/features/memories/DailyQuestion'
 import { useNow } from '@/hooks/useNow'
+import { PersonLink } from '@/components/ui/PersonLink'
 
 export default function HomePage() {
   const now = useNow()
@@ -49,10 +50,20 @@ export default function HomePage() {
         <div className="partner-heading">
           <div>
             <h2>
-              {self.partner_nickname ||
-                partner?.nickname ||
-                partner?.display_name ||
-                '…'}
+              <PersonLink
+                id={partner?.user_id}
+                name={
+                  self.partner_nickname ||
+                  partner?.nickname ||
+                  partner?.display_name ||
+                  'your person'
+                }
+              >
+                {self.partner_nickname ||
+                  partner?.nickname ||
+                  partner?.display_name ||
+                  '…'}
+              </PersonLink>
             </h2>
             <p className="status-chip">
               <span className="status-dot" />
@@ -149,7 +160,6 @@ export default function HomePage() {
           )}
         </div>
       </section>
-      <AttentionActions />
       <div className="home-tiles">
         <Link className="map-preview glass" to="/map">
           <div className="map-lines" aria-hidden="true">
@@ -192,6 +202,7 @@ export default function HomePage() {
           <Heart size={44} strokeWidth={1} aria-hidden="true" />
         </section>
       </div>
+      <AttentionActions />
       <DailyQuestion />
       <ExpiringSoon />
     </div>

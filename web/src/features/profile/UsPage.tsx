@@ -1,6 +1,6 @@
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
-import { ArrowUpRight, Heart } from 'lucide-react'
+import { Heart } from 'lucide-react'
 import { useSpace } from '@/hooks/useSpace'
 import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
@@ -19,42 +19,36 @@ export default function UsPage() {
       <SectionHeading title={copy.profile.hubTitle} kind="us" />
       <section className="us-bond">
         <div className="bond-portraits">
-          <Link to="/profile" aria-label={copy.profile.edit}>
+          <Link to={`/person/${self.user_id}`} aria-label="View your profile">
             <Avatar
               name={self.display_name}
               color={self.color}
               large
               path={self.avatar_path}
             />
+            <strong>{self.nickname || self.display_name}</strong>
           </Link>
           <span aria-hidden="true">
             <Heart size={17} />
           </span>
           {partner && (
-            <Avatar
-              name={partner.display_name}
-              color={partner.color}
-              large
-              path={partner.avatar_path}
-            />
+            <Link
+              to={`/person/${partner.user_id}`}
+              aria-label={`View ${self.partner_nickname || partner.nickname || partner.display_name}’s profile`}
+            >
+              <Avatar
+                name={partner.display_name}
+                color={partner.color}
+                large
+                path={partner.avatar_path}
+              />
+              <strong>
+                {self.partner_nickname ||
+                  partner.nickname ||
+                  partner.display_name}
+              </strong>
+            </Link>
           )}
-        </div>
-        <h2>
-          {self.nickname || self.display_name} <em>&</em>{' '}
-          {self.partner_nickname ||
-            partner?.nickname ||
-            partner?.display_name ||
-            '…'}
-        </h2>
-        <div className="bond-actions">
-          <Link className="card-link" to="/profile">
-            {copy.profile.edit}
-            <ArrowUpRight size={15} />
-          </Link>
-          <Link className="card-link" to="/settings">
-            {copy.profile.shared}
-            <ArrowUpRight size={15} />
-          </Link>
         </div>
       </section>
       <MemoryDoors

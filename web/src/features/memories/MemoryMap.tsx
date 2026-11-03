@@ -9,7 +9,8 @@ import {
 } from 'maplibre-gl'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { couple } from '@/config/couple.config'
+import { orbitMapStyle } from '@/lib/orbit-map-style'
+import { useSpace } from '@/hooks/useSpace'
 import { type Post } from '@/lib/posts'
 setWorkerUrl(workerUrl)
 export default function MemoryMap({
@@ -21,6 +22,8 @@ export default function MemoryMap({
   dark: boolean
   onSelect: (id: string) => void
 }) {
+  const { data: space } = useSpace()
+  const accent = space?.self.theme_accent
   const container = useRef<HTMLDivElement>(null),
     select = useRef(onSelect)
   const [failed, setFailed] = useState(false),
@@ -32,7 +35,7 @@ export default function MemoryMap({
     if (!container.current) return
     const map = new Map({
       container: container.current,
-      style: dark ? couple.mapStyleDarkUrl : couple.mapStyleUrl,
+      style: orbitMapStyle(dark, accent),
       center: [78, 22],
       zoom: 3.5,
       attributionControl: false,
@@ -69,7 +72,7 @@ export default function MemoryMap({
       markers.forEach((marker) => marker.remove())
       map.remove()
     }
-  }, [posts, dark, retry])
+  }, [posts, dark, retry, accent])
   return (
     <div className="memory-map-stage">
       <div

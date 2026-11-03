@@ -23,6 +23,7 @@ import { Composer } from './Composer'
 import { PostCard } from './PostCard'
 import { Avatar } from '@/components/ui/Avatar'
 import { callUrl } from '@/lib/connect'
+import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 export default function PostsPage({ channel }: { channel: Channel }) {
   const {
     field,
@@ -106,13 +107,23 @@ export default function PostsPage({ channel }: { channel: Channel }) {
     <div className={`page posts-page ${channel === 'chat' ? 'chat-page' : ''}`}>
       {channel === 'chat' ? (
         <header className="chat-heading">
-          <Avatar
-            name={space?.partner?.display_name ?? '?'}
-            color={space?.partner?.color ?? '#FF6B8A'}
-            path={space?.partner?.avatar_path}
-          />
+          <Link
+            className="chat-person-link"
+            to={`/person/${space?.partner?.user_id ?? ''}`}
+            aria-label={`View ${partnerName}’s profile`}
+          >
+            <Avatar
+              name={space?.partner?.display_name ?? '?'}
+              color={space?.partner?.color ?? '#FF6B8A'}
+              path={space?.partner?.avatar_path}
+            />
+          </Link>
           <div>
-            <h1>{partnerName}</h1>
+            <h1>
+              <Link to={`/person/${space?.partner?.user_id ?? ''}`}>
+                {partnerName}
+              </Link>
+            </h1>
             <p className="muted small" role="status">
               <span
                 className={`chat-presence ${typing.typing ? 'is-typing' : ''}`}
@@ -124,7 +135,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
               </span>
               {typing.typing
                 ? copy.posts.typing.replace('{name}', partnerName)
-                : copy.posts.privateChat}
+                : ''}
             </p>
           </div>
           {phone && (
@@ -172,7 +183,6 @@ export default function PostsPage({ channel }: { channel: Channel }) {
             </span>
             <span>
               <strong>{copy.posts.createMoment}</strong>
-              <small>{copy.posts.createMomentHint}</small>
             </span>
             <Sparkles size={20} aria-hidden="true" />
           </button>
@@ -282,13 +292,6 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                       ? copy.posts.chatEmpty
                       : copy.posts.momentsEmpty}
               </h2>
-              <p className="muted">
-                {filtered
-                  ? 'Try another word or clear your filters.'
-                  : kept
-                    ? copy.posts.noKeptHint
-                    : copy.posts.emptyHint}
-              </p>
             </section>
           ) : (
             <div

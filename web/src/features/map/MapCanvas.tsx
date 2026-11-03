@@ -14,7 +14,7 @@ import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
-import { couple } from '@/config/couple.config'
+import { orbitMapStyle } from '@/lib/orbit-map-style'
 import { circle, interpolate, type Point } from '@/lib/geo'
 import type { Database } from '@/lib/database.types'
 setWorkerUrl(workerUrl)
@@ -133,6 +133,10 @@ export default function MapCanvas({
   onPick,
   onPerson,
   onRetry,
+  onPlace,
+  onLandmark,
+  focus,
+  accent,
 }: {
   dark: boolean
   people: { member: Member; location: Location }[]
@@ -143,6 +147,10 @@ export default function MapCanvas({
   onPick: (p: Point) => void
   onPerson: (id: string) => void
   onRetry: () => void
+  onPlace?: (place: Place) => void
+  onLandmark?: (place: Point & { name: string }) => void
+  focus?: { points: Point[]; key: number } | null
+  accent?: string
 }) {
   const cameraRef = useContext(MapCameraContext)
   const initiallyFitRef = useRef(false)
@@ -151,17 +159,21 @@ export default function MapCanvas({
   const [failed, setFailed] = useState(false)
   const pick = useRef(onPick),
     addingRef = useRef(adding)
+  const landmarkRef = useRef(onLandmark)
+  const placeRef = useRef(onPlace)
   useEffect(() => {
     pick.current = onPick
     addingRef.current = adding
-  }, [onPick, adding])
+    landmarkRef.current = onLandmark
+    placeRef.current = onPlace
+  }, [onPick, adding, onLandmark, onPlace])
   useEffect(() => {
     if (!container.current) return
     let instance: Map
     try {
       instance = new Map({
         container: container.current,
-        style: dark ? couple.mapStyleDarkUrl : couple.mapStyleUrl,
+        style: orbitMapStyle(dark, accent),
         center: cameraRef?.current?.center ?? [78, 22],
         zoom: cameraRef?.current?.zoom ?? 3.5,
         bearing: cameraRef?.current?.bearing ?? 0,
@@ -185,6 +197,19 @@ export default function MapCanvas({
       instance.on('click', (event) => {
         if (addingRef.current)
           pick.current({ lat: event.lngLat.lat, lng: event.lngLat.lng })
+        else {
+          const feature = instance
+            .queryRenderedFeatures(event.point, {
+              layers: ['little-places', 'little-place-names'],
+            })
+            .find((f) => f.geometry.type === 'Point' && f.properties?.name)
+          if (feature?.geometry.type === 'Point')
+            landmarkRef.current?.({
+              name: String(feature.properties.name),
+              lng: feature.geometry.coordinates[0]!,
+              lat: feature.geometry.coordinates[1]!,
+            })
+        }
       })
       const observer = new ResizeObserver(() => instance.resize())
       observer.observe(container.current)
@@ -204,7 +229,7 @@ export default function MapCanvas({
     } catch {
       queueMicrotask(() => setFailed(true))
     }
-  }, [dark, cameraRef])
+  }, [dark, accent, cameraRef])
   useEffect(() => {
     if (!map || !map.isStyleLoaded()) return
     const polygons = {
@@ -212,7 +237,7 @@ export default function MapCanvas({
       features: [
         ...places.map((p) => ({
           type: 'Feature' as const,
-          properties: { color: '#7C5CFF' },
+          properties: { color: accent ?? '#ba8096' },
           geometry: {
             type: 'Polygon' as const,
             coordinates: [circle(p, p.radius_m)],
@@ -268,17 +293,42 @@ export default function MapCanvas({
     else {
       map.addSource('orbit-trail', { type: 'geojson', data: line })
       map.addLayer({
+        id: 'orbit-trail-halo',
+        type: 'line',
+        source: 'orbit-trail',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: {
+          'line-color': dark ? '#151c2a' : '#fffdf5',
+          'line-width': 8,
+          'line-opacity': 0.9,
+        },
+      })
+      map.addLayer({
         id: 'orbit-trail-line',
         type: 'line',
         source: 'orbit-trail',
         paint: {
-          'line-color': '#A98EFF',
-          'line-width': 3,
+          'line-color': accent ?? '#c37799',
+          'line-width': 4,
           'line-opacity': 0.8,
         },
       })
+      map.setLayoutProperty('orbit-trail-line', 'line-cap', 'round')
+      map.setLayoutProperty('orbit-trail-line', 'line-join', 'round')
     }
-  }, [map, people, places, trail])
+  }, [map, people, places, trail, accent, dark])
+  useEffect(() => {
+    if (!map || !focus?.points.length) return
+    const bounds = new LngLatBounds()
+    focus.points.forEach((p) => bounds.extend([p.lng, p.lat]))
+    map.fitBounds(bounds, {
+      padding: 60,
+      maxZoom: 15,
+      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 0
+        : 600,
+    })
+  }, [map, focus])
   const points = useRef<Point[]>([])
   useEffect(() => {
     points.current = people.map((p) => p.location)
@@ -307,10 +357,16 @@ export default function MapCanvas({
   useEffect(() => {
     if (!map) return
     const markers = places.map((place) => {
-      const node = document.createElement('span')
+      const node = document.createElement('button')
+      node.type = 'button'
       node.className = 'place-map-marker'
       node.textContent = place.emoji
       node.title = place.name
+      node.setAttribute('aria-label', `Open ${place.name}`)
+      node.addEventListener('click', (e) => {
+        e.stopPropagation()
+        placeRef.current?.(place)
+      })
       return new Marker({ element: node })
         .setLngLat([place.lng, place.lat])
         .addTo(map)

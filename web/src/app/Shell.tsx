@@ -29,23 +29,27 @@ const tabs = [
   { to: '/us', key: 'us' },
 ] as const
 export default function Shell() {
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
   const navigationType = useNavigationType()
   const chat = pathname === '/chat'
-  const parentRoute = [
-    '/profile',
-    '/settings',
-    '/keepsakes',
-    '/capsules',
-    '/timeline',
-    '/reveal',
-    '/notifications',
-    '/activity',
-  ].includes(pathname)
-    ? '/us'
-    : pathname === '/tracking'
-      ? '/map'
-      : pathname
+  const parentRoute = pathname.startsWith('/person/')
+    ? state?.orbitFrom === '/chat'
+      ? '/chat'
+      : '/us'
+    : [
+          '/profile',
+          '/settings',
+          '/keepsakes',
+          '/capsules',
+          '/timeline',
+          '/reveal',
+          '/notifications',
+          '/activity',
+        ].includes(pathname)
+      ? '/us'
+      : pathname === '/tracking'
+        ? '/map'
+        : pathname
   const activeTab = Math.max(
     0,
     tabs.findIndex(({ to }) => to === parentRoute),
@@ -112,7 +116,7 @@ export default function Shell() {
                   </Link>
                   <div className="header-actions">
                     <Link
-                      to="/profile"
+                      to={`/person/${space.data?.self.user_id ?? ''}`}
                       className="profile-shortcut"
                       aria-label={copy.profile.title}
                     >

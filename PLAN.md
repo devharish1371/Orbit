@@ -36,6 +36,10 @@ Architecture notes and version records live in `docs/`.
 
 ## Current next steps
 
+Active user brief (2026-11-03): complete docs/ATELIER_PASS.md: custom map, compact refresh,
+day journeys/place navigation, editorial Moments/replies/reactions, person profiles,
+Home signal spacing and Us composition. Preserve all existing device acceptance gates.
+
 User follow-up (2026-11-01): implement mutual manual location refresh and continue map UI
 refinement. Private request API deployed; 72 web / 16 worker / 60 hosted tests pass.
 Responsive verification and native packaging are complete. Remote phone fresh-fix acceptance

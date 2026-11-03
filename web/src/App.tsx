@@ -10,6 +10,7 @@ const Shell = lazy(() => import('@/app/Shell'))
 const HomePage = lazy(() => import('@/features/home/HomePage'))
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
+const PersonPage = lazy(() => import('@/features/profile/PersonPage'))
 const UsPage = lazy(() => import('@/features/profile/UsPage'))
 const TrackingPage = lazy(() => import('@/features/tracking/TrackingPage'))
 const MapPage = lazy(() => import('@/features/map/MapPage'))
@@ -58,6 +59,7 @@ export default function App() {
               <Route path="activity" element={<ActivityPage />} />
               <Route path="call" element={<CallPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="person/:id" element={<PersonPage />} />
               <Route path="us" element={<UsPage />} />
               <Route path="keepsakes" element={<KeepsakesPage />} />
               <Route path="capsules" element={<CapsulesPage />} />
