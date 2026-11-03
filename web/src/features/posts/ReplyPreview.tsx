@@ -23,6 +23,14 @@ export function ReplyPreview({
         space?.partner?.display_name ||
         'Your person'
     : ''
+  const excerpt = available
+    ? post.body?.replace(/\s+/g, ' ').slice(0, 180) ||
+      (post.kind === 'photo'
+        ? 'Photo'
+        : post.kind === 'voice'
+          ? 'Voice note'
+          : 'Message')
+    : ''
   const content = (
     <>
       <Quote size={15} aria-hidden="true" />
@@ -30,14 +38,7 @@ export function ReplyPreview({
         {available ? (
           <>
             <strong>{name}</strong>
-            <span>
-              {post.body?.replace(/\s+/g, ' ').slice(0, 180) ||
-                (post.kind === 'photo'
-                  ? 'Photo'
-                  : post.kind === 'voice'
-                    ? 'Voice note'
-                    : 'Message')}
-            </span>
+            <span>{excerpt}</span>
           </>
         ) : (
           <span>
@@ -51,7 +52,7 @@ export function ReplyPreview({
     <button
       className="reply-preview"
       type="button"
-      aria-label={`Open quoted message from ${name}`}
+      aria-label={`Open quoted message from ${name}: ${excerpt}`}
       onClick={() => onOpen(post.id)}
     >
       {content}

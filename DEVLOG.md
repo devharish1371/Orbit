@@ -1029,3 +1029,10 @@ Browser dummy quote/send/edit/reload/original navigation works. Browser testing 
 fresh-message edit eligibility delay from the coarse display clock; allowed its known tick
 lag in UI eligibility while the server remains authoritative. Narrow layout/a11y and Android
 rollup follow. No real partner contact or safety feature activation.
+
+Final chat accessibility review adds the visible excerpt to each quote's accessible name,
+so voice control and screen readers retain the actual text. All 89 web/16 worker and full
+lint/types/format/build checks pass again. Native modal stacking was absent from static
+HTML captures; replayed its top layer in the audit harness without changing application
+stacking. All eight new states pass 100/100 after that correction; final labelled captures
+and Android rollup follow.
