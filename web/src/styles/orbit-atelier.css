@@ -1,6 +1,6 @@
 /* A quieter canvas: composition and interactions, rather than nested panels. */
 [data-theme='light'] {
-  --text-dim: #596579;
+  --text-faint: #596579;
 }
 .home-page .attention-actions {
   margin: 32px 0 36px;

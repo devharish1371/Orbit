@@ -16,9 +16,11 @@ export function PersonLink({
       className={className}
       to={`/person/${id}`}
       aria-label={
-        name.toLowerCase() === 'you'
-          ? 'View your profile'
-          : `View ${name}’s profile`
+        className === 'profile-face'
+          ? name.toLowerCase() === 'you'
+            ? 'View your profile'
+            : `View ${name}’s profile`
+          : undefined
       }
     >
       {children}

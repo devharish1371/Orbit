@@ -19,7 +19,10 @@ export default function UsPage() {
       <SectionHeading title={copy.profile.hubTitle} kind="us" />
       <section className="us-bond">
         <div className="bond-portraits">
-          <Link to={`/person/${self.user_id}`} aria-label="View your profile">
+          <Link
+            to={`/person/${self.user_id}`}
+            aria-label={`View profile: ${self.nickname || self.display_name}`}
+          >
             <Avatar
               name={self.display_name}
               color={self.color}
