@@ -1,0 +1,110 @@
+/* Focused place controls; shared modal geometry belongs to DialogSheet. */
+.place-sheet .place-editor {
+  margin: 0;
+  padding: 24px 0 4px;
+}
+.place-sheet fieldset {
+  display: grid;
+  gap: 12px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+.place-sheet .place-editor input:not([type='checkbox']):not([type='range']) {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+.place-sheet .place-actions {
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.place-sheet .check-row {
+  min-height: 44px;
+}
+.place-sheet input[type='checkbox'] {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  border: 1.5px solid var(--text-dim);
+  border-radius: 50%;
+  background: transparent;
+}
+.place-sheet input[type='checkbox']::before {
+  content: '';
+  width: 10px;
+  height: 6px;
+  margin-top: -2px;
+  border-left: 2px solid var(--panel);
+  border-bottom: 2px solid var(--panel);
+  transform: rotate(-45deg) scale(0);
+}
+.place-sheet input[type='checkbox']:checked {
+  background: var(--text);
+  border-color: var(--text);
+}
+.place-sheet input[type='checkbox']:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
+.place-sheet input[type='range'] {
+  appearance: none;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.place-sheet input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--primary) var(--range-progress),
+    var(--border) var(--range-progress)
+  );
+}
+.place-sheet input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border: 3px solid var(--panel);
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+.place-sheet input[type='range']::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--primary) var(--range-progress),
+    var(--border) var(--range-progress)
+  );
+}
+.place-sheet input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--panel);
+  border-radius: 50%;
+  background: var(--text);
+}
+.place-sheet input:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  .place-sheet input[type='checkbox'],
+  .place-sheet input[type='range'] {
+    appearance: auto;
+  }
+  .place-sheet input[type='checkbox']::before {
+    content: none;
+  }
+}

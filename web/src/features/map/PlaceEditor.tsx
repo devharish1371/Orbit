@@ -1,4 +1,5 @@
-import { useId, useState, type FormEvent } from 'react'
+import './place-editor.css'
+import { useId, useState, type CSSProperties, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
@@ -106,6 +107,11 @@ export default function PlaceEditor({
           <input
             id={formId + 'radius'}
             type="range"
+            style={
+              {
+                '--range-progress': `${((draft.radius_m - 50) / 1950) * 100}%`,
+              } as CSSProperties
+            }
             min={50}
             max={2000}
             step={50}
