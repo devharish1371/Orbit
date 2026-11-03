@@ -2,10 +2,19 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
-import { expect, test, vi } from 'vitest'
+import { beforeEach, expect, test, vi } from 'vitest'
 import { AuthProvider } from './AuthProvider'
 import { useAuth } from '@/hooks/useAuth'
 import type { OrbitClient } from '@/lib/supabase'
+const local = vi.hoisted(() => ({ clear: vi.fn(), push: vi.fn() }))
+vi.mock('@/features/outbox/store', () => ({
+  outboxStore: { clearAll: local.clear },
+}))
+vi.mock('@/native/push', () => ({ disablePush: local.push }))
+beforeEach(() => {
+  local.clear.mockReset().mockResolvedValue(undefined)
+  local.push.mockReset().mockResolvedValue(undefined)
+})
 function Consumer() {
   const { session, restoring, signOut } = useAuth()
   return (
@@ -89,3 +98,56 @@ test('a temporary refresh failure preserves a reconnect flow instead of requesti
   expect(await screen.findByText('Reconnect saved session')).toBeVisible()
   expect(requestOtp).not.toHaveBeenCalled()
 })
+test.each(['push', 'clear'] as const)(
+  'failed %s cleanup preserves login and signals the stopped outbox to restart',
+  async (step) => {
+    local[step].mockRejectedValueOnce(new Error('CLEANUP_UNAVAILABLE'))
+    const stopped = vi.fn(),
+      restart = vi.fn(),
+      signedOut = vi.fn()
+    window.addEventListener('orbit-signing-out', stopped)
+    window.addEventListener('orbit-signout-failed', restart)
+    function Failure() {
+      const { session, signOut } = useAuth()
+      return (
+        <>
+          <p>{session?.user.id}</p>
+          <button
+            onClick={() => {
+              void signOut().catch(() => {})
+            }}
+          >
+            Try logout
+          </button>
+        </>
+      )
+    }
+    const client = {
+      auth: {
+        getSession: vi.fn().mockResolvedValue({
+          data: { session: { user: { id: 'saved-member' } } },
+        }),
+        onAuthStateChange: vi.fn().mockReturnValue({
+          data: { subscription: { unsubscribe: vi.fn() } },
+        }),
+        signOut: signedOut,
+      },
+    } as unknown as OrbitClient
+    render(
+      <QueryClientProvider client={new QueryClient()}>
+        <AuthProvider client={client}>
+          <Failure />
+        </AuthProvider>
+      </QueryClientProvider>,
+    )
+    await screen.findByText('saved-member')
+    await userEvent.click(screen.getByRole('button', { name: 'Try logout' }))
+    expect(stopped).toHaveBeenCalledOnce()
+    expect(local.clear).toHaveBeenCalledOnce()
+    expect(signedOut).not.toHaveBeenCalled()
+    expect(restart).toHaveBeenCalledOnce()
+    expect(screen.getByText('saved-member')).toBeVisible()
+    window.removeEventListener('orbit-signing-out', stopped)
+    window.removeEventListener('orbit-signout-failed', restart)
+  },
+)

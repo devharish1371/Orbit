@@ -77,9 +77,13 @@ Primary references, verified 3 November 2026:
 - V2.1 reply/edit slice implemented: menu reply, live quote references/tap-to-original,
   author-only 15-minute edits with version checks, edited/sent-to-server indicators and
   retained-draft retry. One shared 24-hour pin now follows original expiry/unsend and protects
-  a replacement from a stale unpin. Durable encrypted outbox remains next in this phase.
+  a replacement from a stale unpin. Text-only encrypted outbox now persists before clearing
+  the composer, retries with stable identity and UUID, and confirms pending-copy discard/logout.
+  Physical offline/process-death validation remains in the user's requested test batch.
   89 web/16 worker checks and all 64 hosted tests pass; browser quote/edit/reload verified.
   Pin follow-up passes 91 web/16 worker checks and all 66 hosted tests.
+  Outbox follow-up passes 105 web/16 worker checks and all 67 hosted tests; native/browser
+  verification is tracked in DEVLOG.md. Photo/voice offline persistence remains for V2.5.
 - V2.2–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

@@ -1056,3 +1056,25 @@ batch. Retain verified builds internally; do not send APK links or ask for insta
 Pin full hosted suite: 66 passed in 137.00s. Earlier reply/edit Android run 41646856489 and
 local APK integrity/signing/private scan pass; retained privately. Eight reply/edit static
 audits score 100/100. Pin follow-up rolls into the next verified build without a handover.
+
+## 2026-11-03 — V2.1 durable text outbox
+
+Added a bounded text-only outbox: encrypted IndexedDB records with non-extractable keys on
+web, and AES-GCM no-backup files with per-owner Android Keystore keys on Android. The composer
+clears only after a committed/read-back send intent, or an online direct-send acknowledgement
+when local storage is unavailable. Photos/voice retain their existing draft/manual retry flow.
+Open-app reconnect/resume retries preserve UUID, owner/couple, quote and Keep/TTL choice;
+server migration 0021 rejects identity changes before idempotence lookup. Pending copies
+expire within 24 hours and can be explicitly retried/discarded. No delivery/read claim.
+Logout stops in-flight work and confirms discarding pending text; failed explicit storage or
+push cleanup keeps login and reports failure. Store generations reject late writes after a
+clear. Account-filtered context prevents a previous owner's pending UI from flashing. Chat
+styles moved out of the shared foundation into a dedicated stylesheet.
+
+Automated verification: 105 web / 16 worker tests; all 67 hosted tests passed in 136.23s,
+including new expected-author/couple guards. Real WebCrypto/IndexedDB tests cover reload,
+tamper, concurrent clear/write, expiry and non-extractable keys; engine tests cover lost
+responses, storage failure, immutable retry, account change and logout races. Three native
+AES-GCM unit cases added; Android compile/CI and browser rollup follow below. Production
+npm audit: zero vulnerabilities; source scan: 889 files, zero findings. Physical offline,
+process death and Keystore behavior remain in the deferred user-requested test batch.

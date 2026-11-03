@@ -100,7 +100,7 @@ test('waveform reduction bounds payloads and photo validation excludes active/ov
   expect(validPhoto({ type: 'image/webp', size: 250000 })).toBe(true)
 })
 test('an ambiguous commit reuses the saved post without deleting its attachment', async () => {
-  const persisted = { id: 'saved' }
+  const persisted = { id: 'draft', author_id: 'author', couple_id: 'couple' }
   const maybeSingle = vi
     .fn()
     .mockResolvedValueOnce({ data: null, error: null })

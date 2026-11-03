@@ -177,3 +177,9 @@ def test_chat_pin_hides_with_message_expiry_unsend_or_pin_timeout(backend):
     assert backend.clients[0].client.post('/rest/v1/rpc/set_chat_pin',json={'p_post_id':fresh['id']}).status_code==204
     assert backend.clients[0].client.post('/rest/v1/rpc/request_unsend',json={'p_id':fresh['id']}).status_code==200
     assert backend.rest(backend.clients[1],'GET','chat_pins').json()==[]
+
+def test_durable_draft_expected_identity_cannot_cross_an_account_switch(backend):
+    assert create(backend,channel='chat',expected_author_id=backend.users[0],expected_couple_id=backend.couples[0]).status_code==200
+    for values in [dict(expected_author_id=backend.users[1]),dict(expected_couple_id=backend.couples[1])]:
+        response=create(backend,channel='chat',**values)
+        assert response.status_code>=400 and 'DRAFT_ACCOUNT_CHANGED' in response.text

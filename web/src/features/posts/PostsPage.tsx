@@ -1,3 +1,4 @@
+import './chat.css'
 import { useComposerMemory, usePostViewMemory } from '@/hooks/useComposerMemory'
 import { PostExplorer } from './PostExplorer'
 import { SectionHeading } from '@/components/ui/SectionHeading'
@@ -32,6 +33,7 @@ import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { DialogSheet } from '@/components/ui/DialogSheet'
 import { PostMedia } from './PostMedia'
 import { PinnedMessage } from './PinnedMessage'
+import { PendingMessages } from '@/features/outbox/PendingMessages'
 export default function PostsPage({ channel }: { channel: Channel }) {
   const {
     field,
@@ -399,6 +401,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
             </Button>
           )}
           <div ref={anchor} />
+          {channel === 'chat' && <PendingMessages sentIds={ids} />}
         </div>
       </div>
       {channel === 'chat' && (

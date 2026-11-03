@@ -1,0 +1,203 @@
+/* V2 chat controls, references and pending messages. */
+/* The composer already groups its controls; input focus must not draw over +/media. */
+.chat-page .chat-composer .messenger-composer,
+.chat-page .chat-composer .messenger-composer:focus-within {
+  box-shadow: none;
+  border-color: var(--border);
+}
+.chat-page .messenger-input-row textarea:focus,
+.chat-page .messenger-input-row textarea:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+.chat-page .messenger-input-row textarea:focus-visible {
+  background-image: linear-gradient(var(--secondary), var(--secondary));
+  background-size: calc(100% - 20px) 1px;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.reply-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--orbit-touch-target);
+  padding: 12px 14px;
+  margin: 0 0 8px;
+  border: 0;
+  border-left: 2px solid var(--secondary);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--secondary) 7%, transparent);
+  color: var(--text-dim);
+  text-align: left;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.reply-preview > svg {
+  flex: none;
+  margin-top: 3px;
+}
+.reply-preview > span {
+  min-width: 0;
+}
+.reply-preview strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.reply-preview span span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.composer-reply {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  padding: 10px 6px 0;
+}
+.composer-reply .reply-preview {
+  flex: 1;
+  min-width: 0;
+}
+.composer-feedback {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.composer-feedback .form-message {
+  margin: 0;
+  flex: 1;
+}
+.chat-message-meta > span {
+  font-size: 10px;
+}
+.edit-message-sheet textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 110px;
+  max-height: 40dvh;
+  border: 0;
+  border-radius: 24px;
+  background: var(--surface-strong);
+  color: var(--text);
+  font: inherit;
+  padding: 18px;
+  margin: 22px 0 12px;
+}
+.original-message {
+  padding-block: 24px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.original-message time {
+  display: block;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.quote-highlight {
+  animation: quote-locate 1400ms var(--ease-orbit);
+}
+@keyframes quote-locate {
+  0%,
+  35% {
+    outline: 2px solid var(--secondary);
+    outline-offset: 5px;
+  }
+  100% {
+    outline: 2px solid transparent;
+    outline-offset: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quote-highlight {
+    animation: none;
+  }
+}
+
+.chat-pin-strip {
+  flex: none;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.chat-pin-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.open-pin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 4px;
+  color: var(--text-dim);
+  background: none;
+  border: 0;
+  border-radius: 20px;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+}
+.open-pin > svg {
+  flex: none;
+  color: var(--secondary);
+}
+.open-pin > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending-messages {
+  display: grid;
+  gap: 12px;
+  padding-block: 8px;
+}
+.pending-message {
+  width: fit-content;
+  max-width: min(90%, 360px);
+  justify-self: end;
+  padding: 14px 16px 8px;
+  border-radius: 24px;
+  background: var(--surface-strong);
+  color: var(--text);
+}
+.pending-message > p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.pending-message-state {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.pending-message-state .icon-button {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  background: none;
+  border: 0;
+}
+.pending-message-state time {
+  margin-left: auto;
+  font-size: 10px;
+}

@@ -22,6 +22,9 @@ vi.mock('@/features/location/LocationProvider', () => ({
 vi.mock('@/features/alerts/PushProvider', () => ({
   PushProvider: ({ children }: { children: ReactNode }) => children,
 }))
+vi.mock('@/features/outbox/OutboxProvider', () => ({
+  OutboxProvider: ({ children }: { children: ReactNode }) => children,
+}))
 vi.mock('@/features/memories/AnniversaryReveal', () => ({
   AutomaticReveal: () => null,
 }))

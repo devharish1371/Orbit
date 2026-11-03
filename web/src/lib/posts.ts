@@ -85,15 +85,24 @@ export function cursorFilter(post: Pick<Post, 'id' | 'created_at'>) {
 export async function sharePost(
   client: OrbitClient,
   draft: PostDraft,
+  signal?: AbortSignal,
 ): Promise<Post> {
   const uploaded: string[] = []
-  const existing = await client
-    .from('posts')
-    .select('*')
-    .eq('id', draft.id)
-    .maybeSingle()
+  const lookup = client.from('posts').select('*').eq('id', draft.id)
+  const existing = await (
+    signal ? lookup.abortSignal(signal) : lookup
+  ).maybeSingle()
   if (existing.error) throw existing.error
-  if (existing.data) return existing.data
+  function own(item: Post) {
+    if (
+      item.author_id !== draft.author ||
+      item.couple_id !== draft.couple ||
+      item.id !== draft.id
+    )
+      throw new Error('DRAFT_ACCOUNT_CHANGED')
+    return item
+  }
+  if (existing.data) return own(existing.data)
   const root = `${draft.couple}/${draft.author}/${draft.id}`
   let media: string | null = null,
     thumb: string | null = null
@@ -120,6 +129,8 @@ export async function sharePost(
     }
     const payload: Json = {
       id: draft.id,
+      expected_author_id: draft.author,
+      expected_couple_id: draft.couple,
       channel: draft.channel,
       kind: draft.kind,
       body: draft.body.trim() || null,
@@ -138,15 +149,18 @@ export async function sharePost(
       height: attachment?.height ?? null,
       waveform: attachment?.waveform ?? null,
     }
-    const result = await client.rpc('create_shared_post', { p_post: payload })
+    const request = client.rpc('create_shared_post', { p_post: payload })
+    const result = await (signal ? request.abortSignal(signal) : request)
     if (result.error) throw result.error
     return result.data
   } catch (error) {
+    if (signal?.aborted) throw error
     // Never remove attached media after a response is lost. RLS also protects references.
+    const lookup = client.from('posts').select('*').eq('id', draft.id)
     const check = await Promise.resolve(
-      client.from('posts').select('*').eq('id', draft.id).maybeSingle(),
+      (signal ? lookup.abortSignal(signal) : lookup).maybeSingle(),
     ).catch(() => null)
-    if (check?.data) return check.data
+    if (check?.data) return own(check.data)
     if (check && !check.error && uploaded.length)
       await client.storage
         .from('media')

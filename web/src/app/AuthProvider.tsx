@@ -4,6 +4,7 @@ import type { Session } from '@supabase/supabase-js'
 import { AuthContext } from './AuthContext'
 import { getClient, type OrbitClient } from '@/lib/supabase'
 import { disablePush } from '@/native/push'
+import { outboxStore } from '@/features/outbox/store'
 
 export function AuthProvider({
   children,
@@ -43,7 +44,11 @@ export function AuthProvider({
       setSession(next)
       if (event !== 'INITIAL_SESSION') setRestoring(false)
       if (next || event === 'SIGNED_OUT') setRestoreError(false)
-      if (event === 'SIGNED_OUT') query.clear()
+      if (event === 'SIGNED_OUT') {
+        window.dispatchEvent(new Event('orbit-signing-out'))
+        void outboxStore.clearAll().catch(() => {})
+        query.clear()
+      }
     })
     void restore()
     window.addEventListener('online', restore)
@@ -76,11 +81,19 @@ export function AuthProvider({
         }
       },
       async signOut() {
-        await disablePush()
-        await client.auth.signOut({ scope: 'local' })
-        query.clear()
-        setSession(null)
-        setRestoreError(false)
+        window.dispatchEvent(new Event('orbit-signing-out'))
+        try {
+          await outboxStore.clearAll()
+          await disablePush()
+          const result = await client.auth.signOut({ scope: 'local' })
+          if (result?.error) throw result.error
+          query.clear()
+          setSession(null)
+          setRestoreError(false)
+        } catch (error) {
+          window.dispatchEvent(new Event('orbit-signout-failed'))
+          throw error
+        }
       },
     }),
     [client, session, restoring, restoreError, query],

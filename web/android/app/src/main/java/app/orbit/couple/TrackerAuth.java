@@ -37,7 +37,7 @@ final class TrackerAuth {
         cipher.init(Cipher.DECRYPT_MODE,key(),new GCMParameterSpec(128,Base64.decode(parts[0],Base64.NO_WRAP)));
         return new String(cipher.doFinal(Base64.decode(parts[1],Base64.NO_WRAP)),StandardCharsets.UTF_8);
     }
-    static synchronized void clear(Context c){c.getSharedPreferences("OrbitAuth",0).edit().clear().commit();}
+    static synchronized void clear(Context c){OutboxFiles.clearAll(c);c.getSharedPreferences("OrbitAuth",0).edit().clear().commit();}
     static void configure(Context c,String url,String apiKey) throws Exception {
         URL parsed=new URL(url);if(!parsed.getProtocol().equals("https")||!parsed.getHost().endsWith(".supabase.co")||!parsed.getPath().isEmpty())throw new Exception("INVALID_PROJECT_URL");
         c.getSharedPreferences("OrbitTracking",0).edit().putString("url",url).putString("publicKey",apiKey).commit();

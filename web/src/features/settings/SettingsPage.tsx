@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/Button'
 import { StorageStatus } from '@/features/posts/StorageStatus'
 import { ExportMemories } from '@/features/memories/ExportMemories'
 import { PrivacySettings } from './PrivacySettings'
+import { useOutbox } from '@/features/outbox/OutboxContext'
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 
 export default function SettingsPage() {
   const { data: space } = useSpace()
@@ -24,6 +26,20 @@ export default function SettingsPage() {
   const [message, setMessage] = useState('')
   const [busy, setBusy] = useState(false)
   const [themeBusy, setThemeBusy] = useState(false)
+  const outbox = useOutbox()
+  const [logoutConfirm, setLogoutConfirm] = useState(false),
+    [logoutBusy, setLogoutBusy] = useState(false)
+  async function logout() {
+    setLogoutBusy(true)
+    setMessage('')
+    try {
+      await signOut()
+    } catch {
+      setMessage(copy.alerts.failed)
+    } finally {
+      setLogoutBusy(false)
+    }
+  }
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!space) return
@@ -154,14 +170,29 @@ export default function SettingsPage() {
         <Button
           className="button-secondary"
           type="button"
+          disabled={logoutBusy}
           onClick={() => {
-            void signOut().catch(() => setMessage(copy.alerts.failed))
+            if (outbox?.items.length) setLogoutConfirm(true)
+            else void logout()
           }}
         >
           <LogOut size={17} aria-hidden="true" />
           {copy.common.signOut}
         </Button>
       </section>
+      {logoutConfirm && (
+        <ConfirmSheet
+          title="Log out?"
+          description="Pending texts on this device will be discarded. Sent messages stay in your conversation."
+          confirmLabel="Log out"
+          onCancel={() => setLogoutConfirm(false)}
+          onConfirm={() => {
+            void logout()
+          }}
+          busy={logoutBusy}
+          error={message}
+        />
+      )}
     </div>
   )
 }

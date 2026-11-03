@@ -31,6 +31,7 @@ import { VoiceRecorder } from './VoiceRecorder'
 import { AudioPlayer } from '@/components/ui/AudioPlayer'
 import { ReplyPreview } from './ReplyPreview'
 import { useQuotedPosts } from './usePosts'
+import { useOutbox } from '@/features/outbox/OutboxContext'
 function LocalPreview({ note }: { note: Attachment }) {
   const attach = useCallback(
     (element: HTMLImageElement | null) => {
@@ -86,6 +87,7 @@ export function Composer({
     [retryable, setRetryable] = field('retryable')
   const quoted = useQuotedPosts(channel === 'chat' ? [replyId] : [])
   const formRef = useRef<HTMLFormElement>(null)
+  const outbox = useOutbox()
   const [recording, setRecording] = useState(false)
   useEffect(() => {
     onBusyChange?.(busy || recording)
@@ -152,7 +154,7 @@ export function Composer({
     setMessage('')
     onStopTyping()
     try {
-      await sharePost(client, {
+      const draft: PostDraft = {
         id: idRef.current,
         couple: space.couple.id,
         author: space.self.user_id,
@@ -168,7 +170,22 @@ export function Composer({
         attachment,
         noteStyle,
         replyTo: replyId,
-      })
+      }
+      if (channel === 'chat' && kind === 'text' && !attachment && outbox) {
+        try {
+          await outbox.enqueue(draft)
+        } catch (storageError) {
+          const code =
+            storageError &&
+            typeof storageError === 'object' &&
+            'message' in storageError
+              ? String(storageError.message)
+              : ''
+          if (!navigator.onLine || code.startsWith('DRAFT_')) throw storageError
+          // Storage can be denied in private browsers. Online sending still works.
+          await sharePost(client, draft)
+        }
+      } else await sharePost(client, draft)
       idRef.current = crypto.randomUUID()
       attemptedRef.current = false
       setBody('')
