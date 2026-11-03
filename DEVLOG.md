@@ -977,3 +977,14 @@ Static audit caught dark timeline text inheriting the old pale-card palette afte
 was removed. Reset the local palette to inherit the actual theme; both themes verified in
 browser. Full web/worker/lint/types/format/build checks pass again. A captured update transition
 in Keepsakes was replaced with its loaded state before the targeted audit rerun.
+
+Final 5810ab7: all 50 static audits score 100 accessibility / 100 best practices. Android
+CI 41640760934 passes, including native tests/signing/manifest checks. Source scan: 816
+files, zero findings. Full audit, bounded evidence, feature priorities, signature concepts
+and the proposed connected visual direction are recorded in docs/FULL_APP_AUDIT.md and
+docs/screens/cleanup. Larger changes await the user's selection. Preview data/server retained.
+
+Final local APK: 6,915,116 bytes; SHA256
+9839e33d38841a46e8367dd7c7615c2438e8ab16868cc0c8f7297114094386e4. ZIP integrity,
+stable signing against the M7 baseline and configured-private-data scan pass. Artifact
+13232777835 supersedes the intermediate 87831eb artifact for this cleanup.
