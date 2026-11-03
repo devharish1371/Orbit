@@ -47,7 +47,7 @@ export const copy = {
     mood: 'How are you feeling?',
     removeAttachment: 'Remove attachment',
     expiry: 'Fades after',
-    defaultExpiry: 'Default · {days} days',
+    defaultExpiry: '{days} days',
     day: '24 hours',
     week: '7 days',
     keep: 'Keep ✨',

@@ -15,7 +15,11 @@ export function PersonLink({
     <JourneyLink
       className={className}
       to={`/person/${id}`}
-      aria-label={`View ${name}’s profile`}
+      aria-label={
+        name.toLowerCase() === 'you'
+          ? 'View your profile'
+          : `View ${name}’s profile`
+      }
     >
       {children}
     </JourneyLink>
