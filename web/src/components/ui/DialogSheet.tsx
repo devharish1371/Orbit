@@ -6,11 +6,13 @@ export function DialogSheet({
   onClose,
   children,
   className = '',
+  dismissible = true,
 }: {
   title: string
   onClose: () => void
   children: ReactNode
   className?: string
+  dismissible?: boolean
 }) {
   const dialog = useRef<HTMLDialogElement>(null),
     uid = useId()
@@ -33,7 +35,7 @@ export function DialogSheet({
       aria-labelledby={uid}
       onCancel={(e) => {
         e.preventDefault()
-        onClose()
+        if (dismissible) onClose()
       }}
       onClick={(e) => {
         if (e.target !== e.currentTarget) return
@@ -44,7 +46,7 @@ export function DialogSheet({
           e.clientY < r.top ||
           e.clientY > r.bottom
         )
-          onClose()
+          if (dismissible) onClose()
       }}
     >
       <header className="orbit-sheet-heading">
@@ -53,6 +55,7 @@ export function DialogSheet({
           className="icon-button"
           type="button"
           aria-label={`Close ${title.toLowerCase()}`}
+          disabled={!dismissible}
           onClick={onClose}
         >
           <X size={20} />

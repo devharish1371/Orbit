@@ -33,3 +33,27 @@ test('sheet supplies an accessible name, Escape dismissal and return focus', asy
   expect(document.activeElement).toBe(trigger)
   trigger.remove()
 })
+test('a pending operation prevents Escape and close dismissal until it settles', async () => {
+  const close = vi.fn()
+  const view = render(
+    <DialogSheet title="Confirm" onClose={close} dismissible={false}>
+      Pending
+    </DialogSheet>,
+  )
+  fireEvent(
+    screen.getByRole('dialog'),
+    new Event('cancel', { cancelable: true }),
+  )
+  expect(close).not.toHaveBeenCalled()
+  expect(screen.getByRole('button', { name: 'Close confirm' })).toBeDisabled()
+  view.rerender(
+    <DialogSheet title="Confirm" onClose={close}>
+      Ready
+    </DialogSheet>,
+  )
+  fireEvent(
+    screen.getByRole('dialog'),
+    new Event('cancel', { cancelable: true }),
+  )
+  expect(close).toHaveBeenCalledOnce()
+})

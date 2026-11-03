@@ -988,3 +988,18 @@ Final local APK: 6,915,116 bytes; SHA256
 9839e33d38841a46e8367dd7c7615c2438e8ab16868cc0c8f7297114094386e4. ZIP integrity,
 stable signing against the M7 baseline and configured-private-data scan pass. Artifact
 13232777835 supersedes the intermediate 87831eb artifact for this cleanup.
+
+## 2026-11-03 — Plan v2 approved; foundation slice
+
+User approved all audit proposals and requested speed/fall-related alerts. PLAN_V2.md now
+tracks every feature in ordered phases, with the original free/two-person/privacy/retention
+and human gates intact. Official Android sensor/location and Pixel Watch sources informed
+the safety contract: opt-in GPS speed estimates; timed check-ins; experimental phone impact
+check-in only after validation, no medical/emergency-service promise or silent activation.
+
+Extracted common controls/open surfaces into orbit-foundation.css with shared tokens.
+Message unsend, sealed capsule deletion and place deletion now use ConfirmSheet; busy
+operations block dismissal, failures stay visible and cancellation restores focus. No actual
+message/capsule/place deletion was performed in browser QA. 84 web/16 worker tests and full
+lint/types/format/build pass. Native dialog fits actual 320/360/412 px viewports; cancel
+restores Unsend focus. V2.1 reply/edit implementation follows, with Android rollup packaging.

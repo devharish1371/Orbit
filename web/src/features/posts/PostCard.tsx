@@ -24,6 +24,7 @@ import type { Database } from '@/lib/database.types'
 import { PostMedia } from './PostMedia'
 import { Comments } from './Comments'
 import { PersonLink } from '@/components/ui/PersonLink'
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 type Reaction = Database['public']['Tables']['reactions']['Row']
 export function PostCard({
   post,
@@ -440,37 +441,19 @@ export function PostCard({
         </footer>
       )}
       {confirm && (
-        <div
-          className="unsend-confirm"
-          role="group"
-          aria-label={copy.posts.unsendTitle}
-        >
-          <p>{copy.posts.unsendTitle}</p>
-          <p className="muted small">
-            {post.keep ? copy.posts.unsendKept : copy.posts.unsendHint}
-          </p>
-          <div className="attention-buttons">
-            <button
-              type="button"
-              className="button button-secondary"
-              disabled={busy}
-              onClick={() => {
-                void action(() =>
-                  client.rpc('request_unsend', { p_id: post.id }),
-                )
-              }}
-            >
-              {copy.posts.unsendBoth}
-            </button>
-            <button
-              type="button"
-              className="text-button"
-              onClick={() => setConfirm(false)}
-            >
-              {copy.posts.cancel}
-            </button>
-          </div>
-        </div>
+        <ConfirmSheet
+          title={copy.posts.unsendTitle}
+          description={
+            post.keep ? copy.posts.unsendKept : copy.posts.unsendHint
+          }
+          confirmLabel={copy.posts.unsendBoth}
+          busy={busy}
+          error={message}
+          onCancel={() => setConfirm(false)}
+          onConfirm={() => {
+            void action(() => client.rpc('request_unsend', { p_id: post.id }))
+          }}
+        />
       )}
       {message && (
         <p role="status" className="form-message">

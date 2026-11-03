@@ -1,13 +1,21 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { afterEach, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 import { PostCard } from './PostCard'
 import type { Post } from '@/lib/posts'
 const f = vi.hoisted(() => ({
   rpc: vi.fn().mockResolvedValue({ error: null }),
 }))
+beforeEach(() => {
+  HTMLDialogElement.prototype.showModal = function () {
+    this.setAttribute('open', '')
+  }
+  HTMLDialogElement.prototype.close = function () {
+    this.removeAttribute('open')
+  }
+})
 vi.mock('@/hooks/useAuth', () => ({
   useAuth: () => ({ client: { rpc: f.rpc }, session: { user: { id: 'me' } } }),
 }))

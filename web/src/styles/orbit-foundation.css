@@ -1,0 +1,236 @@
+/* Shared V2 controls and open surfaces. Screen art stays in its feature stylesheet. */
+:root {
+  --orbit-radius-control: 999px;
+  --orbit-radius-media: 28px;
+  --orbit-touch-target: 44px;
+  --orbit-duration-press: 120ms;
+  --orbit-duration-enter: 220ms;
+}
+/* Full-app cleanup: whitespace groups content; only controls carry a surface. */
+.page :is(.settings-section, .memory-section, .profile-photo-section),
+.page .place-editor {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 24px 0;
+}
+.page
+  :is(.settings-section, .memory-section)
+  + :is(.settings-section, .memory-section) {
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+}
+.page :is(.settings-section, .memory-section) h2 {
+  font-family: var(--font-sans);
+  font-size: 21px;
+  letter-spacing: -0.035em;
+}
+.page
+  :is(.settings-section, .memory-section, .place-editor)
+  :is(
+    input:not([type='checkbox']):not([type='color']):not([type='range']),
+    textarea
+  ),
+.page .choice-trigger {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  box-shadow: none;
+}
+.page :is(input, textarea):focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+}
+.page .button {
+  border-radius: var(--orbit-radius-control);
+}
+.page .button-secondary {
+  border-color: transparent;
+}
+.page .back-link {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+.page .profile-photo-section {
+  padding-top: 8px;
+}
+.page .color-choice {
+  border-radius: 50%;
+}
+.page .theme-sample {
+  border: 0;
+  border-radius: 24px;
+  background: none;
+  padding: 10px 4px;
+}
+.page .theme-sample[aria-pressed='true'] {
+  background: none;
+  box-shadow: none;
+}
+.page .theme-miniature {
+  width: min(76px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  margin: 5px auto 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  outline: 1px solid var(--border);
+  outline-offset: 4px;
+}
+.page .theme-sample[aria-pressed='true'] .theme-miniature {
+  outline: 2px solid var(--primary);
+}
+.page .theme-miniature :is(.mini-line, .mini-dock) {
+  display: none;
+}
+.page .theme-miniature .mini-planet {
+  width: 24%;
+  height: 24%;
+  top: 25%;
+  left: 20%;
+}
+.page .theme-miniature .mini-planet + .mini-planet {
+  top: 50%;
+  left: 55%;
+}
+.page .quiet-hours {
+  padding: 12px 0;
+  background: none;
+}
+.storage-details {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+.storage-details > summary {
+  min-height: var(--orbit-touch-target);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+}
+.storage-details > summary::-webkit-details-marker {
+  display: none;
+}
+.storage-details > summary::after {
+  content: '+';
+  font-size: 18px;
+}
+.storage-details[open] > summary::after {
+  content: '−';
+}
+.storage-details > p {
+  margin-bottom: 10px;
+}
+.page .capsule-compose-toggle {
+  border: 0;
+  padding: 8px 0;
+  min-height: 60px;
+}
+.page .capsule-card {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+}
+.page .capsule-card time {
+  border: 0;
+}
+.page .capsule-card .capsule-stamp {
+  right: 0;
+}
+.page .activity-list {
+  padding: 0;
+  border: 0;
+  gap: 0;
+}
+.page .activity-list li {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: none;
+  padding: 24px 0;
+  box-shadow: none;
+}
+.page .posts-empty {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.chat-page .explorer-toggle {
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  border-radius: 50%;
+}
+.chat-page .post-explorer {
+  margin-block: 0 4px;
+}
+.page .explorer-panel {
+  border: 0;
+  background: var(--panel);
+  border-radius: 28px;
+}
+.explorer-panel .explorer-search input {
+  border: 0;
+  background: none;
+}
+.choice-sheet,
+.orbit-sheet {
+  border: 0;
+}
+.post-author .profile-face,
+.post-comments .profile-face {
+  min-width: var(--orbit-touch-target);
+  min-height: var(--orbit-touch-target);
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+}
+
+.keepsakes-page .keepsake-photo-card {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.timeline-page .story-count {
+  --text: inherit;
+  --text-dim: inherit;
+  --primary: inherit;
+  color: var(--text);
+}
+.timeline-page .story-count .countdown-number,
+.timeline-page .story-count p {
+  color: var(--text);
+}
+.timeline-page .story-count .card-link {
+  color: var(--secondary);
+}
+
+.confirmation-body {
+  padding-block: 24px;
+}
+.confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-block: 8px;
+}
+.confirmation-actions > .button {
+  min-width: 0;
+  flex: 1 1 130px;
+  min-height: 52px;
+  border-radius: var(--orbit-radius-control);
+  white-space: normal;
+}
+.confirmation-actions .button-danger {
+  background: var(--danger);
+  color: var(--bg);
+}

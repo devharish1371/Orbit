@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
-import { DialogSheet } from '@/components/ui/DialogSheet'
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 import { Avatar } from '@/components/ui/Avatar'
 import { nativeTracking } from '@/native/tracker'
 import { useNow } from '@/hooks/useNow'
@@ -555,26 +555,17 @@ export default function MapPage() {
         />
       )}
       {deleting && (
-        <DialogSheet
+        <ConfirmSheet
           title="Delete this place?"
-          onClose={() => setDeleting(false)}
-        >
-          <div className="sheet-actions">
-            <button
-              className="button"
-              disabled={busy}
-              onClick={() => {
-                void remove()
-              }}
-            >
-              Delete place
-            </button>
-            <button className="text-button" onClick={() => setDeleting(false)}>
-              Cancel
-            </button>
-            {error && <p role="alert">{error}</p>}
-          </div>
-        </DialogSheet>
+          description="This removes the shared pin and its arrival alerts."
+          confirmLabel="Delete place"
+          busy={busy}
+          error={error}
+          onCancel={() => setDeleting(false)}
+          onConfirm={() => {
+            void remove()
+          }}
+        />
       )}
       {live.locations.error && (
         <p role="status" className="atlas-error">

@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { useNow } from '@/hooks/useNow'
 import { Button } from '@/components/ui/Button'
+import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 import { memories as text } from '@/copy/memories'
 import { useCapsules } from './useMemories'
 export default function CapsulesPage() {
@@ -17,6 +18,7 @@ export default function CapsulesPage() {
     now = useNow()
   const rows = capsules.data?.pages.flat() ?? []
   const [writing, setWriting] = useState(false)
+  const [cancelId, setCancelId] = useState<string | null>(null)
   const titleField = useRef<HTMLInputElement>(null)
   useEffect(() => {
     if (writing) titleField.current?.focus()
@@ -59,7 +61,6 @@ export default function CapsulesPage() {
     }
   }
   async function change(id: string, open: boolean) {
-    if (!open && !window.confirm(text.cancelConfirm)) return
     setBusy(true)
     setMessage('')
     try {
@@ -68,6 +69,7 @@ export default function CapsulesPage() {
         { p_id: id },
       )
       if (result.error) throw result.error
+      setCancelId(null)
       await query.invalidateQueries({ queryKey: ['capsules'] })
     } catch {
       setMessage(text.failed)
@@ -186,7 +188,8 @@ export default function CapsulesPage() {
                 disabled={busy}
                 className="text-button"
                 onClick={() => {
-                  void change(row.id, false)
+                  setMessage('')
+                  setCancelId(row.id)
                 }}
               >
                 {text.cancelCapsule}
@@ -205,6 +208,19 @@ export default function CapsulesPage() {
           </article>
         )
       })}
+      {cancelId && (
+        <ConfirmSheet
+          title={text.cancelConfirm}
+          description="Your partner won’t be able to open it. This can’t be undone."
+          confirmLabel={text.cancelCapsule}
+          busy={busy}
+          error={message}
+          onCancel={() => setCancelId(null)}
+          onConfirm={() => {
+            void change(cancelId, false)
+          }}
+        />
+      )}
       {capsules.hasNextPage && (
         <Button
           className="button-secondary"
