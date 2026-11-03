@@ -972,3 +972,8 @@ fixture teardown. Production npm audit: zero published vulnerabilities. CUA meas
 phone layouts across 14 pages plus 11 expanded states in both themes at 320/360/412 px;
 no horizontal/control overflow. Static accessibility audits and Android packaging follow.
 Proposed product features and the next visual direction remain unimplemented pending selection.
+
+Static audit caught dark timeline text inheriting the old pale-card palette after its panel
+was removed. Reset the local palette to inherit the actual theme; both themes verified in
+browser. Full web/worker/lint/types/format/build checks pass again. A captured update transition
+in Keepsakes was replaced with its loaded state before the targeted audit rerun.

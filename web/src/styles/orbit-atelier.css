@@ -1845,3 +1845,16 @@
   background: none;
   box-shadow: none;
 }
+.timeline-page .story-count {
+  --text: inherit;
+  --text-dim: inherit;
+  --primary: inherit;
+  color: var(--text);
+}
+.timeline-page .story-count .countdown-number,
+.timeline-page .story-count p {
+  color: var(--text);
+}
+.timeline-page .story-count .card-link {
+  color: var(--secondary);
+}
