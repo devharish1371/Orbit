@@ -1078,3 +1078,9 @@ responses, storage failure, immutable retry, account change and logout races. Th
 AES-GCM unit cases added; Android compile/CI and browser rollup follow below. Production
 npm audit: zero vulnerabilities; source scan: 889 files, zero findings. Physical offline,
 process death and Keystore behavior remain in the deferred user-requested test batch.
+
+Browser rollup: disposable fixture text passed persisted-intent → Sending → Sent to Orbit;
+reload shows exactly one acknowledged copy. Actual 320/360/412 px chat layouts fit without
+horizontal overflow. Screenshot in docs/screens/v2-outbox. No real partner contact or network
+interruption. A coarse display-clock edge briefly showed 25h for a 24h pending lifetime;
+2fe4dee clamps the display to the original intent lifetime. Full local check rerun passes.
