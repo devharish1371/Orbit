@@ -26,3 +26,10 @@ complete hosted regression remains 67 passing tests.
 Verified primary API reference: [Capacitor App v8](https://capacitorjs.com/docs/apis/app#addlistenerbackbutton-),
 including replacement of default Back handling when an application listener is installed.
 Browser screenshots and exact Android build outcome are recorded in DEVLOG.md.
+
+Final code head 4c5ff9b passes Android CI 41687906057 and local APK integrity/signing/private
+checks; retained internally. The place sheet uses theme-aware round checkboxes/radius control
+with forced-colors fallback. Browser regressions verify Cancel/Escape focus and one-layer
+closure. A deployment-rollover failure also led to precaching the small Map route while
+keeping the large renderer deferred and tiles network-only. Map stayed usable before the
+next explicit update; see DECISIONS.md. No APK handover or phone install was requested.

@@ -14,3 +14,7 @@ No actual place save/delete, partner contact, push or phone network interruption
 Android Back is covered by mocked bridge tests and native CI; physical keyboard/predictive
 Back/gesture acceptance remains in the user's deferred batch. Avatar/photo motion handoffs
 and the rest of V2.2 remain planned. The fixture's original day theme was restored.
+
+Final regression: Map reload remained usable across the next build replacement before
+applying Update Orbit. After the focus fix update, message-action Escape returned to Message
+options on the same Chat route. The screenshot predates only that invisible focus correction.

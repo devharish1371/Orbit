@@ -1126,3 +1126,17 @@ it now uses the same close callback and does not consume cancellation from a mod
 Regression assertions cover Moments/Chat focus. Clipboard-unavailable hosts report failure
 instead of throwing synchronously. All work uses disposable data; no place save/delete or
 real partner contact. Physical acceptance remains deferred; no APK handover.
+
+Final browser regression: after replacing the web build, Map reloaded and remained usable
+before Update Orbit was applied (previous missing-route error no longer reproduced). After
+applying the focus fix, Escape on a message action returns to Message options and stays in
+Chat. Place sheet screenshots/geometry and original day-theme restoration are retained.
+Native 013a263 run 41686916998 passes; final 4c5ff9b rollup follows below.
+
+Final 4c5ff9b Android CI 41687906057 passes web/Python/source checks, native unit tests,
+build, apksigner and merged-manifest checks. Retained locally without handover: 6,927,446
+bytes; SHA256 910db46f6789dd45d5e6e45826b70618cf640ff0bb710ca963db61bfa5e429f9.
+Local ZIP integrity, baseline signing continuity and configured-private-material exclusion
+pass. Source scan: 900 files, zero findings. 117 web / 16 worker checks are green; last full
+backend regression remains all 67 passing. V2.1 software slice and first V2.2 Back/place-sheet
+slice are verified; physical gates and remaining V2 phases stay open in PLAN_V2.md.

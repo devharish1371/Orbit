@@ -87,7 +87,9 @@ Primary references, verified 3 November 2026:
 - V2.2 first slice: Android Back prioritizes dialogs/temporary layers, safe history/fallback
   and Home minimize; Escape closes temporary web layers. Place editing uses the shared
   focus-contained sheet, with busy/error/retry and return-focus checks. 117 web/16 worker
-  checks pass. Native gestures and the remaining avatar/photo/keyboard work stay open.
+  checks and final Android CI 41687906057 pass for code head 4c5ff9b. The small Map route
+  now stays cached across web updates; tiles stay network-only. Native gestures and the
+  remaining avatar/photo/keyboard work stay open. Build retained privately, no handover.
 - V2.3–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.
