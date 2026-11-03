@@ -1003,3 +1003,9 @@ operations block dismissal, failures stay visible and cancellation restores focu
 message/capsule/place deletion was performed in browser QA. 84 web/16 worker tests and full
 lint/types/format/build pass. Native dialog fits actual 320/360/412 px viewports; cancel
 restores Unsend focus. V2.1 reply/edit implementation follows, with Android rollup packaging.
+
+User reported the typing highlight colliding with the + control. Removed the textarea's
+external focus outline and composer focus halo/shadow; a contained underline preserves a
+visible text focus indicator. Updated 360 px preview verifies no external outline and the
+textarea does not overlap +. Production build passes; retained only a synthetic unsent draft
+during QA and cleared it afterward. Included in the V2 Android rollup.

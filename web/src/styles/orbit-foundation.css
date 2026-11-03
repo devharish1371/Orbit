@@ -234,3 +234,21 @@
   background: var(--danger);
   color: var(--bg);
 }
+/* The composer already groups its controls; input focus must not draw over +/media. */
+.chat-page .chat-composer .messenger-composer,
+.chat-page .chat-composer .messenger-composer:focus-within {
+  box-shadow: none;
+  border-color: var(--border);
+}
+.chat-page .messenger-input-row textarea:focus,
+.chat-page .messenger-input-row textarea:focus-visible {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+.chat-page .messenger-input-row textarea:focus-visible {
+  background-image: linear-gradient(var(--secondary), var(--secondary));
+  background-size: calc(100% - 20px) 1px;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
