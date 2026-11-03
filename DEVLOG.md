@@ -1009,3 +1009,23 @@ external focus outline and composer focus halo/shadow; a contained underline pre
 visible text focus indicator. Updated 360 px preview verifies no external outline and the
 textarea does not overlap +. Production build passes; retained only a synthetic unsent draft
 during QA and cleared it afterward. Included in the V2 Android rollup.
+
+## 2026-11-03 — V2.1 reply/edit slice
+
+Applied additive 0018. Replies store only a validated same-couple chat ID, with no duplicated
+text/media and no cascade that would erase the unavailable-quote marker after retention.
+Quote rows are read in batches through ordinary RLS and revalidated for expiry in the UI.
+Realtime/social invalidation covers quote queries. Tap scrolls to the loaded original or
+opens a current authorized original in a sheet. Author-only text edits use a 15-minute
+server window and expected version, preserving creation, expiry and identity. Identical
+ambiguous-response retries do not increment the edit twice; stale edits are rejected.
+
+Composer shows sending/retry state and retains the same id for an unchanged failed send;
+success gets a single "Sent to Orbit" mark, never recipient delivery/read claims. Durable
+encrypted outbox/pinning remain in V2.1. Fix for typing outline/halo is included.
+
+89 web/16 worker tests, lint/types/format/build pass. All 64 hosted tests pass in 111.31s.
+Browser dummy quote/send/edit/reload/original navigation works. Browser testing exposed a
+fresh-message edit eligibility delay from the coarse display clock; allowed its known tick
+lag in UI eligibility while the server remains authoritative. Narrow layout/a11y and Android
+rollup follow. No real partner contact or safety feature activation.

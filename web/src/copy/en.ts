@@ -58,11 +58,15 @@ export const copy = {
     pinned: 'Saved at a shared place',
     share: 'Post',
     sharing: 'Posting…',
+    sending: 'Sending…',
+    retrySend: 'Retry send',
     shared: 'Shared',
     keepHint: 'Saved until you remove it. Uses keepsake storage.',
     expiryHint: 'Either of you can save it before it expires.',
     empty: 'Add a note or finish your attachment first.',
     errors: {
+      reply:
+        'The original message is unavailable. Remove the quote to send this message.',
       quota:
         'Your keepsake space is full. Let an older keepsake fade, then try again.',
       unavailable: 'This item is no longer available. Refresh to update.',

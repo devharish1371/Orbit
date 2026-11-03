@@ -24,6 +24,7 @@ export interface PostDraft {
   place: string | null
   attachment?: Attachment
   noteStyle?: NoteStyle
+  replyTo?: string | null
 }
 export function visiblePost(
   post: Pick<Post, 'unsent_at' | 'keep' | 'expires_at'>,
@@ -122,6 +123,7 @@ export async function sharePost(
       channel: draft.channel,
       kind: draft.kind,
       body: draft.body.trim() || null,
+      reply_to_id: draft.channel === 'chat' ? (draft.replyTo ?? null) : null,
       note_style:
         draft.channel === 'moment' && draft.kind === 'text'
           ? (draft.noteStyle ?? 'ink')
@@ -153,14 +155,35 @@ export async function sharePost(
     throw error
   }
 }
-export function mediaError(error: unknown): 'quota' | 'unavailable' | 'failed' {
+export function mediaError(
+  error: unknown,
+): 'quota' | 'unavailable' | 'failed' | 'reply' {
   const text =
     error && typeof error === 'object' && 'message' in error
       ? String(error.message)
       : ''
-  return text.includes('KEEPSAKE_QUOTA_EXCEEDED')
-    ? 'quota'
-    : /CLEANUP|UNAVAILABLE|PGRST116/.test(text)
-      ? 'unavailable'
-      : 'failed'
+  return text.includes('REPLY_UNAVAILABLE')
+    ? 'reply'
+    : text.includes('KEEPSAKE_QUOTA_EXCEEDED')
+      ? 'quota'
+      : /CLEANUP|UNAVAILABLE|PGRST116/.test(text)
+        ? 'unavailable'
+        : 'failed'
+}
+export function canEditChat(
+  post: Pick<
+    Post,
+    'channel' | 'kind' | 'created_at' | 'expires_at' | 'keep' | 'unsent_at'
+  >,
+  now = Date.now(),
+) {
+  const created = Date.parse(post.created_at)
+  return (
+    post.channel === 'chat' &&
+    post.kind === 'text' &&
+    visiblePost(post, now) &&
+    // The shared display clock ticks in batches; a newly sent server row can be newer.
+    created <= now + 60_000 &&
+    now < created + 15 * 60_000
+  )
 }

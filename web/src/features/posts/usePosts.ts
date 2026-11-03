@@ -72,6 +72,26 @@ export function usePostReactions(ids: string[]) {
     },
   })
 }
+/** Batch references separately; never persist a second copy of expiring quote text. */
+export function useQuotedPosts(ids: (string | null | undefined)[]) {
+  const { client } = useAuth(),
+    { data: space } = useSpace()
+  const unique = [...new Set(ids.filter((id): id is string => !!id))].sort()
+  return useQuery({
+    queryKey: ['reply-posts', space?.couple.id, unique],
+    enabled: !!space && unique.length > 0,
+    queryFn: async () => {
+      const result = await client
+        .from('posts')
+        .select('*')
+        .eq('couple_id', space!.couple.id)
+        .eq('channel', 'chat')
+        .in('id', unique)
+      if (result.error) throw result.error
+      return result.data
+    },
+  })
+}
 export interface StorageUsage {
   total_bytes: number
   kept_bytes: number

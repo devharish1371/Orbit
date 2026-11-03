@@ -14,26 +14,45 @@ import {
   MoreHorizontal,
   Copy,
   Heart,
+  Reply,
+  Pencil,
+  Check,
 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
-import { mediaError, remaining, validReaction, type Post } from '@/lib/posts'
+import {
+  canEditChat,
+  mediaError,
+  remaining,
+  validReaction,
+  type Post,
+} from '@/lib/posts'
 import type { Database } from '@/lib/database.types'
 import { PostMedia } from './PostMedia'
 import { Comments } from './Comments'
 import { PersonLink } from '@/components/ui/PersonLink'
 import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
+import { ReplyPreview } from './ReplyPreview'
+import { EditMessage } from './EditMessage'
 type Reaction = Database['public']['Tables']['reactions']['Row']
 export function PostCard({
   post,
   reactions,
   now,
+  quote,
+  quoteLoading,
+  onReply,
+  onOpenQuote,
 }: {
   post: Post
   reactions: Reaction[]
   now: number
+  quote?: Post
+  quoteLoading?: boolean
+  onReply?: (post: Post) => void
+  onOpenQuote?: (id: string) => void
 }) {
   const { client, session } = useAuth(),
     { data: space } = useSpace(),
@@ -46,6 +65,7 @@ export function PostCard({
     [custom, setCustom] = useState(''),
     [actions, setActions] = useState(false)
   const [reacting, setReacting] = useState(false)
+  const [editing, setEditing] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [burst, setBurst] = useState<{ emoji: string; key: number } | null>(
     null,
@@ -254,6 +274,13 @@ export function PostCard({
           </span>
         </header>
       )}
+      {chat && post.reply_to_id && (
+        <ReplyPreview
+          post={quote}
+          loading={quoteLoading}
+          onOpen={onOpenQuote}
+        />
+      )}
       {['photo', 'voice'].includes(post.kind) && (
         <PostMedia post={post} timezone={space?.couple.timezone} />
       )}
@@ -288,6 +315,12 @@ export function PostCard({
       )}
       {chat && (
         <div className="chat-message-meta">
+          {post.edited_at && (
+            <span title={new Date(post.edited_at).toLocaleString()}>
+              edited
+            </span>
+          )}
+          {own && <Check size={12} aria-label="Sent to Orbit" />}
           {post.keep && <Sparkles size={11} aria-label={copy.posts.kept} />}
           <time dateTime={post.created_at}>
             {new Intl.DateTimeFormat('en-IN', {
@@ -365,6 +398,29 @@ export function PostCard({
       )}
       {(!chat || actions) && (
         <footer className="post-actions">
+          {chat && onReply && (
+            <button
+              type="button"
+              className="text-button"
+              onClick={() => {
+                setActions(false)
+                onReply(post)
+              }}
+            >
+              <Reply size={16} />
+              Reply
+            </button>
+          )}
+          {chat && own && canEditChat(post, now) && (
+            <button
+              type="button"
+              className="text-button"
+              onClick={() => setEditing(true)}
+            >
+              <Pencil size={16} />
+              Edit
+            </button>
+          )}
           {!chat && (
             <button
               type="button"
@@ -455,6 +511,7 @@ export function PostCard({
           }}
         />
       )}
+      {editing && <EditMessage post={post} onClose={() => setEditing(false)} />}
       {message && (
         <p role="status" className="form-message">
           {message}

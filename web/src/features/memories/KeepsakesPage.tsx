@@ -7,7 +7,7 @@ import { useTheme } from '@/hooks/useTheme'
 import { useNow } from '@/hooks/useNow'
 import { memories as text } from '@/copy/memories'
 import { PostCard } from '@/features/posts/PostCard'
-import { usePostReactions } from '@/features/posts/usePosts'
+import { usePostReactions, useQuotedPosts } from '@/features/posts/usePosts'
 import { PostMedia } from '@/features/posts/PostMedia'
 import { PostViewContext } from '@/app/FlowContext'
 import { useSpace } from '@/hooks/useSpace'
@@ -29,6 +29,7 @@ export default function KeepsakesPage() {
     [posts],
   )
   const reactions = usePostReactions(posts.map((post) => post.id))
+  const quotes = useQuotedPosts(posts.map((post) => post.reply_to_id))
   const dark =
     theme === 'system'
       ? !window.matchMedia('(prefers-color-scheme: light)').matches
@@ -114,6 +115,8 @@ export default function KeepsakesPage() {
               key={post.id}
               post={post}
               now={now}
+              quote={quotes.data?.find((item) => item.id === post.reply_to_id)}
+              quoteLoading={quotes.isFetching}
               reactions={
                 reactions.data?.filter((row) => row.post_id === post.id) ?? []
               }

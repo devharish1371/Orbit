@@ -659,6 +659,8 @@ export type Database = {
           created_at: string
           deleting_at: string | null
           deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
           expires_at: string | null
           id: string
           keep: boolean
@@ -673,6 +675,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
@@ -687,6 +690,8 @@ export type Database = {
           created_at?: string
           deleting_at?: string | null
           deletion_token?: string | null
+          edit_version?: number
+          edited_at?: string | null
           expires_at?: string | null
           id?: string
           keep?: boolean
@@ -701,6 +706,7 @@ export type Database = {
           media_path?: string | null
           media_width?: number | null
           note_style?: string
+          reply_to_id?: string | null
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
@@ -715,6 +721,8 @@ export type Database = {
           created_at?: string
           deleting_at?: string | null
           deletion_token?: string | null
+          edit_version?: number
+          edited_at?: string | null
           expires_at?: string | null
           id?: string
           keep?: boolean
@@ -729,6 +737,7 @@ export type Database = {
           media_path?: string | null
           media_width?: number | null
           note_style?: string
+          reply_to_id?: string | null
           thumb_bytes?: number
           thumb_path?: string | null
           ttl_hours?: number | null
@@ -909,6 +918,8 @@ export type Database = {
           created_at: string
           deleting_at: string | null
           deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
           expires_at: string | null
           id: string
           keep: boolean
@@ -923,6 +934,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
@@ -982,6 +994,8 @@ export type Database = {
           created_at: string
           deleting_at: string | null
           deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
           expires_at: string | null
           id: string
           keep: boolean
@@ -996,6 +1010,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
           ttl_hours: number | null
@@ -1010,6 +1025,46 @@ export type Database = {
         }
       }
       daily_question: { Args: never; Returns: Json }
+      edit_chat_post: {
+        Args: { p_body: string; p_expected_version: number; p_id: string }
+        Returns: {
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          note_style: string
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       finish_expired_post: {
         Args: { p_id: string; p_token: string }
         Returns: boolean

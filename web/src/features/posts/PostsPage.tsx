@@ -1,4 +1,4 @@
-import { usePostViewMemory } from '@/hooks/useComposerMemory'
+import { useComposerMemory, usePostViewMemory } from '@/hooks/useComposerMemory'
 import { PostExplorer } from './PostExplorer'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react'
@@ -16,14 +16,16 @@ import { useSpace } from '@/hooks/useSpace'
 import { useNow } from '@/hooks/useNow'
 import { Button } from '@/components/ui/Button'
 import { copy } from '@/copy/en'
-import { visiblePost, type Channel } from '@/lib/posts'
-import { usePostReactions, usePosts } from './usePosts'
+import { visiblePost, type Channel, type Post } from '@/lib/posts'
+import { usePostReactions, usePosts, useQuotedPosts } from './usePosts'
 import { useTyping } from './useTyping'
 import { Composer } from './Composer'
 import { PostCard } from './PostCard'
 import { Avatar } from '@/components/ui/Avatar'
 import { callUrl } from '@/lib/connect'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
+import { DialogSheet } from '@/components/ui/DialogSheet'
+import { PostMedia } from './PostMedia'
 export default function PostsPage({ channel }: { channel: Channel }) {
   const {
     field,
@@ -34,6 +36,13 @@ export default function PostsPage({ channel }: { channel: Channel }) {
     [kind, setKind] = field('filter'),
     [kept, setKept] = field('kept'),
     [composing, setComposing] = field('composing')
+  const {
+    field: composerField,
+    id: draftIdRef,
+    attempted: replyAttemptedRef,
+  } = useComposerMemory(channel)
+  const [, setReplyId] = composerField('replyId')
+  const [originalId, setOriginalId] = useState<string | null>(null)
   const [needle, setNeedle] = useState(search)
   useEffect(() => {
     const timer = setTimeout(() => setNeedle(search), 300)
@@ -55,6 +64,33 @@ export default function PostsPage({ channel }: { channel: Channel }) {
   const ids = unique.map((post) => post.id),
     reactions = usePostReactions(ids),
     newest = unique[0]?.id
+  const quotes = useQuotedPosts(unique.map((post) => post.reply_to_id))
+  const original = quotes.data?.find((post) => post.id === originalId)
+  function reply(post: Post) {
+    if (replyAttemptedRef.current) {
+      draftIdRef.current = crypto.randomUUID()
+      replyAttemptedRef.current = false
+    }
+    setReplyId(post.id)
+    document.getElementById('chat-message')?.focus()
+  }
+  function openQuote(id: string) {
+    const element = document.getElementById(`post-${id}`)
+    if (element) {
+      element.scrollIntoView({
+        block: 'center',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      })
+      element.classList.add('quote-highlight')
+      element.addEventListener(
+        'animationend',
+        () => element.classList.remove('quote-highlight'),
+        { once: true },
+      )
+    } else setOriginalId(id)
+  }
   useEffect(() => {
     if (channel !== 'chat') return
     const area = scrollArea.current
@@ -319,6 +355,12 @@ export default function PostsPage({ channel }: { channel: Channel }) {
                       ) ?? []
                     }
                     now={now}
+                    quote={quotes.data?.find(
+                      (item) => item.id === post.reply_to_id,
+                    )}
+                    quoteLoading={quotes.isFetching}
+                    onReply={channel === 'chat' ? reply : undefined}
+                    onOpenQuote={openQuote}
                   />
                 </Fragment>
               ))}
@@ -372,6 +414,28 @@ export default function PostsPage({ channel }: { channel: Channel }) {
             {composer}
           </div>
         </>
+      )}
+      {originalId && (
+        <DialogSheet
+          title="Original message"
+          onClose={() => setOriginalId(null)}
+        >
+          {original && visiblePost(original, now) ? (
+            <div className="original-message">
+              <time dateTime={original.created_at}>
+                {day(original.created_at)}
+              </time>
+              {['photo', 'voice'].includes(original.kind) && (
+                <PostMedia post={original} timezone={space?.couple.timezone} />
+              )}
+              {original.body && <p>{original.body}</p>}
+            </div>
+          ) : (
+            <p className="muted original-message">
+              Original message unavailable
+            </p>
+          )}
+        </DialogSheet>
       )}
     </div>
   )

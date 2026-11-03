@@ -121,6 +121,7 @@ export function useLiveSpace() {
           for (const key of [
             'space',
             'posts',
+            'reply-posts',
             'post-reactions',
             'post-comments',
             'storage-summary',
@@ -144,6 +145,7 @@ export function useLiveSpace() {
           mark('activity')
           for (const key of [
             'posts',
+            'reply-posts',
             'post-reactions',
             'post-comments',
             'storage-summary',
@@ -166,6 +168,7 @@ export function useLiveSpace() {
         mark('activity')
         for (const key of [
           'posts',
+          'reply-posts',
           'post-reactions',
           'post-comments',
           'storage-summary',

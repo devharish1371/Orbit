@@ -46,6 +46,23 @@ function mount(channel: 'chat' | 'moment' = 'chat') {
     </QueryClientProvider>,
   )
 }
+test('a failed chat send retains its draft and retry reuses the same id', async () => {
+  f.share
+    .mockRejectedValueOnce(new Error('network'))
+    .mockResolvedValueOnce({ id: 'sent' })
+  mount('chat')
+  await userEvent.type(
+    screen.getByRole('textbox', { name: 'Your note' }),
+    'Try once more',
+  )
+  await userEvent.click(screen.getByRole('button', { name: 'Send message' }))
+  await userEvent.click(
+    await screen.findByRole('button', { name: 'Retry send' }),
+  )
+  await waitFor(() => expect(f.share).toHaveBeenCalledTimes(2))
+  expect(f.share.mock.calls[0]![1].id).toBe(f.share.mock.calls[1]![1].id)
+  await waitFor(() => expect(screen.getByRole('textbox')).toHaveValue(''))
+})
 test('moment media tray previews and removes a photo without posting, and requires an explicit Post', async () => {
   URL.createObjectURL = vi.fn(() => 'blob:moment-preview')
   URL.revokeObjectURL = vi.fn()

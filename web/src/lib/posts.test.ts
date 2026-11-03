@@ -5,11 +5,39 @@ import {
   validReaction,
   visiblePost,
   sharePost,
+  canEditChat,
   type PostDraft,
 } from './posts'
 import { validPhoto, waveformBins } from './media'
 import type { OrbitClient } from './supabase'
 const now = Date.parse('2026-10-30T08:00:00Z')
+test('editing stops at fifteen minutes and cannot revive unavailable text', () => {
+  const post = {
+    channel: 'chat',
+    kind: 'text',
+    created_at: new Date(now - 1000).toISOString(),
+    keep: false,
+    expires_at: new Date(now + 1000).toISOString(),
+    unsent_at: null,
+  } as const
+  expect(canEditChat(post, now)).toBe(true)
+  expect(
+    canEditChat(
+      { ...post, created_at: new Date(now + 20000).toISOString() },
+      now,
+    ),
+  ).toBe(true)
+  expect(
+    canEditChat(
+      { ...post, keep: true, created_at: new Date(now - 900000).toISOString() },
+      now,
+    ),
+  ).toBe(false)
+  expect(
+    canEditChat({ ...post, unsent_at: new Date(now).toISOString() }, now),
+  ).toBe(false)
+  expect(canEditChat({ ...post, channel: 'moment' }, now)).toBe(false)
+})
 test('expiry boundaries, kept items and tombstones stay consistent', () => {
   expect(
     visiblePost(

@@ -29,6 +29,8 @@ import {
 } from '@/lib/posts'
 import { VoiceRecorder } from './VoiceRecorder'
 import { AudioPlayer } from '@/components/ui/AudioPlayer'
+import { ReplyPreview } from './ReplyPreview'
+import { useQuotedPosts } from './usePosts'
 function LocalPreview({ note }: { note: Attachment }) {
   const attach = useCallback(
     (element: HTMLImageElement | null) => {
@@ -79,7 +81,11 @@ export function Composer({
     [busy, setBusy] = field('busy'),
     [message, setMessage] = field('message'),
     [more, setMore] = field('more'),
-    [noteStyle, setNoteStyle] = field('noteStyle')
+    [noteStyle, setNoteStyle] = field('noteStyle'),
+    [replyId, setReplyId] = field('replyId'),
+    [retryable, setRetryable] = field('retryable')
+  const quoted = useQuotedPosts(channel === 'chat' ? [replyId] : [])
+  const formRef = useRef<HTMLFormElement>(null)
   const [recording, setRecording] = useState(false)
   useEffect(() => {
     onBusyChange?.(busy || recording)
@@ -103,6 +109,8 @@ export function Composer({
   ]
   const photoInput = useRef<HTMLInputElement>(null)
   function edited() {
+    setRetryable(false)
+    setMessage('')
     if (attemptedRef.current) {
       idRef.current = crypto.randomUUID()
       attemptedRef.current = false
@@ -139,6 +147,7 @@ export function Composer({
       return
     }
     attemptedRef.current = true
+    setRetryable(false)
     setBusy(true)
     setMessage('')
     onStopTyping()
@@ -158,6 +167,7 @@ export function Composer({
         place: place || null,
         attachment,
         noteStyle,
+        replyTo: replyId,
       })
       idRef.current = crypto.randomUUID()
       attemptedRef.current = false
@@ -167,9 +177,11 @@ export function Composer({
       setAttachment(undefined)
       setKind('text')
       setPlace('')
+      setReplyId(null)
       setMore(false)
       setMessage(channel === 'chat' ? '' : copy.posts.shared)
     } catch (error) {
+      setRetryable(true)
       setMessage(copy.posts.errors[mediaError(error)])
     } finally {
       setBusy(false)
@@ -180,12 +192,33 @@ export function Composer({
   if (channel === 'chat')
     return (
       <form
+        ref={formRef}
         className="messenger-composer"
         data-recording={recording}
         onSubmit={(event) => {
           void submit(event)
         }}
       >
+        {replyId && (
+          <div className="composer-reply">
+            <ReplyPreview
+              post={quoted.data?.find((post) => post.id === replyId)}
+              loading={quoted.isFetching}
+            />
+            <button
+              className="icon-button"
+              type="button"
+              aria-label="Cancel reply"
+              disabled={busy}
+              onClick={() => {
+                edited()
+                setReplyId(null)
+              }}
+            >
+              <X size={18} />
+            </button>
+          </div>
+        )}
         {attachment && (
           <div className="messenger-attachment">
             <LocalPreview note={attachment} />
@@ -320,16 +353,32 @@ export function Composer({
               type="submit"
               className="chat-send"
               disabled={busy}
-              aria-label={busy ? copy.posts.sharing : copy.posts.send}
+              aria-label={busy ? copy.posts.sending : copy.posts.send}
             >
               <Send size={20} />
             </button>
           )}
         </div>
-        {message && (
-          <p className="form-message" role="status">
-            {message}
+        {busy && (
+          <p className="composer-feedback" role="status">
+            {copy.posts.sending}
           </p>
+        )}
+        {message && (
+          <div className="composer-feedback">
+            <p className="form-message" role="status">
+              {message}
+            </p>
+            {retryable && !busy && (
+              <button
+                className="text-button"
+                type="button"
+                onClick={() => formRef.current?.requestSubmit()}
+              >
+                {copy.posts.retrySend}
+              </button>
+            )}
+          </div>
         )}
       </form>
     )

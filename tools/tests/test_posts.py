@@ -88,3 +88,55 @@ def test_storage_summary_is_scoped_and_default_expiry_is_stamped_by_server(backe
     assert own.status_code==200 and own.json()['quota_bytes']==300*1024*1024
     assert own.json()['total_bytes']>=own.json()['kept_bytes']>=0
     assert backend.clients[2].client.post('/rest/v1/rpc/storage_summary',json={}).status_code>=400
+
+def test_chat_reply_reference_is_scoped_and_does_not_retain_expired_content(backend):
+    original=create(backend,channel='chat',body='Original disposable text').json()
+    reply=create(backend,actor=1,channel='chat',body='A reply',reply_to_id=original['id'],keep=True)
+    assert reply.status_code==200 and reply.json()['reply_to_id']==original['id']
+    assert reply.json()['body']=='A reply'
+    assert create(backend,reply_to_id=original['id']).status_code>=400
+    assert create(backend,actor=3,channel='chat',reply_to_id=original['id']).status_code>=400
+    moment=create(backend).json()
+    assert create(backend,channel='chat',reply_to_id=moment['id']).status_code>=400
+    with backend.db() as db: db.execute("update public.posts set expires_at=now()-interval '1 second' where id=%s",(original['id'],))
+    assert create(backend,channel='chat',reply_to_id=original['id']).status_code>=400
+    assert backend.rest(backend.clients[1],'GET','posts',id='eq.'+original['id']).json()==[]
+    with backend.db() as db: db.execute('delete from public.posts where id=%s',(original['id'],))
+    kept=backend.rest(backend.clients[0],'GET','posts',id='eq.'+reply.json()['id']).json()[0]
+    assert kept['reply_to_id']==original['id'] and kept['body']=='A reply'
+
+
+def test_recent_chat_edit_is_author_only_versioned_idempotent_and_preserves_expiry(backend):
+    row=create(backend,channel='chat',body='A typo').json()
+    args={'p_id':row['id'],'p_body':'A correction','p_expected_version':0}
+    for actor in [1,2,3]: assert backend.clients[actor].client.post('/rest/v1/rpc/edit_chat_post',json=args).status_code>=400
+    result=backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json=args)
+    assert result.status_code==200
+    edited=result.json()
+    assert edited['body']=='A correction' and edited['edit_version']==1 and edited['edited_at']
+    assert edited['created_at']==row['created_at'] and edited['expires_at']==row['expires_at'] and edited['keep']==row['keep']
+    again=backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json=args)
+    assert again.status_code==200 and again.json()['edit_version']==1 and again.json()['edited_at']==edited['edited_at']
+    conflict=backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_body':'Stale overwrite'})
+    assert conflict.status_code>=400 and 'EDIT_CONFLICT' in conflict.text
+    assert backend.rest(backend.clients[0],'PATCH','posts',{'body':'Direct edit'},id='eq.'+row['id']).status_code>=400
+    assert backend.rest(backend.clients[0],'PATCH','posts',{'reply_to_id':row['id']},id='eq.'+row['id']).status_code>=400
+    moment=create(backend).json()
+    assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_id':moment['id']}).status_code>=400
+
+
+def test_chat_edit_window_expiry_unsend_and_validation_are_enforced(backend):
+    row=create(backend,channel='chat').json()
+    args={'p_id':row['id'],'p_body':'Changed','p_expected_version':0}
+    for body in ['',' ',None,'x'*2001]: assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_body':body}).status_code>=400
+    assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_expected_version':None}).status_code>=400
+    with backend.db() as db: db.execute("update public.posts set created_at=now()-interval '16 minutes' where id=%s",(row['id'],))
+    closed=backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json=args)
+    assert closed.status_code>=400 and 'EDIT_WINDOW_CLOSED' in closed.text
+    expired=create(backend,channel='chat').json()
+    with backend.db() as db: db.execute("update public.posts set expires_at=now()-interval '1 second' where id=%s",(expired['id'],))
+    assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_id':expired['id']}).status_code>=400
+    unsent=create(backend,channel='chat').json()
+    assert backend.clients[0].client.post('/rest/v1/rpc/request_unsend',json={'p_id':unsent['id']}).status_code==200
+    assert create(backend,channel='chat',reply_to_id=unsent['id']).status_code>=400
+    assert backend.clients[0].client.post('/rest/v1/rpc/edit_chat_post',json={**args,'p_id':unsent['id']}).status_code>=400

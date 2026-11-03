@@ -16,6 +16,8 @@ export interface ComposerMemory {
   message: string
   more: boolean
   noteStyle: NoteStyle
+  replyId: string | null
+  retryable: boolean
 }
 export const freshComposer = (): ComposerMemory => ({
   kind: 'text',
@@ -28,6 +30,8 @@ export const freshComposer = (): ComposerMemory => ({
   message: '',
   more: false,
   noteStyle: 'ink',
+  replyId: null,
+  retryable: false,
 })
 export type DraftHandles = {
   id: { current: string }

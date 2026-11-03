@@ -72,7 +72,10 @@ Primary references, verified 3 November 2026:
   capsule and place deletion share a native confirmation sheet with busy/error/cancel behavior.
   84 web/16 worker tests and lint/types/format/build pass; 320/360/412 px sheet checks fit,
   cancellation restores focus. Remaining legacy screen rules migrate during subsequent phases.
-- V2.1: in progress — reply/edit first, then durable outbox/pinning.
+- V2.1 reply/edit slice implemented: menu reply, live quote references/tap-to-original,
+  author-only 15-minute edits with version checks, edited/sent-to-server indicators and
+  retained-draft retry. Durable encrypted outbox and expiring pin remain next in this phase.
+  89 web/16 worker checks and all 64 hosted tests pass; browser quote/edit/reload verified.
 - V2.2–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.
