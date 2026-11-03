@@ -5,6 +5,7 @@ import { useSpace } from '@/hooks/useSpace'
 import { Button } from '@/components/ui/Button'
 import { copy } from '@/copy/en'
 import { validPlace, type PlaceDraft } from '@/lib/place'
+import { DialogSheet } from '@/components/ui/DialogSheet'
 export default function PlaceEditor({
   initial,
   id,
@@ -25,7 +26,7 @@ export default function PlaceEditor({
     setDraft((previous) => ({ ...previous, [key]: value }))
   async function save(event: FormEvent) {
     event.preventDefault()
-    if (!data) return
+    if (!data || busy) return
     if (!validPlace(draft)) {
       setMessage(copy.map.invalidPlace)
       return
@@ -68,78 +69,85 @@ export default function PlaceEditor({
     }
   }
   return (
-    <form
-      className="glass place-editor"
-      onSubmit={(event) => {
-        void save(event)
-      }}
-      aria-label={id ? copy.map.edit : copy.map.add}
+    <DialogSheet
+      title={id ? copy.map.edit : copy.map.add}
+      onClose={onClose}
+      dismissible={!busy}
+      className="place-sheet"
     >
-      <h2>{id ? copy.map.edit : copy.map.add}</h2>
-      <label htmlFor={formId + 'name'}>{copy.map.name}</label>
-      <input
-        autoFocus
-        id={formId + 'name'}
-        value={draft.name}
-        maxLength={40}
-        onChange={(e) => update('name', e.target.value)}
-        required
-      />
-      <label htmlFor={formId + 'emoji'}>{copy.map.emoji}</label>
-      <input
-        id={formId + 'emoji'}
-        value={draft.emoji}
-        maxLength={16}
-        onChange={(e) => update('emoji', e.target.value)}
-        required
-      />
-      <label htmlFor={formId + 'radius'}>
-        {copy.map.radius} · {draft.radius_m} m
-      </label>
-      <input
-        id={formId + 'radius'}
-        type="range"
-        min={50}
-        max={2000}
-        step={50}
-        value={draft.radius_m}
-        onChange={(e) => update('radius_m', Number(e.target.value))}
-      />
-      <label className="check-row">
-        <input
-          type="checkbox"
-          checked={draft.notify_arrive}
-          onChange={(e) => update('notify_arrive', e.target.checked)}
-        />
-        {copy.map.arrive}
-      </label>
-      <label className="check-row">
-        <input
-          type="checkbox"
-          checked={draft.notify_leave}
-          onChange={(e) => update('notify_leave', e.target.checked)}
-        />
-        {copy.map.leave}
-      </label>
-      <p className="small muted">{copy.map.alertsLater}</p>
-      <div className="place-actions">
-        <Button disabled={busy}>
-          {busy ? copy.common.saving : copy.map.save}
-        </Button>
-        <button
-          type="button"
-          className="text-button"
-          onClick={onClose}
-          disabled={busy}
-        >
-          {copy.map.cancel}
-        </button>
-      </div>
-      {message && (
-        <p role="alert" className="form-message">
-          {message}
-        </p>
-      )}
-    </form>
+      <form
+        className="place-editor"
+        onSubmit={(event) => {
+          void save(event)
+        }}
+        aria-label={id ? copy.map.edit : copy.map.add}
+      >
+        <fieldset disabled={busy}>
+          <label htmlFor={formId + 'name'}>{copy.map.name}</label>
+          <input
+            autoFocus
+            id={formId + 'name'}
+            value={draft.name}
+            maxLength={40}
+            onChange={(e) => update('name', e.target.value)}
+            required
+          />
+          <label htmlFor={formId + 'emoji'}>{copy.map.emoji}</label>
+          <input
+            id={formId + 'emoji'}
+            value={draft.emoji}
+            maxLength={16}
+            onChange={(e) => update('emoji', e.target.value)}
+            required
+          />
+          <label htmlFor={formId + 'radius'}>
+            {copy.map.radius} · {draft.radius_m} m
+          </label>
+          <input
+            id={formId + 'radius'}
+            type="range"
+            min={50}
+            max={2000}
+            step={50}
+            value={draft.radius_m}
+            onChange={(e) => update('radius_m', Number(e.target.value))}
+          />
+          <label className="check-row">
+            <input
+              type="checkbox"
+              checked={draft.notify_arrive}
+              onChange={(e) => update('notify_arrive', e.target.checked)}
+            />
+            {copy.map.arrive}
+          </label>
+          <label className="check-row">
+            <input
+              type="checkbox"
+              checked={draft.notify_leave}
+              onChange={(e) => update('notify_leave', e.target.checked)}
+            />
+            {copy.map.leave}
+          </label>
+          <div className="place-actions">
+            <Button disabled={busy}>
+              {busy ? copy.common.saving : copy.map.save}
+            </Button>
+            <button
+              type="button"
+              className="text-button"
+              onClick={onClose}
+              disabled={busy}
+            >
+              {copy.map.cancel}
+            </button>
+          </div>
+          {message && (
+            <p role="alert" className="form-message">
+              {message}
+            </p>
+          )}
+        </fieldset>
+      </form>
+    </DialogSheet>
   )
 }

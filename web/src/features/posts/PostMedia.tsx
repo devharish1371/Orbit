@@ -114,6 +114,8 @@ export function PostMedia({
           type="button"
           className="photo-open"
           aria-label={copy.posts.openPhoto}
+          aria-haspopup="dialog"
+          aria-expanded={open}
           style={{
             aspectRatio: `${post.media_width ?? 4} / ${post.media_height ?? 3}`,
           }}

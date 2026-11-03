@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useBackLayer } from '@/app/backLayers'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Plus,
@@ -49,6 +50,14 @@ export default function MapPage() {
   const [selected, setSelected] = useState<string | null>(null),
     [view, setView] = useState<'now' | 'day'>('now')
   const [personMenu, setPersonMenu] = useState(false)
+  useBackLayer(personMenu, () => {
+    setPersonMenu(false)
+    document
+      .querySelector<HTMLButtonElement>(
+        '.atlas-people button[aria-pressed="true"]',
+      )
+      ?.focus({ preventScroll: true })
+  })
   const [fit, setFit] = useState(0),
     [attempt, setAttempt] = useState(0),
     [adding, setAdding] = useState(false)
@@ -56,6 +65,8 @@ export default function MapPage() {
     [editor, setEditor] = useState<{ draft: PlaceDraft; id?: string } | null>(
       null,
     )
+  useBackLayer(Boolean(spot), () => setSpot(null))
+  useBackLayer(adding, () => setAdding(false))
   const [focus, setFocus] = useState<{ points: Point[]; key: number } | null>(
       null,
     ),

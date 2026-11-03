@@ -37,6 +37,7 @@ import { PersonLink } from '@/components/ui/PersonLink'
 import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 import { ReplyPreview } from './ReplyPreview'
 import { EditMessage } from './EditMessage'
+import { useBackLayer } from '@/app/backLayers'
 type Reaction = Database['public']['Tables']['reactions']['Row']
 export function PostCard({
   post,
@@ -81,6 +82,16 @@ export function PostCard({
     return () => clearTimeout(timer)
   }, [burst])
   const card = useRef<HTMLElement>(null)
+  useBackLayer(actions || reacting || picker, () => {
+    setActions(false)
+    setReacting(false)
+    setPicker(false)
+    card.current
+      ?.querySelector<HTMLButtonElement>(
+        '.chat-message-menu, .moment-react-trigger',
+      )
+      ?.focus({ preventScroll: true })
+  })
   useEffect(() => {
     if (!reacting) return
     const dismiss = (event: PointerEvent) => {

@@ -55,6 +55,8 @@ export default function PersonPage() {
           className="person-photo-trigger"
           disabled={!person.avatar_path}
           aria-label={`View ${name}’s photo`}
+          aria-haspopup="dialog"
+          aria-expanded={photo}
           onClick={() => setPhoto(true)}
         >
           <Avatar

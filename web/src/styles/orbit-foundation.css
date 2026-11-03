@@ -7,6 +7,27 @@
   --orbit-duration-enter: 220ms;
 }
 /* Full-app cleanup: whitespace groups content; only controls carry a surface. */
+.place-sheet .place-editor {
+  margin: 0;
+  padding: 24px 0 4px;
+}
+.place-sheet fieldset {
+  display: grid;
+  gap: 12px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+.place-sheet .place-editor input:not([type='checkbox']):not([type='range']) {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+.place-sheet .place-actions {
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
 .page :is(.settings-section, .memory-section, .profile-photo-section),
 .page .place-editor {
   border: 0;

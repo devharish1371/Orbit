@@ -32,6 +32,7 @@ import { AudioPlayer } from '@/components/ui/AudioPlayer'
 import { ReplyPreview } from './ReplyPreview'
 import { useQuotedPosts } from './usePosts'
 import { useOutbox } from '@/features/outbox/OutboxContext'
+import { useBackLayer } from '@/app/backLayers'
 function LocalPreview({ note }: { note: Attachment }) {
   const attach = useCallback(
     (element: HTMLImageElement | null) => {
@@ -89,6 +90,12 @@ export function Composer({
   const formRef = useRef<HTMLFormElement>(null)
   const outbox = useOutbox()
   const [recording, setRecording] = useState(false)
+  useBackLayer(more, () => {
+    setMore(false)
+    formRef.current
+      ?.querySelector<HTMLButtonElement>('.composer-plus')
+      ?.focus({ preventScroll: true })
+  })
   useEffect(() => {
     onBusyChange?.(busy || recording)
   }, [busy, recording, onBusyChange])

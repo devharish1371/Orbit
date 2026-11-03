@@ -1084,3 +1084,26 @@ reload shows exactly one acknowledged copy. Actual 320/360/412 px chat layouts f
 horizontal overflow. Screenshot in docs/screens/v2-outbox. No real partner contact or network
 interruption. A coarse display-clock edge briefly showed 25h for a 24h pending lifetime;
 2fe4dee clamps the display to the original intent lifetime. Full local check rerun passes.
+
+Outbox Android rollup: exact code head 2fe4dee passes CI 41683148775, including native unit
+suite, build, signature verification and merged manifest checks. Retained privately locally:
+6,925,763 bytes, SHA256 844bce7052fecc434fad27626d36ac7a03455949efd488ef69cce53614bfb7d8.
+ZIP integrity, signing continuity against 959314d and configured-private-material scan pass.
+No APK link or install request was sent.
+
+## 2026-11-03 — V2.2 Back layers and place-editing slice
+
+Added a native Android Back boundary: open dialogs first (existing busy/cancel lifecycle),
+then temporary menus/trays/map selections, then known router history or a safe parent.
+Home minimizes instead of traversing unrelated WebView history. Escape shares temporary
+layer handling on web. Subscriptions clean up on navigation/unmount; stale callbacks stop.
+Moved place editor into the shared modal sheet, disabled fields during save, preserved
+failed-save values and exposed photo/profile trigger dialog state. A new cancellation test
+caught child autofocus replacing the sheet's return-focus target; shared capture now happens
+before that commit, and place cancellation returns to the opener.
+
+117 web / 16 worker tests plus lint/types/format/build pass. Nine mocked-native-navigation
+cases and three place cancel/error/retry cases cover this slice. Browser/native rollup
+follows below. No database change: prior full 67-hosted pass remains applicable. Native
+keyboard/predictive-Back gestures stay in the user's batch; avatar/photo handoff and the
+rest of V2.2 remain planned, not declared complete. See docs/V2_FLOW.md.

@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, type ReactNode } from 'react'
+import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 export function DialogSheet({
@@ -16,18 +16,20 @@ export function DialogSheet({
 }) {
   const dialog = useRef<HTMLDialogElement>(null),
     uid = useId()
+  // Capture before a child's autoFocus runs during commit.
+  const [previous] = useState(() =>
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null,
+  )
   useLayoutEffect(() => {
-    const previous =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null
     const node = dialog.current
     node?.showModal()
     return () => {
       node?.close()
       if (previous?.isConnected) previous.focus({ preventScroll: true })
     }
-  }, [])
+  }, [previous])
   return createPortal(
     <dialog
       ref={dialog}

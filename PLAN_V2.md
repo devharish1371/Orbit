@@ -84,6 +84,10 @@ Primary references, verified 3 November 2026:
   Pin follow-up passes 91 web/16 worker checks and all 66 hosted tests.
   Outbox follow-up passes 105 web/16 worker checks and all 67 hosted tests; native/browser
   verification is tracked in DEVLOG.md. Photo/voice offline persistence remains for V2.5.
-- V2.2–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
+- V2.2 first slice: Android Back prioritizes dialogs/temporary layers, safe history/fallback
+  and Home minimize; Escape closes temporary web layers. Place editing uses the shared
+  focus-contained sheet, with busy/error/retry and return-focus checks. 117 web/16 worker
+  checks pass. Native gestures and the remaining avatar/photo/keyboard work stay open.
+- V2.3–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.
