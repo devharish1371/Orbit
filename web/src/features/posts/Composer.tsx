@@ -2,7 +2,18 @@ import { useComposerMemory } from '@/hooks/useComposerMemory'
 import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ImagePlus, Mic, Smile, Type, Plus, Send, X } from 'lucide-react'
+import {
+  ImagePlus,
+  Mic,
+  Smile,
+  Type,
+  Plus,
+  Send,
+  X,
+  ArrowUpRight,
+  Clock3,
+  MapPin,
+} from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { useLiveData } from '@/features/map/LiveContext'
@@ -322,16 +333,23 @@ export function Composer({
     )
   return (
     <form
-      className="glass composer"
+      className="composer moment-studio"
+      data-kind={kind}
       onSubmit={(event) => {
         void submit(event)
       }}
     >
-      {kind === 'photo' && (
+      {kind === 'photo' && !attachment && (
         <label className="file-picker">
-          <ImagePlus size={30} aria-hidden="true" />
-          {copy.posts.choosePhoto}
+          <span className="photo-picker-art" aria-hidden="true">
+            <i />
+            <i />
+            <ImagePlus size={25} />
+          </span>
+          <span>Choose photo</span>
           <input
+            className="sr-only media-input"
+            aria-label={copy.posts.choosePhoto}
             type="file"
             accept="image/jpeg,image/png,image/webp"
             disabled={busy}
@@ -342,8 +360,9 @@ export function Composer({
           />
         </label>
       )}
-      {kind === 'voice' && (
+      {kind === 'voice' && !attachment && (
         <VoiceRecorder
+          studio
           onReady={(note) => {
             edited()
             setAttachment(note)
@@ -371,10 +390,11 @@ export function Composer({
         </div>
       )}
       {attachment && (
-        <div className="attachment-preview">
+        <div className={`attachment-preview preview-${kind}`}>
           <LocalPreview note={attachment} />
           <button
-            className="text-button"
+            className="icon-button remove-preview"
+            aria-label={copy.posts.removeAttachment}
             type="button"
             disabled={busy || recording}
             onClick={() => {
@@ -382,55 +402,91 @@ export function Composer({
               setAttachment(undefined)
             }}
           >
-            {copy.posts.removeAttachment}
+            <X size={17} aria-hidden="true" />
           </button>
+          {kind === 'photo' && (
+            <label className="replace-photo" title="Change photo">
+              <ImagePlus size={18} aria-hidden="true" />
+              <input
+                className="sr-only media-input"
+                aria-label="Change photo"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                disabled={busy}
+                onChange={(event) => {
+                  void photo(event.target.files?.[0])
+                  event.target.value = ''
+                }}
+              />
+            </label>
+          )}
         </div>
       )}
-      <label className="sr-only" htmlFor={`compose-${channel}`}>
-        {copy.posts.write}
-      </label>
-      <textarea
-        id={`compose-${channel}`}
-        value={body}
-        maxLength={kind === 'mood' ? 1950 : 2000}
-        rows={3}
-        disabled={busy || recording}
-        placeholder={
-          kind === 'text'
-            ? copy.posts.momentPlaceholder
-            : copy.posts.captionPlaceholder
-        }
-        onChange={(event) => {
-          edited()
-          setBody(event.target.value)
-          onTyping()
-        }}
-      />
-      <div className="composer-modes" aria-label={copy.posts.addSomething}>
-        {(
-          [
-            ['text', Type],
-            ['photo', ImagePlus],
-            ['voice', Mic],
-            ['mood', Smile],
-          ] as const
-        ).map(([value, Icon]) => (
-          <button
-            key={value}
-            type="button"
+      {(kind === 'text' || kind === 'mood' || attachment) && (
+        <>
+          <label className="sr-only" htmlFor={`compose-${channel}`}>
+            {copy.posts.write}
+          </label>
+          <textarea
+            id={`compose-${channel}`}
+            value={body}
+            maxLength={kind === 'mood' ? 1950 : 2000}
+            rows={3}
             disabled={busy || recording}
-            aria-pressed={kind === value}
-            aria-label={copy.posts.kinds[value]}
-            title={copy.posts.kinds[value]}
-            onClick={() => mode(value)}
-          >
-            <Icon size={18} aria-hidden="true" />
-            <span className="sr-only">{copy.posts.kinds[value]}</span>
-          </button>
-        ))}
+            placeholder={
+              kind === 'text'
+                ? copy.posts.momentPlaceholder
+                : copy.posts.captionPlaceholder
+            }
+            onChange={(event) => {
+              edited()
+              setBody(event.target.value)
+              onTyping()
+            }}
+          />
+        </>
+      )}
+      <div className="compose-dock">
+        <div className="composer-modes" aria-label={copy.posts.addSomething}>
+          {(
+            [
+              ['text', Type],
+              ['photo', ImagePlus],
+              ['voice', Mic],
+              ['mood', Smile],
+            ] as const
+          ).map(([value, Icon]) => (
+            <button
+              key={value}
+              type="button"
+              disabled={busy || recording}
+              aria-pressed={kind === value}
+              aria-label={copy.posts.kinds[value]}
+              title={copy.posts.kinds[value]}
+              onClick={() => mode(value)}
+            >
+              <Icon size={18} aria-hidden="true" />
+              <span className="sr-only">{copy.posts.kinds[value]}</span>
+            </button>
+          ))}
+        </div>
+        <Button
+          type="submit"
+          title="Post"
+          aria-label={busy ? copy.posts.sharing : 'Post moment'}
+          disabled={
+            busy ||
+            recording ||
+            (kind === 'text' && !body.trim()) ||
+            ((kind === 'photo' || kind === 'voice') && !attachment)
+          }
+        >
+          <ArrowUpRight size={22} aria-hidden="true" />
+        </Button>
       </div>
       <div className="composer-options">
         <label>
+          <Clock3 size={14} aria-hidden="true" />
           <span className="sr-only">{copy.posts.expiry}</span>
           <ChoiceSelect
             label={copy.posts.expiry}
@@ -445,13 +501,14 @@ export function Composer({
         </label>
         {channel === 'moment' && (
           <label>
+            <MapPin size={14} aria-hidden="true" />
             <span className="sr-only">{copy.posts.pin}</span>
             <ChoiceSelect
               label={copy.posts.pin}
               value={place}
               disabled={busy || recording}
               options={[
-                { value: '', label: copy.posts.noPin },
+                { value: '', label: 'Add place' },
                 ...(live.places.data ?? []).map((item) => ({
                   value: item.id,
                   label: `${item.emoji} ${item.name}`,
@@ -464,9 +521,6 @@ export function Composer({
             />
           </label>
         )}
-        <Button type="submit" disabled={busy || recording}>
-          {busy ? copy.posts.sharing : copy.posts.share}
-        </Button>
       </div>
       {ttl === 'keep' && <p className="muted small">{copy.posts.keepHint}</p>}
       {message && (

@@ -305,6 +305,7 @@ export default function MapPage() {
           <span className="muted">{status.label}</span>
         )}
         <span
+          role="img"
           className={`atlas-connection ${live.connection === 'live' ? 'is-live' : ''}`}
           title={live.connection === 'live' ? 'Connected' : 'Reconnecting'}
           aria-label={live.connection === 'live' ? 'Connected' : 'Reconnecting'}

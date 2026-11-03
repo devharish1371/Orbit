@@ -2,6 +2,13 @@
 
 ## 2026-11-03 — App-wide visual and interaction pass
 
+Additional media-flow correction requested during review: hide the native file input and
+replace the stacked photo/voice form with one shared media tray, compact preview/caption,
+aligned action dock and quiet expiry/place metadata. Photo selection is local-only until
+posting; replace/remove remain explicit. Studio voice capture reuses the existing recorder
+and real level samples, preserving foreground/background microphone cleanup. Verification
+of picker, preview and recording states follows before the final APK handover.
+
 Implemented the user's detailed Home/Map/Moments/Chat/Us brief. Home signals are separated
 from the profile composition. Original OpenMapTiles-based light/dark cartography replaces
 stock styles; compact refresh and instruments replace stacked location panels. Last-24-hour

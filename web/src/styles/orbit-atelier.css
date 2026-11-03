@@ -1,4 +1,7 @@
 /* A quieter canvas: composition and interactions, rather than nested panels. */
+[data-theme='light'] {
+  --text-dim: #596579;
+}
 .home-page .attention-actions {
   margin: 32px 0 36px;
   padding: 0;
@@ -894,6 +897,270 @@
   flex: none;
   display: inline-flex;
   border-radius: 50%;
+}
+/* One media tray, with a shared dock instead of stacked file/form boxes. */
+.moment-create .moment-studio .file-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 100px;
+  padding: 12px;
+  margin: 0 0 10px;
+  background: none;
+  border: 0;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.photo-picker-art {
+  position: relative;
+  display: block;
+  width: 62px;
+  height: 62px;
+  flex: none;
+}
+.photo-picker-art i {
+  position: absolute;
+  width: 38px;
+  height: 46px;
+  left: 9px;
+  top: 7px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  border-radius: 8px;
+  transform: rotate(-12deg);
+}
+.photo-picker-art i:nth-child(2) {
+  transform: rotate(10deg);
+  background: color-mix(in srgb, var(--primary) 12%, var(--panel));
+}
+.photo-picker-art > svg {
+  position: absolute;
+  top: 19px;
+  left: 16px;
+  color: var(--primary);
+}
+.file-picker:focus-within,
+.replace-photo:focus-within {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.moment-studio .media-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.moment-create .moment-studio textarea {
+  min-height: 132px;
+  padding: 16px 0;
+  font-size: 23px;
+}
+.moment-create .moment-studio:not([data-kind='text']) textarea {
+  min-height: 64px;
+  height: 72px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 12px 0;
+}
+.moment-studio .compose-dock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.moment-studio .compose-dock .composer-modes {
+  flex: none;
+  gap: 4px;
+  margin: 0;
+}
+.moment-studio .compose-dock .composer-modes button {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+}
+.moment-studio .compose-dock > .button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+}
+.moment-create .moment-studio .composer-options {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  padding: 2px 0 8px;
+}
+.moment-create .moment-studio .composer-options > label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: calc(50% - 8px);
+  color: var(--text-dim);
+}
+.moment-studio .composer-options > label > svg {
+  flex: none;
+}
+.moment-create .moment-studio .choice-trigger {
+  min-width: 0;
+  width: auto;
+  max-width: 140px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: none;
+  border: 0;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.moment-studio .choice-trigger > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.moment-studio .choice-trigger > svg {
+  display: none;
+}
+.moment-studio .attachment-preview {
+  position: relative;
+  margin: 8px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.moment-studio .attachment-preview .draft-photo {
+  display: block;
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  background: var(--surface-strong);
+  border-radius: 24px;
+}
+.moment-studio .remove-preview {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+.moment-studio .replace-photo {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+  border: 1px solid var(--border);
+}
+.moment-studio .preview-voice {
+  padding: 8px 48px 8px 0;
+  overflow: visible;
+}
+.moment-studio .preview-voice .remove-preview {
+  right: 0;
+  top: 18px;
+  background: none;
+  border: 0;
+}
+.moment-studio .preview-voice .orbit-audio {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+}
+.moment-studio .studio-recorder {
+  padding: 18px 0;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.studio-recorder .voice-capture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 16px;
+  min-height: 74px;
+}
+.studio-recorder .voice-capture > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  gap: 10px;
+  min-width: 44px;
+  min-height: 56px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  background: var(--surface-strong);
+  box-shadow: none;
+  font-size: 13px;
+  color: var(--text);
+}
+.studio-recorder[data-state='recording'] .voice-capture > button {
+  color: var(--primary);
+}
+.studio-levels {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 30px;
+}
+.studio-levels i {
+  display: block;
+  width: 3px;
+  height: 28px;
+  background: var(--primary);
+  border-radius: 3px;
+  transition: transform 80ms linear;
+}
+.moment-studio .mood-options {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 6px;
+  padding: 14px 0;
+}
+.moment-studio .mood-options button {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 25px;
+  background: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-levels i {
+    transition: none;
+  }
 }
 .post-author strong a,
 .partner-heading h2 a {

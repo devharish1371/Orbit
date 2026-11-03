@@ -33,15 +33,62 @@ vi.mock('@/lib/media', async (importOriginal) => ({
 afterEach(() => {
   vi.clearAllMocks()
 })
-function mount() {
+function mount(channel: 'chat' | 'moment' = 'chat') {
   return render(
     <QueryClientProvider client={new QueryClient()}>
       <FlowProvider>
-        <Composer channel="chat" onTyping={f.typing} onStopTyping={f.stopped} />
+        <Composer
+          channel={channel}
+          onTyping={f.typing}
+          onStopTyping={f.stopped}
+        />
       </FlowProvider>
     </QueryClientProvider>,
   )
 }
+test('moment media tray previews and removes a photo without posting, and requires an explicit Post', async () => {
+  URL.createObjectURL = vi.fn(() => 'blob:moment-preview')
+  URL.revokeObjectURL = vi.fn()
+  const attachment = {
+    blob: new Blob(['photo'], { type: 'image/webp' }),
+    extension: 'webp',
+    width: 2,
+    height: 2,
+  }
+  f.photo.mockResolvedValue(attachment)
+  f.share.mockResolvedValue({ id: 'sent' })
+  mount('moment')
+  expect(screen.getByRole('button', { name: 'Post moment' })).toBeDisabled()
+  await userEvent.click(screen.getByRole('button', { name: 'Photo' }))
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+  const select = () =>
+    fireEvent.change(screen.getByLabelText('Choose a photo'), {
+      target: { files: [new File(['x'], 'photo.png', { type: 'image/png' })] },
+    })
+  select()
+  await screen.findByRole('img', { name: 'Your photo before sharing' })
+  expect(f.share).not.toHaveBeenCalled()
+  expect(screen.getByRole('textbox', { name: 'Your note' })).toHaveAttribute(
+    'placeholder',
+    'Add a caption…',
+  )
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Remove attachment' }),
+  )
+  expect(
+    screen.queryByRole('img', { name: 'Your photo before sharing' }),
+  ).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Post moment' })).toBeDisabled()
+  select()
+  await screen.findByRole('img', { name: 'Your photo before sharing' })
+  await userEvent.click(screen.getByRole('button', { name: 'Post moment' }))
+  await waitFor(() =>
+    expect(f.share).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ channel: 'moment', kind: 'photo', attachment }),
+    ),
+  )
+})
 test('messenger input sends text with Enter and preserves Shift+Enter for a new line', async () => {
   f.share.mockResolvedValue({ id: 'sent' })
   mount()

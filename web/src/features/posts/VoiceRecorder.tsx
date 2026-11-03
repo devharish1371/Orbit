@@ -9,11 +9,13 @@ export function VoiceRecorder({
   onBusy,
   compact = false,
   disabled = false,
+  studio = false,
 }: {
   onReady: (note: Attachment) => void
   onBusy: (busy: boolean) => void
   compact?: boolean
   disabled?: boolean
+  studio?: boolean
 }) {
   const [state, setState] = useState<'idle' | 'starting' | 'recording'>('idle'),
     [seconds, setSeconds] = useState(0),
@@ -61,8 +63,13 @@ export function VoiceRecorder({
     }
   }
   return (
-    <div className={`voice-recorder ${compact ? 'compact-recorder' : ''}`}>
-      {!compact && <p className="muted small">{copy.posts.voiceHint}</p>}
+    <div
+      className={`voice-recorder ${compact ? 'compact-recorder' : ''} ${studio ? 'studio-recorder' : ''}`}
+      data-state={state}
+    >
+      {!compact && !studio && (
+        <p className="muted small">{copy.posts.voiceHint}</p>
+      )}
       <div className="voice-capture">
         <Button
           className={compact ? 'icon-button' : 'button-secondary'}
@@ -89,25 +96,39 @@ export function VoiceRecorder({
           ) : (
             <Square size={16} aria-hidden="true" />
           )}
-          {!compact &&
+          {(!compact || studio) &&
             (state === 'idle'
               ? copy.posts.record
               : state === 'starting'
                 ? copy.posts.cancel
                 : copy.posts.stop)}
         </Button>
-        {(!compact || state !== 'idle') && (
+        {((!compact && !studio) || state !== 'idle') && (
           <span role="status" className="record-time">
             {Math.floor(seconds / 60)}:
             {String(Math.floor(seconds) % 60).padStart(2, '0')}
           </span>
         )}
-        {(!compact || state !== 'idle') && (
-          <span
-            className="record-level"
-            style={{ transform: `scaleY(${Math.max(0.1, level)})` }}
-            aria-hidden="true"
-          />
+        {studio && state === 'recording' ? (
+          <span className="studio-levels" aria-hidden="true">
+            {[0.35, 0.6, 0.9, 1, 0.85, 0.55, 0.3].map((weight, i) => (
+              <i
+                key={i}
+                style={{
+                  transform: `scaleY(${Math.max(0.12, level * weight)})`,
+                }}
+              />
+            ))}
+          </span>
+        ) : (
+          !studio &&
+          (!compact || state !== 'idle') && (
+            <span
+              className="record-level"
+              style={{ transform: `scaleY(${Math.max(0.1, level)})` }}
+              aria-hidden="true"
+            />
+          )
         )}
       </div>
       {error && <p role="alert">{copy.posts.voiceFailed}</p>}

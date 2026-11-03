@@ -6,11 +6,13 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const suite = process.argv[2] ?? 'm8';
+const port = process.argv[4] ?? '4174';
+if (!/^\d{4,5}$/.test(port) || Number(port) > 65535) throw new Error('Invalid local audit port');
 if (!/^[a-z0-9-]+$/.test(suite)) throw new Error('Invalid audit suite name');
 const input = path.join(root, `.artifacts/qa/${suite}-audit`);
 const output = path.join(root, `.artifacts/qa/${suite}-reports`);
 await mkdir(output, { recursive: true });
-const prefixes = process.argv[3]?.split(',') ?? [];
+const prefixes = process.argv[3]?.split(',').filter(Boolean) ?? [];
 if (prefixes.some(prefix => !/^[a-z0-9-]+$/.test(prefix))) throw new Error('Invalid screen prefix');
 const queue = (await readdir(input)).filter(name => name.endsWith('-360.html') && (!prefixes.length || prefixes.some(prefix => name.startsWith(prefix+'-')))).sort();
 if (!queue.length) throw new Error('No matching screen captures');
@@ -21,7 +23,7 @@ async function audit(name) {
   const report = path.join(output, name.replace('.html', '.json'));
   await new Promise((resolve, reject) => {
     const process = spawn(path.join(root,'web/node_modules/.bin/lighthouse'), [
-      'http://127.0.0.1:4174/'+name, '--only-categories=accessibility,best-practices',
+      'http://127.0.0.1:'+port+'/'+name, '--only-categories=accessibility,best-practices',
       '--chrome-flags=--headless', '--output=json', '--output-path='+report, '--quiet',
     ], { cwd: root, stdio: 'ignore' });
     process.on('error', reject);
