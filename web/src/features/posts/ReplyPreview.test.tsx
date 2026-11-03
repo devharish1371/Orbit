@@ -22,6 +22,11 @@ const item = (values: Partial<Post> = {}) =>
 test('a visible quote identifies the author and opens its original', async () => {
   const open = vi.fn()
   render(<ReplyPreview post={item()} onOpen={open} />)
+  const button = screen.getByRole('button')
+  expect(button).toHaveTextContent('Partner A private original')
+  expect(button).toHaveAccessibleName(
+    `Open quoted message from ${button.textContent}`,
+  )
   await userEvent.click(
     screen.getByRole('button', {
       name: /Open quoted message from Partner.*A private original/,

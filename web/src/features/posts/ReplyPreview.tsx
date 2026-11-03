@@ -37,8 +37,7 @@ export function ReplyPreview({
       <span>
         {available ? (
           <>
-            <strong>{name}</strong>
-            <span>{excerpt}</span>
+            <strong>{name}</strong> <span>{excerpt}</span>
           </>
         ) : (
           <span>
@@ -52,7 +51,7 @@ export function ReplyPreview({
     <button
       className="reply-preview"
       type="button"
-      aria-label={`Open quoted message from ${name}: ${excerpt}`}
+      aria-label={`Open quoted message from ${name} ${excerpt}`}
       onClick={() => onOpen(post.id)}
     >
       {content}

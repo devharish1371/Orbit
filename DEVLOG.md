@@ -1154,7 +1154,7 @@ removed/replaced avatars remount/clear an open profile preview.
 
 Chat + is a three-action Photo/Voice/expiry shelf. Voice selection keeps typed text and
 requires an explicit Record action. Cancel restores typing; Back stops into a local preview
-or cancels a pending microphone request. Eight-line drafts resize correctly after navigation.
+or cancels a pending recording intent. Eight-line drafts resize correctly after navigation.
 No microphone request, media upload, new message, real partner contact or APK handover in QA.
 
 125 web / 16 worker tests, lint/types/format/build pass. Full backend run validates all 67
@@ -1165,3 +1165,10 @@ Shared/profile viewer loads and zooms; Escape returns focus, feed scroll 1237 px
 Eight-line draft returns as eight lines at 132 px. Voice cancel keeps text/focus; tool buttons
 are 72 px and voice Record is 44 px high. Final responsive/native/a11y rollup follows.
 See docs/V2_CONNECTED_IMAGES.md. Physical keyboard/predictive Back/gestures remain deferred.
+
+Six initial static accessibility/best-practice audits score 100/100, with a non-scoring
+label-content advisory on the existing quote preview. Added a real space between the visible
+author/excerpt and removed the intervening colon from its accessible name, so visible text
+is an exact substring for voice control. Regression assertion covers the complete visible
+label; both quote tests pass. Full 125 web/16 worker/lint/types/format/build also pass.
+Affected captured-state audits and the final Android rollup are rerun below.

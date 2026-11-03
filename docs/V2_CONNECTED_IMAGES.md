@@ -27,7 +27,7 @@ No APK handover or phone install request.
 The + shelf contains Photo, Voice and expiry. The redundant inline photo icon and decorative
 emoji shortcuts are removed. Choosing Voice preserves text and does not start the microphone;
 Record is explicit. Cancel restores typing. Back stops a recording into a local preview or
-cancels a pending request; late permission responses cannot restart it. Recording never publishes a message.
+cancels a pending recording intent; late permission responses cannot restart it. Recording never publishes a message.
 Multi-line text resizes before paint and after width/navigation changes. IME composition guards
 and the existing Android adjustResize behavior remain; physical verification is still deferred.
 
