@@ -57,6 +57,7 @@ test('Moments keeps the reaction palette out of the feed until requested', async
   expect(f.rpc).not.toHaveBeenCalled()
   fireEvent.keyDown(view.container.querySelector('article')!, { key: 'Escape' })
   expect(screen.queryByRole('button', { name: '❤️' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'React' })).toHaveFocus()
   await userEvent.click(screen.getByRole('button', { name: 'React' }))
   await userEvent.click(screen.getByRole('button', { name: '❤️' }))
   await waitFor(() =>
@@ -91,6 +92,13 @@ test('chat keeps reactions and unsend behind message options, with confirmation 
     </QueryClientProvider>,
   )
   expect(screen.queryByRole('button', { name: '❤️' })).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: 'Message options' }))
+  screen.getByRole('button', { name: 'Copy text' }).focus()
+  await userEvent.keyboard('{Escape}')
+  expect(screen.getByRole('button', { name: 'Message options' })).toHaveFocus()
+  expect(
+    screen.queryByRole('button', { name: 'Copy text' }),
+  ).not.toBeInTheDocument()
   fireEvent.contextMenu(view.container.querySelector('article')!)
   await userEvent.click(screen.getByRole('button', { name: '❤️' }))
   await waitFor(() =>

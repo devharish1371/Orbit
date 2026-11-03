@@ -1,0 +1,92 @@
+[
+  {
+    "checkbox": [
+      24,
+      24
+    ],
+    "dialog": [
+      0,
+      207,
+      320,
+      800
+    ],
+    "overflow": false,
+    "theme": "dark",
+    "width": 320
+  },
+  {
+    "checkbox": [
+      24,
+      24
+    ],
+    "dialog": [
+      0,
+      207,
+      360,
+      800
+    ],
+    "overflow": false,
+    "theme": "dark",
+    "width": 360
+  },
+  {
+    "checkbox": [
+      24,
+      24
+    ],
+    "dialog": [
+      0,
+      207,
+      412,
+      800
+    ],
+    "overflow": false,
+    "theme": "dark",
+    "width": 412
+  },
+  {
+    "checkbox": [
+      24,
+      24
+    ],
+    "dialog": [
+      0,
+      207,
+      320,
+      800
+    ],
+    "overflow": false,
+    "theme": "light",
+    "width": 320
+  },
+  {
+    "checkbox": [
+      24,
+      24
+    ],
+    "dialog": [
+      0,
+      207,
+      412,
+      800
+    ],
+    "overflow": false,
+    "theme": "light",
+    "width": 412
+  },
+  {
+    "theme": "light",
+    "width": 360,
+    "dialog": [
+      0,
+      207,
+      360,
+      800
+    ],
+    "overflow": false,
+    "checkbox": [
+      24,
+      24
+    ]
+  }
+]

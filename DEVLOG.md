@@ -1116,3 +1116,13 @@ A web deployment rollover also reproduced a missing MapPage route hash. Removed 
 route from the precache exclusion; MapLibre renderer/worker remain deferred and tiles stay
 network-only. Final generated service worker includes MapPage JS and CSS. See DECISIONS.
 117 web / 16 worker checks and full lint/types/format/build pass after these changes.
+
+Browser checks: place Cancel returns to Edit place; final 360px day capture and settled
+320/360/412px light/dark geometry fit, including 24px circular controls and 44px labels.
+Excluded transient viewport captures from the evidence folder. Chat expiry-sheet Escape
+keeps the tray and restores its choice trigger; a second Escape closes the tray and focuses
++. Browser message-menu Escape exposed a pre-existing local handler bypassing focus return;
+it now uses the same close callback and does not consume cancellation from a modal above it.
+Regression assertions cover Moments/Chat focus. Clipboard-unavailable hosts report failure
+instead of throwing synchronously. All work uses disposable data; no place save/delete or
+real partner contact. Physical acceptance remains deferred; no APK handover.

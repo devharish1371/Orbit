@@ -82,7 +82,7 @@ export function PostCard({
     return () => clearTimeout(timer)
   }, [burst])
   const card = useRef<HTMLElement>(null)
-  useBackLayer(actions || reacting || picker, () => {
+  function closeActions() {
     setActions(false)
     setReacting(false)
     setPicker(false)
@@ -91,7 +91,8 @@ export function PostCard({
         '.chat-message-menu, .moment-react-trigger',
       )
       ?.focus({ preventScroll: true })
-  })
+  }
+  useBackLayer(actions || reacting || picker, closeActions)
   useEffect(() => {
     if (!reacting) return
     const dismiss = (event: PointerEvent) => {
@@ -188,10 +189,13 @@ export function PostCard({
       data-kind={post.kind}
       data-own={own}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          setReacting(false)
-          setPicker(false)
-          setActions(false)
+        if (
+          event.key === 'Escape' &&
+          !document.querySelector('dialog[open]') &&
+          (actions || reacting || picker)
+        ) {
+          event.preventDefault()
+          closeActions()
         }
       }}
       style={{ '--bubble-color': author?.color ?? '#FF6B8A' } as CSSProperties}
@@ -507,6 +511,10 @@ export function PostCard({
               className="text-button"
               type="button"
               onClick={() => {
+                if (!navigator.clipboard) {
+                  setMessage(copy.posts.errors.failed)
+                  return
+                }
                 void navigator.clipboard
                   .writeText(post.body!)
                   .then(() => setMessage(copy.posts.copied))
