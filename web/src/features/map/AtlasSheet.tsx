@@ -46,12 +46,10 @@ export function AtlasSheet({
           gesture.current = null
           dragged.current = false
         }}
-        onClick={() => {
-          if (dragged.current) {
-            dragged.current = false
-            return
-          }
-          onExpand(!expanded)
+        onClick={(event) => {
+          const dragClick = dragged.current && event.detail !== 0
+          dragged.current = false
+          if (!dragClick) onExpand(!expanded)
         }}
       >
         <span aria-hidden="true" />

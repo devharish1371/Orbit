@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, type ReactNode } from 'react'
 import { usePrivateMedia } from '@/hooks/usePrivateMedia'
 import { PortraitContext } from '@/app/PortraitContext'
 import { SharedImage } from './SharedImage'
@@ -23,12 +23,14 @@ export function Avatar({
   large = false,
   path,
   transitionName,
+  fallback,
 }: {
   name: string
   color: string
   large?: boolean
   path?: string | null
   transitionName?: string | null
+  fallback?: ReactNode
 }) {
   const inherited = useContext(PortraitContext)
   const motionName = transitionName === undefined ? inherited : transitionName
@@ -40,7 +42,7 @@ export function Avatar({
         aria-hidden="true"
         data-portrait-key={motionName ?? undefined}
       >
-        {name.trim().slice(0, 1).toUpperCase()}
+        {fallback ?? name.trim().slice(0, 1).toUpperCase()}
         {path && <Photo key={path} path={path} />}
       </span>
     </SharedImage>

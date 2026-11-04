@@ -25,7 +25,7 @@
   Reduced motion skips detail settling, camera animations and existing portrait interpolation.
   No extra library, service, sensor, retention rule or permission was added.
 
-Verification: 135 web / 16 worker tests; lint/types/format/build; 67 hosted checks. Browser,
+Verification: 136 web / 16 worker tests; lint/types/format/build; 67 hosted checks. Browser,
 static accessibility and exact Android CI evidence are recorded in DEVLOG.md and
 docs/screens/v2-atlas. Synthetic GPS fixtures exercise UI only. Physical touch, TalkBack,
 background/offline/endurance and real partner acceptance remain in the user's later batch.

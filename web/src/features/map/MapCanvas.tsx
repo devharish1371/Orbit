@@ -13,6 +13,7 @@ import {
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Avatar } from '@/components/ui/Avatar'
+import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
 import { copy } from '@/copy/en'
 import { orbitMapStyle } from '@/lib/orbit-map-style'
 import { circle, interpolate, type Point } from '@/lib/geo'
@@ -111,6 +112,7 @@ export function PersonMarker({
         name={member.display_name}
         color={member.color}
         path={member.avatar_path}
+        fallback={<OrbitGlyph name="home" width="24" height="24" />}
       />
       {location.heading !== null && !location.fuzzed && (
         <i

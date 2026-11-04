@@ -19,6 +19,8 @@ const api = vi.hoisted(() => ({
   mode: 'live',
   epoch: 1,
   fuzzed: false,
+  age: 0,
+  includeSelf: false,
   from: vi.fn(),
   now: Date.parse('2026-11-04T12:00:00Z'),
 }))
@@ -55,12 +57,26 @@ vi.mock('./LiveContext', () => ({
     connection: 'live',
     locations: {
       data: [
+        ...(api.includeSelf
+          ? [
+              {
+                user_id: 'self',
+                lat: 13.02,
+                lng: 80,
+                fuzzed: false,
+                recorded_at: new Date(api.now).toISOString(),
+                battery_pct: 85,
+                speed_mps: 0,
+                accuracy_m: 10,
+              },
+            ]
+          : []),
         {
           user_id: 'partner',
           lat: 13,
           lng: 80,
           fuzzed: api.fuzzed,
-          recorded_at: new Date(api.now).toISOString(),
+          recorded_at: new Date(api.now - api.age).toISOString(),
           battery_pct: 80,
           speed_mps: 0,
           accuracy_m: 10,
@@ -136,7 +152,26 @@ beforeEach(() => {
   api.mode = 'live'
   api.epoch = 1
   api.fuzzed = false
+  api.age = 0
+  api.includeSelf = false
   api.from.mockClear()
+})
+test('old approximate pair distance is labelled last shared and never offers midpoint navigation', () => {
+  api.includeSelf = true
+  api.mode = 'surprise'
+  api.fuzzed = true
+  api.age = 360_000
+  const view = setup()
+  expect(screen.getByText('approx. last shared')).toBeVisible()
+  expect(
+    screen.queryByRole('link', { name: 'Meet in the middle' }),
+  ).not.toBeInTheDocument()
+  api.age = 0
+  view.rerender(view.element())
+  expect(screen.getByText('approx. apart')).toBeVisible()
+  expect(
+    screen.queryByRole('link', { name: 'Meet in the middle' }),
+  ).not.toBeInTheDocument()
 })
 test('recorded sample selection survives profile navigation; Back clears the journey before collapsing details', async () => {
   setup()

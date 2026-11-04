@@ -100,7 +100,7 @@ Primary references, verified 3 November 2026:
   Physical keyboard/predictive-Back/gesture tests remain for the user's batch. See
   docs/V2_CONNECTED_IMAGES.md and DEVLOG.md for final browser/Android results.
 - V2.3 software implemented: anchored map/two-position sheet, actual-sample journey scrubbing,
-  session-scoped browsing context and privacy/freshness guards. 135 web/16 worker and all
+  session-scoped browsing context and privacy/freshness guards. 136 web/16 worker and all
   67 hosted checks pass. Final browser/a11y/Android rollup is in progress; see DEVLOG.md.
 - V2.4–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded

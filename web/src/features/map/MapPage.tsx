@@ -168,12 +168,13 @@ export default function MapPage() {
   const recentPair =
     a &&
     b &&
-    people.every(
-      (p) =>
-        locationStatus(p.member.share_mode, p.location.recorded_at, now)
-          .state === 'recent',
-    )
-  const precisePair = recentPair && !a.location.fuzzed && !b.location.fuzzed
+    people.every((p) => {
+      const age = now - Date.parse(p.location.recorded_at)
+      return Number.isFinite(age) && age >= -60_000 && age <= 300_000
+    })
+  const precisePair =
+    recentPair &&
+    people.every((p) => p.member.share_mode === 'live' && !p.location.fuzzed)
   const directions = location
     ? directionsTo(
         location,
@@ -324,11 +325,8 @@ export default function MapPage() {
                   <strong>
                     {distanceLabel(distance(a.location, b.location))}
                   </strong>{' '}
-                  {a.location.fuzzed || b.location.fuzzed
-                    ? 'approx. apart'
-                    : recentPair
-                      ? 'apart'
-                      : 'last shared'}
+                  {a.location.fuzzed || b.location.fuzzed ? 'approx. ' : ''}
+                  {recentPair ? 'apart' : 'last shared'}
                 </>
               ) : (
                 'Our map'

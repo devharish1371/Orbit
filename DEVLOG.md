@@ -1214,3 +1214,11 @@ review caught sheet/nav overlap and scroll anchoring; corrected workspace sizing
 11 px navigation clearance at 800 px height with zero outer scroll. Remaining browser,
 static-audit and Android rollup follows. Synthetic fixture only; no real partner contact,
 new permission, recording, APK handover or install request. See docs/V2_ATLAS.md.
+
+Audit follow-up: all five static states initially scored 100/100 but reported a non-scoring
+voice-control advisory on the inherited map avatar's visible initial versus full-name label.
+Map-only avatar fallback now uses Orbit's paired glyph; real photos and descriptive member
+labels remain. Also corrected stale approximate-pair wording and tested recent/stale Surprise
+without midpoint navigation. A gesture regression verifies Enter still works if a touch host
+omits the click after dragging. Full suite: 136 web / 16 worker plus lint/types/format/build.
+Initial implementation 714853f passes Android CI 41866405108; final follow-up rollup follows.

@@ -34,7 +34,7 @@ test('the sheet has a keyboard/click alternative to dragging and hides collapsed
     screen.getByRole('button', { name: 'Expand map details' }),
   ).toHaveFocus()
 })
-test('a handle drag snaps once, while scrolling/cancelled gestures do not toggle it', () => {
+test('a handle drag snaps once, preserves scrolling and leaves keyboard activation available', async () => {
   vi.stubGlobal('PointerEvent', MouseEvent)
   render(<Fixture />)
   const handle = screen.getByRole('button', { name: 'Expand map details' })
@@ -53,7 +53,7 @@ test('a handle drag snaps once, while scrolling/cancelled gestures do not toggle
   }
   pointer('pointerdown', 240)
   pointer('pointerup', 170)
-  fireEvent.click(handle)
+  fireEvent.click(handle, { detail: 1 })
   expect(handle).toHaveAttribute('aria-expanded', 'true')
   fireEvent.pointerDown(screen.getByRole('button', { name: 'Journey' }), {
     clientY: 170,
@@ -64,7 +64,13 @@ test('a handle drag snaps once, while scrolling/cancelled gestures do not toggle
   expect(handle).toHaveAttribute('aria-expanded', 'true')
   pointer('pointerdown', 170)
   pointer('pointerup', 240)
-  fireEvent.click(handle)
+  fireEvent.click(handle, { detail: 1 })
+  expect(handle).toHaveAttribute('aria-expanded', 'false')
+  pointer('pointerdown', 240)
+  pointer('pointerup', 170)
+  // Some touch hosts suppress the trailing click after a drag. Enter must still work.
+  handle.focus()
+  await userEvent.keyboard('{Enter}')
   expect(handle).toHaveAttribute('aria-expanded', 'false')
   vi.unstubAllGlobals()
 })
