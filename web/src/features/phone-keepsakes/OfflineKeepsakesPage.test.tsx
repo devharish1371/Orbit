@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, expect, test, vi } from 'vitest'
 import OfflineKeepsakesPage from './OfflineKeepsakesPage'
+import { AuthContext, type AuthValue } from '@/app/AuthContext'
 const native = vi.hoisted(() => ({ identity: vi.fn(), items: vi.fn() }))
 vi.mock('./native', () => ({
   phoneCopiesSupported: true,
@@ -60,5 +61,21 @@ test('signing out clears the private library even while its route is still mount
   )
   await screen.findByText('Offline saved note')
   act(() => window.dispatchEvent(new Event('orbit-signing-out')))
+  expect(screen.queryByText('Offline saved note')).not.toBeInTheDocument()
+})
+test('account changes hide old private metadata immediately while native identity is still loading', async () => {
+  const library = (owner: string) => (
+    <AuthContext.Provider
+      value={{ session: { user: { id: owner } } } as AuthValue}
+    >
+      <MemoryRouter>
+        <OfflineKeepsakesPage />
+      </MemoryRouter>
+    </AuthContext.Provider>
+  )
+  const view = render(library('own'))
+  await screen.findByText('Offline saved note')
+  native.identity.mockImplementation(() => new Promise(() => {}))
+  view.rerender(library('different-account'))
   expect(screen.queryByText('Offline saved note')).not.toBeInTheDocument()
 })

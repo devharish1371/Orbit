@@ -15,7 +15,7 @@ evidence, acknowledges missing/repaired copies again, renews daily and scans eve
 minutes as fallback; revision/resume/manual triggers remain immediate. Final exact-bundle
 verification and artifact integrity are recorded in DEVLOG.md.
 
-158 web / 22 worker tests pass; all 75 hosted checks validated across the full run plus the
+159 web / 22 worker tests pass; all 75 hosted checks validated across the full run plus the
 private-helper privilege correction and five-test retention rerun. The browser preview
 requests no phone-storage permission and never pretends it has native files. No real
 partner notification, account mutation, phone opt-in or APK handover was performed.

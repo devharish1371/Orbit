@@ -1330,7 +1330,11 @@ cab7d3d36a6765fbaaace5682325bc4c8e295d29118887efa0fdf0a710e373a8).
 Final efficiency refinement avoids rewriting unchanged receipts on each pass, renews daily
 and reduces fallback native scans to five minutes. Missing/repaired files still acknowledge
 again after forgetting stale evidence. The new retry test passes; 158 web/22 worker checks,
-types, format and production build pass. Final exact-bundle CI verification follows.
+types, format and production build pass. Final review added an optional live-account guard
+to the independent library: a changed account hides prior metadata/media immediately and
+revalidates native identity, without requiring a successful session refresh for cold access.
+The regression passes; the full pipeline now passes 159 web/22 worker tests. Final
+exact-bundle CI verification follows.
 Three browser widths fit; the static accessibility/best-practices audit scores 100/100 with
 no findings after fixing the replay's local asset paths under unchanged CSP. Physical cold offline
 launch with expired auth, process death, phone storage failures, playback and real two-phone

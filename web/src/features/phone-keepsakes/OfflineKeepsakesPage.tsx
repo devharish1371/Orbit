@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { AuthContext } from '@/app/AuthContext'
 import { Link } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -20,6 +21,8 @@ import {
 import type { PhoneCopy, PhoneIdentity } from './model'
 import './phone-keepsakes.css'
 export default function OfflineKeepsakesPage() {
+  // Native identity remains sufficient for cold offline access; a known live account must agree.
+  const account = useContext(AuthContext)?.session?.user.id
   const returnFocus = useRef<HTMLElement | null>(null)
   const [identity, setIdentity] = useState<PhoneIdentity>(),
     [items, setItems] = useState<PhoneCopy[]>([]),
@@ -39,6 +42,8 @@ export default function OfflineKeepsakesPage() {
             rows = await phoneItems(id)
           return { id, rows }
         })
+        if (account && result.id.owner !== account)
+          throw new Error('ACCOUNT_CHANGED')
         if (active) {
           setIdentity(result.id)
           setItems(
@@ -76,9 +81,15 @@ export default function OfflineKeepsakesPage() {
       active = false
       window.removeEventListener('orbit-signing-out', clear)
     }
-  }, [reload])
+  }, [reload, account])
   useEffect(() => {
-    if (!identity || !selected || !selected.bytes) return
+    if (
+      !identity ||
+      !selected ||
+      !selected.bytes ||
+      (account && identity.owner !== account)
+    )
+      return
     let active = true,
       objectUrl: string | undefined
     void readPhoneMedia(identity, selected.id, () => active && !document.hidden)
@@ -95,12 +106,15 @@ export default function OfflineKeepsakesPage() {
       active = false
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
-  }, [identity, selected, reload])
+  }, [identity, selected, reload, account])
   const close = () => {
     setSelected(null)
     setUrl(undefined)
     setMediaError(false)
   }
+  const sameAccount = !account || identity?.owner === account
+  const visibleItems = sameAccount ? items : []
+  const visibleSelection = sameAccount ? selected : null
   return (
     <main className="page phone-library">
       <Link
@@ -127,14 +141,16 @@ export default function OfflineKeepsakesPage() {
           <RefreshCw size={19} aria-hidden="true" />
         </button>
       </header>
-      <p className="muted">{items.length} saved · Opens without internet</p>
+      <p className="muted">
+        {visibleItems.length} saved · Opens without internet
+      </p>
       {loading && <p role="status">Checking saved files…</p>}
       {error && <p role="status">{error}</p>}
       {!loading && !error && !items.length && (
         <p>No phone copies yet. Open Keepsakes while connected to sync.</p>
       )}
       <div className="phone-library-list">
-        {items.map((copy) => (
+        {visibleItems.map((copy) => (
           <article key={copy.id} className="phone-library-item">
             <div className="phone-library-kind" aria-hidden="true">
               {copy.kind === 'photo' ? (
@@ -173,15 +189,15 @@ export default function OfflineKeepsakesPage() {
         appear after your next sync. Phone copies aren’t a backup; signing out
         or uninstalling removes them.
       </p>
-      {selected?.kind === 'photo' && (
+      {visibleSelection?.kind === 'photo' && (
         <ImageViewer
           transitionName="orbit-phone-photo"
           returnFocus={returnFocus}
           title="Saved photo"
-          alt={selected.body ?? 'Saved photo'}
+          alt={visibleSelection.body ?? 'Saved photo'}
           src={url}
           error={mediaError}
-          caption={selected.body}
+          caption={visibleSelection.body}
           onRetry={() => {
             setMediaError(false)
             setReload((v) => v + 1)
@@ -189,7 +205,7 @@ export default function OfflineKeepsakesPage() {
           onClose={close}
         />
       )}
-      {selected?.kind === 'voice' && (
+      {visibleSelection?.kind === 'voice' && (
         <section className="phone-library-voice" aria-label="Saved voice note">
           <button className="text-button" onClick={close}>
             Close

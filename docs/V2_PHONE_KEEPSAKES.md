@@ -10,6 +10,9 @@ One designated phone per member can sync; choosing another replaces its server d
 The separate On this phone library opens from Keepsakes and from the reconnect screen.
 It reads native files without the space query or a successful server session refresh. Native
 operations still require the saved, encrypted account identity. A slow in-flight native auth
+refresh cannot authorize a mismatched live account: a known account change hides old metadata
+and media immediately while native identity is rechecked. With no live session, the saved
+native identity still permits cold offline access. A slow in-flight native auth
 refresh can delay access; expired-session/airplane-mode timing remains a physical test gate.
 Web previews explain Android availability; browser storage is not a durable archive substitute.
 
