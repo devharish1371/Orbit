@@ -132,7 +132,8 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   expired-session/offline/process-death/two-phone gates remain in the later device batch.
   159 web/22 worker checks pass; all 75 hosted checks are validated across the full run and
   the corrected private-helper privilege audit. Android native tests/build/signing pass in
-  CI 41918291192 and 41918882265; the receipt-efficiency follow-up is being rechecked. Photo sets,
+  CI 41918291192 and 41918882265. Final code f0fdf4a passes CI 41920390183 and local
+  integrity/signing/private-material checks. The software slice is verified. Photo sets,
   collections and archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded

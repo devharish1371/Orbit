@@ -9,12 +9,14 @@ One designated phone per member can sync; choosing another replaces its server d
 
 The separate On this phone library opens from Keepsakes and from the reconnect screen.
 It reads native files without the space query or a successful server session refresh. Native
-operations still require the saved, encrypted account identity. A slow in-flight native auth
-refresh cannot authorize a mismatched live account: a known account change hides old metadata
+operations still require the saved, encrypted account identity. A known account change hides
+old metadata
 and media immediately while native identity is rechecked. With no live session, the saved
 native identity still permits cold offline access. A slow in-flight native auth
 refresh can delay access; expired-session/airplane-mode timing remains a physical test gate.
 Web previews explain Android availability; browser storage is not a durable archive substitute.
+The local library is a checked snapshot. Return to the connected Keepsakes screen to
+reconcile current Keep/unsend changes; its independent offline route does not run cloud sync.
 
 ## Files and receipts
 
@@ -69,6 +71,12 @@ background cancellation, logout/relogin and two-device propagation/revocation. V
 phone is unavailable before the surprise reveal, so no real partner-copy claim is made.
 APK handover stays deferred until requested. V2.5 photo sets/collections and later V2 phases
 remain open; this is the phone-copy foundation, not a final production-release declaration.
+
+Final software result: 159 web / 22 worker tests and all lint/type/format/build checks pass.
+All 75 hosted checks are validated across the full run and targeted privilege correction.
+Android source f0fdf4a passes native tests/build/signing in CI 41920390183, plus local APK
+integrity/signing-identity/private-material checks. The browser capture scores 100/100 for
+accessibility/best practices, and 320/360/412 px layouts fit. Secret scan: 988 files, no findings.
 
 References: [Android app-specific storage](https://developer.android.com/training/data-storage/app-specific),
 [Android Keystore](https://developer.android.com/privacy-and-security/keystore).

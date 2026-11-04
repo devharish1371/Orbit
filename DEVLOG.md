@@ -1333,8 +1333,12 @@ again after forgetting stale evidence. The new retry test passes; 158 web/22 wor
 types, format and production build pass. Final review added an optional live-account guard
 to the independent library: a changed account hides prior metadata/media immediately and
 revalidates native identity, without requiring a successful session refresh for cold access.
-The regression passes; the full pipeline now passes 159 web/22 worker tests. Final
-exact-bundle CI verification follows.
+The regression passes; the full pipeline now passes 159 web/22 worker tests. Final source
+f0fdf4a passes Android CI 41920390183 (3m44s): native unit tests, compilation, merged manifest,
+signing and upload checks all pass. Its retained private artifact is 6,975,615 bytes; SHA-256
+d42f29fb8047626623efdd3d6eb3296d8cadf3f6e063f6e1ee1e6e34ab7d5ccb. ZIP integrity,
+signing identity against 7b11edf and private-material scans pass. Source secret scan checks
+988 files with no findings. Final documentation changes do not alter the compiled sources.
 Three browser widths fit; the static accessibility/best-practices audit scores 100/100 with
 no findings after fixing the replay's local asset paths under unchanged CSP. Physical cold offline
 launch with expired auth, process death, phone storage failures, playback and real two-phone

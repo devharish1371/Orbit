@@ -14,6 +14,9 @@ Native cipher tests, compilation, signing and build checks pass in Android CI 41
 evidence, acknowledges missing/repaired copies again, renews daily and scans every five
 minutes as fallback; revision/resume/manual triggers remain immediate. Final exact-bundle
 verification and artifact integrity are recorded in DEVLOG.md.
+Final code f0fdf4a passes CI 41920390183 (3m44s); its private retained artifact passes ZIP,
+matching signing identity and private-material scanning. No application source changed after
+that run; the final checkpoint records only documentation.
 
 159 web / 22 worker tests pass; all 75 hosted checks validated across the full run plus the
 private-helper privilege correction and five-test retention rerun. The browser preview
