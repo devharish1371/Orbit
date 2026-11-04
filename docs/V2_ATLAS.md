@@ -15,6 +15,7 @@
   segmentation. The native range has time/sample-count semantics and previous/next buttons.
   A distinct historical dot marks the selected sample. Scrubbing pans immediately while
   preserving zoom. Missing/removed journeys clear the dot; gaps are never joined by playback.
+  Playback focuses the map on its route/dot, with person controls available in the sheet.
 - Pause/Surprise remove cached precise markers and replay data immediately. Surprise only
   paints an already-fuzzed fix. History requests stop in these modes. Navigation requires a
   recent precise fix; an older pair reads “last shared” and loses its midpoint navigation.

@@ -208,9 +208,10 @@ test.each(['surprise', 'paused'])(
   '%s removes precise cached markers, history and directions without reading new history',
   async (mode) => {
     const view = setup()
+    expect(screen.getByLabelText('Visible people')).toHaveTextContent('1')
     await userEvent.click(screen.getByRole('button', { name: '24 hours' }))
     await userEvent.click(screen.getByRole('button', { name: /Walk/ }))
-    expect(screen.getByLabelText('Visible people')).toHaveTextContent('1')
+    expect(screen.getByLabelText('Visible people')).toHaveTextContent('0')
     api.mode = mode
     api.epoch = 2
     view.rerender(view.element())
@@ -230,19 +231,19 @@ test('saved-place selection opens details with explicit external navigation, and
   await userEvent.click(screen.getByRole('button', { name: 'Places' }))
   await userEvent.click(screen.getByRole('button', { name: /Café/ }))
   expect(
-    screen.getByRole('link', { name: 'Navigate to Café' }),
+    screen.getByRole('link', { name: 'Directions to Café' }),
   ).toHaveAttribute(
     'href',
     'https://www.google.com/maps/dir/?api=1&destination=13.000000,80.000000',
   )
   expect(
-    screen.getByRole('link', { name: 'Navigate to Café' }),
+    screen.getByRole('link', { name: 'Directions to Café' }),
   ).toHaveAttribute('rel', 'noopener noreferrer')
   await act(async () => {
     expect(dismissBackLayer()).toBe(true)
   })
   expect(
-    screen.queryByRole('link', { name: 'Navigate to Café' }),
+    screen.queryByRole('link', { name: 'Directions to Café' }),
   ).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Places' })).toHaveAttribute(
     'aria-pressed',

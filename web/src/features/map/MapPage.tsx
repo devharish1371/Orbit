@@ -297,8 +297,8 @@ export default function MapPage() {
             key={`${dark}-${attempt}`}
             dark={dark}
             accent={data.self.theme_accent}
-            people={people}
-            places={places}
+            people={selectedJourney ? [] : people}
+            places={selectedJourney ? [] : places}
             trail={selectedJourney?.points ?? []}
             sample={sample}
             timezone={data.couple.timezone}
@@ -630,7 +630,7 @@ export default function MapPage() {
                       href={navigateUrl(spot)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Navigate to ${spot.name}`}
+                      aria-label={`Directions to ${spot.name}`}
                       title="Open Google Maps"
                     >
                       <Navigation size={18} aria-hidden="true" />

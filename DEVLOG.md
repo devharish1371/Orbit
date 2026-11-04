@@ -1222,3 +1222,8 @@ labels remain. Also corrected stale approximate-pair wording and tested recent/s
 without midpoint navigation. A gesture regression verifies Enter still works if a touch host
 omits the click after dragging. Full suite: 136 web / 16 worker plus lint/types/format/build.
 Initial implementation 714853f passes Android CI 41866405108; final follow-up rollup follows.
+
+Final static review found one partly clipped current-position marker during historical replay
+and a saved-place Directions label mismatch. Playback now focuses the map on the recorded
+route/dot while person controls remain in the sheet. Directions' accessible label includes
+the visible action. Targeted captured-state audits are refreshed after this correction.
