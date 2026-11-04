@@ -1367,6 +1367,21 @@ membership freshness, creator controls, malformed totals and ZIP group/file cons
 
 Browser flow with disposable data passes: name/color draft survives Us round-trip, new empty
 group offers a return to Keepsakes, a saved photo joins the group, Photos filters it, and
-archive/restore preserves the photo and membership. Rename/color edits save. Final visual,
-accessibility and Android CI verification follows. No real partner contact or phone install
-requested; all physical gates remain in the later batch. See docs/V2_COLLECTIONS.md.
+archive/restore preserves the photo and membership. Rename/color edits save. One photo joins
+two groups without duplication. The actual browser ZIP contains two collections, two links,
+one post and its two original/thumbnail files once each; ZIP integrity passes.
+
+Final visual verification covers 21 layouts at 320/360/412 × 800 with no horizontal overflow
+and all new collection controls at least 44 px. Seven Day/Night static audits score 100/100
+for accessibility/best practices with no binary findings. Initial audits caught label-content
+mismatches; the picker now uses properly spaced intrinsic names, and the organization action's
+spoken name includes its visible Collections label. Source eaaefc2 passes the 166/22 full
+pipeline and Android CI 41926210764. The earlier 6b6d816 build also passed CI 41924577662.
+Final private artifact: 6,981,407 bytes, SHA-256
+bb8e5c51d8aeaf2c696b187fef7fba32bd37df31751989bd7ebff2572565897d. ZIP integrity,
+signing identity against f0fdf4a and private-material scanning pass. Final source secret scan:
+1,012 files, zero findings. Only documentation and
+evidence are changed after the verified application source. Temporary audit server closed;
+both user preview/dev servers remain running. Day/viewport restored and QA tab closed.
+No real partner contact, APK handover or phone install requested; physical gates remain in
+the later batch. Photo sets and cloud archive policy stay open. See docs/V2_COLLECTIONS.md.

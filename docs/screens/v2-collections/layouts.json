@@ -1,0 +1,209 @@
+[
+  {
+    "name": "editor-night",
+    "badTargets": [],
+    "dialogClient": 320,
+    "dialogScroll": 320,
+    "dialogWidth": 320,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "editor-night",
+    "badTargets": [],
+    "dialogClient": 360,
+    "dialogScroll": 360,
+    "dialogWidth": 360,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "editor-night",
+    "badTargets": [],
+    "dialogClient": 412,
+    "dialogScroll": 412,
+    "dialogWidth": 412,
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "shelf-night",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "shelf-night",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "shelf-night",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "manager-night",
+    "badTargets": [],
+    "dialogClient": 320,
+    "dialogScroll": 320,
+    "dialogWidth": 320,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "manager-night",
+    "badTargets": [],
+    "dialogClient": 360,
+    "dialogScroll": 360,
+    "dialogWidth": 360,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "manager-night",
+    "badTargets": [],
+    "dialogClient": 412,
+    "dialogScroll": 412,
+    "dialogWidth": 412,
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "picker-night",
+    "badTargets": [],
+    "dialogClient": 320,
+    "dialogScroll": 320,
+    "dialogWidth": 320,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "picker-night",
+    "badTargets": [],
+    "dialogClient": 360,
+    "dialogScroll": 360,
+    "dialogWidth": 360,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "picker-night",
+    "badTargets": [],
+    "dialogClient": 412,
+    "dialogScroll": 412,
+    "dialogWidth": 412,
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "shelf",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "shelf",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "shelf",
+    "badTargets": [
+      {
+        "height": 15,
+        "label": "Your person",
+        "width": 67.359375
+      }
+    ],
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "picker",
+    "badTargets": [],
+    "dialogClient": 320,
+    "dialogScroll": 320,
+    "dialogWidth": 320,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "picker",
+    "badTargets": [],
+    "dialogClient": 360,
+    "dialogScroll": 360,
+    "dialogWidth": 360,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "picker",
+    "badTargets": [],
+    "dialogClient": 412,
+    "dialogScroll": 412,
+    "dialogWidth": 412,
+    "scrollWidth": 412,
+    "width": 412
+  },
+  {
+    "name": "editor",
+    "badTargets": [],
+    "dialogClient": 320,
+    "dialogScroll": 320,
+    "dialogWidth": 320,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "name": "editor",
+    "badTargets": [],
+    "dialogClient": 360,
+    "dialogScroll": 360,
+    "dialogWidth": 360,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "name": "editor",
+    "badTargets": [],
+    "dialogClient": 412,
+    "dialogScroll": 412,
+    "dialogWidth": 412,
+    "scrollWidth": 412,
+    "width": 412
+  }
+]

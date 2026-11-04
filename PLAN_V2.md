@@ -137,7 +137,9 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   Shared collection slice is implemented: creator-owned names/colors/archive/restore,
   both-member organization of already-kept posts, scoped Keep-instance/version guards,
   collection filters and ZIP metadata without duplicated files. 166 web/22 worker and all
-  80 hosted checks pass; final visual/Android verification is in progress. Photo sets and
+  80 backend checks pass; 21 final phone layouts fit and seven static audits score 100/100
+  with no findings. Final source eaaefc2 passes Android CI 41926210764 and artifact checks.
+  The collection software slice is verified. Photo sets and
   archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md and docs/V2_COLLECTIONS.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded

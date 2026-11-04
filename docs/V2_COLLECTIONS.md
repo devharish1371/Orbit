@@ -49,7 +49,12 @@ membership, owner-only controls, malformed counts and collection-preserving ZIP 
 one photo download. Full client pipeline passes 166 web / 22 worker tests, lint, types,
 format and production build. Secret scan: 1,001 files, zero findings.
 
-Browser, static accessibility and Android exact-source results are recorded in DEVLOG.md.
+Final visual checks: 21 phone layouts fit across 320/360/412 px, with all new collection
+controls at least 44 px; seven static accessibility/best-practice audits score 100/100 with
+no findings after the accessible-label correction. The actual browser ZIP includes two
+collections/two associations for one photo, with its original/thumbnail each stored once.
+Final application source eaaefc2 passes Android CI 41926210764 and artifact integrity,
+matching-signing-identity and private-material checks. Detailed evidence is in DEVLOG.md.
 Only the retained disposable couple is used for write tests. No real partner contact,
 notification, phone opt-in or APK handover. Native touch/keyboard/export and two-device checks
 remain in the user's later batch. Photo sets, reordering/captions and cloud archive policy
