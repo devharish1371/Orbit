@@ -122,6 +122,62 @@ export type Database = {
           },
         ]
       }
+      collection_posts: {
+        Row: {
+          added_at: string
+          added_by: string
+          collection_id: string
+          couple_id: string
+          kept_at: string
+          post_id: string
+        }
+        Insert: {
+          added_at?: string
+          added_by: string
+          collection_id: string
+          couple_id: string
+          kept_at: string
+          post_id: string
+        }
+        Update: {
+          added_at?: string
+          added_by?: string
+          collection_id?: string
+          couple_id?: string
+          kept_at?: string
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'collection_posts_added_by_fkey'
+            columns: ['added_by']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+          {
+            foreignKeyName: 'collection_posts_collection_id_fkey'
+            columns: ['collection_id']
+            isOneToOne: false
+            referencedRelation: 'memory_collections'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'collection_posts_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'collection_posts_post_id_fkey'
+            columns: ['post_id']
+            isOneToOne: false
+            referencedRelation: 'posts'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       comments: {
         Row: {
           author_id: string
@@ -734,6 +790,54 @@ export type Database = {
           },
         ]
       }
+      memory_collections: {
+        Row: {
+          archived: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          name: string
+          tone: string
+          version: number
+        }
+        Insert: {
+          archived?: boolean
+          couple_id: string
+          created_at?: string
+          created_by: string
+          id: string
+          name: string
+          tone: string
+          version?: number
+        }
+        Update: {
+          archived?: boolean
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          name?: string
+          tone?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'memory_collections_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'memory_collections_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       place_presence: {
         Row: {
           changed_at: string
@@ -1286,6 +1390,52 @@ export type Database = {
         }
       }
       claim_orphan_media: { Args: { p_paths: string[] }; Returns: string[] }
+      collection_keepsakes: {
+        Args: {
+          p_before_created?: string
+          p_before_id?: string
+          p_collection: string
+          p_photos?: boolean
+        }
+        Returns: {
+          archive_revision: number
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          note_style: string
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }[]
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       create_capsule: {
         Args: {
           p_body: string
@@ -1421,6 +1571,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      memory_collections_index: { Args: never; Returns: Json }
       open_capsule: {
         Args: { p_id: string }
         Returns: {
@@ -1524,6 +1675,33 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      save_memory_collection: {
+        Args: {
+          p_archived: boolean
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_name: string
+          p_tone: string
+          p_version: number | null
+        }
+        Returns: {
+          archived: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          name: string
+          tone: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'memory_collections'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       save_plan: {
         Args: {
           p_expected_couple: string
@@ -1564,6 +1742,18 @@ export type Database = {
       }
       set_chat_pin: {
         Args: { p_post_id: string; p_remove?: boolean }
+        Returns: undefined
+      }
+      set_collection_post: {
+        Args: {
+          p_add: boolean
+          p_collection: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_kept_at: string
+          p_post: string
+          p_version: number
+        }
         Returns: undefined
       }
       set_keepsake_device: {

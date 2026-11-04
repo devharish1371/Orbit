@@ -70,15 +70,32 @@ export function useCapsules() {
       page.length === 30 ? page[page.length - 1] : undefined,
   })
 }
-export function useKeptMemories(photosOnly = false) {
+export function useKeptMemories(
+  photosOnly = false,
+  collection: string | null = null,
+) {
   const { client } = useAuth(),
     { data: space } = useSpace()
   return useInfiniteQuery({
-    queryKey: ['kept-memories', space?.couple.id, photosOnly],
+    queryKey: ['kept-memories', space?.couple.id, photosOnly, collection],
     enabled: !!space,
     initialPageParam: null as Pick<Post, 'id' | 'created_at'> | null,
     maxPages: 3,
     queryFn: async ({ pageParam }) => {
+      if (collection) {
+        const result = await client.rpc('collection_keepsakes', {
+          p_collection: collection,
+          p_photos: photosOnly,
+          ...(pageParam
+            ? {
+                p_before_created: pageParam.created_at,
+                p_before_id: pageParam.id,
+              }
+            : {}),
+        })
+        if (result.error) throw result.error
+        return result.data
+      }
       let request = client
         .from('posts')
         .select('*')

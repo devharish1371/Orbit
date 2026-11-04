@@ -1,7 +1,20 @@
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { BackLink } from '@/components/ui/JourneyLink'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { lazy, Suspense, useContext, useMemo } from 'react'
+import { lazy, Suspense, useContext, useMemo, useState } from 'react'
+import { FolderPlus } from 'lucide-react'
+import type { Post } from '@/lib/posts'
+import { CollectionContext } from '@/features/collections/CollectionContext'
+import { useCollections } from '@/features/collections/useCollections'
+import { CollectionShelf } from '@/features/collections/CollectionShelf'
+import { CollectionEditor } from '@/features/collections/CollectionEditor'
+import { CollectionPicker } from '@/features/collections/CollectionPicker'
+import type {
+  Collection,
+  CollectionDraft,
+  CollectionTone,
+} from '@/features/collections/model'
+import '@/features/collections/collections.css'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTheme } from '@/hooks/useTheme'
 import { useNow } from '@/hooks/useNow'
@@ -22,7 +35,58 @@ export default function KeepsakesPage() {
   if (!viewMemory) throw new Error('FlowProvider required')
   const { keptView: view, setKeptView: setView } = viewMemory
   const { data: space } = useSpace()
-  const kept = useKeptMemories(view === 'photos'),
+  const memory = useContext(CollectionContext)
+  if (!memory) throw new Error('FlowProvider required')
+  const collections = useCollections()
+  const selected =
+    collections.data?.find(
+      (c) => c.id === memory.memory.selected && !c.archived,
+    ) ?? null
+  const [editor, setEditor] = useState(false),
+    [organizing, setOrganizing] = useState<Post | null>(null)
+  function newCollection() {
+    if (!space) return
+    memory!.setMemory((previous) => ({
+      ...previous,
+      draft:
+        previous.draft?.version === null
+          ? previous.draft
+          : {
+              id: crypto.randomUUID(),
+              owner: space.self.user_id,
+              couple: space.couple.id,
+              version: null,
+              name: '',
+              tone: 'iris',
+              archived: false,
+            },
+    }))
+    setEditor(true)
+  }
+  function editCollection(collection: Collection) {
+    if (!space) return
+    memory!.setMemory((previous) => ({
+      ...previous,
+      draft:
+        previous.draft?.id === collection.id &&
+        previous.draft.version === collection.version
+          ? previous.draft
+          : {
+              id: collection.id,
+              owner: space.self.user_id,
+              couple: space.couple.id,
+              version: collection.version,
+              name: collection.name,
+              tone: collection.tone as CollectionTone,
+              archived: collection.archived,
+            },
+    }))
+    setEditor(true)
+  }
+  function draftChange(draft: CollectionDraft) {
+    memory!.setMemory((previous) => ({ ...previous, draft }))
+  }
+  const kept = useKeptMemories(view === 'photos', selected?.id ?? null),
     query = useQueryClient(),
     now = useNow(),
     { theme } = useTheme()
@@ -42,7 +106,20 @@ export default function KeepsakesPage() {
     <div className="page memories-page keepsakes-page">
       <BackLink fallback="/us" />
       <SectionHeading title={text.keepsakes} kind="moments" />
-      <PhoneCopiesControl />
+      <CollectionShelf
+        collections={collections.data ?? []}
+        selected={selected?.id ?? null}
+        loading={collections.isPending}
+        failed={!!collections.error}
+        onRetry={() => {
+          void collections.refetch()
+        }}
+        onSelect={(id) =>
+          memory.setMemory((previous) => ({ ...previous, selected: id }))
+        }
+        onNew={newCollection}
+        onEdit={editCollection}
+      />
       <div className="theme-options">
         {(['all', 'photos', 'map'] as const).map((value) => (
           <button
@@ -58,7 +135,7 @@ export default function KeepsakesPage() {
         ))}
       </div>
       {kept.isPending && <p role="status">Loading keepsakes…</p>}
-      {kept.error && (
+      {kept.error && !kept.isFetching && (
         <button
           className="text-button"
           onClick={() => {
@@ -70,7 +147,30 @@ export default function KeepsakesPage() {
       )}
       {!kept.isPending && !kept.error && posts.length === 0 && (
         <section className="glass memory-section muted">
-          {view === 'photos' ? 'No saved photos yet.' : text.empty}
+          {selected ? (
+            <div className="collection-empty">
+              <p>
+                {view === 'photos'
+                  ? 'No photos in this collection yet.'
+                  : 'Nothing in this collection yet.'}
+              </p>
+              <button
+                className="text-button"
+                onClick={() =>
+                  memory.setMemory((previous) => ({
+                    ...previous,
+                    selected: null,
+                  }))
+                }
+              >
+                Choose from Keepsakes
+              </button>
+            </div>
+          ) : view === 'photos' ? (
+            'No saved photos yet.'
+          ) : (
+            text.empty
+          )}
         </section>
       )}
       {map &&
@@ -113,6 +213,14 @@ export default function KeepsakesPage() {
                   }).format(new Date(post.created_at))}
                 </time>
                 {post.body && <p>{post.body}</p>}
+                <button
+                  className="text-button keepsake-organize"
+                  aria-label="Organize keepsake"
+                  onClick={() => setOrganizing(post)}
+                >
+                  <FolderPlus size={17} aria-hidden="true" />
+                  Collections
+                </button>
                 <PhoneCopyBadge post={post} />
               </div>
             </article>
@@ -131,6 +239,14 @@ export default function KeepsakesPage() {
                 }
               />
               <PhoneCopyBadge post={post} />
+              <button
+                className="text-button keepsake-organize"
+                aria-label="Organize keepsake"
+                onClick={() => setOrganizing(post)}
+              >
+                <FolderPlus size={17} aria-hidden="true" />
+                Collections
+              </button>
             </div>
           ),
         )}
@@ -165,6 +281,30 @@ export default function KeepsakesPage() {
       <Link className="collection-settings-link" to="/settings">
         Storage & export <span aria-hidden="true">↗</span>
       </Link>
+      <PhoneCopiesControl />
+      {editor && memory.memory.draft && (
+        <CollectionEditor
+          draft={memory.memory.draft}
+          onChange={draftChange}
+          onClose={() => setEditor(false)}
+          onSaved={(id) => {
+            memory.setMemory((previous) => ({
+              ...previous,
+              selected: organizing ? previous.selected : id,
+              draft: null,
+            }))
+            setEditor(false)
+          }}
+        />
+      )}
+      {!editor && organizing && (
+        <CollectionPicker
+          post={organizing}
+          collections={collections.data ?? []}
+          onClose={() => setOrganizing(null)}
+          onNew={newCollection}
+        />
+      )}
     </div>
   )
 }

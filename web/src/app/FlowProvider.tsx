@@ -1,5 +1,9 @@
 import { useMemo, useRef, useState, type ReactNode } from 'react'
 import {
+  CollectionContext,
+  type CollectionMemory,
+} from '@/features/collections/CollectionContext'
+import {
   PlanningContext,
   type PlanningMemory,
 } from '@/features/plans/PlanningContext'
@@ -14,6 +18,14 @@ import {
   freshAtlas,
 } from './FlowContext'
 export function FlowProvider({ children }: { children: ReactNode }) {
+  const [collection, setCollection] = useState<CollectionMemory>({
+    selected: null,
+    draft: null,
+  })
+  const collectionValue = useMemo(
+    () => ({ memory: collection, setMemory: setCollection }),
+    [collection],
+  )
   const cameraRef = useRef<MapCameraMemory | null>(null)
   const [planning, setPlanning] = useState<PlanningMemory>({
     plan: null,
@@ -68,16 +80,18 @@ export function FlowProvider({ children }: { children: ReactNode }) {
     [views, handles, keptView],
   )
   return (
-    <FlowContext.Provider value={value}>
-      <PostViewContext.Provider value={viewValue}>
-        <MapCameraContext.Provider value={cameraRef}>
-          <AtlasContext.Provider value={atlasValue}>
-            <PlanningContext.Provider value={planningValue}>
-              {children}
-            </PlanningContext.Provider>
-          </AtlasContext.Provider>
-        </MapCameraContext.Provider>
-      </PostViewContext.Provider>
-    </FlowContext.Provider>
+    <CollectionContext.Provider value={collectionValue}>
+      <FlowContext.Provider value={value}>
+        <PostViewContext.Provider value={viewValue}>
+          <MapCameraContext.Provider value={cameraRef}>
+            <AtlasContext.Provider value={atlasValue}>
+              <PlanningContext.Provider value={planningValue}>
+                {children}
+              </PlanningContext.Provider>
+            </AtlasContext.Provider>
+          </MapCameraContext.Provider>
+        </PostViewContext.Provider>
+      </FlowContext.Provider>
+    </CollectionContext.Provider>
   )
 }

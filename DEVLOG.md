@@ -1344,3 +1344,29 @@ no findings after fixing the replay's local asset paths under unchanged CSP. Phy
 launch with expired auth, process death, phone storage failures, playback and real two-phone
 propagation remain in the requested device batch. No APK handover or install request.
 See docs/V2_PHONE_KEEPSAKES.md. Photo sets, collections and cloud archive policy remain open.
+
+## 2026-11-05 — V2.5 shared collections
+
+Added an original orbit-line collection shelf to Keepsakes, with name/color, selection across
+All/Photos/Memory Map, an item membership picker, creator-only metadata/archive/restore and
+both-member organization. Phone storage setup moves below the memories. Archiving preserves
+posts and grouping; removing Keep/unsending hides associations immediately. A later Keep of
+the same post does not silently restore old memberships. ZIP export includes visible groups
+and associations without duplicating shared files. The phone library remains a flat offline
+snapshot; collection organization is online in this slice.
+
+Applied additive migrations 0029/0030; generated types and preserved installed-client media
+behavior. Scoped RPCs bind account, couple, collection version and original Keep timestamp.
+Collection advisory gates plus post-before-couple locks avoid inverse Keep/cleanup ordering.
+New hosted tests cover privacy/creator rights, forging/direct writes, retries, unchanged media
+bytes/quota, unkeep/rekeep/unsend, 31-row tied-time pagination and six concurrent write races.
+The first focused run had a connection reset; the complete backend suite passes all 80 tests
+in 154.92s. Seven new web checks cover pending/error recovery, stable draft identity/account,
+membership freshness, creator controls, malformed totals and ZIP group/file consistency.
+166 web/22 worker tests, lint/types/format/build pass. Source scan: 1,001 files, zero findings.
+
+Browser flow with disposable data passes: name/color draft survives Us round-trip, new empty
+group offers a return to Keepsakes, a saved photo joins the group, Photos filters it, and
+archive/restore preserves the photo and membership. Rename/color edits save. Final visual,
+accessibility and Android CI verification follows. No real partner contact or phone install
+requested; all physical gates remain in the later batch. See docs/V2_COLLECTIONS.md.

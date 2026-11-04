@@ -67,10 +67,35 @@ export async function exportMemories(
     signal,
   )
   const postIds = posts.map((post) => post.id)
+  const collections = await collect(
+    (from, to) =>
+      client
+        .from('memory_collections')
+        .select('*')
+        .lte('created_at', started)
+        .order('id')
+        .range(from, to),
+    signal,
+  )
+  const collectionItems = []
   const comments = [],
     reactions = []
   for (let offset = 0; offset < postIds.length; offset += 100) {
     const ids = postIds.slice(offset, offset + 100)
+    collectionItems.push(
+      ...(await collect(
+        (from, to) =>
+          client
+            .from('collection_posts')
+            .select('*')
+            .in('post_id', ids)
+            .lte('added_at', started)
+            .order('collection_id')
+            .order('post_id')
+            .range(from, to),
+        signal,
+      )),
+    )
     comments.push(
       ...(await collect(
         (from, to) =>
@@ -138,6 +163,8 @@ export async function exportMemories(
           posts,
           comments,
           reactions,
+          collections,
+          collection_items: collectionItems,
           capsules,
           answers,
           daily_summaries: summaries,

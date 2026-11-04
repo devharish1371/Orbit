@@ -133,8 +133,12 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   159 web/22 worker checks pass; all 75 hosted checks are validated across the full run and
   the corrected private-helper privilege audit. Android native tests/build/signing pass in
   CI 41918291192 and 41918882265. Final code f0fdf4a passes CI 41920390183 and local
-  integrity/signing/private-material checks. The software slice is verified. Photo sets,
-  collections and archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md.
+  integrity/signing/private-material checks. The phone-copy software slice is verified.
+  Shared collection slice is implemented: creator-owned names/colors/archive/restore,
+  both-member organization of already-kept posts, scoped Keep-instance/version guards,
+  collection filters and ZIP metadata without duplicated files. 166 web/22 worker and all
+  80 hosted checks pass; final visual/Android verification is in progress. Photo sets and
+  archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md and docs/V2_COLLECTIONS.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

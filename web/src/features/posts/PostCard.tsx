@@ -146,6 +146,8 @@ export function PostCard({
         'storage-summary',
         'expiring',
         'kept-memories',
+        'collections',
+        'collection-links',
       ])
         void query.invalidateQueries({ queryKey: [key] })
     }
