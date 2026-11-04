@@ -91,7 +91,6 @@ export function CollectionPicker({
               <button
                 key={collection.id}
                 type="button"
-                aria-label={`${collection.name}, ${collection.kept_count} saved`}
                 disabled={
                   !!busy || links.isPending || !!links.error || !post.kept_at
                 }
@@ -102,7 +101,7 @@ export function CollectionPicker({
               >
                 <CollectionMark tone={collection.tone} />
                 <span>
-                  <strong>{collection.name}</strong>
+                  <strong>{collection.name}</strong>{' '}
                   <small>{collection.kept_count} saved</small>
                 </span>
                 {selected && <Check size={18} aria-hidden="true" />}

@@ -140,7 +140,7 @@ test('picker binds the Keep instance and leaves failed membership unchanged for 
       />
     </QueryClientProvider>,
   )
-  const entry = screen.getByRole('button', { name: 'Our weekends, 2 saved' })
+  const entry = screen.getByRole('button', { name: 'Our weekends 2 saved' })
   await userEvent.click(entry)
   expect(await screen.findByRole('alert')).toHaveTextContent(
     'This changed elsewhere',
@@ -171,7 +171,7 @@ test('picker cannot toggle while its actual membership is unknown', async () => 
     </QueryClientProvider>,
   )
   expect(
-    screen.getByRole('button', { name: 'Our weekends, 2 saved' }),
+    screen.getByRole('button', { name: 'Our weekends 2 saved' }),
   ).toBeDisabled()
   expect(api.rpc).not.toHaveBeenCalled()
 })

@@ -215,7 +215,7 @@ export default function KeepsakesPage() {
                 {post.body && <p>{post.body}</p>}
                 <button
                   className="text-button keepsake-organize"
-                  aria-label="Organize keepsake"
+                  aria-label="Collections for this keepsake"
                   onClick={() => setOrganizing(post)}
                 >
                   <FolderPlus size={17} aria-hidden="true" />
@@ -241,7 +241,7 @@ export default function KeepsakesPage() {
               <PhoneCopyBadge post={post} />
               <button
                 className="text-button keepsake-organize"
-                aria-label="Organize keepsake"
+                aria-label="Collections for this keepsake"
                 onClick={() => setOrganizing(post)}
               >
                 <FolderPlus size={17} aria-hidden="true" />
