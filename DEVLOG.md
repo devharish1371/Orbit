@@ -1172,3 +1172,23 @@ author/excerpt and removed the intervening colon from its accessible name, so vi
 is an exact substring for voice control. Regression assertion covers the complete visible
 label; both quote tests pass. Full 125 web/16 worker/lint/types/format/build also pass.
 Affected captured-state audits and the final Android rollup are rerun below.
+
+Final rollup: implementation 179c0f2 and quote-label fix 49971a9 pass Android CI; the
+contained daily-answer focus fix 6cac899 passes Android CI 41861182765, including the full
+125 web/16 worker/lint/types/format/build pipeline. Local build and formatting also pass
+after the CSS change. The daily textarea keeps its 2 px focus outline inside its own rounded
+boundary (offset -2 px); focused browser checks at 320/360/412 px report no horizontal
+overflow. No answer was submitted. Screenshot: docs/screens/v2-connected/question-focus-360.jpg.
+
+All six static accessibility/best-practice states score 100/100 with no binary findings.
+Chat/voice were recaptured after the quote fix; the initial harness-only missing-doctype
+finding was corrected and those four states rerun. Photo/profile states retain their earlier
+completed results. These static audits measure rendered semantics/contrast, not authenticated
+app performance, TalkBack or device gestures. Layout evidence and scope are in
+docs/screens/v2-connected/README.md. Theme/viewport restored, local preview retained.
+No real partner contact, microphone recording, submitted answer or APK handover.
+
+Retained final build internally: 6,931,513 bytes; SHA256
+`d6f0b97ed73ff4d8c3622e2d2e35e07f90b202ad384f92fa554387b1275b4ad2`.
+ZIP integrity, signing identity against 959314d and packaged private-material scan pass.
+The temporary 4176 audit server is stopped; existing 4173/5173 servers are preserved.

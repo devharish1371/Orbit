@@ -161,6 +161,7 @@ The user approved the full audit proposals. PLAN_V2.md supersedes the earlier se
 for that expansion; original physical/background/offline/partner/soak/signing gates remain.
 Foundation confirmations, chat replies/recent versioned edits, one expiring shared pin and a
 text-only encrypted outbox are implemented in tested slices. Back layers and focused place
-editing begin V2.2. Current baseline: 117 web / 16
-worker tests and all 67 hosted tests pass. Native CI/browser evidence is recorded in DEVLOG.
+editing, portrait/photo handoffs and the unified media shelf complete the V2.2 software
+slice. Current baseline: 125 web / 16 worker tests and all 67 hosted tests pass.
+Android CI 41861182765 passes; native CI/browser evidence is recorded in DEVLOG.
 Do not hand over APKs or request installs until the user asks for their larger test batch.

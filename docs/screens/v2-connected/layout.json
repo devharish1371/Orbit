@@ -1,0 +1,156 @@
+[
+  {
+    "state": "shelf-light",
+    "area": [
+      10,
+      554,
+      310,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 320
+  },
+  {
+    "state": "shelf-light",
+    "area": [
+      10,
+      554,
+      402,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 412
+  },
+  {
+    "state": "voice-light",
+    "area": [
+      10,
+      581,
+      350,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 360
+  },
+  {
+    "state": "voice-light",
+    "area": [
+      10,
+      581,
+      310,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 320
+  },
+  {
+    "state": "voice-light",
+    "area": [
+      10,
+      581,
+      402,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 412
+  },
+  {
+    "state": "shelf-dark",
+    "area": [
+      10,
+      554,
+      350,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 360
+  },
+  {
+    "state": "voice-dark",
+    "area": [
+      10,
+      581,
+      350,
+      706
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 360
+  },
+  {
+    "state": "photo",
+    "area": [
+      0,
+      0,
+      360,
+      800
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 360
+  },
+  {
+    "state": "photo",
+    "area": [
+      0,
+      0,
+      320,
+      800
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 320
+  },
+  {
+    "state": "photo",
+    "area": [
+      0,
+      0,
+      412,
+      800
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 412
+  },
+  {
+    "state": "portrait",
+    "area": [
+      0,
+      0,
+      360,
+      800
+    ],
+    "height": 800,
+    "outside": [],
+    "overflow": false,
+    "smallTargets": [],
+    "width": 360
+  }
+]

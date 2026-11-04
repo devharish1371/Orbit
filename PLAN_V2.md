@@ -94,6 +94,9 @@ Primary references, verified 3 November 2026:
   profile/post photo viewer with preview/retry/zoom and focus/scroll return; interruption and
   reduced-motion fallbacks; three-action media shelf, voice cancel/Back and restored draft
   sizing. 125 web/16 worker checks and all 67 backend checks validated (one network retry).
+  Android CI 41861182765 passes. Six static screen audits score 100/100 for accessibility
+  and best practices; quote-label advisories are resolved. The daily-answer focus highlight
+  is contained inside the field, verified at 320/360/412 px. Physical gates remain deferred.
   Physical keyboard/predictive-Back/gesture tests remain for the user's batch. See
   docs/V2_CONNECTED_IMAGES.md and DEVLOG.md for final browser/Android results.
 - V2.3–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
