@@ -1314,14 +1314,17 @@ Cloud originals remain saved; caching alone does not reduce hosted storage consu
 Applied migrations 0027/0028 and regenerated public schema types. New hosted ledger checks
 pass on disposable identities. Full backend run passed 74/75 checks; the privilege audit
 caught default execution on a private trigger helper. Migration 0028 explicitly revokes
-API-role execution; targeted retention/privilege rerun records the correction below.
+API-role execution; all five retention/privilege tests pass on retry (19.17 seconds), so all
+75 hosted checks are validated across the full run and targeted correction.
 157 web and 22 worker tests, lint, types, format and production build pass. New sync tests
 exercise interrupted/failed manifests, missing files, quota/size/revision failures, retries,
 account/background cancellation and concurrent unkeep; standalone UI tests prove cold local
 reading without Auth/Space/Query providers and fail-closed/logout clearing. Native cipher
 tests cover bytes/metadata, unique IVs, wrong identity/key, tampering and size limits.
-Android compile/signing verification is pending the milestone CI run. Physical cold offline
+Android native tests, compile and signing checks pass in CI 41918291192 for code 07468b7
+(2m26s). Browser review found a development warning from the cache-only sync-status observer;
+it now explicitly uses skipToken, and the full 157/22 web/worker pipeline passes again.
+The exact follow-up bundle is being rechecked in CI. Physical cold offline
 launch with expired auth, process death, phone storage failures, playback and real two-phone
 propagation remain in the requested device batch. No APK handover or install request.
 See docs/V2_PHONE_KEEPSAKES.md. Photo sets, collections and cloud archive policy remain open.
-

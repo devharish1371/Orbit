@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { skipToken, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Smartphone,
   Cloud,
@@ -26,6 +26,7 @@ export function PhoneCopiesControl() {
     [error, setError] = useState('')
   const sync = useQuery<{ error?: string | null; skipped?: number }>({
     queryKey: ['phone-sync', session?.user.id, space?.couple.id],
+    queryFn: skipToken,
     enabled: false,
   })
   const enabled = state.data?.local?.enabled ?? false
