@@ -1,0 +1,444 @@
+[
+  {
+    "state": "now-expanded",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      310,
+      435.5
+    ],
+    "nav": [
+      18,
+      723,
+      302,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      441.5,
+      310,
+      712
+    ],
+    "small": [],
+    "width": 320,
+    "y": 0
+  },
+  {
+    "state": "now-expanded",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      435.5
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      441.5,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "now-expanded",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      402,
+      435.5
+    ],
+    "nav": [
+      18,
+      723,
+      394,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      441.5,
+      402,
+      712
+    ],
+    "small": [],
+    "width": 412,
+    "y": 0
+  },
+  {
+    "state": "now",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      310,
+      532
+    ],
+    "nav": [
+      18,
+      723,
+      302,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      538,
+      310,
+      712
+    ],
+    "small": [],
+    "width": 320,
+    "y": 0
+  },
+  {
+    "state": "now",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      532
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      538,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "now",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      402,
+      532
+    ],
+    "nav": [
+      18,
+      723,
+      394,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      538,
+      402,
+      712
+    ],
+    "small": [],
+    "width": 412,
+    "y": 0
+  },
+  {
+    "state": "journey",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      310,
+      284
+    ],
+    "nav": [
+      18,
+      723,
+      302,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      290,
+      310,
+      712
+    ],
+    "small": [],
+    "width": 320,
+    "y": 0
+  },
+  {
+    "state": "journey",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      284
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      290,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "journey",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      402,
+      284
+    ],
+    "nav": [
+      18,
+      723,
+      394,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      290,
+      402,
+      712
+    ],
+    "small": [],
+    "width": 412,
+    "y": 0
+  },
+  {
+    "state": "journey-short",
+    "height": 640,
+    "map": [
+      10,
+      76,
+      350,
+      256
+    ],
+    "nav": [
+      18,
+      563,
+      342,
+      625
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      262,
+      350,
+      552
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "place",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      310,
+      412
+    ],
+    "nav": [
+      18,
+      723,
+      302,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      418,
+      310,
+      712
+    ],
+    "small": [],
+    "width": 320,
+    "y": 0
+  },
+  {
+    "state": "place",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      412
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      418,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "place",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      402,
+      412
+    ],
+    "nav": [
+      18,
+      723,
+      394,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      418,
+      402,
+      712
+    ],
+    "small": [],
+    "width": 412,
+    "y": 0
+  },
+  {
+    "state": "journey-night",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      284
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      290,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "person-actions-night",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      310,
+      379.5
+    ],
+    "nav": [
+      18,
+      723,
+      302,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      385.5,
+      310,
+      712
+    ],
+    "small": [],
+    "width": 320,
+    "y": 0
+  },
+  {
+    "state": "person-actions-night",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      350,
+      379.5
+    ],
+    "nav": [
+      18,
+      723,
+      342,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      385.5,
+      350,
+      712
+    ],
+    "small": [],
+    "width": 360,
+    "y": 0
+  },
+  {
+    "state": "person-actions-night",
+    "height": 800,
+    "map": [
+      10,
+      76,
+      402,
+      379.5
+    ],
+    "nav": [
+      18,
+      723,
+      394,
+      785
+    ],
+    "overflow": false,
+    "sheet": [
+      10,
+      385.5,
+      402,
+      712
+    ],
+    "small": [],
+    "width": 412,
+    "y": 0
+  }
+]

@@ -162,6 +162,8 @@ for that expansion; original physical/background/offline/partner/soak/signing ga
 Foundation confirmations, chat replies/recent versioned edits, one expiring shared pin and a
 text-only encrypted outbox are implemented in tested slices. Back layers and focused place
 editing, portrait/photo handoffs and the unified media shelf complete the V2.2 software
-slice. Current baseline: 125 web / 16 worker tests and all 67 hosted tests pass.
-Android CI 41861182765 passes; native CI/browser evidence is recorded in DEVLOG.
+slice. V2.3 adds the anchored Atlas workspace, compact sheet and recorded journey scrubbing.
+Current baseline: 136 web / 16 worker tests and all 67 hosted tests pass. Exact Android
+CI/browser evidence and deferred device gates are recorded in DEVLOG. Plans/places follow
+in V2.4 after the current milestone's verification.
 Do not hand over APKs or request installs until the user asks for their larger test batch.

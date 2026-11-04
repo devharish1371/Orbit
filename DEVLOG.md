@@ -1227,3 +1227,18 @@ Final static review found one partly clipped current-position marker during hist
 and a saved-place Directions label mismatch. Playback now focuses the map on the recorded
 route/dot while person controls remain in the sheet. Directions' accessible label includes
 the visible action. Targeted captured-state audits are refreshed after this correction.
+
+V2.3 final rollup: code eddf5f0 passes Android CI 41868838371. All five static states score
+100 accessibility / 100 best practices with no binary findings after the corrections; final
+summary is in docs/screens/v2-atlas/audit-summary.json. Seventeen responsive measurements
+fit, including 360×640; no summary targets below 44 px, no horizontal overflow and 11 px
+navigation clearance. Map pan leaves outer scroll at zero; sample End reaches 16/16;
+Escape restores the journey row, then the sheet handle. Day theme and normal viewport
+were restored; no browser warnings/errors observed. Existing preview servers remain intact;
+the temporary 4176 audit server is stopped. Physical gates remain deferred.
+
+Full final client checks: 136 web / 16 worker plus lint/types/format/build; hosted regression
+67 passed in 100.48 s. Source scan reports zero findings. Build retained privately:
+6,934,713 bytes, SHA256 `e93acd7ab3730f768ce3b0614a37f965938b8347444160682540414d2d78141e`.
+ZIP integrity, baseline 959314d signing identity and packaged private-material scan pass.
+No APK handover, install request or real partner contact. V2.4 shared plans/places is next.

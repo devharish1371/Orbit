@@ -1,0 +1,32 @@
+[
+  {
+    "name": "journey-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "journey-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "now-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "person-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "place-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  }
+]
