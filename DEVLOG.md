@@ -1192,3 +1192,25 @@ Retained final build internally: 6,931,513 bytes; SHA256
 `d6f0b97ed73ff4d8c3622e2d2e35e07f90b202ad384f92fa554387b1275b4ad2`.
 ZIP integrity, signing identity against 959314d and packaged private-material scan pass.
 The temporary 4176 audit server is stopped; existing 4173/5173 servers are preserved.
+
+## 2026-11-04 — V2.3 Atlas implementation
+
+Replaced the scrolling map/details stack with an anchored map and two-position, nonmodal
+browsing sheet. Drag is confined to its handle; keyboard/click expansion and independent
+sheet scrolling remain available. Person/freshness/refresh and Now/24 hours/Places stay
+visible. Journey playback steps through actual recorded timestamps, with range semantics,
+previous/next controls and a distinct historical marker. Scrubbing pans without resetting
+zoom. Session-scoped map browse state and camera survive profile roundtrips.
+
+Privacy regression: Pause/Surprise remove cached precise markers, trails and cursors;
+history reads stop. Stale pair distances read “last shared”; midpoint directions require
+both recent precise fixes. Saved places/POIs share the detail sheet; existing edit/delete
+dialogs remain. Map styles consolidated out of global atelier/worlds overrides.
+
+135 web / 16 worker tests plus lint/types/format/build pass. Full hosted regression:
+67 passed in 100.48 s. Source scan: 932 files, zero findings. Browser drag/keyboard, actual
+sample stepping, profile roundtrip and 320/360/412 px Now/expanded layouts pass. A spacing
+review caught sheet/nav overlap and scroll anchoring; corrected workspace sizing leaves
+11 px navigation clearance at 800 px height with zero outer scroll. Remaining browser,
+static-audit and Android rollup follows. Synthetic fixture only; no real partner contact,
+new permission, recording, APK handover or install request. See docs/V2_ATLAS.md.

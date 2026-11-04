@@ -603,42 +603,6 @@ h2 {
   margin-top: -12px;
   margin-bottom: 14px;
 }
-.atlas-frame {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  overflow: hidden;
-  background: var(--panel);
-}
-.atlas-frame .map-stage {
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  height: min(58dvh, 520px);
-  min-height: 340px;
-}
-.atlas-frame .map-toolbar {
-  position: absolute;
-  z-index: 2;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  pointer-events: none;
-  margin: 0;
-}
-.atlas-frame .map-toolbar button {
-  pointer-events: auto;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  min-height: 44px;
-  padding: 10px 12px;
-  font-size: 11px;
-  box-shadow: 0 3px 14px #0002;
-}
 .map-page .distance-card {
   margin-top: 12px;
   display: grid;
@@ -1301,9 +1265,6 @@ h2 {
   .preference-row input::before {
     transition: none;
   }
-}
-.atlas-frame .maplibregl-ctrl-top-right {
-  top: 70px;
 }
 .post-explorer {
   flex: none;

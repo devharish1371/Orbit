@@ -14,6 +14,15 @@ export interface Journey {
   started: string
   ended: string
 }
+/** Cursor identity is a recorded timestamp; refreshes never turn it into an invented fix. */
+export function selectedSample(
+  journey: Journey | undefined,
+  at: string | null,
+) {
+  return (
+    journey?.points.find((p) => p.recorded_at === at) ?? journey?.points.at(-1)
+  )
+}
 /** Conservative GPS-only estimates. Gaps never become fictitious straight-line trips. */
 export function journeysFromFixes(input: TrailFix[], now: number): Journey[] {
   const fixes = [

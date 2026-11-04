@@ -6,9 +6,13 @@ import {
   freshPostView,
   MapCameraContext,
   type MapCameraMemory,
+  AtlasContext,
+  freshAtlas,
 } from './FlowContext'
 export function FlowProvider({ children }: { children: ReactNode }) {
   const cameraRef = useRef<MapCameraMemory | null>(null)
+  const [atlas, setAtlas] = useState(freshAtlas)
+  const atlasValue = useMemo(() => ({ atlas, setAtlas }), [atlas])
   const [drafts, setDrafts] = useState(() => ({
     chat: freshComposer(),
     moment: freshComposer(),
@@ -55,7 +59,9 @@ export function FlowProvider({ children }: { children: ReactNode }) {
     <FlowContext.Provider value={value}>
       <PostViewContext.Provider value={viewValue}>
         <MapCameraContext.Provider value={cameraRef}>
-          {children}
+          <AtlasContext.Provider value={atlasValue}>
+            {children}
+          </AtlasContext.Provider>
         </MapCameraContext.Provider>
       </PostViewContext.Provider>
     </FlowContext.Provider>

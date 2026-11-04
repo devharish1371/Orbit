@@ -73,3 +73,22 @@ export type MapCameraMemory = {
 }
 export const MapCameraContext =
   createContext<RefObject<MapCameraMemory | null> | null>(null)
+
+export interface AtlasMemory {
+  person: string | null
+  view: 'now' | 'day' | 'places'
+  expanded: boolean
+  journey: string | null
+  sample: string | null
+}
+export const freshAtlas = (): AtlasMemory => ({
+  person: null,
+  view: 'now',
+  expanded: false,
+  journey: null,
+  sample: null,
+})
+export const AtlasContext = createContext<{
+  atlas: AtlasMemory
+  setAtlas: Dispatch<SetStateAction<AtlasMemory>>
+} | null>(null)

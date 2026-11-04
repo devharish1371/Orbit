@@ -16,6 +16,7 @@ import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
 import { orbitMapStyle } from '@/lib/orbit-map-style'
 import { circle, interpolate, type Point } from '@/lib/geo'
+import type { TrailFix } from '@/lib/journeys'
 import type { Database } from '@/lib/database.types'
 setWorkerUrl(workerUrl)
 type Member = Database['public']['Tables']['members']['Row']
@@ -140,6 +141,8 @@ export default function MapCanvas({
   onLandmark,
   focus,
   accent,
+  sample,
+  timezone = 'UTC',
 }: {
   dark: boolean
   people: { member: Member; location: Location }[]
@@ -152,8 +155,10 @@ export default function MapCanvas({
   onRetry: () => void
   onPlace?: (place: Place) => void
   onLandmark?: (place: Point & { name: string }) => void
-  focus?: { points: Point[]; key: number } | null
+  focus?: { points: Point[]; key: number; sample?: boolean } | null
   accent?: string
+  sample?: TrailFix
+  timezone?: string
 }) {
   const cameraRef = useContext(MapCameraContext)
   const initiallyFitRef = useRef(false)
@@ -362,6 +367,12 @@ export default function MapCanvas({
   }, [map, people, places, trail, accent, dark])
   useEffect(() => {
     if (!map || !focus?.points.length) return
+    initiallyFitRef.current = true
+    if (focus.sample) {
+      const point = focus.points[0]!
+      map.panTo([point.lng, point.lat], { duration: 0 })
+      return
+    }
     const bounds = new LngLatBounds()
     focus.points.forEach((p) => bounds.extend([p.lng, p.lat]))
     map.fitBounds(bounds, {
@@ -372,6 +383,26 @@ export default function MapCanvas({
         : 600,
     })
   }, [map, focus])
+  useEffect(() => {
+    if (!map || !sample) return
+    const node = document.createElement('div')
+    node.className = 'journey-sample-marker'
+    node.setAttribute('role', 'img')
+    node.setAttribute(
+      'aria-label',
+      `Recorded location at ${new Intl.DateTimeFormat('en-IN', {
+        timeZone: timezone,
+        dateStyle: 'medium',
+        timeStyle: 'medium',
+      }).format(new Date(sample.recorded_at))}`,
+    )
+    const marker = new Marker({ element: node })
+      .setLngLat([sample.lng, sample.lat])
+      .addTo(map)
+    return () => {
+      marker.remove()
+    }
+  }, [map, sample, timezone])
   const points = useRef<Point[]>([])
   useEffect(() => {
     points.current = people.map((p) => p.location)
