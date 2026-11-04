@@ -27,6 +27,8 @@ final class TrackerAuth {
         return ((KeyStore.SecretKeyEntry)store.getEntry("OrbitSessionV1",null)).getSecretKey();
     }
     static synchronized void save(Context c,String value) throws Exception {
+        String previous=read(c);
+        if(previous!=null&&!new JSONObject(previous).getJSONObject("user").getString("id").equals(new JSONObject(value).getJSONObject("user").getString("id")))KeepsakeFiles.clear(c);
         Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding");cipher.init(Cipher.ENCRYPT_MODE,key());
         String encoded=Base64.encodeToString(cipher.getIV(),Base64.NO_WRAP)+":"+Base64.encodeToString(cipher.doFinal(value.getBytes(StandardCharsets.UTF_8)),Base64.NO_WRAP);
         if(!c.getSharedPreferences("OrbitAuth",0).edit().putString("session",encoded).commit())throw new Exception("AUTH_STORAGE_FAILED");
@@ -37,7 +39,7 @@ final class TrackerAuth {
         cipher.init(Cipher.DECRYPT_MODE,key(),new GCMParameterSpec(128,Base64.decode(parts[0],Base64.NO_WRAP)));
         return new String(cipher.doFinal(Base64.decode(parts[1],Base64.NO_WRAP)),StandardCharsets.UTF_8);
     }
-    static synchronized void clear(Context c){OutboxFiles.clearAll(c);c.getSharedPreferences("OrbitAuth",0).edit().clear().commit();}
+    static synchronized void clear(Context c){OutboxFiles.clearAll(c);KeepsakeFiles.clear(c);c.getSharedPreferences("OrbitAuth",0).edit().clear().commit();}
     static void configure(Context c,String url,String apiKey) throws Exception {
         URL parsed=new URL(url);if(!parsed.getProtocol().equals("https")||!parsed.getHost().endsWith(".supabase.co")||!parsed.getPath().isEmpty())throw new Exception("INVALID_PROJECT_URL");
         c.getSharedPreferences("OrbitTracking",0).edit().putString("url",url).putString("publicKey",apiKey).commit();

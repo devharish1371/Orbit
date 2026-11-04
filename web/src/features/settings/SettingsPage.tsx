@@ -183,7 +183,7 @@ export default function SettingsPage() {
       {logoutConfirm && (
         <ConfirmSheet
           title="Log out?"
-          description="Pending texts on this device will be discarded. Sent messages stay in your conversation."
+          description="Pending texts and private phone copies will be removed from this device. Sent messages and cloud keepsakes stay saved."
           confirmLabel="Log out"
           onCancel={() => setLogoutConfirm(false)}
           onConfirm={() => {

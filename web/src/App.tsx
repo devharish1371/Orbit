@@ -3,7 +3,8 @@ import { NativeNavigation } from '@/app/NativeNavigation'
 import { MotionSafety } from '@/app/MotionSafety'
 import { LoadingView } from '@/components/ui/LoadingView'
 import { lazy, Suspense } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom'
+import { phoneCopiesSupported } from '@/features/phone-keepsakes/native'
 import { useAuth } from '@/hooks/useAuth'
 import { OfflineBanner } from '@/components/OfflineBanner'
 import { copy } from '@/copy/en'
@@ -27,7 +28,11 @@ const CapsulesPage = lazy(() => import('@/features/memories/CapsulesPage'))
 const TimelinePage = lazy(() => import('@/features/memories/TimelinePage'))
 const ReplayReveal = lazy(() => import('@/features/memories/AnniversaryReveal'))
 const PlansPage = lazy(() => import('@/features/plans/PlansPage'))
+const OfflineKeepsakesPage = lazy(
+  () => import('@/features/phone-keepsakes/OfflineKeepsakesPage'),
+)
 export default function App() {
+  const { pathname } = useLocation()
   const { session, restoring, restoreError, retryRestore } = useAuth()
   return (
     <>
@@ -37,12 +42,19 @@ export default function App() {
       <div className="aurora" aria-hidden="true" />
       <OfflineBanner />
       <Suspense fallback={<LoadingView />}>
-        {restoring && !session ? (
+        {pathname === '/offline' ? (
+          <OfflineKeepsakesPage />
+        ) : restoring && !session ? (
           <LoadingView />
         ) : restoreError && !session ? (
           <main className="fallback">
             <h1>{copy.common.reconnectTitle}</h1>
             <p>{copy.common.reconnectBody}</p>
+            {phoneCopiesSupported && (
+              <Link className="text-button" to="/offline">
+                Open phone keepsakes
+              </Link>
+            )}
             <button
               className="button"
               onClick={() => {

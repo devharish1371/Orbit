@@ -126,6 +126,11 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   72 hosted checks validated. Six static audits score 100/100; 15 phone layouts fit.
   Android bundle 7b11edf passes CI 41877567905 and integrity/signing/private scan. Schema
   lock-order follow-up 0026 passes concurrency/hosted checks. Physical gates stay deferred.
-- V2.5–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
+- V2.5 phone-copy slice implemented, under final software verification: independent Android
+  opt-in, encrypted private files with readback/hash verification, account/device/revision-bound
+  receipts and a server-independent local library. Cloud originals stay saved. Physical
+  expired-session/offline/process-death/two-phone gates remain in the later device batch.
+  Photo sets, collections and archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md.
+- V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

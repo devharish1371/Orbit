@@ -1299,3 +1299,29 @@ User storage steering recorded for V2.5: Keep by either member should download p
 verified offline copies on both opted-in phones. The cloud remains the bridge until both
 copies are confirmed; explicit owner policy and backup/recovery checks precede cloud removal.
 This is planned, not implemented or claimed as copied to the unavailable partner phone.
+# 2026-11-05 — V2.5 private phone keepsakes, first slice
+
+Continued the approved V2 plan with the user's request that a Keep by either person can
+save on both phones. Implemented independent Android opt-in, one designated phone per
+member, bounded encrypted no-backup files with atomic writes and readback/SHA-256 checking,
+revision-bound per-phone receipts, sync cancellation/retry and a separate local library.
+The library needs neither the space query nor a successful session refresh; native files
+remain tied to the saved account. Old phone, removed Keep, edited/unsent post and corrupt
+copy states invalidate evidence. Logout/account switching clears private phone copies/keys.
+No GPS dependency, broad media permission, real partner contact or cloud deletion added.
+Cloud originals remain saved; caching alone does not reduce hosted storage consumption.
+
+Applied migrations 0027/0028 and regenerated public schema types. New hosted ledger checks
+pass on disposable identities. Full backend run passed 74/75 checks; the privilege audit
+caught default execution on a private trigger helper. Migration 0028 explicitly revokes
+API-role execution; targeted retention/privilege rerun records the correction below.
+157 web and 22 worker tests, lint, types, format and production build pass. New sync tests
+exercise interrupted/failed manifests, missing files, quota/size/revision failures, retries,
+account/background cancellation and concurrent unkeep; standalone UI tests prove cold local
+reading without Auth/Space/Query providers and fail-closed/logout clearing. Native cipher
+tests cover bytes/metadata, unique IVs, wrong identity/key, tampering and size limits.
+Android compile/signing verification is pending the milestone CI run. Physical cold offline
+launch with expired auth, process death, phone storage failures, playback and real two-phone
+propagation remain in the requested device batch. No APK handover or install request.
+See docs/V2_PHONE_KEEPSAKES.md. Photo sets, collections and cloud archive policy remain open.
+

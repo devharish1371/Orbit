@@ -389,6 +389,100 @@ export type Database = {
           },
         ]
       }
+      keepsake_devices: {
+        Row: {
+          couple_id: string
+          device_id: string
+          enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          couple_id: string
+          device_id: string
+          enabled: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          couple_id?: string
+          device_id?: string
+          enabled?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'keepsake_devices_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'keepsake_devices_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: true
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
+      keepsake_receipts: {
+        Row: {
+          bytes: number
+          couple_id: string
+          device_id: string
+          post_id: string
+          revision: number
+          sha256: string
+          user_id: string
+          verified_at: string
+        }
+        Insert: {
+          bytes: number
+          couple_id: string
+          device_id: string
+          post_id: string
+          revision: number
+          sha256: string
+          user_id: string
+          verified_at?: string
+        }
+        Update: {
+          bytes?: number
+          couple_id?: string
+          device_id?: string
+          post_id?: string
+          revision?: number
+          sha256?: string
+          user_id?: string
+          verified_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'keepsake_receipts_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'keepsake_receipts_post_id_fkey'
+            columns: ['post_id']
+            isOneToOne: false
+            referencedRelation: 'posts'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'keepsake_receipts_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       live_location: {
         Row: {
           accuracy_m: number | null
@@ -854,6 +948,7 @@ export type Database = {
       }
       posts: {
         Row: {
+          archive_revision: number
           author_id: string
           body: string | null
           channel: string
@@ -885,6 +980,7 @@ export type Database = {
           waveform: number[] | null
         }
         Insert: {
+          archive_revision?: number
           author_id: string
           body?: string | null
           channel: string
@@ -916,6 +1012,7 @@ export type Database = {
           waveform?: number[] | null
         }
         Update: {
+          archive_revision?: number
           author_id?: string
           body?: string | null
           channel?: string
@@ -1092,6 +1189,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ack_keepsake_copy: {
+        Args: {
+          p_bytes: number
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+          p_revision: number
+          p_sha256: string
+        }
+        Returns: {
+          bytes: number
+          couple_id: string
+          device_id: string
+          post_id: string
+          revision: number
+          sha256: string
+          user_id: string
+          verified_at: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'keepsake_receipts'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       answer_daily_question: {
         Args: { p_answer: string }
         Returns: {
@@ -1113,6 +1237,7 @@ export type Database = {
       claim_expired_posts: {
         Args: { p_limit?: number }
         Returns: {
+          archive_revision: number
           author_id: string
           body: string | null
           channel: string
@@ -1189,6 +1314,7 @@ export type Database = {
       create_shared_post: {
         Args: { p_post: Json }
         Returns: {
+          archive_revision: number
           author_id: string
           body: string | null
           channel: string
@@ -1239,6 +1365,7 @@ export type Database = {
       edit_chat_post: {
         Args: { p_body: string; p_expected_version: number; p_id: string }
         Returns: {
+          archive_revision: number
           author_id: string
           body: string | null
           channel: string
@@ -1285,6 +1412,15 @@ export type Database = {
         Returns: undefined
       }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      forget_keepsake_copy: {
+        Args: {
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+        }
+        Returns: undefined
+      }
       open_capsule: {
         Args: { p_id: string }
         Returns: {
@@ -1429,6 +1565,27 @@ export type Database = {
       set_chat_pin: {
         Args: { p_post_id: string; p_remove?: boolean }
         Returns: undefined
+      }
+      set_keepsake_device: {
+        Args: {
+          p_device: string
+          p_enabled: boolean
+          p_expected_couple: string
+          p_expected_user: string
+        }
+        Returns: {
+          couple_id: string
+          device_id: string
+          enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'keepsake_devices'
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       set_plan_reminder: {
         Args: {

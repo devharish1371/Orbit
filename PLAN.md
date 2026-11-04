@@ -164,7 +164,9 @@ text-only encrypted outbox are implemented in tested slices. Back layers and foc
 editing, portrait/photo handoffs and the unified media shelf complete the V2.2 software
 slice. V2.3 adds the anchored Atlas workspace, compact sheet and recorded journey scrubbing.
 V2.4 adds shared versioned plans, personal reminders, calendar files, private/shared ideas
-and want-to-go places. Current client baseline: 145 web / 22 worker tests pass; hosted and
+and want-to-go places. V2.5's first slice adds opted-in encrypted phone keepsakes, verified
+dual-phone receipts and an independent offline library; cloud originals remain saved.
+Current client baseline: 157 web / 22 worker tests pass; hosted and
 Android evidence is recorded in DEVLOG. V2.5 includes dual-phone offline keepsakes and
 explicit, verified cloud-space recovery. Device gates remain deferred.
 Do not hand over APKs or request installs until the user asks for their larger test batch.

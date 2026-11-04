@@ -22,6 +22,8 @@ import { Button } from '@/components/ui/Button'
 import { PushProvider } from '@/features/alerts/PushProvider'
 import { AutomaticReveal } from '@/features/memories/AnniversaryReveal'
 import { OutboxProvider } from '@/features/outbox/OutboxProvider'
+import { PhoneCopySync } from '@/features/phone-keepsakes/usePhoneCopies'
+import { phoneCopiesSupported } from '@/features/phone-keepsakes/native'
 const tabs = [
   { to: '/', key: 'home' },
   { to: '/map', key: 'map' },
@@ -80,6 +82,11 @@ export default function Shell() {
         >
           {copy.common.retry}
         </Button>
+        {phoneCopiesSupported && (
+          <Link className="text-button" to="/offline">
+            Open phone keepsakes
+          </Link>
+        )}
         <button
           className="text-button"
           onClick={() => {
@@ -97,6 +104,7 @@ export default function Shell() {
           <PushProvider>
             <OutboxProvider>
               <AutomaticReveal />
+              {phoneCopiesSupported && <PhoneCopySync />}
               <div
                 className={`app-shell ${chat ? 'app-shell-chat' : ''}`}
                 data-scene={tabs[activeTab]?.key}

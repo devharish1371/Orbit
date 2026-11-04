@@ -12,6 +12,10 @@ import { PostMedia } from '@/features/posts/PostMedia'
 import { PostViewContext } from '@/app/FlowContext'
 import { useSpace } from '@/hooks/useSpace'
 import { useKeptMemories } from './useMemories'
+import {
+  PhoneCopiesControl,
+  PhoneCopyBadge,
+} from '@/features/phone-keepsakes/PhoneCopiesControl'
 const MemoryMap = lazy(() => import('./MemoryMap'))
 export default function KeepsakesPage() {
   const viewMemory = useContext(PostViewContext)
@@ -38,6 +42,7 @@ export default function KeepsakesPage() {
     <div className="page memories-page keepsakes-page">
       <BackLink fallback="/us" />
       <SectionHeading title={text.keepsakes} kind="moments" />
+      <PhoneCopiesControl />
       <div className="theme-options">
         {(['all', 'photos', 'map'] as const).map((value) => (
           <button
@@ -108,19 +113,25 @@ export default function KeepsakesPage() {
                   }).format(new Date(post.created_at))}
                 </time>
                 {post.body && <p>{post.body}</p>}
+                <PhoneCopyBadge post={post} />
               </div>
             </article>
           ) : (
-            <PostCard
-              key={post.id}
-              post={post}
-              now={now}
-              quote={quotes.data?.find((item) => item.id === post.reply_to_id)}
-              quoteLoading={quotes.isFetching}
-              reactions={
-                reactions.data?.filter((row) => row.post_id === post.id) ?? []
-              }
-            />
+            <div key={post.id}>
+              <PostCard
+                key={post.id}
+                post={post}
+                now={now}
+                quote={quotes.data?.find(
+                  (item) => item.id === post.reply_to_id,
+                )}
+                quoteLoading={quotes.isFetching}
+                reactions={
+                  reactions.data?.filter((row) => row.post_id === post.id) ?? []
+                }
+              />
+              <PhoneCopyBadge post={post} />
+            </div>
           ),
         )}
       </div>

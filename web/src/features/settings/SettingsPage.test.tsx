@@ -46,7 +46,7 @@ test('logging out with pending texts requires confirmation before clearing them'
   await userEvent.click(screen.getByRole('button', { name: 'Log out' }))
   expect(logout).not.toHaveBeenCalled()
   expect(screen.getByRole('dialog')).toHaveTextContent(
-    'Pending texts on this device will be discarded',
+    'Pending texts and private phone copies will be removed from this device',
   )
   await userEvent.click(screen.getByRole('button', { name: 'Cancel' }))
   expect(logout).not.toHaveBeenCalled()
