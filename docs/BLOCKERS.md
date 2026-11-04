@@ -51,8 +51,8 @@ Both accounts restored on reload. Logout clears the session and query cache.
 - #7: install the debug APK on Android phones for tracking/permission, screen-off,
   swipe-away and offline reliability tests. Hardware performance remains unverified.
 - #3 resolved: matching Firebase Android/service-account files supplied and configured.
-- #6: personal anniversary letter for M7; profiles now allow people to set photos,
-  nicknames and colors themselves. Shared date and Meet link are already configured.
+- #6: personal details are configurable in profiles. Shared date and Meet link are configured.
+  The user's later decision keeps the anniversary letter outside the app; it is not a blocker.
 - #1/#5: Pages/CI release configuration and backed-up signing key for M9.
 
 ## Resolved — Backend and GitHub

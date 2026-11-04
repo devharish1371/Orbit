@@ -1,0 +1,38 @@
+[
+  {
+    "name": "editor-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "idea-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "jar-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "places-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "plans-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "reminder-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  }
+]

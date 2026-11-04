@@ -21,7 +21,7 @@ def pytest_addoption(parser) -> None:
     parser.addoption('--run-integration', action='store_true', help='Use the configured hosted Supabase project and disposable test data.')
 
 
-@dataclass
+@dataclass(repr=False)
 class Backend:
     url: str
     public_key: str

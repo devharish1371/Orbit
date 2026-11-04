@@ -30,8 +30,8 @@ def test_expired_row_and_file_removed_kept_and_avatar_survive_orphan_swept(backe
     response=backend.retention()
     assert response.status_code == 200, 'Retention failed: HTTP '+str(response.status_code)
     stats=response.json()
-    assert stats['posts_deleted'] >= 1
-    assert stats['orphans_deleted'] >= 1
+    # The hourly scheduler may process this fixture before our manual request.
+    # Verify these exact rows/files below instead of this global run's counters.
     assert stats['error'] is None
     assert backend.rest(backend.admin,'GET','posts',id='eq.'+expired_id).json() == []
     for path,exists in [(expired_path,False),(orphan,False),(kept_path,True),(avatar,True),(fresh,True)]:
@@ -43,7 +43,10 @@ def test_expired_row_and_file_removed_kept_and_avatar_survive_orphan_swept(backe
     assert len(backend.rest(backend.admin,'GET','posts',id='eq.'+kept_id).json()) == 1
     again=backend.retention()
     assert again.status_code == 200
-    assert again.json()['posts_deleted'] == 0
+    assert backend.rest(backend.admin,'GET','posts',id='eq.'+expired_id).json() == []
+    folder,name=orphan.rsplit('/',1)
+    listing=backend.admin.request('POST','/storage/v1/object/list/media',json={'prefix':folder,'limit':1000}).json()
+    assert not any(item['name']==name for item in listing)
 
 
 def test_keep_and_cleanup_are_serialized(backend) -> None:

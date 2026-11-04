@@ -163,7 +163,8 @@ Foundation confirmations, chat replies/recent versioned edits, one expiring shar
 text-only encrypted outbox are implemented in tested slices. Back layers and focused place
 editing, portrait/photo handoffs and the unified media shelf complete the V2.2 software
 slice. V2.3 adds the anchored Atlas workspace, compact sheet and recorded journey scrubbing.
-Current baseline: 136 web / 16 worker tests and all 67 hosted tests pass. Exact Android
-CI/browser evidence and deferred device gates are recorded in DEVLOG. Plans/places follow
-in V2.4 after the current milestone's verification.
+V2.4 adds shared versioned plans, personal reminders, calendar files, private/shared ideas
+and want-to-go places. Current client baseline: 145 web / 22 worker tests pass; hosted and
+Android evidence is recorded in DEVLOG. V2.5 includes dual-phone offline keepsakes and
+explicit, verified cloud-space recovery. Device gates remain deferred.
 Do not hand over APKs or request installs until the user asks for their larger test batch.

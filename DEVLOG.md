@@ -1265,3 +1265,37 @@ validating all 71 checks. Browser review caught a datetime input-event draft iss
 editor focus; corrected with direct input handling and post-dialog focus, covered by tests.
 Final responsive/a11y/Android rollup follows. Only verified disposable fixtures used; no real
 partner contact, permission prompt, notification send or APK handover. See docs/V2_PLANS.md.
+
+Browser rollup: Us entry, retained title/date/venue, local proposal save (12 Nov at 19:00
+Asia/Kolkata), personal reminder on→off and cancellation into Recent plans pass. Calendar
+download succeeds with DTSTART:20261112T133000Z and no attendee/alarm. Jar selects a real
+visible idea; private-row marker announces Only me. Fifteen final phone measurements across
+320/360/412 px fit with 44 px targets. Six static audits score 100/100 with no findings.
+Day theme and viewport restored; zero browser warnings/errors. Source scan: 959 files, zero
+findings. Evidence: docs/screens/v2-plans. Android CI 41877567905 is queued for 7b11edf;
+waiting for its exact outcome before recording native verification.
+
+Concurrency follow-up while waiting for the runner: migration 0026 makes reminder changes
+and idea removal acquire the same couple→record locks as other planning writes. This avoids
+opposite lock ordering through foreign keys/social revisions. Added a hosted race test with
+three simultaneous archive/removal attempts. No frontend/native bundle changes.
+
+Final V2.4: concurrency/planning checks 5/5 pass (16.42 s). Full hosted run: 71/72 pass;
+retention's run-global orphan counter can lose a race to the hourly scheduler. Changed the
+test to verify its exact rows and Storage API object listings (including repeat cleanup),
+also accounting for Supabase's HTTP 400 missing-object response. All five retention checks
+then pass in 20.50 s, validating all 72 hosted checks. Backend fixture repr is disabled so
+future failed assertions cannot print credential-bearing fixture fields.
+
+Android bundle 7b11edf passes CI 41877567905 after runner queueing. Retained internally:
+6,948,086 bytes; SHA256 `debc91c86cf7477e13ed32289ca758e0b10718de7d195fa3f73b05b967dd5823`.
+ZIP integrity, baseline 959314d signing identity and private-material scan pass. Schema-only
+0026 changes no bundled web/native source. Six static audits remain 100/100 with no findings;
+145 web/22 worker plus lint/types/format/build pass. Existing preview servers remain intact;
+temporary audit server stopped. Physical native-calendar/reminder tests stay in the user's
+later batch; no APK handover or real partner contact.
+
+User storage steering recorded for V2.5: Keep by either member should download private,
+verified offline copies on both opted-in phones. The cloud remains the bridge until both
+copies are confirmed; explicit owner policy and backup/recovery checks precede cloud removal.
+This is planned, not implemented or claimed as copied to the unavailable partner phone.

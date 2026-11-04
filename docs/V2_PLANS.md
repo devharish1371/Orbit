@@ -30,11 +30,13 @@ UTF-8-folded RFC 5545 content, UTC instants, stable UID/version and no invite re
 alarms. Files are user-triggered snapshots; later changes do not sync. Android reuses the
 existing document picker/export stream with a narrowly allowed ICS filename/MIME type.
 
-Migrations 0022–0025 are additive for installed clients. New tables expose SELECT through
+Migrations 0022–0026 are additive for installed clients. New tables expose SELECT through
 RLS; writes use scoped RPCs. Private queue/cron helpers are not callable by app users. A
 couple-scoped private queue entry point lets hosted tests enqueue only disposable fixtures.
 Schema generation annotates three deliberately nullable RPC scalar arguments, whose NULL
 behavior is tested against PostgreSQL. No dependency or paid service was added.
+Planning writes use consistent couple→record locking, including reminder changes/removal,
+so concurrent archive/removal resolves as a version conflict rather than a deadlock.
 
 Verification and final Android/browser results are in DEVLOG.md and docs/screens/v2-plans.
 Physical Android calendar import, reminder delivery/tap, keyboard and quiet-hour/device

@@ -31,7 +31,7 @@ the original PLAN.md and deferred physical release gates remain valid.
 | V2.2 — Connected flow | Avatar/profile and photo/viewer transitions; consistent sheets and Back; keyboard/media tray; preserve navigation context | Reduced-motion fallback, no duplicate transition names, no animation waits, Back closes overlays before leaving, physical keyboard/gesture checks |
 | V2.3 — Atlas | Anchored map and compact snap sheet, person/freshness/actions, journey overview and selected-route scrubbing when data permits | Map gestures and sheet scroll coexist; GPS gaps/age/privacy stay honest; safe-area/large-text checks |
 | V2.4 — Plans and places | Shared plans with confirmation/reminders and optional ICS; want-to-go list separate from arrival geofences; date jar from user-written ideas | Membership/ownership, timezone, reminder dedupe, cancellation and opt-in verified; no external booking/calendar account or paid service |
-| V2.5 — Media and collections | Photo sets/reordering/captions and continuous viewer; named memory collections; one pinned chat message | Atomic quota accounting, interrupted-upload cleanup, author/partner rights, explicit Keep/expiry; collection/pin does not retain content silently |
+| V2.5 — Media and collections | Photo sets/reordering/captions and continuous viewer; named memory collections; private phone cache/offline access and explicit phone archives; one pinned chat message | Atomic quota accounting, interrupted-upload cleanup, author/partner rights, explicit Keep/expiry; local cache follows expiry/privacy/logout; cloud removal needs explicit owner consent and verified archive/backup, with honest other-device availability |
 | V2.6 — Personal keepsakes | Photo with a voice on its back; one memory with two voluntary contributions | Mixed-media storage/cleanup/export, accessible alternative to flip gesture, deletion/partial-contribution states; no anniversary letter in the app |
 | V2.7 — Personal space | Optional expiring emoji/status, on-this-day kept memories, Us shared shelf and restrained Home hierarchy | User-authored status only, real saved memories only, no inferred mood/relationship score or streak pressure |
 | V2.8 — Native entrance and comfort | Theme-aware privacy cover/splash/unlock handoff; text size/ambient-motion controls; private photo/plan widget | Lock cancel/failure keeps cover; no pre-unlock personal content, privacy-safe widget defaults; measured phone behavior |
@@ -70,6 +70,23 @@ Primary references, verified 3 November 2026:
 
 ## Status
 
+Phone storage extension requested on 4 November: cache to reduce downloads; explicit private
+phone archives for kept media. A cache alone does not free cloud space. Cloud deletion must
+use the Storage API and remain an explicit owner-authorized action after archive verification
+and backup guidance. Shared content stays in the cloud unless its changed availability is
+reviewed; a phone-only archive is not presented as available to the other person. Browser
+storage cannot be treated as the only durable copy. This belongs to V2.5; no cloud copy is
+removed during the current planning milestone.
+
+User refinement: a Keep by either person should fan out to both phones after each device
+enables keepsakes offline. Store private, user-scoped copies and verify file contents after
+writing before acknowledging them. Show Waiting for the other phone / Saved on both from
+real per-device receipts. Keep cloud originals as the transfer/recovery bridge until both
+devices are ready; before cloud removal also require explicit owner policy, backup/recovery
+guidance and compatible clients. Offline/missing/full/uninstalled devices must not count as
+a verified durable copy. Never claim that enabling this has already copied anything to
+the real partner's unavailable phone. Physical two-phone verification stays for after reveal.
+
 - V2.0 foundation slice implemented: shared token/surface stylesheet extracted; message,
   capsule and place deletion share a native confirmation sheet with busy/error/cancel behavior.
   84 web/16 worker tests and lint/types/format/build pass; 320/360/412 px sheet checks fit,
@@ -106,7 +123,9 @@ Primary references, verified 3 November 2026:
   physical touch/TalkBack and background/offline gates stay in the user's later batch.
 - V2.4 implemented: versioned shared plans/confirmation, personal reminders, calendar files,
   private/shared ideas and date jar, independent want-to-go list. 145 web/22 worker and all
-  71 hosted checks validated; final browser/a11y/Android rollup is in progress. See DEVLOG.md.
+  72 hosted checks validated. Six static audits score 100/100; 15 phone layouts fit.
+  Android bundle 7b11edf passes CI 41877567905 and integrity/signing/private scan. Schema
+  lock-order follow-up 0026 passes concurrency/hosted checks. Physical gates stay deferred.
 - V2.5–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

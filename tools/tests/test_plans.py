@@ -71,3 +71,17 @@ def test_personal_reminder_optin_and_scoped_queue_are_versioned_and_deduped(back
     assert rpc(b,0,'set_plan_reminder',p_id=plan['id'],p_version=1,p_minutes=7).status_code>=400
     assert rpc(b,0,'save_plan',**dict(body,p_version=1,p_title='Changed')).json()['version']==2
     with b.db() as db: assert db.execute('select orbit_private.enqueue_plan_reminders_for(%s)',(b.couples[0],)).fetchone()[0]==0
+
+def test_concurrent_archive_and_remove_resolve_as_a_stale_write_not_a_deadlock(backend):
+    from concurrent.futures import ThreadPoolExecutor
+    b=backend
+    for _ in range(3):
+        body=dict(p_id=str(uuid.uuid4()),p_version=None,p_kind='idea',p_title='Concurrent disposable idea',p_notes='',p_private=False,p_archived=False)
+        assert rpc(b,0,'save_date_idea',**body).status_code==200
+        with ThreadPoolExecutor(max_workers=2) as workers:
+            update=workers.submit(rpc,b,0,'save_date_idea',**dict(body,p_version=1,p_archived=True))
+            remove=workers.submit(rpc,b,0,'delete_date_idea',p_id=body['p_id'],p_version=1)
+            statuses=[update.result().status_code,remove.result().status_code]
+        assert any(code in (200,204) for code in statuses) and all(code<500 for code in statuses)
+        remaining=b.rest(b.clients[0],'GET','date_ideas',id='eq.'+body['p_id']).json()
+        assert not remaining or (remaining[0]['version']==2 and remaining[0]['archived'])

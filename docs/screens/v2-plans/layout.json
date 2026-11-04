@@ -1,0 +1,212 @@
+[
+  {
+    "name": "plan-editor-final",
+    "box": [
+      0,
+      127.609375,
+      320,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 320
+  },
+  {
+    "name": "plan-editor-final",
+    "box": [
+      0,
+      127.609375,
+      360,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 360
+  },
+  {
+    "name": "plan-editor-final",
+    "box": [
+      0,
+      146.3046875,
+      412,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 412
+  },
+  {
+    "name": "reminder",
+    "box": [
+      0,
+      482.609375,
+      320,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 320
+  },
+  {
+    "name": "reminder",
+    "box": [
+      0,
+      482.609375,
+      360,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 360
+  },
+  {
+    "name": "reminder",
+    "box": [
+      0,
+      482.609375,
+      412,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 412
+  },
+  {
+    "name": "jar-picked",
+    "box": [
+      0,
+      58,
+      320,
+      1175.6875
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 320
+  },
+  {
+    "name": "jar-picked",
+    "box": [
+      0,
+      58,
+      360,
+      1175.6875
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 360
+  },
+  {
+    "name": "jar-picked",
+    "box": [
+      0,
+      58,
+      412,
+      1151.6875
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 412
+  },
+  {
+    "name": "want-to-go-night",
+    "box": [
+      0,
+      76,
+      320,
+      551.4765625
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 320
+  },
+  {
+    "name": "want-to-go-night",
+    "box": [
+      0,
+      76,
+      360,
+      527.3984375
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 360
+  },
+  {
+    "name": "want-to-go-night",
+    "box": [
+      0,
+      76,
+      412,
+      527.3984375
+    ],
+    "dialog": false,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 412
+  },
+  {
+    "name": "idea-editor-night",
+    "box": [
+      0,
+      274.3046875,
+      320,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 320
+  },
+  {
+    "name": "idea-editor-night",
+    "box": [
+      0,
+      274.3046875,
+      360,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 360
+  },
+  {
+    "name": "idea-editor-night",
+    "box": [
+      0,
+      274.3046875,
+      412,
+      800
+    ],
+    "dialog": true,
+    "height": 800,
+    "overflow": false,
+    "small": [],
+    "width": 412
+  }
+]
