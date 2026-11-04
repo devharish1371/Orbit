@@ -233,7 +233,7 @@ export function PhoneCopySync() {
     window.addEventListener('orbit-signing-out', stop)
     window.addEventListener('orbit-signout-failed', retry)
     document.addEventListener('visibilitychange', visibility)
-    const timer = setInterval(resume, 60000)
+    const timer = setInterval(resume, 300000)
     resume()
     return () => {
       stop()

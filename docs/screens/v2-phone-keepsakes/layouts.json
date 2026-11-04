@@ -1,0 +1,20 @@
+[
+  {
+    "horizontalOverflow": false,
+    "phoneStorageWidth": 280,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "horizontalOverflow": false,
+    "phoneStorageWidth": 320,
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "horizontalOverflow": false,
+    "phoneStorageWidth": 362,
+    "scrollWidth": 412,
+    "width": 412
+  }
+]

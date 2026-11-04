@@ -166,7 +166,7 @@ slice. V2.3 adds the anchored Atlas workspace, compact sheet and recorded journe
 V2.4 adds shared versioned plans, personal reminders, calendar files, private/shared ideas
 and want-to-go places. V2.5's first slice adds opted-in encrypted phone keepsakes, verified
 dual-phone receipts and an independent offline library; cloud originals remain saved.
-Current client baseline: 157 web / 22 worker tests pass; hosted and
+Current client baseline: 158 web / 22 worker tests pass; hosted and
 Android evidence is recorded in DEVLOG. V2.5 includes dual-phone offline keepsakes and
 explicit, verified cloud-space recovery. Device gates remain deferred.
 Do not hand over APKs or request installs until the user asks for their larger test batch.

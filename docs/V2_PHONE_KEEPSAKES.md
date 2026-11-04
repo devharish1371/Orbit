@@ -3,6 +3,8 @@
 Either member can Keep a post. Each member must independently opt in to phone copies in
 Keepsakes → On this phone → Set up. Orbit reconciles kept posts while the Android app is
 open, visible and connected. It does not send a partner notification or require GPS sharing.
+Keep/revision changes and app resume trigger reconciliation; the fallback interval is five
+minutes. Unchanged receipts are not rewritten on every pass; evidence is renewed daily.
 One designated phone per member can sync; choosing another replaces its server designation.
 
 The separate On this phone library opens from Keepsakes and from the reconnect screen.

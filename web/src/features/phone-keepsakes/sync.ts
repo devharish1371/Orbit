@@ -30,6 +30,7 @@ export async function syncPhoneCopies(
   check()
   const receipts = await port.receipts()
   check()
+  const forgotten = new Set<string>()
   const wanted = new Map(
     posts.filter((p) => p.keep && !p.unsent_at).map((p) => [p.id, p]),
   )
@@ -40,6 +41,7 @@ export async function syncPhoneCopies(
       await port.remove(copy.id)
       check()
       await port.forget(copy.id)
+      forgotten.add(copy.id)
     }
   }
   for (const receipt of receipts) {
@@ -53,6 +55,7 @@ export async function syncPhoneCopies(
     ) {
       check()
       await port.forget(receipt.post_id)
+      forgotten.add(receipt.post_id)
     }
   }
   let saved = 0,
@@ -79,7 +82,18 @@ export async function syncPhoneCopies(
     // The server rechecks Keep, unsend, revision, current phone and current account.
     check()
     try {
-      await port.acknowledge(copy)
+      const recent =
+        !forgotten.has(copy.id) &&
+        receipts.some(
+          (r) =>
+            r.post_id === copy.id &&
+            r.revision === copy.revision &&
+            r.bytes === copy.bytes &&
+            r.sha256 === copy.sha256 &&
+            Date.now() - Date.parse(r.verified_at) >= 0 &&
+            Date.now() - Date.parse(r.verified_at) < 86400000,
+        )
+      if (!recent) await port.acknowledge(copy)
     } catch (error) {
       if (
         error &&

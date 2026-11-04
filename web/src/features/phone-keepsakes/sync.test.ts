@@ -35,6 +35,38 @@ function port(overrides: Partial<CopySyncPort> = {}): CopySyncPort {
   }
 }
 describe('private phone sync', () => {
+  test('unchanged verified copies avoid repeat receipt writes; stale evidence is renewed', async () => {
+    const receipt = {
+      post_id: id,
+      user_id: 'self',
+      device_id: 'phone',
+      revision: copy.revision,
+      bytes: copy.bytes,
+      sha256: copy.sha256,
+      verified_at: new Date().toISOString(),
+    }
+    const current = port({
+      local: vi.fn().mockResolvedValue([copy]),
+      receipts: vi.fn().mockResolvedValue([receipt]),
+    })
+    await syncPhoneCopies(current, () => true)
+    expect(current.acknowledge).not.toHaveBeenCalled()
+    const missing = port({ receipts: vi.fn().mockResolvedValue([receipt]) })
+    await syncPhoneCopies(missing, () => true)
+    expect(missing.forget).toHaveBeenCalledWith(id)
+    expect(missing.acknowledge).toHaveBeenCalledWith(copy)
+    const stale = port({
+      local: vi.fn().mockResolvedValue([copy]),
+      receipts: vi.fn().mockResolvedValue([
+        {
+          ...receipt,
+          verified_at: new Date(Date.now() - 86400001).toISOString(),
+        },
+      ]),
+    })
+    await syncPhoneCopies(stale, () => true)
+    expect(stale.acknowledge).toHaveBeenCalledWith(copy)
+  })
   test('writes then acknowledges a verified committed copy; retry reuses it', async () => {
     const p = port()
     expect(await syncPhoneCopies(p, () => true)).toEqual({

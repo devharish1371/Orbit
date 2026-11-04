@@ -1316,7 +1316,7 @@ pass on disposable identities. Full backend run passed 74/75 checks; the privile
 caught default execution on a private trigger helper. Migration 0028 explicitly revokes
 API-role execution; all five retention/privilege tests pass on retry (19.17 seconds), so all
 75 hosted checks are validated across the full run and targeted correction.
-157 web and 22 worker tests, lint, types, format and production build pass. New sync tests
+158 web and 22 worker tests, lint, types, format and production build pass. New sync tests
 exercise interrupted/failed manifests, missing files, quota/size/revision failures, retries,
 account/background cancellation and concurrent unkeep; standalone UI tests prove cold local
 reading without Auth/Space/Query providers and fail-closed/logout clearing. Native cipher
@@ -1324,7 +1324,15 @@ tests cover bytes/metadata, unique IVs, wrong identity/key, tampering and size l
 Android native tests, compile and signing checks pass in CI 41918291192 for code 07468b7
 (2m26s). Browser review found a development warning from the cache-only sync-status observer;
 it now explicitly uses skipToken, and the full 157/22 web/worker pipeline passes again.
-The exact follow-up bundle is being rechecked in CI. Physical cold offline
+The cache-observer follow-up passes CI 41918882265 (95ef298, 2m56s). Its retained artifact
+passes ZIP/signing/private-material checks against 7b11edf (6,975,387 bytes; SHA-256
+cab7d3d36a6765fbaaace5682325bc4c8e295d29118887efa0fdf0a710e373a8).
+Final efficiency refinement avoids rewriting unchanged receipts on each pass, renews daily
+and reduces fallback native scans to five minutes. Missing/repaired files still acknowledge
+again after forgetting stale evidence. The new retry test passes; 158 web/22 worker checks,
+types, format and production build pass. Final exact-bundle CI verification follows.
+Three browser widths fit; the static accessibility/best-practices audit scores 100/100 with
+no findings after fixing the replay's local asset paths under unchanged CSP. Physical cold offline
 launch with expired auth, process death, phone storage failures, playback and real two-phone
 propagation remain in the requested device batch. No APK handover or install request.
 See docs/V2_PHONE_KEEPSAKES.md. Photo sets, collections and cloud archive policy remain open.
