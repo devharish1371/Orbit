@@ -29,6 +29,21 @@ export const nativePrivacy = registerPlugin<PrivacyPlugin>('OrbitPrivacy')
 export const isAndroid = () => Capacitor.getPlatform() === 'android'
 export async function saveMemoryZip(blob: Blob, signal: AbortSignal) {
   const filename = `orbit-memories-${new Date().toISOString().slice(0, 10)}.zip`
+  return savePrivateExport(blob, filename, signal)
+}
+export async function savePlanCalendar(content: string, id: string) {
+  if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error('INVALID_PLAN')
+  return savePrivateExport(
+    new Blob([content], { type: 'text/calendar;charset=utf-8' }),
+    `orbit-plan-${id}.ics`,
+    new AbortController().signal,
+  )
+}
+async function savePrivateExport(
+  blob: Blob,
+  filename: string,
+  signal: AbortSignal,
+) {
   signal.throwIfAborted()
   if (!isAndroid()) {
     const url = URL.createObjectURL(blob),

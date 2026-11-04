@@ -104,6 +104,9 @@ Primary references, verified 3 November 2026:
   67 hosted checks pass. Final code eddf5f0 passes Android CI 41868838371; five static
   audits score 100/100 with no findings, and 17 responsive states fit. Software slice verified;
   physical touch/TalkBack and background/offline gates stay in the user's later batch.
-- V2.4–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
+- V2.4 implemented: versioned shared plans/confirmation, personal reminders, calendar files,
+  private/shared ideas and date jar, independent want-to-go list. 145 web/22 worker and all
+  71 hosted checks validated; final browser/a11y/Android rollup is in progress. See DEVLOG.md.
+- V2.5–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

@@ -1,5 +1,9 @@
 import { useMemo, useRef, useState, type ReactNode } from 'react'
 import {
+  PlanningContext,
+  type PlanningMemory,
+} from '@/features/plans/PlanningContext'
+import {
   FlowContext,
   freshComposer,
   PostViewContext,
@@ -11,6 +15,14 @@ import {
 } from './FlowContext'
 export function FlowProvider({ children }: { children: ReactNode }) {
   const cameraRef = useRef<MapCameraMemory | null>(null)
+  const [planning, setPlanning] = useState<PlanningMemory>({
+    plan: null,
+    idea: null,
+  })
+  const planningValue = useMemo(
+    () => ({ drafts: planning, setDrafts: setPlanning }),
+    [planning],
+  )
   const [atlas, setAtlas] = useState(freshAtlas)
   const atlasValue = useMemo(() => ({ atlas, setAtlas }), [atlas])
   const [drafts, setDrafts] = useState(() => ({
@@ -60,7 +72,9 @@ export function FlowProvider({ children }: { children: ReactNode }) {
       <PostViewContext.Provider value={viewValue}>
         <MapCameraContext.Provider value={cameraRef}>
           <AtlasContext.Provider value={atlasValue}>
-            {children}
+            <PlanningContext.Provider value={planningValue}>
+              {children}
+            </PlanningContext.Provider>
           </AtlasContext.Provider>
         </MapCameraContext.Provider>
       </PostViewContext.Provider>

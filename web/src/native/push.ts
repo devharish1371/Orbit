@@ -11,9 +11,16 @@ export function notificationRoute(data: unknown): string | null {
   if (!data || typeof data !== 'object') return null
   const route = (data as Record<string, unknown>).route
   return typeof route === 'string' &&
-    ['/', '/map', '/activity', '/call', '/moments', '/chat', '/us'].includes(
-      route,
-    )
+    [
+      '/',
+      '/map',
+      '/activity',
+      '/call',
+      '/moments',
+      '/chat',
+      '/us',
+      '/plans',
+    ].includes(route)
     ? route
     : null
 }

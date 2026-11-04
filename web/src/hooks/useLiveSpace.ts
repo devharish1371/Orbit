@@ -132,6 +132,9 @@ export function useLiveSpace() {
             'capsules',
             'question-answers',
             'week-recap',
+            'plans',
+            'date-ideas',
+            'plan-reminders',
           ])
             mark(key)
         },
@@ -157,6 +160,9 @@ export function useLiveSpace() {
             'capsules',
             'question-answers',
             'week-recap',
+            'plans',
+            'date-ideas',
+            'plan-reminders',
           ])
             mark(key)
         }
@@ -181,6 +187,9 @@ export function useLiveSpace() {
           'capsules',
           'question-answers',
           'week-recap',
+          'plans',
+          'date-ideas',
+          'plan-reminders',
         ])
           mark(key)
       }

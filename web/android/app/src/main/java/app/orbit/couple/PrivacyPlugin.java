@@ -87,9 +87,10 @@ public class PrivacyPlugin extends Plugin {
     @PluginMethod public synchronized void beginExport(PluginCall call) {
         if (choosing || output != null) { call.reject("Export already running"); return; }
         String filename = call.getString("filename","");
-        if (!filename.matches("orbit-memories-[0-9-]{10}\\.zip")) { call.reject("Invalid export filename"); return; }
+        boolean calendar = filename.matches("orbit-plan-[0-9a-fA-F-]{36}\\.ics");
+        if (!calendar && !filename.matches("orbit-memories-[0-9-]{10}\\.zip")) { call.reject("Invalid export filename"); return; }
         choosing = true;
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/zip").putExtra(Intent.EXTRA_TITLE,filename);
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(calendar ? "text/calendar" : "application/zip").putExtra(Intent.EXTRA_TITLE,filename);
         startActivityForResult(call,intent,"exportDestination");
     }
     @ActivityCallback private synchronized void exportDestination(PluginCall call, ActivityResult result) {

@@ -65,10 +65,61 @@ export function notifyStore(url: string, key: string): NotifyStore {
           "&select=user_id,display_name,nickname,notify_prefs,quiet_start,quiet_end",
       );
       const self = members.find((m) => m.user_id === actor),
-        partner = members.find((m) => m.user_id !== actor);
+        partner =
+          job.source_table === "plan_reminders"
+            ? self
+            : members.find((m) => m.user_id !== actor);
       if (!self || !partner) return null;
       let type: string;
-      if (job.source_table === "events") type = String(record.type);
+      if (job.source_table === "plan_reminders") {
+        if (
+          typeof record.plan_id !== "string" ||
+          !Number.isInteger(record.version)
+        )
+          return null;
+        const plans = await request<
+          {
+            version: number;
+            cancelled: boolean;
+            starts_at: string;
+            accepted_by: string[];
+          }[]
+        >(
+          "plans?id=eq." +
+            encodeURIComponent(record.plan_id) +
+            "&couple_id=eq." +
+            encodeURIComponent(couple) +
+            "&select=version,cancelled,starts_at,accepted_by",
+        );
+        const plan = plans[0];
+        if (
+          !plan ||
+          plan.cancelled ||
+          plan.version !== record.version ||
+          !Number.isFinite(Date.parse(plan.starts_at)) ||
+          Date.parse(plan.starts_at) <= Date.now() ||
+          members.length !== 2 ||
+          !members.every((m) => plan.accepted_by.includes(m.user_id))
+        )
+          return null;
+        const reminders = await request<
+          { lead_minutes: number | null; queued_version: number | null }[]
+        >(
+          "plan_reminders?plan_id=eq." +
+            encodeURIComponent(record.plan_id) +
+            "&user_id=eq." +
+            encodeURIComponent(actor) +
+            "&couple_id=eq." +
+            encodeURIComponent(couple) +
+            "&select=lead_minutes,queued_version",
+        );
+        if (
+          reminders[0]?.lead_minutes == null ||
+          reminders[0].queued_version !== plan.version
+        )
+          return null;
+        type = "plan_reminder";
+      } else if (job.source_table === "events") type = String(record.type);
       else if (job.source_table === "posts") {
         const live = await request<{ id: string }[]>(
           "posts?id=eq." +
@@ -123,7 +174,11 @@ export function notifyStore(url: string, key: string): NotifyStore {
         name: self.nickname || self.display_name,
         place,
         placeId:
-          typeof record.place_id === "string" ? record.place_id : undefined,
+          job.source_table === "plan_reminders"
+            ? `${record.plan_id}:${record.version}`
+            : typeof record.place_id === "string"
+              ? record.place_id
+              : undefined,
         timezone: couples[0]?.timezone ?? "Asia/Kolkata",
         quietStart: partner.quiet_start,
         quietEnd: partner.quiet_end,

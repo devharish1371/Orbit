@@ -36,6 +36,7 @@ export function messageFor(
     chat: `💬 A new message from ${name}`,
     comment: `${name} commented on your moment`,
     reaction: `${name} reacted to your moment`,
+    plan_reminder: "Your plan starts soon. Open Orbit for details.",
   };
   const body = map[type];
   if (!body) return null;
@@ -51,28 +52,31 @@ export function messageFor(
         sharing_resumed: "sharing_stopped",
         mode_changed: "sharing_stopped",
         call_request: "nudge",
+        plan_reminder: "plans",
       } as Record<string, string>
     )[type] ?? type;
   const route =
-    type === "call_request"
-      ? "/call"
-      : [
-            "arrive",
-            "leave",
-            "low_battery",
-            "sharing_stopped",
-            "sharing_resumed",
-            "mode_changed",
-            "sos",
-          ].includes(type)
-        ? "/map"
-        : type === "chat"
-          ? "/chat"
-          : ["moment", "comment", "reaction"].includes(type)
-            ? "/moments"
-            : type === "capsule_unlocked"
-              ? "/us"
-              : "/activity";
+    type === "plan_reminder"
+      ? "/plans"
+      : type === "call_request"
+        ? "/call"
+        : [
+              "arrive",
+              "leave",
+              "low_battery",
+              "sharing_stopped",
+              "sharing_resumed",
+              "mode_changed",
+              "sos",
+            ].includes(type)
+          ? "/map"
+          : type === "chat"
+            ? "/chat"
+            : ["moment", "comment", "reaction"].includes(type)
+              ? "/moments"
+              : type === "capsule_unlocked"
+                ? "/us"
+                : "/activity";
   return {
     ...base,
     body,

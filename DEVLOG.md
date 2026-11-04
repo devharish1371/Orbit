@@ -1242,3 +1242,26 @@ Full final client checks: 136 web / 16 worker plus lint/types/format/build; host
 6,934,713 bytes, SHA256 `e93acd7ab3730f768ce3b0614a37f965938b8347444160682540414d2d78141e`.
 ZIP integrity, baseline 959314d signing identity and packaged private-material scan pass.
 No APK handover, install request or real partner contact. V2.4 shared plans/places is next.
+
+## 2026-11-04 — V2.4 shared planning implementation
+
+Added shared versioned plans, mutual confirmation, author editing, cancellation and personal
+opt-in reminders. The server queue dedupes by version/member; notification context revalidates
+consent/current row before resolving only that member's devices. Quiet hours remain respected.
+Added private/shared date ideas, a real-idea jar, independent want-to-go places and owner-only
+archive/removal. The shared editor uses retained drafts and couple-timezone date entry.
+Us gets one next-plan entry; all other controls live in the secondary Plans screen.
+
+Calendar export uses escaped/folded UTF-8 ICS, stable IDs/versions and UTC instants, with no
+attendees or alarms. Android's existing private export picker now accepts a narrowly bounded
+ICS filename/MIME as well as memory ZIPs. Calendar files explicitly do not sync later edits.
+Migrations 0022–0025 applied; RLS and request-account binding protect all new writes. Notify
+worker deployed with existing live configuration retained. No real reminders opted in.
+
+145 web / 22 worker tests and lint/types/format/build pass. Four new hosted security tests
+pass. Full hosted regression: 70 passed; the cron allowlist test expected the old seven jobs.
+Updated its exact expected set for the plan-reminder job; isolated retry passes (5.41 s),
+validating all 71 checks. Browser review caught a datetime input-event draft issue and initial
+editor focus; corrected with direct input handling and post-dialog focus, covered by tests.
+Final responsive/a11y/Android rollup follows. Only verified disposable fixtures used; no real
+partner contact, permission prompt, notification send or APK handover. See docs/V2_PLANS.md.

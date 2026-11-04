@@ -44,6 +44,7 @@ export default function Shell() {
           '/capsules',
           '/timeline',
           '/reveal',
+          '/plans',
           '/notifications',
           '/activity',
         ].includes(pathname)

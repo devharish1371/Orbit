@@ -252,6 +252,60 @@ export type Database = {
           },
         ]
       }
+      date_ideas: {
+        Row: {
+          archived: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          kind: string
+          notes: string
+          private: boolean
+          title: string
+          version: number
+        }
+        Insert: {
+          archived?: boolean
+          couple_id: string
+          created_at?: string
+          created_by: string
+          id: string
+          kind: string
+          notes?: string
+          private?: boolean
+          title: string
+          version?: number
+        }
+        Update: {
+          archived?: boolean
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          kind?: string
+          notes?: string
+          private?: boolean
+          title?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'date_ideas_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'date_ideas_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       device_tokens: {
         Row: {
           platform: string
@@ -689,6 +743,115 @@ export type Database = {
           },
         ]
       }
+      plan_reminders: {
+        Row: {
+          couple_id: string
+          lead_minutes: number | null
+          plan_id: string
+          queued_version: number | null
+          user_id: string
+        }
+        Insert: {
+          couple_id: string
+          lead_minutes?: number | null
+          plan_id: string
+          queued_version?: number | null
+          user_id: string
+        }
+        Update: {
+          couple_id?: string
+          lead_minutes?: number | null
+          plan_id?: string
+          queued_version?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'plan_reminders_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'plan_reminders_plan_id_fkey'
+            columns: ['plan_id']
+            isOneToOne: false
+            referencedRelation: 'plans'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'plan_reminders_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
+      plans: {
+        Row: {
+          accepted_by: string[]
+          cancelled: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          notes: string
+          starts_at: string
+          timezone: string
+          title: string
+          updated_at: string
+          venue: string
+          version: number
+        }
+        Insert: {
+          accepted_by?: string[]
+          cancelled?: boolean
+          couple_id: string
+          created_at?: string
+          created_by: string
+          id: string
+          notes?: string
+          starts_at: string
+          timezone: string
+          title: string
+          updated_at?: string
+          venue?: string
+          version?: number
+        }
+        Update: {
+          accepted_by?: string[]
+          cancelled?: boolean
+          couple_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          notes?: string
+          starts_at?: string
+          timezone?: string
+          title?: string
+          updated_at?: string
+          venue?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'plans_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'plans_created_by_fkey'
+            columns: ['created_by']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       posts: {
         Row: {
           author_id: string
@@ -1064,6 +1227,15 @@ export type Database = {
         }
       }
       daily_question: { Args: never; Returns: Json }
+      delete_date_idea: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_version: number
+        }
+        Returns: undefined
+      }
       edit_chat_post: {
         Args: { p_body: string; p_expected_version: number; p_id: string }
         Returns: {
@@ -1155,6 +1327,101 @@ export type Database = {
         Args: { p_id: string; p_key: string }
         Returns: boolean
       }
+      respond_plan: {
+        Args: {
+          p_accept: boolean
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_version: number
+        }
+        Returns: {
+          accepted_by: string[]
+          cancelled: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          notes: string
+          starts_at: string
+          timezone: string
+          title: string
+          updated_at: string
+          venue: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'plans'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      save_date_idea: {
+        Args: {
+          p_archived: boolean
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_kind: string
+          p_notes: string
+          p_private: boolean
+          p_title: string
+          p_version: number | null
+        }
+        Returns: {
+          archived: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          kind: string
+          notes: string
+          private: boolean
+          title: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'date_ideas'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      save_plan: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_notes: string
+          p_starts_at: string
+          p_timezone: string
+          p_title: string
+          p_venue: string
+          p_version: number | null
+        }
+        Returns: {
+          accepted_by: string[]
+          cancelled: boolean
+          couple_id: string
+          created_at: string
+          created_by: string
+          id: string
+          notes: string
+          starts_at: string
+          timezone: string
+          title: string
+          updated_at: string
+          venue: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'plans'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       send_attention: {
         Args: { p_id: string; p_type: string }
         Returns: string
@@ -1162,6 +1429,28 @@ export type Database = {
       set_chat_pin: {
         Args: { p_post_id: string; p_remove?: boolean }
         Returns: undefined
+      }
+      set_plan_reminder: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_minutes: number | null
+          p_version: number
+        }
+        Returns: {
+          couple_id: string
+          lead_minutes: number | null
+          plan_id: string
+          queued_version: number | null
+          user_id: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'plan_reminders'
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       set_post_reaction: {
         Args: { p_emoji?: string; p_id: string }

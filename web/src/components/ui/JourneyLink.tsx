@@ -25,6 +25,7 @@ const routes = new Set([
   '/capsules',
   '/timeline',
   '/reveal',
+  '/plans',
 ])
 /** Record the actual entry point for secondary screens, without persisting personal data. */
 export function JourneyLink({ state, children, ...props }: LinkProps) {

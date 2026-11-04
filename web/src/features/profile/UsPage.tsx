@@ -9,6 +9,7 @@ import { MemoryDoors } from '@/components/ui/MemoryDoors'
 import { storyDays } from '@/lib/memories'
 import { useNow } from '@/hooks/useNow'
 import { DailyQuestion } from '@/features/memories/DailyQuestion'
+import { NextPlan } from '@/features/plans/NextPlan'
 export default function UsPage() {
   const { data } = useSpace()
   const now = useNow()
@@ -54,6 +55,7 @@ export default function UsPage() {
           )}
         </div>
       </section>
+      <NextPlan />
       <MemoryDoors
         days={
           data.couple.anniversary
