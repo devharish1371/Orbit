@@ -3,7 +3,6 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useAuth } from '@/hooks/useAuth'
 import { JourneyCheckins } from './JourneyCheckins'
 import { SpeedReminders } from './SpeedReminders'
-import { MotionLab } from './MotionLab'
 import './safety.css'
 export default function SafetyPage() {
   const { session } = useAuth()
@@ -13,7 +12,6 @@ export default function SafetyPage() {
       <SectionHeading title="Safety" kind="map" />
       <JourneyCheckins />
       <SpeedReminders />
-      <MotionLab />
       <details className="safety-details">
         <summary>Before you rely on a reminder</summary>
         <p>

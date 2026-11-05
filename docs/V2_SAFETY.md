@@ -16,7 +16,8 @@ confirmed check-in. Server acknowledgements and FCM acceptance never claim phone
 Notifications revalidate state/version/consent/privacy, expire one hour after the deadline,
 respect quiet hours, and can be delayed or missed. No emergency-service call is made.
 
-The motion prototype uses synthetic acceleration traces only. It adds no sensor listener,
+The motion prototype is a QA/research component, excluded from the shipped Safety screen.
+It uses synthetic acceleration traces only. It adds no sensor listener,
 background process or partner escalation switch. A phone drop can resemble a fall; a phone
 left elsewhere cannot monitor a person. Hardware, false-positive and battery evidence must
 precede real monitoring. Never fall, drop a phone or drive fast to test these features.
