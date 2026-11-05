@@ -1612,3 +1612,9 @@ at dcb1995; physical phone/launcher acceptance remains explicitly deferred. Fina
 and evidence scan: 1,139 files, zero findings. QA tabs and temporary 4176/4177 servers are
 closed; user app previews 5173/4173 are preserved, viewport and Day/Standard/Follow phone
 restored. Only docs/evidence change after the verified application source.
+
+Publication note: application source dcb1995 is already pushed and Android-verified.
+Final evidence commit faf5d23 remains local after three GitHub `commit_refs` rejections,
+including an HTTP/1.1 retry. Remote main is unchanged; no force/history rewrite attempted.
+The worktree is committed and verification evidence is available locally. See
+`docs/BLOCKERS.md`; this does not change the passing build or deferred physical gates.

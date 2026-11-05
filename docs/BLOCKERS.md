@@ -61,3 +61,15 @@ Hosted database/Vault/retention/cron and permanent passwordless identities are c
 signup is disabled. Disposable-user integration tests pass. M0 and M1 are pushed to
 `devharish1371/Orbit` with milestone tags. The password-choice requirement was superseded
 by the user's email OTP request.
+
+## V2.8 evidence publication — remote ref update failed
+
+The V2.8 application source dcb1995 is pushed and verified by Android CI 42117158960.
+The final docs/browser evidence commit faf5d233c19cbd329ac91ea2284a885618a39eed is committed
+locally. Three fast-forward push attempts (including explicit HEAD and HTTP/1.1) were
+rejected by GitHub with `remote: fatal error in commit_refs`. `ls-remote` confirms main
+still points to dcb19952006dd15d539f60fe164dac5b2cb8fb35; the full evidence commit is not
+available through the Git Data API. No force push, reset or history rewrite was attempted.
+The status endpoint reported operational; this is an observed repository publication
+failure, not evidence of a general outage. Retry the ordinary fast-forward push when the
+remote accepts updates. No user action or APK installation is required for this issue.
