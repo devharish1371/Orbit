@@ -83,3 +83,60 @@ test("failure to record status changes the response to an error", async () => {
     "Could not record retention status",
   );
 });
+
+test("photo sets delete every unique file before metadata and charge all freed bytes", async () => {
+  const store = fixture();
+  vi.mocked(store.claimPosts)
+    .mockReset()
+    .mockResolvedValueOnce([
+      {
+        id: "set",
+        deletion_token: "token",
+        media_path: "cover",
+        thumb_path: "small",
+        media_bytes: 20,
+        thumb_bytes: 5,
+        photo_items: [
+          { path: "cover", thumb_path: "small" },
+          { path: "second", thumb_path: "second-small" },
+        ],
+        extra_media_bytes: 30,
+        extra_thumb_bytes: 6,
+      },
+    ])
+    .mockResolvedValue([]);
+  const result = await runRetention(store, now);
+  expect(store.removeFiles).toHaveBeenNthCalledWith(1, [
+    "cover",
+    "small",
+    "second",
+    "second-small",
+  ]);
+  expect(result.files_deleted).toBe(5);
+  expect(result.bytes_freed).toBe(69);
+  expect(store.finishPost).toHaveBeenCalledWith("set", "token");
+});
+
+test("a malformed set cannot lose its remaining references", async () => {
+  const store = fixture();
+  vi.mocked(store.claimPosts)
+    .mockReset()
+    .mockResolvedValueOnce([
+      {
+        id: "set",
+        deletion_token: "token",
+        media_path: "cover",
+        thumb_path: "small",
+        media_bytes: 20,
+        thumb_bytes: 5,
+        photo_items: [{ path: "second" }],
+      },
+    ])
+    .mockResolvedValue([]);
+  const result = await runRetention(store, now);
+  expect(store.finishPost).not.toHaveBeenCalled();
+  expect(store.removeFiles).not.toHaveBeenCalledWith(
+    expect.arrayContaining(["cover"]),
+  );
+  expect(result.error).toContain("lease retained");
+});

@@ -188,3 +188,18 @@ html:has(.photo-dialog[open]) {
     animation: none !important;
   }
 }
+
+.viewer-photo-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+  padding: 4px 16px;
+}
+.viewer-photo-nav output {
+  min-width: 4em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}

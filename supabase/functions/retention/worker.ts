@@ -6,6 +6,9 @@ export interface ExpiredPost {
   thumb_path: string | null;
   media_bytes: number;
   thumb_bytes: number;
+  photo_items?: unknown;
+  extra_media_bytes?: number;
+  extra_thumb_bytes?: number;
 }
 export interface StorageObject {
   path: string;
@@ -52,15 +55,37 @@ export async function runRetention(
       if (!rows.length) break;
       for (const post of rows) {
         try {
-          const paths = [post.media_path, post.thumb_path].filter(
-            (path): path is string => Boolean(path),
-          );
+          const additional: string[] = [];
+          if (post.photo_items !== undefined) {
+            if (!Array.isArray(post.photo_items) || post.photo_items.length > 6)
+              throw new Error("Invalid photo manifest");
+            for (const item of post.photo_items) {
+              if (
+                !item ||
+                typeof item.path !== "string" ||
+                typeof item.thumb_path !== "string"
+              )
+                throw new Error("Invalid photo manifest");
+              additional.push(item.path, item.thumb_path);
+            }
+          }
+          const paths = [
+            ...new Set(
+              [post.media_path, post.thumb_path, ...additional].filter(
+                (path): path is string => Boolean(path),
+              ),
+            ),
+          ];
           if (paths.length) await store.removeFiles(paths);
           // Token matching prevents a late worker from completing a different lease.
           if (await store.finishPost(post.id, post.deletion_token)) {
             stats.posts_deleted++;
             stats.files_deleted += paths.length;
-            stats.bytes_freed += post.media_bytes + post.thumb_bytes;
+            stats.bytes_freed +=
+              post.media_bytes +
+              post.thumb_bytes +
+              (post.extra_media_bytes ?? 0) +
+              (post.extra_thumb_bytes ?? 0);
           }
         } catch {
           failures.push(

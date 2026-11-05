@@ -53,3 +53,25 @@ test('cancel dismissal restores the source photo instead of leaving focus behind
   )
   expect(trigger).toHaveFocus()
 })
+
+test('a set announces its size, preserves cover alt text and opens each caption in order', async () => {
+  const set = {
+    ...photo,
+    photo_items: [
+      { id: 'photo', path: 'cover', caption: 'First photo', bytes: 3 },
+      { id: 'second', path: 'second', caption: 'Second photo', bytes: 4 },
+    ],
+  }
+  render(<PostMedia post={set} />)
+  const trigger = screen.getByRole('button', { name: 'Open 2 photos' })
+  await userEvent.click(trigger)
+  expect(screen.getByText('First photo')).toBeVisible()
+  await userEvent.click(screen.getByRole('button', { name: 'Next photo' }))
+  expect(screen.getByText('Second photo')).toBeVisible()
+  expect(trigger.querySelector('img')).toHaveAttribute('alt', 'First photo')
+  expect(screen.getByRole('button', { name: 'Next photo' })).toBeDisabled()
+  await userEvent.click(screen.getByRole('button', { name: 'Close photo' }))
+  expect(trigger).toHaveFocus()
+  await userEvent.click(trigger)
+  expect(screen.getByText('First photo')).toBeVisible()
+})

@@ -1,3 +1,4 @@
+import type { DraftPhoto } from './photos'
 import type { Database, Json } from './database.types'
 import type { OrbitClient } from './supabase'
 export type Post = Database['public']['Tables']['posts']['Row']
@@ -22,6 +23,7 @@ export interface PostDraft {
   ttl: number | null
   keep: boolean
   place: string | null
+  photos?: DraftPhoto[]
   attachment?: Attachment
   noteStyle?: NoteStyle
   replyTo?: string | null
@@ -119,7 +121,23 @@ export async function sharePost(
   }
   try {
     const attachment = draft.attachment
-    if (attachment) {
+    const photos: Json[] = []
+    if (draft.kind === 'photo' && draft.photos?.length) {
+      for (const [index, photo] of draft.photos.entries()) {
+        const base = index ? `${root}_${photo.id}` : root
+        if (!photo.attachment.thumb) throw new Error('PHOTO_THUMB_REQUIRED')
+        await upload(base + '.webp', photo.attachment.blob)
+        await upload(base + '_t.webp', photo.attachment.thumb)
+        photos.push({
+          id: index ? photo.id : draft.id,
+          path: base + '.webp',
+          thumb_path: base + '_t.webp',
+          width: photo.attachment.width,
+          height: photo.attachment.height,
+          caption: photo.caption,
+        })
+      }
+    } else if (attachment) {
       media = root + '.' + attachment.extension
       await upload(media, attachment.blob)
       if (attachment.thumb) {
@@ -128,6 +146,7 @@ export async function sharePost(
       }
     }
     const payload: Json = {
+      photos,
       id: draft.id,
       expected_author_id: draft.author,
       expected_couple_id: draft.couple,
@@ -149,7 +168,10 @@ export async function sharePost(
       height: attachment?.height ?? null,
       waveform: attachment?.waveform ?? null,
     }
-    const request = client.rpc('create_shared_post', { p_post: payload })
+    const request = client.rpc(
+      photos.length ? 'create_photo_post' : 'create_shared_post',
+      { p_post: payload },
+    )
     const result = await (signal ? request.abortSignal(signal) : request)
     if (result.error) throw result.error
     return result.data

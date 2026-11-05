@@ -4,11 +4,13 @@ import {
   type SetStateAction,
   type RefObject,
 } from 'react'
+import type { DraftPhoto } from '@/lib/photos'
 import type { Attachment, Channel, PostDraft, NoteStyle } from '@/lib/posts'
 export interface ComposerMemory {
   kind: PostDraft['kind']
   body: string
   mood: string
+  photos: DraftPhoto[]
   attachment: Attachment | undefined
   ttl: string
   place: string
@@ -24,6 +26,7 @@ export const freshComposer = (): ComposerMemory => ({
   body: '',
   mood: '💛',
   attachment: undefined,
+  photos: [],
   ttl: 'default',
   place: '',
   busy: false,

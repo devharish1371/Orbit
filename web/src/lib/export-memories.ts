@@ -1,3 +1,4 @@
+import { postFiles } from './photos'
 import type { OrbitClient } from './supabase'
 import { MemoryZip } from './zip'
 async function collect<T>(
@@ -127,9 +128,7 @@ export async function exportMemories(
     files: Record<string, string> = {}
   const paths = [
     ...new Set(
-      posts
-        .flatMap((post) => [post.media_path, post.thumb_path])
-        .filter((path): path is string => !!path),
+      posts.flatMap(postFiles).filter((path): path is string => !!path),
     ),
   ]
   let count = 0

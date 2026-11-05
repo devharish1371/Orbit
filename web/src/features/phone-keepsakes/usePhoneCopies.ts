@@ -1,3 +1,5 @@
+import { photoSources, splitCopyId } from '@/lib/photos'
+import type { OrbitClient } from '@/lib/supabase'
 import { useEffect, useRef, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
@@ -12,6 +14,40 @@ import {
   writePhoneCopy,
 } from './native'
 import { syncPhoneCopies } from './sync'
+export async function loadCopyReceipts(
+  client: OrbitClient,
+  owner?: string,
+  device?: string,
+) {
+  const rows: CopyReceipt[] = []
+  for (const table of [
+    'keepsake_receipts',
+    'keepsake_asset_receipts',
+  ] as const) {
+    for (let offset = 0; ; offset += 500) {
+      let request = client
+        .from(table)
+        .select('*')
+        .order('post_id')
+        .order('user_id')
+      if (table === 'keepsake_asset_receipts')
+        request = request.order('asset_id')
+      if (owner) request = request.eq('user_id', owner)
+      if (device) request = request.eq('device_id', device)
+      const page = await request.range(offset, offset + 499)
+      if (page.error) throw page.error
+      rows.push(
+        ...page.data.map((row) => ({
+          ...row,
+          post_id:
+            'asset_id' in row ? `${row.post_id}:${row.asset_id}` : row.post_id,
+        })),
+      )
+      if (page.data.length < 500) break
+    }
+  }
+  return rows
+}
 export function usePhoneCopies() {
   const { client, session } = useAuth(),
     { data: space } = useSpace()
@@ -23,23 +59,9 @@ export function usePhoneCopies() {
     refetchInterval: 60000,
     queryFn: async () => {
       const identity = { owner: owner!, couple: couple! }
-      const loadReceipts = async () => {
-        const rows: CopyReceipt[] = []
-        for (let offset = 0; ; offset += 500) {
-          const page = await client
-            .from('keepsake_receipts')
-            .select('*')
-            .order('post_id')
-            .order('user_id')
-            .range(offset, offset + 499)
-          if (page.error) throw page.error
-          rows.push(...page.data)
-          if (page.data.length < 500) return rows
-        }
-      }
       const [devices, receipts, local] = await Promise.all([
         client.from('keepsake_devices').select('*'),
-        loadReceipts(),
+        loadCopyReceipts(client),
         phoneCopiesSupported
           ? phoneOperation(() => phone.status(identity))
           : Promise.resolve(null),
@@ -125,22 +147,14 @@ export function PhoneCopySync() {
                   const page = await request
                   if (page.error) throw page.error
                   rows.push(...page.data)
-                  if (page.data.length < 500) return rows
+                  if (page.data.length < 500) return rows.flatMap(photoSources)
                   if (rows.length >= 10000)
                     throw new Error('COPY_MANIFEST_LIMIT')
                   after = page.data.at(-1)!.id
                 }
               },
               local: () => phoneOperation(() => phoneItems(identity)),
-              async receipts() {
-                const result = await client
-                  .from('keepsake_receipts')
-                  .select('*')
-                  .eq('user_id', owner)
-                  .eq('device_id', status.device)
-                if (result.error) throw result.error
-                return result.data
-              },
+              receipts: () => loadCopyReceipts(client, owner, status.device),
               async download(post) {
                 const download = new AbortController(),
                   abort = () => download.abort()
@@ -171,20 +185,37 @@ export function PhoneCopySync() {
               remove: (id) =>
                 phoneOperation(() => phone.remove({ ...identity, id })),
               async acknowledge(copy) {
-                const result = await client.rpc('ack_keepsake_copy', {
-                  ...args,
-                  p_post: copy.id,
-                  p_revision: copy.revision,
-                  p_bytes: copy.bytes,
-                  p_sha256: copy.sha256,
-                })
+                const id = splitCopyId(copy.id)
+                const result = id.asset
+                  ? await client.rpc('ack_keepsake_asset', {
+                      ...args,
+                      p_post: id.post,
+                      p_asset: id.asset,
+                      p_revision: copy.revision,
+                      p_bytes: copy.bytes,
+                      p_sha256: copy.sha256,
+                    })
+                  : await client.rpc('ack_keepsake_copy', {
+                      ...args,
+                      p_post: id.post,
+                      p_revision: copy.revision,
+                      p_bytes: copy.bytes,
+                      p_sha256: copy.sha256,
+                    })
                 if (result.error) throw result.error
               },
               async forget(id) {
-                const result = await client.rpc('forget_keepsake_copy', {
-                  ...args,
-                  p_post: id,
-                })
+                const source = splitCopyId(id)
+                const result = source.asset
+                  ? await client.rpc('forget_keepsake_asset', {
+                      ...args,
+                      p_post: source.post,
+                      p_asset: source.asset,
+                    })
+                  : await client.rpc('forget_keepsake_copy', {
+                      ...args,
+                      p_post: source.post,
+                    })
                 if (result.error) throw result.error
               },
             },

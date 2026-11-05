@@ -34,7 +34,7 @@ export const copy = {
     momentPlaceholder: 'What’s happening?',
     chatPlaceholder: 'Message…',
     captionPlaceholder: 'Add a caption…',
-    choosePhoto: 'Choose a photo',
+    choosePhoto: 'Choose photos',
     photoFailed: 'Choose a JPG, PNG or WebP under 20 MB.',
     photoPreview: 'Your photo before sharing',
     voiceHint:

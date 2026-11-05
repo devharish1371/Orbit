@@ -1385,3 +1385,21 @@ evidence are changed after the verified application source. Temporary audit serv
 both user preview/dev servers remain running. Day/viewport restored and QA tab closed.
 No real partner contact, APK handover or phone install requested; physical gates remain in
 the later batch. Photo sets and cloud archive policy stay open. See docs/V2_COLLECTIONS.md.
+
+### 5 November — V2.5 photo sets (verification in progress)
+
+Added one-post photo sets (up to six), local ordering and per-image captions in Moments and
+Chat, numbered/swipe/keyboard viewer, complete ZIP file manifests, and independent encrypted
+phone records for every image. Existing installed clients retain the cover fields and old
+receipt API. Full-set verification requires every photo on both current opted-in phones.
+New compound native identities keep old cover filenames/AAD unchanged and exclude path traversal.
+Cloud originals stay saved; no archive/cloud-removal policy is enabled.
+
+Applied additive migrations 0031/0032. Storage metadata supplies all byte counts; a shared
+Keep lock charges originals and thumbnails for the whole set. Path locks and references cover
+all uploads. Updated/deployed the retention worker; an older worker cannot remove metadata
+while extra files remain. Disposable hosted photo tests pass 5/5, and the complete backend
+suite passes all 85 checks in 176.30s. Tests caught and fixed selected-photo drift after reorder.
+The 173-web/24-worker pipeline passed before the final cover accessibility follow-up; final
+pipeline, responsive/audit evidence and Android CI are pending below. No real partner contact,
+phone install or APK handover requested.

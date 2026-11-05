@@ -1,3 +1,6 @@
+import './photo-sets.css'
+import { Images } from 'lucide-react'
+import { photosOf } from '@/lib/photos'
 import { useEffect, useId, useRef, useState } from 'react'
 import { ImageViewer } from '@/components/ui/ImageViewer'
 import { imagePreview, type ImagePreview } from '@/components/ui/imagePreview'
@@ -75,14 +78,17 @@ export function PostMedia({
   const [visible, setVisible] = useState(
       typeof IntersectionObserver === 'undefined',
     ),
+    [index, setIndex] = useState(0),
     [open, setOpen] = useState(false),
     [preview, setPreview] = useState<ImagePreview>()
   const node = useRef<HTMLDivElement>(null),
     trigger = useRef<HTMLButtonElement>(null)
   const uid = useId(),
     transitionName = `orbit-photo-${uid.replace(/[^a-zA-Z0-9_-]/g, '')}`
+  const photos = photosOf(post),
+    current = photos[index]
   const full = useSignedMedia(
-    post.kind === 'photo' ? post.media_path : null,
+    post.kind === 'photo' ? (current?.path ?? null) : null,
     open,
   )
   useEffect(() => {
@@ -100,7 +106,7 @@ export function PostMedia({
     return () => observer.disconnect()
   }, [visible])
   function closeViewer(animate = false) {
-    changeImageSurface(() => setOpen(false), animate)
+    changeImageSurface(() => setOpen(false), animate && index === 0)
   }
   if (!post.media_path) return null
   return (
@@ -113,13 +119,18 @@ export function PostMedia({
           ref={trigger}
           type="button"
           className="photo-open"
-          aria-label={copy.posts.openPhoto}
+          aria-label={
+            photos.length > 1
+              ? `Open ${photos.length} photos`
+              : copy.posts.openPhoto
+          }
           aria-haspopup="dialog"
           aria-expanded={open}
           style={{
             aspectRatio: `${post.media_width ?? 4} / ${post.media_height ?? 3}`,
           }}
           onClick={() => {
+            setIndex(0)
             const ready = imagePreview(trigger.current)
             setPreview(ready)
             changeImageSurface(() => setOpen(true), Boolean(ready))
@@ -129,12 +140,19 @@ export function PostMedia({
             {visible ? (
               <Asset
                 path={post.thumb_path ?? post.media_path}
-                alt={post.body ?? copy.posts.photo}
+                alt={photos[0]?.caption || post.body || copy.posts.photo}
               />
             ) : (
               <div className="skeleton media-skeleton" />
             )}
           </SharedImage>
+          {photos.length > 1 && (
+            <span className="photo-set-count">
+              <Images size={15} aria-hidden="true" />
+              {photos.length}
+              <span className="sr-only"> photos</span>
+            </span>
+          )}
         </button>
       ) : (
         <>
@@ -152,13 +170,20 @@ export function PostMedia({
       {open && (
         <ImageViewer
           title="Photo"
-          alt={post.body ?? copy.posts.photo}
+          alt={current?.caption || post.body || copy.posts.photo}
           src={full.data}
-          preview={preview}
-          width={post.media_width}
-          height={post.media_height}
+          preview={index === 0 ? preview : undefined}
+          width={current?.width}
+          height={current?.height}
           error={Boolean(full.error)}
-          caption={post.body}
+          caption={current?.caption || post.body}
+          navigation={{
+            index,
+            count: photos.length,
+            onPrevious: () => setIndex((value) => Math.max(0, value - 1)),
+            onNext: () =>
+              setIndex((value) => Math.min(photos.length - 1, value + 1)),
+          }}
           date={{
             iso: post.created_at,
             label: new Intl.DateTimeFormat('en-IN', {

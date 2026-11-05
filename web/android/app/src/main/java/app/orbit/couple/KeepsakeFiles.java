@@ -19,7 +19,7 @@ final class KeepsakeFiles {
     private static File root(Context c) throws Exception {
         File f=new File(c.getNoBackupFilesDir(),"orbit-keepsakes");if(!f.isDirectory()&&!f.mkdirs())throw new Exception("COPY_STORAGE_FAILED");return f;
     }
-    private static String identity(String owner,String couple,String id) throws Exception {return OutboxFiles.uuid(owner)+"_"+OutboxFiles.uuid(couple)+"_"+OutboxFiles.uuid(id);}
+    private static String identity(String owner,String couple,String id) throws Exception {return OutboxFiles.uuid(owner)+"_"+OutboxFiles.uuid(couple)+"_"+KeepsakeIds.filename(id);}
     private static SecretKey key(String owner) throws Exception {
         KeyStore store=KeyStore.getInstance("AndroidKeyStore");store.load(null);String alias=PREFIX+OutboxFiles.uuid(owner);
         if(!store.containsAlias(alias)){
@@ -48,7 +48,7 @@ final class KeepsakeFiles {
         String prefix=OutboxFiles.uuid(owner)+"_"+OutboxFiles.uuid(couple)+"_";List<org.json.JSONObject> result=new ArrayList<>();
         File[] files=root(c).listFiles((d,n)->n.startsWith(prefix)&&(n.endsWith(".keep")||n.endsWith(".keep.bak")));
         java.util.Set<String> ids=new java.util.HashSet<>();if(files!=null)for(File file:files)ids.add(file.getName().substring(prefix.length()).replaceFirst("\\.keep(\\.bak)?$",""));
-        for(String id:ids)try{KeepsakeRecord r=read(c,owner,couple,id);org.json.JSONObject meta=new org.json.JSONObject(r.metadata);meta.put("bytes",r.media.length);meta.put("sha256",r.hash());result.add(meta);}catch(Exception ignored){}return result;
+        for(String id:ids)try{KeepsakeRecord r=read(c,owner,couple,KeepsakeIds.fromFilename(id));org.json.JSONObject meta=new org.json.JSONObject(r.metadata);meta.put("bytes",r.media.length);meta.put("sha256",r.hash());result.add(meta);}catch(Exception ignored){}return result;
     }
     static void remove(Context c,String owner,String couple,String id)throws Exception{new AtomicFile(new File(root(c),identity(owner,couple,id)+".keep")).delete();}
     static void clear(Context c){

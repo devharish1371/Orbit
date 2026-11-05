@@ -68,3 +68,41 @@ test('a failed full image keeps its preview and supports retry, zoom and focus-s
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Open' })).toHaveFocus()
 })
+
+test('set browsing supports buttons, arrows and deliberate horizontal swipes; zoom and vertical gestures stay safe', async () => {
+  const next = vi.fn(),
+    previous = vi.fn()
+  render(
+    <ImageViewer
+      title="Set"
+      alt="First"
+      src="/first.webp"
+      transitionName="set"
+      returnFocus={{ current: null }}
+      onRetry={() => {}}
+      onClose={() => {}}
+      navigation={{ index: 1, count: 3, onNext: next, onPrevious: previous }}
+    />,
+  )
+  const dialog = screen.getByRole('dialog'),
+    stage = dialog.querySelector('.photo-viewer-stage')!
+  await userEvent.click(screen.getByRole('button', { name: 'Next photo' }))
+  fireEvent.keyDown(dialog, { key: 'ArrowRight' })
+  fireEvent.keyDown(dialog, { key: 'ArrowLeft' })
+  expect(next).toHaveBeenCalledTimes(2)
+  expect(previous).toHaveBeenCalledTimes(1)
+  fireEvent.touchStart(stage, { touches: [{ clientX: 200, clientY: 100 }] })
+  fireEvent.touchEnd(stage, { changedTouches: [{ clientX: 50, clientY: 110 }] })
+  expect(next).toHaveBeenCalledTimes(3)
+  fireEvent.touchStart(stage, { touches: [{ clientX: 200, clientY: 100 }] })
+  fireEvent.touchEnd(stage, {
+    changedTouches: [{ clientX: 180, clientY: 260 }],
+  })
+  expect(next).toHaveBeenCalledTimes(3)
+  await userEvent.click(screen.getByRole('button', { name: 'Zoom photo' }))
+  expect(screen.getByRole('button', { name: 'Next photo' })).toBeDisabled()
+  fireEvent.keyDown(dialog, { key: 'ArrowRight' })
+  fireEvent.touchStart(stage, { touches: [{ clientX: 200, clientY: 100 }] })
+  fireEvent.touchEnd(stage, { changedTouches: [{ clientX: 50, clientY: 100 }] })
+  expect(next).toHaveBeenCalledTimes(3)
+})

@@ -14,7 +14,8 @@ import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 import type { Post } from '@/lib/posts'
 import { phone, phoneCopiesSupported, phoneOperation } from './native'
 import { usePhoneCopies } from './usePhoneCopies'
-import { verifiedPair } from './model'
+import { photoSources } from '@/lib/photos'
+import { verifiedPair, verifiedUser } from './model'
 import './phone-keepsakes.css'
 export function PhoneCopiesControl() {
   const { client, session } = useAuth(),
@@ -156,11 +157,13 @@ export function PhoneCopyBadge({ post }: { post: Post }) {
     state.data.devices,
     state.data.receipts,
   )
-  const own = state.data.receipts.find(
-    (r) =>
-      r.post_id === post.id &&
-      r.user_id === space.self.user_id &&
-      r.revision === post.archive_revision,
+  const own = photoSources(post).every((source) =>
+    verifiedUser(
+      source,
+      space.self.user_id,
+      state.data.devices,
+      state.data.receipts,
+    ),
   )
   const label = both
     ? 'Copies last verified on both phones'

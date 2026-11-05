@@ -1,3 +1,4 @@
+import { photoSources, type PhotoSource } from '@/lib/photos'
 import type { Post } from '@/lib/posts'
 export const MAX_COPY_BYTES = 16 * 1024 * 1024
 export interface PhoneIdentity {
@@ -6,6 +7,9 @@ export interface PhoneIdentity {
 }
 export interface PhoneCopy {
   id: string
+  photo_set?: boolean
+  photo_position?: number
+  photo_caption?: string
   revision: number
   kind: Post['kind']
   body: string | null
@@ -34,9 +38,16 @@ export interface CopyReceipt {
   sha256: string
   verified_at: string
 }
-export function copyMetadata(post: Post, mime: string) {
+export function copyMetadata(post: PhotoSource, mime: string) {
   // Deliberately excludes location, signed URLs, quote snapshots and unrelated profile data.
   return {
+    ...(post.copy_set
+      ? {
+          photo_set: true,
+          photo_position: post.copy_position,
+          photo_caption: post.copy_caption,
+        }
+      : {}),
     id: post.id,
     revision: post.archive_revision,
     kind: post.kind,
@@ -45,13 +56,17 @@ export function copyMetadata(post: Post, mime: string) {
     mime,
   }
 }
-export function copyMatches(copy: PhoneCopy, post: Post) {
+export function copyMatches(copy: PhoneCopy, post: PhotoSource) {
   return (
     post.keep &&
     !post.unsent_at &&
     copy.id === post.id &&
     copy.revision === post.archive_revision &&
-    copy.bytes === post.media_bytes
+    copy.bytes === post.media_bytes &&
+    (!post.copy_set ||
+      (copy.photo_set === true &&
+        copy.photo_position === post.copy_position &&
+        copy.photo_caption === post.copy_caption))
   )
 }
 export function verifiedPair(
@@ -67,11 +82,22 @@ export function verifiedPair(
     post.unsent_at
   )
     return false
-  const copies = users.map((user) => {
-    const device = devices.find((d) => d.user_id === user && d.enabled)
-    return (
-      device &&
-      receipts.find(
+  return photoSources(post).every((source) => {
+    const copies = users.map((user) =>
+      verifiedUser(source, user, devices, receipts),
+    )
+    return !!copies[0] && !!copies[1] && copies[0].sha256 === copies[1].sha256
+  })
+}
+export function verifiedUser(
+  post: Post,
+  user: string,
+  devices: DeviceReceipt[],
+  receipts: CopyReceipt[],
+) {
+  const device = devices.find((d) => d.user_id === user && d.enabled)
+  return post.keep && !post.unsent_at && device
+    ? receipts.find(
         (r) =>
           r.post_id === post.id &&
           r.user_id === user &&
@@ -80,15 +106,23 @@ export function verifiedPair(
           r.bytes === post.media_bytes &&
           /^[0-9a-f]{64}$/.test(r.sha256),
       )
-    )
-  })
-  return !!copies[0] && !!copies[1] && copies[0].sha256 === copies[1].sha256
+    : undefined
 }
+
 export function validCopy(value: unknown): value is PhoneCopy {
   if (!value || typeof value !== 'object') return false
   const c = value as PhoneCopy
   return (
-    /^[0-9a-f-]{36}$/.test(c.id) &&
+    /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}(:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})?$/.test(
+      c.id,
+    ) &&
+    (c.photo_set === undefined ||
+      (c.photo_set === true &&
+        Number.isInteger(c.photo_position) &&
+        c.photo_position! >= 0 &&
+        c.photo_position! < 6 &&
+        typeof c.photo_caption === 'string' &&
+        c.photo_caption.length <= 400)) &&
     Number.isInteger(c.revision) &&
     c.revision > 0 &&
     ['photo', 'text', 'voice', 'mood'].includes(c.kind) &&

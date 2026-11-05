@@ -1,3 +1,4 @@
+import { splitCopyId } from '@/lib/photos'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '@/app/AuthContext'
 import { Link } from 'react-router-dom'
@@ -47,8 +48,11 @@ export default function OfflineKeepsakesPage() {
         if (active) {
           setIdentity(result.id)
           setItems(
-            result.rows.sort((a, b) =>
-              b.created_at.localeCompare(a.created_at),
+            result.rows.sort(
+              (a, b) =>
+                b.created_at.localeCompare(a.created_at) ||
+                splitCopyId(a.id).post.localeCompare(splitCopyId(b.id).post) ||
+                (a.photo_position ?? 0) - (b.photo_position ?? 0),
             ),
           )
           setError('')
@@ -115,6 +119,21 @@ export default function OfflineKeepsakesPage() {
   const sameAccount = !account || identity?.owner === account
   const visibleItems = sameAccount ? items : []
   const visibleSelection = sameAccount ? selected : null
+  const setPhotos = visibleSelection?.photo_set
+    ? visibleItems.filter(
+        (copy) =>
+          copy.photo_set &&
+          splitCopyId(copy.id).post === splitCopyId(visibleSelection.id).post,
+      )
+    : []
+  const photoIndex = setPhotos.findIndex(
+    (copy) => copy.id === visibleSelection?.id,
+  )
+  const selectPhoto = (index: number) => {
+    setUrl(undefined)
+    setMediaError(false)
+    setSelected(setPhotos[index] ?? null)
+  }
   return (
     <main className="page phone-library">
       <Link
@@ -168,6 +187,12 @@ export default function OfflineKeepsakesPage() {
                 }).format(new Date(copy.created_at))}
               </time>
               {copy.body && <p>{copy.body}</p>}
+              {copy.photo_caption && <p>{copy.photo_caption}</p>}
+              {copy.photo_set && (
+                <span className="muted">
+                  Photo {(copy.photo_position ?? 0) + 1}
+                </span>
+              )}
               {copy.bytes > 0 && (
                 <button
                   className="text-button"
@@ -197,7 +222,17 @@ export default function OfflineKeepsakesPage() {
           alt={visibleSelection.body ?? 'Saved photo'}
           src={url}
           error={mediaError}
-          caption={visibleSelection.body}
+          caption={visibleSelection.photo_caption || visibleSelection.body}
+          navigation={
+            setPhotos.length > 1
+              ? {
+                  index: photoIndex,
+                  count: setPhotos.length,
+                  onPrevious: () => selectPhoto(photoIndex - 1),
+                  onNext: () => selectPhoto(photoIndex + 1),
+                }
+              : undefined
+          }
           onRetry={() => {
             setMediaError(false)
             setReload((v) => v + 1)

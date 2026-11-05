@@ -4,7 +4,30 @@ import { exportMemories } from './export-memories'
 import type { OrbitClient } from './supabase'
 test('shared collection references survive export without copying the same photo per collection', async () => {
   const source: Record<string, object[]> = {
-    posts: [{ id: 'p', media_path: 'couple/user/p.webp', thumb_path: null }],
+    posts: [
+      {
+        id: 'p',
+        kind: 'photo',
+        media_path: 'couple/user/p.webp',
+        thumb_path: null,
+        photo_items: [
+          {
+            id: 'p',
+            path: 'couple/user/p.webp',
+            thumb_path: null,
+            caption: 'First',
+            bytes: 3,
+          },
+          {
+            id: 'extra',
+            path: 'couple/user/extra.webp',
+            thumb_path: 'couple/user/extra_t.webp',
+            caption: 'Second',
+            bytes: 3,
+          },
+        ],
+      },
+    ],
     memory_collections: [
       { id: 'one', name: 'Weekends' },
       { id: 'two', name: 'Trips' },
@@ -31,7 +54,7 @@ test('shared collection references survive export without copying the same photo
   } as unknown as OrbitClient
   const fetch = vi
     .spyOn(globalThis, 'fetch')
-    .mockResolvedValue(new Response(new Uint8Array([1, 2, 3])))
+    .mockImplementation(async () => new Response(new Uint8Array([1, 2, 3])))
   try {
     const zip = await exportMemories(
         client,
@@ -56,11 +79,18 @@ test('shared collection references survive export without copying the same photo
     const json = JSON.parse(new TextDecoder().decode(entries['memories.json']))
     expect(json.collections).toHaveLength(2)
     expect(json.collection_items).toHaveLength(2)
-    expect(Object.keys(json.files)).toEqual(['couple/user/p.webp'])
+    expect(Object.keys(json.files)).toEqual([
+      'couple/user/p.webp',
+      'couple/user/extra.webp',
+      'couple/user/extra_t.webp',
+    ])
+    expect(
+      json.posts[0].photo_items.map((p: { caption: string }) => p.caption),
+    ).toEqual(['First', 'Second'])
     expect(
       Object.keys(entries).filter((name) => name.startsWith('media/')),
-    ).toHaveLength(1)
-    expect(fetch).toHaveBeenCalledTimes(1)
+    ).toHaveLength(3)
+    expect(fetch).toHaveBeenCalledTimes(3)
     expect(new TextDecoder().decode(bytes)).not.toContain(
       'https://example.test/disposable-media',
     )

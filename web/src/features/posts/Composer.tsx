@@ -1,3 +1,5 @@
+import { PhotoSetDraft } from './PhotoSetDraft'
+import { MAX_PHOTOS, type DraftPhoto } from '@/lib/photos'
 import { useComposerMemory } from '@/hooks/useComposerMemory'
 import { ChoiceSelect } from '@/components/ui/ChoiceSelect'
 import {
@@ -87,6 +89,7 @@ export function Composer({
     [body, setBody] = field('body'),
     [mood, setMood] = field('mood'),
     [attachment, setAttachment] = field('attachment'),
+    [photos, setPhotos] = field('photos'),
     [ttl, setTtl] = field('ttl'),
     [place, setPlace] = field('place'),
     [busy, setBusy] = field('busy'),
@@ -150,30 +153,59 @@ export function Composer({
   }
   function mode(next: PostDraft['kind']) {
     edited()
+    if (next === kind) return
     setKind(next)
+    setPhotos([])
     setAttachment(undefined)
     setMessage('')
   }
-  async function photo(file: File | undefined) {
-    if (!file) return
+  async function photo(files: FileList | null) {
+    if (!files?.length || busy) return
+    if (photos.length + files.length > MAX_PHOTOS) {
+      setMessage('Choose up to 6 photos.')
+      return
+    }
     edited()
     setBusy(true)
-    setMessage('')
     try {
-      setAttachment(await preparePhoto(file))
+      const ready: DraftPhoto[] = []
+      for (const file of Array.from(files))
+        ready.push({
+          id: crypto.randomUUID(),
+          attachment: await preparePhoto(file),
+          caption: '',
+        })
+      setPhotos((previous) => [...previous, ...ready])
+      setAttachment(undefined)
+      setKind('photo')
+      setMore(false)
     } catch {
       setMessage(copy.posts.photoFailed)
     } finally {
       setBusy(false)
     }
   }
+  const photoDraft = (
+    <PhotoSetDraft
+      photos={photos}
+      disabled={busy || recording}
+      compact={channel === 'chat'}
+      onAdd={() => photoInput.current?.click()}
+      onChange={(value) => {
+        edited()
+        setPhotos(value)
+        if (!value.length && channel === 'chat') setKind('text')
+      }}
+    />
+  )
   async function submit(event: FormEvent) {
     event.preventDefault()
     const form = event.currentTarget as HTMLFormElement
     if (!space || busy || recording) return
     if (
       (kind === 'text' && !body.trim()) ||
-      (['photo', 'voice'].includes(kind) && !attachment)
+      (kind === 'photo' && !photos.length) ||
+      (kind === 'voice' && !attachment)
     ) {
       setMessage(copy.posts.empty)
       return
@@ -198,6 +230,7 @@ export function Composer({
         keep: ttl === 'keep',
         place: place || null,
         attachment,
+        photos: kind === 'photo' ? photos : undefined,
         noteStyle,
         replyTo: replyId,
       }
@@ -222,6 +255,7 @@ export function Composer({
       const text = form.querySelector('textarea')
       if (text) text.style.height = 'auto'
       setAttachment(undefined)
+      setPhotos([])
       setKind('text')
       setPlace('')
       setReplyId(null)
@@ -266,6 +300,7 @@ export function Composer({
             </button>
           </div>
         )}
+        {photos.length > 0 && photoDraft}
         {attachment && (
           <div className="messenger-attachment">
             <LocalPreview note={attachment} />
@@ -308,7 +343,9 @@ export function Composer({
               className="chat-tray-action"
               type="button"
               aria-label="Voice note"
-              disabled={busy || recording || Boolean(attachment)}
+              disabled={
+                busy || recording || Boolean(attachment) || photos.length > 0
+              }
               onClick={() => {
                 mode('voice')
                 setMore(false)
@@ -363,13 +400,10 @@ export function Composer({
           ref={photoInput}
           type="file"
           accept="image/jpeg,image/png,image/webp"
+          multiple
+          disabled={busy || recording}
           onChange={(event) => {
-            const file = event.target.files?.[0]
-            if (file) {
-              mode('photo')
-              setMore(false)
-              void photo(file)
-            }
+            void photo(event.target.files)
             event.target.value = ''
           }}
         />
@@ -418,7 +452,10 @@ export function Composer({
             }}
           />
           <div
-            hidden={(!!(body.trim() || attachment) && !recording) || voiceDraft}
+            hidden={
+              (!!(body.trim() || attachment || photos.length) && !recording) ||
+              voiceDraft
+            }
           >
             <VoiceRecorder
               compact
@@ -431,7 +468,7 @@ export function Composer({
               onBusy={setRecording}
             />
           </div>
-          {!!(body.trim() || attachment) && !recording && (
+          {!!(body.trim() || attachment || photos.length) && !recording && (
             <button
               type="submit"
               className="chat-send"
@@ -475,26 +512,43 @@ export function Composer({
         void submit(event)
       }}
     >
-      {kind === 'photo' && !attachment && (
+      {kind === 'photo' && !photos.length && (
         <label className="file-picker">
           <span className="photo-picker-art" aria-hidden="true">
             <i />
             <i />
             <ImagePlus size={25} />
           </span>
-          <span>Choose photo</span>
+          <span>Choose photos</span>
           <input
             className="sr-only media-input"
             aria-label={copy.posts.choosePhoto}
             type="file"
+            multiple
+            ref={photoInput}
             accept="image/jpeg,image/png,image/webp"
             disabled={busy}
             onChange={(event) => {
-              void photo(event.target.files?.[0])
+              void photo(event.target.files)
               event.target.value = ''
             }}
           />
         </label>
+      )}
+      {kind === 'photo' && photos.length > 0 && photoDraft}
+      {kind === 'photo' && photos.length > 0 && (
+        <input
+          hidden
+          ref={photoInput}
+          type="file"
+          multiple
+          accept="image/jpeg,image/png,image/webp"
+          disabled={busy}
+          onChange={(event) => {
+            void photo(event.target.files)
+            event.target.value = ''
+          }}
+        />
       )}
       {kind === 'voice' && !attachment && (
         <VoiceRecorder
@@ -550,7 +604,7 @@ export function Composer({
                 accept="image/jpeg,image/png,image/webp"
                 disabled={busy}
                 onChange={(event) => {
-                  void photo(event.target.files?.[0])
+                  void photo(event.target.files)
                   event.target.value = ''
                 }}
               />
@@ -579,7 +633,10 @@ export function Composer({
           ))}
         </div>
       )}
-      {(kind === 'text' || kind === 'mood' || attachment) && (
+      {(kind === 'text' ||
+        kind === 'mood' ||
+        attachment ||
+        photos.length > 0) && (
         <>
           <label className="sr-only" htmlFor={`compose-${channel}`}>
             {copy.posts.write}
@@ -635,7 +692,8 @@ export function Composer({
             busy ||
             recording ||
             (kind === 'text' && !body.trim()) ||
-            ((kind === 'photo' || kind === 'voice') && !attachment)
+            (kind === 'photo' && !photos.length) ||
+            (kind === 'voice' && !attachment)
           }
         >
           <ArrowUpRight size={22} aria-hidden="true" />

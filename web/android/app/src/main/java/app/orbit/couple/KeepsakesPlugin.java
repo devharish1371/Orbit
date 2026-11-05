@@ -48,7 +48,7 @@ public class KeepsakesPlugin extends Plugin {
     });}
     @PluginMethod public void begin(PluginCall call){run(call,true,(owner,couple)->{
         JSObject meta=call.getObject("metadata");if(meta==null)throw new Exception("INVALID_COPY");
-        pendingId=OutboxFiles.uuid(meta.getString("id"));expected=call.getInt("bytes",-1);
+        pendingId=KeepsakeIds.valid(meta.getString("id"));expected=call.getInt("bytes",-1);
         if(expected<0||expected>KeepsakeRecord.MAX_MEDIA||meta.toString().length()>KeepsakeRecord.MAX_META||meta.getInteger("revision",0)<1)throw new Exception("INVALID_COPY");
         pendingMeta=meta.toString();pendingOwner=owner;pendingCouple=couple;pending=new ByteArrayOutputStream();return new JSObject();
     });}

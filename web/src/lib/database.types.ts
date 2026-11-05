@@ -445,6 +445,64 @@ export type Database = {
           },
         ]
       }
+      keepsake_asset_receipts: {
+        Row: {
+          asset_id: string
+          bytes: number
+          couple_id: string
+          device_id: string
+          post_id: string
+          revision: number
+          sha256: string
+          user_id: string
+          verified_at: string
+        }
+        Insert: {
+          asset_id: string
+          bytes: number
+          couple_id: string
+          device_id: string
+          post_id: string
+          revision: number
+          sha256: string
+          user_id: string
+          verified_at?: string
+        }
+        Update: {
+          asset_id?: string
+          bytes?: number
+          couple_id?: string
+          device_id?: string
+          post_id?: string
+          revision?: number
+          sha256?: string
+          user_id?: string
+          verified_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'keepsake_asset_receipts_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'keepsake_asset_receipts_post_id_fkey'
+            columns: ['post_id']
+            isOneToOne: false
+            referencedRelation: 'posts'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'keepsake_asset_receipts_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       keepsake_devices: {
         Row: {
           couple_id: string
@@ -1063,6 +1121,8 @@ export type Database = {
           edit_version: number
           edited_at: string | null
           expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
           id: string
           keep: boolean
           kept_at: string | null
@@ -1076,6 +1136,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          photo_items: Json
           reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
@@ -1095,6 +1156,8 @@ export type Database = {
           edit_version?: number
           edited_at?: string | null
           expires_at?: string | null
+          extra_media_bytes?: number
+          extra_thumb_bytes?: number
           id?: string
           keep?: boolean
           kept_at?: string | null
@@ -1108,6 +1171,7 @@ export type Database = {
           media_path?: string | null
           media_width?: number | null
           note_style?: string
+          photo_items?: Json
           reply_to_id?: string | null
           thumb_bytes?: number
           thumb_path?: string | null
@@ -1127,6 +1191,8 @@ export type Database = {
           edit_version?: number
           edited_at?: string | null
           expires_at?: string | null
+          extra_media_bytes?: number
+          extra_thumb_bytes?: number
           id?: string
           keep?: boolean
           kept_at?: string | null
@@ -1140,6 +1206,7 @@ export type Database = {
           media_path?: string | null
           media_width?: number | null
           note_style?: string
+          photo_items?: Json
           reply_to_id?: string | null
           thumb_bytes?: number
           thumb_path?: string | null
@@ -1293,6 +1360,19 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      ack_keepsake_asset: {
+        Args: {
+          p_asset: string
+          p_bytes: number
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+          p_revision: number
+          p_sha256: string
+        }
+        Returns: undefined
+      }
       ack_keepsake_copy: {
         Args: {
           p_bytes: number
@@ -1352,6 +1432,8 @@ export type Database = {
           edit_version: number
           edited_at: string | null
           expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
           id: string
           keep: boolean
           kept_at: string | null
@@ -1365,6 +1447,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          photo_items: Json
           reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
@@ -1409,6 +1492,8 @@ export type Database = {
           edit_version: number
           edited_at: string | null
           expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
           id: string
           keep: boolean
           kept_at: string | null
@@ -1422,6 +1507,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          photo_items: Json
           reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
@@ -1461,6 +1547,50 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      create_photo_post: {
+        Args: { p_post: Json }
+        Returns: {
+          archive_revision: number
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          note_style: string
+          photo_items: Json
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       create_shared_post: {
         Args: { p_post: Json }
         Returns: {
@@ -1475,6 +1605,8 @@ export type Database = {
           edit_version: number
           edited_at: string | null
           expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
           id: string
           keep: boolean
           kept_at: string | null
@@ -1488,6 +1620,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          photo_items: Json
           reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
@@ -1526,6 +1659,8 @@ export type Database = {
           edit_version: number
           edited_at: string | null
           expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
           id: string
           keep: boolean
           kept_at: string | null
@@ -1539,6 +1674,7 @@ export type Database = {
           media_path: string | null
           media_width: number | null
           note_style: string
+          photo_items: Json
           reply_to_id: string | null
           thumb_bytes: number
           thumb_path: string | null
@@ -1562,6 +1698,16 @@ export type Database = {
         Returns: undefined
       }
       finish_orphan_media: { Args: { p_paths: string[] }; Returns: undefined }
+      forget_keepsake_asset: {
+        Args: {
+          p_asset: string
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+        }
+        Returns: undefined
+      }
       forget_keepsake_copy: {
         Args: {
           p_device: string

@@ -44,7 +44,7 @@ test('the media shelf preserves typed text, never starts the microphone on mode 
     screen.getByRole('button', { name: 'More message options' }),
   )
   expect(screen.getByRole('group', { name: 'Message tools' })).toBeVisible()
-  expect(screen.getByRole('button', { name: 'Choose a photo' })).toBeVisible()
+  expect(screen.getByRole('button', { name: 'Choose photos' })).toBeVisible()
   await userEvent.click(screen.getByRole('button', { name: 'Voice note' }))
   expect(calls.begin).not.toHaveBeenCalled()
   expect(input).toHaveValue('Not sent yet')
