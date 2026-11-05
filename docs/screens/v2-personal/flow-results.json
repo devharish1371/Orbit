@@ -1,0 +1,20 @@
+{
+  "scope": "isolated injected providers and local simulated status transport; no external delivery",
+  "failedSaveRetainedText": true,
+  "retrySavedAndReloaded": true,
+  "bubbleOpenedFullStatus": true,
+  "backReturnedToUs": true,
+  "collectionDeepLinkSelected": true,
+  "comfortReload": {
+    "motion": "reduced",
+    "rootFont": "20px",
+    "text": "largest"
+  },
+  "home": {
+    "duplicatePausedText": false,
+    "orbitAnimation": "none",
+    "orbitToggle": false,
+    "pausedIcons": 1
+  },
+  "source": "1c58d7c2bf1bfe464dfcaada47ff9577abef4ec0"
+}

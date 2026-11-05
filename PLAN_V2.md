@@ -160,6 +160,10 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.
 
-Combined batch underway: V2.7 personal space and V2.8 reading/motion controls are implemented;
-201 web/24 worker checks pass. Final browser/hosted/Android evidence follows in DEVLOG.md and
-docs/V2_PERSONAL_SPACE.md. V2.6 remains deferred at the user’s request.
+Combined batch: V2.7 personal space and V2.8 reading/motion controls are implemented.
+203 web/24 worker and all 89 backend checks are validated; 198 phone-sized states fit,
+and fourteen static screen audits score 100/100 with no findings. Source 1c58d7c passes
+Android CI 42077458980 and artifact integrity/signing/private-material checks. The V2.7
+and V2.8 comfort software batch is verified. See DEVLOG.md, docs/V2_PERSONAL_SPACE.md and the browser
+evidence. V2.6 remains deferred at the user’s request. V2.8 native entrance/widget,
+V2.9 safety, V2.10 release audit and the V2.5 archive/cloud-removal policy remain open.

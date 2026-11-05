@@ -1,0 +1,86 @@
+[
+  {
+    "name": "home-day-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "home-day-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "home-night-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "home-night-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "on-this-day-day-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "on-this-day-night-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "settings-day-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "settings-night-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "status-day-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "status-night-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "us-day-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "us-day-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "us-night-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "us-night-standard-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  }
+]

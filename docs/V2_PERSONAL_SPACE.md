@@ -65,3 +65,10 @@ providers; actual production components and comfort logic render them. Local sim
 saves/reloads do not prove internet delivery; hosted RLS and server-clock checks run separately
 with disposable accounts. Physical font scaling, accessibility service/gestures and endurance
 remain in the user's deferred task #7 batch. No APK handover or installation is requested.
+
+Final browser checks cover 198 responsive page/sheet states and fourteen static screen
+audits, all 100/100 with no findings. See [evidence](screens/v2-personal/README.md). All 89
+backend checks are validated across the full run and corrected cron-inventory rerun.
+Application source 1c58d7c passes Android CI 42077458980, including native unit tests,
+assembly, manifest and signature checks. The privately retained APK passes ZIP integrity,
+signing continuity and private-material checks. Details are recorded in DEVLOG.md.

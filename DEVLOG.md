@@ -1534,3 +1534,27 @@ label mismatch advisory without extra visible wording. Strengthened Us feature s
 matched the isolated harness stylesheet order to production; all 198 final states fit again.
 203 web/24 worker and the full client pipeline pass after these changes. Android CI
 42071973843 passed at 167652d; the final accessibility source is being verified below.
+
+
+Final combined-batch verification: application source 1c58d7c passes 203 web/24 worker
+tests, lint, strict types, formatting and production build. All 89 backend checks are
+validated across the 88-pass full run (146.63s) and corrected cron inventory/schedule/private
+privilege rerun (5.30s). Fourteen final static audits score 100/100 with no binary findings;
+198 phone-sized page/sheet states fit across both themes, all three reading sizes and
+320/360/412px. Thought bubbles shorten long status text, open full profile text, and preserve
+44px actions; Home has one paused-location icon and compact personal status. Browser fixtures
+use synthetic content/local simulated writes; hosted security/expiry checks are separate.
+
+Android CI 42077458980 succeeds at exact head 1c58d7c2bf1bfe464dfcaada47ff9577abef4ec0,
+including native unit tests, assembly, manifest and cryptographic signing verification.
+Privately retained APK: 7,000,115 bytes; SHA-256
+685306e74163e3eb7ec3f57c871f5790ed82e69ca360a61018adbf794ecde59b.
+Local ZIP integrity, signing continuity against a140993 and private-material scanning pass.
+No APK handover or phone install requested. No real partner contact, microphone/sensor use
+or cloud-original removal. V2.6 is deferred; V2.8 native entrance/widget, V2.9 safety, V2.10
+release audit and V2.5 archive/cloud-removal policy remain open, alongside physical gates.
+See docs/V2_PERSONAL_SPACE.md and docs/screens/v2-personal/README.md. Only docs/evidence
+changed after the verified application source. QA tabs and temporary 4176/4177 servers are
+closed; Day/Standard/Follow phone and the default viewport restored. User app previews stay
+running on 5173/4173.
+Final source/evidence secret scan: 1,088 files, zero findings.

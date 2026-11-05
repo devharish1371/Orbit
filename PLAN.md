@@ -180,3 +180,9 @@ V2.5 Chat media follow-up (5 November): encrypted photo/voice pending packages, 
 previews and staged retry are software-verified at a140993 (191 web/24 worker/85 backend
 checks, Android CI 42012693712). See PLAN_V2.md and docs/V2_MEDIA_OUTBOX.md. Physical
 checks and APK handover remain in the user’s later batch.
+
+5 November combined batch: V2.6 deferred by user; V2.7 personal space plus V2.8 text/motion
+comfort are implemented at 1c58d7c. 203 web/24 worker and 89 backend checks validated;
+198 responsive states fit and fourteen static audits score 100/100. Final Android evidence
+is recorded in DEVLOG.md and docs/V2_PERSONAL_SPACE.md. Native entrance/widget, safety,
+release audit, archive/cloud-removal policy and deferred physical gates remain open.
