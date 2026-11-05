@@ -3,19 +3,19 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { sharePost, type PostDraft } from '@/lib/posts'
-import { TextOutbox } from './engine'
+import { MessageOutbox } from './engine'
 import { OutboxContext } from './OutboxContext'
 import { outboxStore } from './store'
-import type { PendingText } from './model'
+import type { PendingMessage } from './model'
 export function OutboxProvider({ children }: { children: ReactNode }) {
   const { client, session } = useAuth(),
     { data: space } = useSpace(),
     query = useQueryClient()
   const owner = session?.user.id,
     couple = space?.couple.id
-  const [items, setItems] = useState<PendingText[]>([]),
+  const [items, setItems] = useState<PendingMessage[]>([]),
     [sendingId, setSendingId] = useState<string | null>(null)
-  const engineRef = useRef<TextOutbox | null>(null)
+  const engineRef = useRef<MessageOutbox | null>(null)
   const [generation, setGeneration] = useState(0)
   useEffect(() => {
     const restart = () => setGeneration((value) => value + 1)
@@ -40,7 +40,7 @@ export function OutboxProvider({ children }: { children: ReactNode }) {
         })
         .catch(() => {})
     }
-    const engine = new TextOutbox(
+    const engine = new MessageOutbox(
       outboxStore,
       current,
       async (draft, signal) => {
@@ -67,8 +67,14 @@ export function OutboxProvider({ children }: { children: ReactNode }) {
       active = false
       engine.stop()
     }
+    const pause = () => engine.pause(),
+      visibility = () => {
+        if (document.hidden) pause()
+        else resume()
+      }
     window.addEventListener('online', resume)
-    document.addEventListener('visibilitychange', resume)
+    window.addEventListener('offline', pause)
+    document.addEventListener('visibilitychange', visibility)
     window.addEventListener('orbit-signing-out', stop)
     const prune = setInterval(refresh, 30000)
     resume()
@@ -77,7 +83,8 @@ export function OutboxProvider({ children }: { children: ReactNode }) {
       engineRef.current = null
       clearInterval(prune)
       window.removeEventListener('online', resume)
-      document.removeEventListener('visibilitychange', resume)
+      window.removeEventListener('offline', pause)
+      document.removeEventListener('visibilitychange', visibility)
       window.removeEventListener('orbit-signing-out', stop)
     }
   }, [client, owner, couple, query, generation])
@@ -85,6 +92,10 @@ export function OutboxProvider({ children }: { children: ReactNode }) {
     if (!engineRef.current) throw new Error('OUTBOX_UNAVAILABLE')
     await engineRef.current.enqueue(draft)
     void engineRef.current.flush().catch(() => {})
+  }, [])
+  const preview = useCallback(async (id: string) => {
+    if (!engineRef.current) throw new Error('OUTBOX_UNAVAILABLE')
+    return engineRef.current.preview(id)
   }, [])
   return (
     <OutboxContext.Provider
@@ -101,6 +112,7 @@ export function OutboxProvider({ children }: { children: ReactNode }) {
           ? sendingId
           : null,
         enqueue,
+        preview,
         retry: (id) => {
           void engineRef.current?.flush(id).catch(() => {})
         },

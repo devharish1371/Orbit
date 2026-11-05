@@ -84,6 +84,32 @@ export function cursorFilter(post: Pick<Post, 'id' | 'created_at'>) {
     throw new Error('INVALID_POST_CURSOR')
   return `created_at.lt.${post.created_at},and(created_at.eq.${post.created_at},id.lt.${post.id})`
 }
+// The installed Storage SDK cannot cancel upload fetches. Stop awaiting a stalled request
+// on interruption; the late upload may finish privately, but cannot continue into publication.
+function untilAborted<T>(
+  request: PromiseLike<T>,
+  signal?: AbortSignal,
+): Promise<T> {
+  if (!signal) return Promise.resolve(request)
+  return new Promise((resolve, reject) => {
+    const abort = () => {
+      signal.removeEventListener('abort', abort)
+      reject(signal.reason ?? new DOMException('Cancelled', 'AbortError'))
+    }
+    Promise.resolve(request).then(
+      (value) => {
+        signal.removeEventListener('abort', abort)
+        resolve(value)
+      },
+      (error) => {
+        signal.removeEventListener('abort', abort)
+        reject(error)
+      },
+    )
+    if (signal.aborted) abort()
+    else signal.addEventListener('abort', abort, { once: true })
+  })
+}
 export async function sharePost(
   client: OrbitClient,
   draft: PostDraft,
@@ -109,15 +135,20 @@ export async function sharePost(
   let media: string | null = null,
     thumb: string | null = null
   async function upload(path: string, blob: Blob) {
-    const result = await client.storage.from('media').upload(path, blob, {
-      contentType: blob.type.split(';')[0],
-      cacheControl: '3600',
-      upsert: false,
-    })
+    signal?.throwIfAborted()
+    const result = await untilAborted(
+      client.storage.from('media').upload(path, blob, {
+        contentType: blob.type.split(';')[0],
+        cacheControl: '3600',
+        upsert: false,
+      }),
+      signal,
+    )
     // A retry can reuse this draft's immutable file; editing a failed draft changes its ID.
     if (result.error && String(result.error.statusCode) !== '409')
       throw result.error
     uploaded.push(path)
+    signal?.throwIfAborted()
   }
   try {
     const attachment = draft.attachment

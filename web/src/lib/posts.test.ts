@@ -135,3 +135,51 @@ test('an ambiguous commit reuses the saved post without deleting its attachment'
   expect(await sharePost(client, draft)).toEqual(persisted)
   expect(remove).not.toHaveBeenCalled()
 })
+
+test('an interrupted upload releases the outbox and a late Storage response cannot publish', async () => {
+  let release!: (value: { error: null }) => void, started!: () => void
+  const waiting = new Promise<{ error: null }>((resolve) => {
+      release = resolve
+    }),
+    began = new Promise<void>((resolve) => {
+      started = resolve
+    })
+  const lookup = {
+    maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
+    abortSignal: () => lookup,
+  }
+  const rpc = vi.fn(),
+    upload = vi.fn(() => {
+      started()
+      return waiting
+    })
+  const client = {
+    from: () => ({ select: () => ({ eq: () => lookup }) }),
+    storage: { from: () => ({ upload }) },
+    rpc,
+  } as unknown as OrbitClient
+  const draft: PostDraft = {
+    id: 'draft',
+    author: 'author',
+    couple: 'couple',
+    channel: 'chat',
+    kind: 'voice',
+    body: '',
+    ttl: 24,
+    keep: false,
+    place: null,
+    attachment: {
+      blob: new Blob(['audio'], { type: 'audio/webm' }),
+      extension: 'webm',
+    },
+  }
+  const controller = new AbortController(),
+    send = sharePost(client, draft, controller.signal)
+  await began
+  controller.abort()
+  await expect(send).rejects.toMatchObject({ name: 'AbortError' })
+  release({ error: null })
+  await Promise.resolve()
+  await Promise.resolve()
+  expect(rpc).not.toHaveBeenCalled()
+})

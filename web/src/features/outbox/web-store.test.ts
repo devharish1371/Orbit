@@ -30,7 +30,7 @@ function inspect<T>(
   run: (store: IDBObjectStore) => IDBRequest<T>,
 ): Promise<T> {
   return new Promise((resolve, reject) => {
-    const open = indexedDB.open('orbit-outbox-v1', 1)
+    const open = indexedDB.open('orbit-outbox-v1', 2)
     open.onsuccess = () => {
       const db = open.result,
         tx = db.transaction(store, 'readwrite'),
@@ -105,4 +105,59 @@ test('expired records are pruned and a clear prevents old intents from being res
   expect(await store.list(owner)).toEqual([])
   await store.clearAll()
   await expect(store.put(saved)).rejects.toThrow('OUTBOX_CLEARED')
+})
+
+test('upgrading the database preserves an installed v1 encrypted text message and its key', async () => {
+  const saved = item(),
+    stamp = crypto.randomUUID(),
+    key = await crypto.subtle.generateKey(
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt'],
+    ),
+    iv = crypto.getRandomValues(new Uint8Array(12))
+  const encrypted = await crypto.subtle.encrypt(
+    {
+      name: 'AES-GCM',
+      iv,
+      additionalData: new TextEncoder().encode(
+        owner + ':' + saved.id + ':' + stamp,
+      ),
+    },
+    key,
+    new TextEncoder().encode(JSON.stringify(saved)),
+  )
+  await new Promise<void>((resolve, reject) => {
+    const open = indexedDB.open('orbit-outbox-v1', 1)
+    open.onupgradeneeded = () => {
+      open.result.createObjectStore('keys')
+      open.result
+        .createObjectStore('messages', { keyPath: 'key' })
+        .createIndex('owner', 'owner')
+    }
+    open.onsuccess = () => {
+      const db = open.result,
+        tx = db.transaction(['keys', 'messages'], 'readwrite')
+      tx.objectStore('keys').put(key, owner)
+      tx.objectStore('keys').put({ stamp, clearedAt: 0 }, '@epoch')
+      tx.objectStore('messages').put({
+        key: owner + ':' + saved.id,
+        owner,
+        id: saved.id,
+        stamp,
+        iv,
+        encrypted,
+      })
+      tx.oncomplete = () => {
+        db.close()
+        resolve()
+      }
+      tx.onabort = () => reject(tx.error)
+    }
+  })
+  const store = new WebOutboxStore()
+  expect(await store.list(owner)).toEqual([saved])
+  expect(await inspect('media', (s) => s.count())).toBe(0)
+  await store.put({ ...saved, blocked: true })
+  expect((await store.list(owner))[0]?.blocked).toBe(true)
 })

@@ -55,8 +55,11 @@ final class OutboxFiles {
     static synchronized void put(Context context, String owner, String id, String value, long expected) throws Exception {
         check(expected); uuid(owner); uuid(id);
         File dir = root(context), file = new File(dir, owner + "_" + id + ".box");
-        if (!file.exists() && names(dir, owner).size() >= 50) throw new Exception("OUTBOX_FULL");
+        if(new File(dir,owner+"_"+id+".mbox").exists())throw new Exception("DRAFT_IMMUTABLE");
+        if (!file.exists() && names(dir, owner).size()+mediaNames(dir,owner).size() >= 50) throw new Exception("OUTBOX_FULL");
         byte[] encrypted = OutboxCipher.encrypt(value.getBytes(StandardCharsets.UTF_8), key(owner), owner + ":" + id);
+        long used=0;File[] stored=dir.listFiles();if(stored!=null)for(File f:stored)used+=f.length();
+        if(used-file.length()+encrypted.length>32L*1024*1024)throw new Exception("OUTBOX_FULL");
         AtomicFile atomic = new AtomicFile(file); FileOutputStream stream = null;
         try { stream = atomic.startWrite(); stream.write(encrypted); atomic.finishWrite(stream); }
         catch (Exception failure) { if (stream != null) atomic.failWrite(stream); throw failure; }
@@ -69,10 +72,42 @@ final class OutboxFiles {
             try { result.add(new String(OutboxCipher.decrypt(file.readFully(), key(owner), owner + ":" + id), StandardCharsets.UTF_8)); }
             catch (Exception invalid) { file.delete(); }
         }
+        for(String name:mediaNames(dir,owner)) {
+            String id=name.substring(owner.length()+1,name.length()-5);
+            try {result.add(mediaRead(context,owner,id,expected).metadata);}catch(Exception invalid){new AtomicFile(new File(dir,name)).delete();}
+        }
         return result;
     }
     static synchronized void remove(Context context, String owner, String id, long expected) throws Exception {
         check(expected); new AtomicFile(new File(root(context), uuid(owner) + "_" + uuid(id) + ".box")).delete();
+        new AtomicFile(new File(root(context),owner+"_"+id+".mbox")).delete();
+    }
+    private static Set<String> mediaNames(File dir,String owner) {
+        Set<String> result=new HashSet<>();File[] files=dir.listFiles();
+        if(files!=null)for(File file:files)if(file.getName().startsWith(owner+"_")&&(file.getName().endsWith(".mbox")||file.getName().endsWith(".mbox.bak")))result.add(file.getName().replaceFirst("\\.bak$",""));
+        return result;
+    }
+    static synchronized OutboxMediaRecord mediaRead(Context context,String owner,String id,long expected)throws Exception {
+        check(expected);uuid(owner);uuid(id);String name=owner+"_"+id+".mbox";
+        AtomicFile file=new AtomicFile(new File(root(context),name));
+        if(file.getBaseFile().length()>OutboxMediaRecord.MAX_MEDIA+OutboxMediaRecord.MAX_META+34)throw new Exception("INVALID_PENDING_MEDIA");
+        return OutboxMediaRecord.decrypt(file.readFully(),key(owner),owner+":"+id+":media-v2");
+    }
+    static synchronized void mediaPut(Context context,String owner,String id,OutboxMediaRecord record,long expected)throws Exception {
+        check(expected);uuid(owner);uuid(id);File dir=root(context),target=new File(dir,owner+"_"+id+".mbox");
+        if(new File(dir,owner+"_"+id+".box").exists())throw new Exception("DRAFT_IMMUTABLE");
+        if(!target.exists()&&names(dir,owner).size()+mediaNames(dir,owner).size()>=50)throw new Exception("OUTBOX_FULL");
+        byte[] encrypted=record.encrypt(key(owner),owner+":"+id+":media-v2");long used=0;File[] files=dir.listFiles();
+        if(files!=null)for(File f:files)used+=f.length();
+        if(used-target.length()+encrypted.length>32L*1024*1024||dir.getUsableSpace()<encrypted.length+32L*1024*1024)throw new Exception("OUTBOX_FULL");
+        AtomicFile atomic=new AtomicFile(target);FileOutputStream stream=null;
+        try{stream=atomic.startWrite();stream.write(encrypted);atomic.finishWrite(stream);}catch(Exception failure){if(stream!=null)atomic.failWrite(stream);throw failure;}
+        OutboxMediaRecord verified=mediaRead(context,owner,id,expected);
+        if(!verified.metadata.equals(record.metadata)||!verified.hash().equals(record.hash())){atomic.delete();throw new Exception("OUTBOX_WRITE_UNCONFIRMED");}
+    }
+    static synchronized void mediaMetadata(Context context,String owner,String id,String value,long expected)throws Exception {
+        OutboxMediaRecord record=mediaRead(context,owner,id,expected);
+        mediaPut(context,owner,id,new OutboxMediaRecord(value,record.media),expected);
     }
     static synchronized void clearAll(Context context) {
         generation(context); epoch++;

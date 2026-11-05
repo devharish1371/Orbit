@@ -289,3 +289,25 @@
   max-width: 70px;
   overflow: hidden;
 }
+
+.pending-media-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+}
+.pending-media-preview > svg {
+  flex: none;
+  color: var(--accent);
+}
+.pending-media-preview + p {
+  margin-top: 6px;
+}

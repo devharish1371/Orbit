@@ -234,7 +234,11 @@ export function Composer({
         noteStyle,
         replyTo: replyId,
       }
-      if (channel === 'chat' && kind === 'text' && !attachment && outbox) {
+      if (
+        channel === 'chat' &&
+        ['text', 'photo', 'voice'].includes(kind) &&
+        outbox
+      ) {
         try {
           await outbox.enqueue(draft)
         } catch (storageError) {
@@ -244,7 +248,8 @@ export function Composer({
             'message' in storageError
               ? String(storageError.message)
               : ''
-          if (!navigator.onLine || code.startsWith('DRAFT_')) throw storageError
+          if (!navigator.onLine || code.startsWith('DRAFT_') || kind !== 'text')
+            throw storageError
           // Storage can be denied in private browsers. Online sending still works.
           await sharePost(client, draft)
         }

@@ -1,3 +1,4 @@
+import { PendingMediaPreview } from './PendingMediaPreview'
 import { useState } from 'react'
 import { Clock3, RotateCcw, X } from 'lucide-react'
 import { useOutbox } from './OutboxContext'
@@ -32,7 +33,8 @@ export function PendingMessages({ sentIds }: { sentIds: string[] }) {
             const remaining = item.expiresAt - Math.max(now, item.queuedAt)
             return (
               <article className="pending-message" key={item.id}>
-                <p>{item.body}</p>
+                {item.version === 2 && <PendingMediaPreview item={item} />}
+                {item.body && <p>{item.body}</p>}
                 <div className="pending-message-state">
                   <Clock3 size={13} aria-hidden="true" />
                   <span>
@@ -71,8 +73,8 @@ export function PendingMessages({ sentIds }: { sentIds: string[] }) {
                 </div>
                 {item.blocked && (
                   <p className="small muted">
-                    The quote or account is unavailable. Discard this pending
-                    copy to write a new message.
+                    Couldn’t send this copy. Check storage or the original
+                    message, then retry.
                   </p>
                 )}
               </article>

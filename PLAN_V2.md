@@ -100,7 +100,8 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   89 web/16 worker checks and all 64 hosted tests pass; browser quote/edit/reload verified.
   Pin follow-up passes 91 web/16 worker checks and all 66 hosted tests.
   Outbox follow-up passes 105 web/16 worker checks and all 67 hosted tests; native/browser
-  verification is tracked in DEVLOG.md. Photo/voice offline persistence remains for V2.5.
+  verification is tracked in DEVLOG.md. Photo/voice persistence is extended in the V2.5
+  Chat media slice described below.
 - V2.2 first slice: Android Back prioritizes dialogs/temporary layers, safe history/fallback
   and Home minimize; Escape closes temporary web layers. Place editing uses the shared
   focus-contained sheet, with busy/error/retry and return-focus checks. 117 web/16 worker
@@ -144,7 +145,10 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   encrypted copies with all-image receipts. All 85 backend, 174 web/24 worker checks pass;
   18 final layouts fit and six static audits score 100/100. Source 4a32eaa passes Android
   CI 41994769622 and artifact checks. Photo-set software is verified; physical gates,
-  persistent offline media drafts and archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md and docs/V2_COLLECTIONS.md.
+  archive/cloud-removal policy remain open. The Chat media outbox now persists verified
+  photo/voice packages with local previews; final browser/Android verification is in progress.
+  Moments drafts remain in memory. See docs/V2_PHONE_KEEPSAKES.md, docs/V2_COLLECTIONS.md
+  and docs/V2_MEDIA_OUTBOX.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

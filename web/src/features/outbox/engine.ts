@@ -1,7 +1,8 @@
-import { pendingText, postDraft, type OutboxStore } from './model'
+import { type OutboxStore } from './model'
+import { pendingMessage, restoreMedia, sameIntent } from './media'
 import type { PostDraft } from '@/lib/posts'
 type Identity = { owner: string; couple: string }
-export class TextOutbox {
+export class MessageOutbox {
   private running = false
   private active = true
   private requested = false
@@ -39,6 +40,10 @@ export class TextOutbox {
       current.couple === this.identity.couple
     )
   }
+  pause() {
+    this.requested = false
+    this.abort?.abort()
+  }
   stop() {
     this.active = false
     this.requested = false
@@ -62,24 +67,35 @@ export class TextOutbox {
       draft.couple !== this.identity.couple
     )
       throw new Error('DRAFT_ACCOUNT_CHANGED')
-    let item = pendingText(draft, this.now())
+    const prepared = await pendingMessage(draft, this.now())
+    let item = prepared.item
     const existing = (await this.list()).find((saved) => saved.id === item.id)
     if (existing) {
-      if (
-        JSON.stringify(postDraft(existing)) !== JSON.stringify(postDraft(item))
-      )
-        throw new Error('DRAFT_IMMUTABLE')
+      if (!sameIntent(existing, item)) throw new Error('DRAFT_IMMUTABLE')
       item = existing
     }
     if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
-    await this.store.put(item)
+    await this.store.put(item, prepared.media)
     if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
     const verified = (await this.list()).find((saved) => saved.id === item.id)
     if (!verified || JSON.stringify(verified) !== JSON.stringify(item))
       throw new Error('OUTBOX_WRITE_UNCONFIRMED')
+    if (item.version === 2)
+      await restoreMedia(item, await this.store.readMedia?.(item))
     if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
     this.changed()
     return item
+  }
+  async preview(id: string) {
+    if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
+    const item = (await this.list()).find((row) => row.id === id)
+    if (!item) throw new Error('OUTBOX_MEDIA_UNAVAILABLE')
+    const draft = await restoreMedia(
+      item,
+      item.version === 2 ? await this.store.readMedia?.(item) : undefined,
+    )
+    if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
+    return draft
   }
   async discard(id: string) {
     if (!this.valid() || this.sendingId === id) throw new Error('OUTBOX_BUSY')
@@ -111,7 +127,13 @@ export class TextOutbox {
         this.abort = new AbortController()
         const timer = setTimeout(() => this.abort?.abort(), 30000)
         try {
-          await this.send(postDraft(item), this.abort.signal)
+          const draft = await restoreMedia(
+            item,
+            item.version === 2 ? await this.store.readMedia?.(item) : undefined,
+          )
+          if (!this.valid() || !this.connected() || this.abort.signal.aborted)
+            break
+          await this.send(draft, this.abort.signal)
           if (!this.valid()) break
           await this.store.remove(item.owner, item.id)
         } catch (error) {
@@ -121,7 +143,7 @@ export class TextOutbox {
               ? String(error.message)
               : ''
           if (
-            /REPLY_UNAVAILABLE|DRAFT_ACCOUNT_CHANGED|POST_ID_UNAVAILABLE|MEMBERSHIP_REQUIRED/.test(
+            /REPLY_UNAVAILABLE|DRAFT_ACCOUNT_CHANGED|POST_ID_UNAVAILABLE|MEMBERSHIP_REQUIRED|KEEPSAKE_QUOTA_EXCEEDED|MEDIA_CLEANUP_IN_PROGRESS|OUTBOX_MEDIA_CORRUPT|OUTBOX_MEDIA_UNAVAILABLE/.test(
               message,
             )
           )

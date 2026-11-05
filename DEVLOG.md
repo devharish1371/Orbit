@@ -1424,3 +1424,23 @@ See docs/V2_PHOTO_SETS.md and docs/screens/v2-photo-sets/README.md for scope/evi
 Final source/evidence secret scan: 1,031 files, zero findings. Only documentation/evidence
 changed after the verified application commit. Temporary audit server and QA tab closed;
 user dev/preview servers remain running. Day appearance and default viewport restored.
+
+### 5 November — V2.5 durable Chat media (verification in progress)
+
+Extended the encrypted text outbox to Chat photo sets and completed voice notes. Native
+atomic authenticated packages use bounded bridge chunks and preserve old text files; web
+schema upgrade preserves old text keys/records and commits media plus metadata together.
+Enqueue verifies readback and individual asset hashes before clearing the composer. Pending
+photos/voice have local previews; discard/expiry/logout remove both metadata and bytes.
+Limits: six photos, 120-second/4.5 MB voice, 8 MB package, 32 MB pending budget, 50 messages.
+Moments remain in-memory drafts; cloud originals/cache and the archive-removal policy stay unchanged.
+
+Background/offline pauses the sending pass. The installed SDK cannot cancel an upload fetch;
+the wrapper releases an interrupted wait and prevents a late upload from continuing into
+publication. Stable post IDs resolve lost responses. Unit checks cover this interruption,
+quota rollback, corrupt/missing media, account/clear races, failed-save composer retention,
+native chunks and v1 database migration. The 188-web/24-worker full pipeline passed before
+the last migration regression was added; final checks follow below. All 85 backend checks
+pass in 154.67s with disposable accounts. Browser reload restored the queued photo set and
+captions; synthetic voice reload/preview and responsive checks are ongoing. No real partner
+contact, microphone use, APK handover or phone install requested. See docs/V2_MEDIA_OUTBOX.md.

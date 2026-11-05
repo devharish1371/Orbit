@@ -249,3 +249,47 @@ test('photo sets retain captions and order across failed sends; edits get a fres
   expect(f.photo.mock.calls.length).toBe(before)
   expect(screen.getByRole('button', { name: 'Select photo 2' })).toBeVisible()
 })
+
+test('a failed durable media save retains the photo set and never falls through to an online send', async () => {
+  const { OutboxContext } = await import('@/features/outbox/OutboxContext')
+  URL.createObjectURL = vi.fn(() => 'blob:local-queued')
+  URL.revokeObjectURL = vi.fn()
+  f.photo.mockResolvedValue({
+    blob: new Blob(['photo'], { type: 'image/webp' }),
+    extension: 'webp',
+    width: 2,
+    height: 2,
+  })
+  const enqueue = vi.fn().mockRejectedValue(new Error('OUTBOX_FULL'))
+  const view = render(
+    <QueryClientProvider client={new QueryClient()}>
+      <FlowProvider>
+        <OutboxContext.Provider
+          value={{
+            items: [],
+            sendingId: null,
+            enqueue,
+            preview: vi.fn(),
+            discard: vi.fn(),
+            retry: vi.fn(),
+          }}
+        >
+          <Composer
+            channel="chat"
+            onTyping={() => {}}
+            onStopTyping={() => {}}
+          />
+        </OutboxContext.Provider>
+      </FlowProvider>
+    </QueryClientProvider>,
+  )
+  fireEvent.change(view.container.querySelector('input[type=file]')!, {
+    target: { files: [new File(['x'], 'x.png', { type: 'image/png' })] },
+  })
+  await screen.findByRole('img', { name: 'Photo 1 preview' })
+  await userEvent.click(screen.getByRole('button', { name: 'Send message' }))
+  await screen.findByRole('button', { name: 'Retry send' })
+  expect(screen.getByRole('img', { name: 'Photo 1 preview' })).toBeVisible()
+  expect(enqueue).toHaveBeenCalledTimes(1)
+  expect(f.share).not.toHaveBeenCalled()
+})

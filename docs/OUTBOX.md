@@ -1,7 +1,8 @@
-# V2 text outbox contract
+# V2 Chat outbox contract
 
-Text-only implementation; photo/voice keep their existing in-memory draft
-and explicit retry behavior until the media phase. Do not advertise media as offline queued.
+Extended on 5 November 2026: Chat text, photo sets and completed voice notes now use the
+private durable outbox. See V2_MEDIA_OUTBOX.md for media limits, recovery and verification.
+The text contract below remains the compatibility baseline.
 
 - Persist a send intent before clearing its composer. Store id, original owner/couple, body,
   reply reference, TTL/Keep choice and pending deadline. Max 50 intents; pending deadline is

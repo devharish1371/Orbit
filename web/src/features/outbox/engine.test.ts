@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest'
-import { TextOutbox } from './engine'
+import { MessageOutbox } from './engine'
 import { pendingText, type OutboxStore, type PendingText } from './model'
 import type { PostDraft } from '@/lib/posts'
 const owner = '11111111-1111-4111-8111-111111111111',
@@ -36,7 +36,7 @@ test('lost-response retries preserve identity/id and serialized intent until con
       .fn()
       .mockRejectedValueOnce(new Error('response lost'))
       .mockResolvedValueOnce({})
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     send,
@@ -64,7 +64,7 @@ test('offline, expired, stopped and switched-account queues never start a send',
     identity: { owner: string; couple: string } | null = { owner, couple }
   const store = new MemoryStore(),
     send = vi.fn()
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     send,
@@ -93,7 +93,7 @@ test('offline, expired, stopped and switched-account queues never start a send',
 test('a permanent quote failure blocks automatic retries but permits an explicit retry', async () => {
   const store = new MemoryStore(),
     send = vi.fn().mockRejectedValue(new Error('REPLY_UNAVAILABLE'))
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     send,
@@ -117,7 +117,7 @@ test('only text is serialized, pending lifetime is bounded and store failure lea
   )
   const store = new MemoryStore()
   store.put = vi.fn().mockRejectedValue(new Error('disk full'))
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     vi.fn(),
@@ -141,7 +141,7 @@ test('logout during a pending read stops enqueue before it can write after the c
     started()
     return waiting
   })
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     vi.fn(),
@@ -159,7 +159,7 @@ test('logout during a pending read stops enqueue before it can write after the c
 test('an unconfirmed durable write never reports the intent as queued', async () => {
   const store = new MemoryStore()
   store.put = vi.fn().mockResolvedValue(undefined)
-  const engine = new TextOutbox(
+  const engine = new MessageOutbox(
     store,
     { owner, couple },
     vi.fn(),
