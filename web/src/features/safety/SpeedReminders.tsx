@@ -90,7 +90,7 @@ export function SpeedReminders() {
             <div className="safety-speed-status">
               <span>
                 {state.data.enabled
-                  ? `${state.data.threshold} km/h · ${state.data.running ? 'tracking active' : 'tracking stopped'}`
+                  ? `${state.data.threshold} km/h · ${state.data.running ? 'on this phone' : 'tracking stopped'}`
                   : 'Off on this phone'}
               </span>
               <Button

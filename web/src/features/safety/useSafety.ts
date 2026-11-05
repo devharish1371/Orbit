@@ -23,7 +23,7 @@ export const deliveryLabels: Record<string, string> = {
   not_due: 'Shared timer',
   not_queued: 'Reminder not queued',
   pending: 'Reminder queued',
-  sent: 'Notification accepted · delivery unconfirmed',
+  sent: 'Reminder processed · delivery unconfirmed',
   failed: 'Reminder failed',
   skipped: 'Reminder skipped',
   dry_run: 'Test only · not sent',

@@ -8,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 /** Local only. No network, extra sensors or service starts. Bound to the authenticated owner. */
 final class SafetyLocal {
     private static SpeedPolicy detector=new SpeedPolicy();private static String identity="";
+    static boolean notifications(Context c){if(!NotificationManagerCompat.from(c).areNotificationsEnabled())return false;if(Build.VERSION.SDK_INT>=26){NotificationChannel channel=((NotificationManager)c.getSystemService(Context.NOTIFICATION_SERVICE)).getNotificationChannel("orbit_speed");return channel==null||channel.getImportance()!=NotificationManager.IMPORTANCE_NONE;}return true;}
     static android.content.SharedPreferences prefs(Context c){return c.getSharedPreferences("OrbitSafety",0);}
     static synchronized void clear(Context c){prefs(c).edit().clear().commit();detector=new SpeedPolicy();identity="";NotificationManagerCompat.from(c).cancel(28359);}
     static synchronized void reset(){detector.reset();}

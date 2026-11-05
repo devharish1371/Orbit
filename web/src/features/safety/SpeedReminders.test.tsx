@@ -81,7 +81,7 @@ test('threshold setup requires consent and waits for a successful native acknowl
   ).toBeInTheDocument()
   f.configure.mockResolvedValueOnce({ ...off, enabled: true, threshold: 100 })
   await u.click(screen.getByRole('button', { name: 'Enable reminder' }))
-  await screen.findByText('100 km/h · tracking active')
+  await screen.findByText('100 km/h · on this phone')
   expect(f.configure).toHaveBeenLastCalledWith({
     owner: 'me',
     enabled: true,
