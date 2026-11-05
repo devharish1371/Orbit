@@ -1,0 +1,19 @@
+{
+  "source": "a140993",
+  "transport": "isolated injected test transport; no external delivery",
+  "photoReload": true,
+  "photoCaptions": [
+    "Frame 1",
+    "Frame 2"
+  ],
+  "voiceReload": true,
+  "voiceDuration": 1.621333,
+  "voiceEnded": true,
+  "voiceError": null,
+  "discardCancelled": true,
+  "rejectedCopyRetained": true,
+  "readyTransportDidNotAutoSendStagedCopy": true,
+  "verifiedExplicitRetryAccepted": true,
+  "retainedComposerDidNotDuplicatePendingRow": true,
+  "emptyPendingContainers": 0
+}

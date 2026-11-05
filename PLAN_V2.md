@@ -146,8 +146,11 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   18 final layouts fit and six static audits score 100/100. Source 4a32eaa passes Android
   CI 41994769622 and artifact checks. Photo-set software is verified; physical gates,
   archive/cloud-removal policy remain open. The Chat media outbox now persists verified
-  photo/voice packages with local previews; final browser/Android verification is in progress.
-  Moments drafts remain in memory. See docs/V2_PHONE_KEEPSAKES.md, docs/V2_COLLECTIONS.md
+  photo/voice packages with local previews and verified explicit retry after interrupted staging.
+  Final source a140993 passes 191 web/24 worker and all 85 backend checks; 30 phone layouts
+  fit and ten static audits score 100/100 with no findings. Android CI 42012693712 and
+  artifact integrity/signing/private scan pass. The Chat media software slice is verified;
+  physical gates remain deferred. Moments drafts remain in memory. See docs/V2_PHONE_KEEPSAKES.md, docs/V2_COLLECTIONS.md
   and docs/V2_MEDIA_OUTBOX.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded

@@ -175,3 +175,8 @@ Do not hand over APKs or request installs until the user asks for their larger t
 V2.5 follow-up (5 November): photo-set software is implemented and verified;
 see PLAN_V2.md and docs/V2_PHOTO_SETS.md. Cloud originals remain saved, and APK handover
 and physical phone checks remain deferred at the user’s request.
+
+V2.5 Chat media follow-up (5 November): encrypted photo/voice pending packages, local
+previews and staged retry are software-verified at a140993 (191 web/24 worker/85 backend
+checks, Android CI 42012693712). See PLAN_V2.md and docs/V2_MEDIA_OUTBOX.md. Physical
+checks and APK handover remain in the user’s later batch.

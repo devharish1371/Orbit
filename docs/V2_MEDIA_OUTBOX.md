@@ -60,3 +60,10 @@ checks are not a claim of real internet delivery or Android process-death recove
 hosted backend regressions run separately. Physical airplane-mode, background interruption,
 process-death/full-storage and two-phone checks remain in the user's later device batch.
 Final automated/browser/Android evidence is recorded in DEVLOG.md.
+
+Final source a140993 passes 191 web tests, 24 worker tests, lint, strict types, format and
+production build, plus all 85 hosted backend checks. Android CI [42012693712](https://github.com/devharish1371/Orbit/actions/runs/42012693712)
+passes native unit tests, assembly, manifest and signing checks. Thirty responsive states
+fit at 320/360/412 px; ten static accessibility/best-practices audits score 100/100.
+See [browser evidence](screens/v2-media-outbox/README.md) for the measured scope and limits.
+The APK is retained privately for the later physical test batch.

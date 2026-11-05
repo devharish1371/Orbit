@@ -1456,3 +1456,26 @@ group role. A regression covers both states, and browser fault injection reconfi
 composer → Retry → one accepted test-transport message. Legacy media without a verified-state
 flag also waits for an explicit integrity-checked retry. No duplicate pending row is shown
 while that same media draft is held in the composer.
+
+
+Final Chat media software verification: source a140993 passes 191 web/24 worker tests,
+lint, strict types, formatting and production build. All 85 backend checks pass in 154.67s
+with disposable accounts. Thirty final responsive states fit at 320/360/412 px; measured
+visible product controls are at least 44 px. Ten static screen audits score 100/100 for
+accessibility and best practices with no binary findings. Browser reload restores both
+photo captions and synthetic voice; playback ends normally at 1.621333s without error.
+Injected rejection, cancelled discard, interrupted save/staged reload and explicit verified
+retry pass. The harness uses real components/encryption with fake providers and a local
+test transport, so it does not establish external delivery or physical process-death recovery.
+
+Android CI 42012693712 succeeds at a140993, including native unit tests, manifest and
+signing checks. Privately retained APK: 6,989,265 bytes, SHA-256
+6a3c37b6a3fc10bacbff9ac985788fb6d95b4b82d255df509668ee734ada82e1.
+ZIP integrity, signing continuity against 4a32eaa and private-material scan pass. Only
+documentation/evidence changed after the verified application commit. See
+docs/screens/v2-media-outbox/README.md and docs/V2_MEDIA_OUTBOX.md. Physical gates,
+Moments persistence and archive/cloud-removal policy remain open; cloud originals stay saved.
+No real partner contact, microphone use or APK handover. QA tabs closed, Day appearance
+and default viewport restored. User dev/production preview servers restored on 5173/4173.
+Temporary QA servers on 4176/4177 stopped; app previews remain available. Final
+source/evidence secret scan: 1,052 files, zero findings.

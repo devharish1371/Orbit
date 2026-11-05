@@ -1,0 +1,1667 @@
+[
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-day",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-day",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 152
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 192
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 238
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-day",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-night",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-night",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "pending-night",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-night",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-night",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Zoom photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "photo-night",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 152
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-night",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 192
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-night",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close pending voice note",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Play voice note",
+        "w": 48
+      },
+      {
+        "h": 54,
+        "name": "Seek voice note",
+        "w": 238
+      },
+      {
+        "h": 44,
+        "name": "Playback speed 1 times. Change speed",
+        "w": 44
+      }
+    ],
+    "name": "voice-night",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close discard pending copy?",
+        "w": 44
+      },
+      {
+        "h": 91,
+        "name": "Cancel",
+        "w": 132
+      },
+      {
+        "h": 91,
+        "name": "Discard pending copy",
+        "w": 132
+      }
+    ],
+    "name": "discard-night",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close discard pending copy?",
+        "w": 44
+      },
+      {
+        "h": 70,
+        "name": "Cancel",
+        "w": 152
+      },
+      {
+        "h": 70,
+        "name": "Discard pending copy",
+        "w": 152
+      }
+    ],
+    "name": "discard-night",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Close discard pending copy?",
+        "w": 44
+      },
+      {
+        "h": 70,
+        "name": "Cancel",
+        "w": 178
+      },
+      {
+        "h": 70,
+        "name": "Discard pending copy",
+        "w": 178
+      }
+    ],
+    "name": "discard-night",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "blocked-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "blocked-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Preview pending voice note",
+        "w": 100.015625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "blocked-day",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Add photos",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Send message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Retry send",
+        "w": 66.265625
+      }
+    ],
+    "name": "retained-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Add photos",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Send message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Retry send",
+        "w": 66.265625
+      }
+    ],
+    "name": "retained-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Add photos",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Send message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Retry send",
+        "w": 66.265625
+      }
+    ],
+    "name": "retained-day",
+    "scroll": 412,
+    "width": 412
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "staged-day",
+    "scroll": 320,
+    "width": 320
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "staged-day",
+    "scroll": 360,
+    "width": 360
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Preview pending 2 photos",
+        "w": 87.625
+      },
+      {
+        "h": 44,
+        "name": "Retry pending message",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Discard pending copy",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "More message options",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Record voice",
+        "w": 44
+      }
+    ],
+    "name": "staged-day",
+    "scroll": 412,
+    "width": 412
+  }
+]

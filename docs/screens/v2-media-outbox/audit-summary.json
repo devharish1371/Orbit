@@ -1,0 +1,62 @@
+[
+  {
+    "name": "blocked-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "discard-night-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "pending-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "pending-night-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "photo-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "photo-night-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "retained-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "staged-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "voice-day-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "voice-night-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  }
+]
