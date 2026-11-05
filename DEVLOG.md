@@ -1444,3 +1444,15 @@ the last migration regression was added; final checks follow below. All 85 backe
 pass in 154.67s with disposable accounts. Browser reload restored the queued photo set and
 captions; synthetic voice reload/preview and responsive checks are ongoing. No real partner
 contact, microphone use, APK handover or phone install requested. See docs/V2_MEDIA_OUTBOX.md.
+
+Follow-up review found an interrupted-readback edge: a durable but unverified package could
+become eligible for automatic retry while the composer still retained its draft. Media is
+now staged until verification/promotion; unfinished staging requires explicit Retry and a
+fresh integrity check. Operational staging/blocked flags do not change immutable send intent.
+A regression covers interruption followed by a skipped automatic pass and verified manual retry.
+Accessibility follow-up: an empty labelled pending container remained when the active composer
+held the only staged copy. It now renders nothing; populated pending messages have an explicit
+group role. A regression covers both states, and browser fault injection reconfirms retained
+composer → Retry → one accepted test-transport message. Legacy media without a verified-state
+flag also waits for an explicit integrity-checked retry. No duplicate pending row is shown
+while that same media draft is held in the composer.

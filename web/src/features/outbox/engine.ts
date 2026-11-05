@@ -80,8 +80,12 @@ export class MessageOutbox {
     const verified = (await this.list()).find((saved) => saved.id === item.id)
     if (!verified || JSON.stringify(verified) !== JSON.stringify(item))
       throw new Error('OUTBOX_WRITE_UNCONFIRMED')
-    if (item.version === 2)
+    if (item.version === 2) {
       await restoreMedia(item, await this.store.readMedia?.(item))
+      if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
+      item = { ...item, staged: false }
+      await this.store.put(item)
+    }
     if (!this.valid()) throw new Error('DRAFT_ACCOUNT_CHANGED')
     this.changed()
     return item
@@ -115,7 +119,8 @@ export class MessageOutbox {
         if (!this.valid() || !this.connected()) break
         if (
           (retryId && item.id !== retryId) ||
-          (item.blocked && item.id !== retryId)
+          ((item.blocked || (item.version === 2 && item.staged !== false)) &&
+            item.id !== retryId)
         )
           continue
         if (item.expiresAt <= this.now()) {
@@ -133,6 +138,11 @@ export class MessageOutbox {
           )
           if (!this.valid() || !this.connected() || this.abort.signal.aborted)
             break
+          if (item.version === 2 && item.staged !== false) {
+            await this.store.put({ ...item, staged: false })
+            if (!this.valid() || !this.connected() || this.abort.signal.aborted)
+              break
+          }
           await this.send(draft, this.abort.signal)
           if (!this.valid()) break
           await this.store.remove(item.owner, item.id)

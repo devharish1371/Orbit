@@ -158,3 +158,79 @@ test('pending media previews remain local, preserve captions and return focus wi
   expect(retry).not.toHaveBeenCalled()
   expect(URL.revokeObjectURL).toHaveBeenCalled()
 })
+
+test('an unfinished copy held by the composer has no duplicate or empty labelled group', async () => {
+  const { FlowContext, freshComposer } = await import('@/app/FlowContext')
+  const base = pendingText({
+    id: crypto.randomUUID(),
+    author: '11111111-1111-4111-8111-111111111111',
+    couple: '22222222-2222-4222-8222-222222222222',
+    channel: 'chat',
+    kind: 'text',
+    body: 'Held draft',
+    ttl: 24,
+    keep: false,
+    place: null,
+  })
+  const item = {
+    ...base,
+    version: 2 as const,
+    kind: 'voice' as const,
+    staged: true,
+    assets: [],
+  }
+  const handles = {
+    id: { current: item.id },
+    attempted: { current: true },
+    scroll: { current: null },
+    nearBottom: { current: true },
+  }
+  const memory = {
+    drafts: {
+      chat: {
+        ...freshComposer(),
+        kind: 'voice' as const,
+        attachment: { blob: new Blob(['voice']), extension: 'webm' as const },
+      },
+      moment: freshComposer(),
+    },
+    setDrafts: vi.fn(),
+    handles: {
+      chat: handles,
+      moment: { ...handles, id: { current: crypto.randomUUID() } },
+    },
+  }
+  const outbox = {
+    items: [item],
+    sendingId: null,
+    enqueue: vi.fn(),
+    preview: vi.fn(),
+    retry: vi.fn(),
+    discard: vi.fn(),
+  }
+  const content = (value: typeof memory) => (
+    <FlowContext.Provider value={value}>
+      <OutboxContext.Provider value={outbox}>
+        <PendingMessages sentIds={[]} />
+      </OutboxContext.Provider>
+    </FlowContext.Provider>
+  )
+  const view = render(content(memory))
+  expect(
+    screen.queryByRole('group', { name: 'Pending messages' }),
+  ).not.toBeInTheDocument()
+  expect(view.container.querySelector('.pending-messages')).toBeNull()
+  view.rerender(
+    content({
+      ...memory,
+      handles: {
+        ...memory.handles,
+        chat: { ...handles, id: { current: crypto.randomUUID() } },
+      },
+    }),
+  )
+  expect(screen.getByRole('group', { name: 'Pending messages' })).toBeVisible()
+  expect(
+    screen.getByText('Tap Retry to finish saving this copy.'),
+  ).toBeVisible()
+})

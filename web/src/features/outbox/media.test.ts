@@ -186,6 +186,10 @@ test('blocking a queued message preserves its media; retry never accepts changed
   await engine.enqueue(original)
   await engine.flush()
   expect((await engine.list())[0]?.blocked).toBe(true)
+  await expect(engine.enqueue(original)).resolves.toMatchObject({
+    id: original.id,
+    staged: false,
+  })
   const loaded = await engine.preview(original.id)
   expect(loaded.photos?.[0]?.caption).toBe('First')
   await expect(
@@ -335,5 +339,34 @@ test('pausing an in-flight send preserves the package and resumes with the same 
     original.id,
     original.id,
   ])
+  expect(await engine.list()).toEqual([])
+})
+
+test('an interrupted save stays staged and cannot auto-send until an explicit verified retry', async () => {
+  const store = new WebOutboxStore(),
+    original = draft(),
+    send = vi.fn(),
+    read = store.readMedia.bind(store)
+  vi.spyOn(store, 'readMedia')
+    .mockRejectedValueOnce(new Error('interrupted readback'))
+    .mockImplementation(read)
+  const engine = new MessageOutbox(
+    store,
+    { owner, couple },
+    send,
+    () => true,
+    () => ({ owner, couple }),
+    () => {},
+  )
+  await expect(engine.enqueue(original)).rejects.toThrow('interrupted readback')
+  expect((await engine.list())[0]).toMatchObject({ version: 2, staged: true })
+  await engine.flush()
+  expect(send).not.toHaveBeenCalled()
+  const legacy = (await engine.list())[0]!
+  await store.put({ ...legacy, staged: undefined } as PendingMedia)
+  await engine.flush()
+  expect(send).not.toHaveBeenCalled()
+  await engine.flush(original.id)
+  expect(send).toHaveBeenCalledTimes(1)
   expect(await engine.list()).toEqual([])
 })

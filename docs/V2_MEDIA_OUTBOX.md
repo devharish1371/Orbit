@@ -20,7 +20,9 @@ by Orbit. Moments drafts still remain in memory until posted; no durable Moment 
   commits the message and payload. Upgrade preserves version-one text records/keys.
 - Every asset has a contiguous range, allowed MIME type, bounded size and SHA-256 digest.
   Restore checks the complete package and each image/thumbnail/voice hash before sending.
-  Composer clearing requires storage readback, not just a completed write call.
+  Composer clearing requires storage readback, not just a completed write call. A media
+  package remains staged until verification completes. Interrupted staging cannot auto-send;
+  an explicit Retry verifies it before promotion.
 - Pending lifetime remains at most 24 hours (or a shorter chosen TTL). Expired copies are
   pruned when the queue next opens/refreshes. Discard, logout and expiry remove the media
   alongside its metadata. This queue is temporary and is not an archive or backup.

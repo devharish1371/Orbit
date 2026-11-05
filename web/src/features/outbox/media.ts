@@ -23,7 +23,13 @@ export function pendingBytes(item: PendingMessage) {
 }
 export function sameIntent(a: PendingMessage, b: PendingMessage) {
   const intent = (item: PendingMessage) =>
-    JSON.stringify({ ...item, queuedAt: 0, expiresAt: 0, blocked: undefined })
+    JSON.stringify({
+      ...item,
+      queuedAt: 0,
+      expiresAt: 0,
+      blocked: undefined,
+      staged: undefined,
+    })
   return intent(a) === intent(b)
 }
 export async function pendingMessage(
@@ -57,6 +63,7 @@ export async function pendingMessage(
   }
   const item: PendingMedia = {
     version: 2,
+    staged: true,
     id: draft.id,
     owner: draft.author,
     couple: draft.couple,

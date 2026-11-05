@@ -21,6 +21,7 @@ export interface PendingAsset {
 export type PendingMedia = Omit<PendingText, 'version'> & {
   version: 2
   kind: 'photo' | 'voice'
+  staged?: boolean
   assets: PendingAsset[]
   photos?: {
     id: string
@@ -122,6 +123,7 @@ export function postDraft(item: PendingText): PostDraft {
 }
 
 function validMedia(p: PendingMedia) {
+  if (p.staged !== undefined && typeof p.staged !== 'boolean') return false
   if (!Array.isArray(p.assets) || p.assets.length < 1 || p.assets.length > 12)
     return false
   let total = 0
