@@ -101,6 +101,11 @@ export default function SettingsPage() {
         <strong>{copy.tracking.title}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
+      <Link className="profile-settings-link" to="/safety">
+        <OrbitGlyph name="map" width={26} height={26} />
+        <strong>Safety &amp; check-ins</strong>
+        <span aria-hidden="true">↗</span>
+      </Link>
       <Link className="profile-settings-link" to="/notifications">
         <OrbitGlyph name="chat" width={26} height={26} />
         <strong>{copy.alerts.notificationTitle}</strong>

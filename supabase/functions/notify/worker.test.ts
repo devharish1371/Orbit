@@ -129,3 +129,24 @@ test("copy uses generic private previews and safe internal routes", () => {
   });
   expect(messageFor("not-real", "Partner")).toBeNull();
 });
+
+test("safety reminders default off and retain ordinary quiet hours without emergency wording", async () => {
+  const f = fixture();
+  f.context.type = "journey_overdue";
+  expect(messageFor("journey_overdue", "A")).toMatchObject({
+    preference: "safety",
+    route: "/safety",
+    urgent: false,
+  });
+  await runNotify(f.store, f.sender, { dryRun: false, now });
+  expect(f.sender.send).not.toHaveBeenCalled();
+  f.context.prefs.safety = true;
+  await runNotify(f.store, f.sender, { dryRun: false, now });
+  expect(f.sender.send).toHaveBeenCalledTimes(2);
+  f.sender.send.mockClear();
+  await runNotify(f.store, f.sender, {
+    dryRun: false,
+    now: new Date("2026-10-30T18:00:00Z"),
+  });
+  expect(f.sender.send).not.toHaveBeenCalled();
+});

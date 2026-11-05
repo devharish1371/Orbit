@@ -1397,6 +1397,66 @@ export type Database = {
         }
         Relationships: []
       }
+      safety_journeys: {
+        Row: {
+          couple_id: string
+          created_at: string
+          deadline: string
+          destination: string
+          id: string
+          last_request: string
+          queued_version: number | null
+          share_overdue: boolean
+          state: string
+          updated_at: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string
+          deadline: string
+          destination: string
+          id: string
+          last_request: string
+          queued_version?: number | null
+          share_overdue?: boolean
+          state?: string
+          updated_at?: string
+          user_id: string
+          version?: number
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string
+          deadline?: string
+          destination?: string
+          id?: string
+          last_request?: string
+          queued_version?: number | null
+          share_overdue?: boolean
+          state?: string
+          updated_at?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'safety_journeys_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'safety_journeys_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1876,6 +1936,14 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      safety_journey_delivery: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+        }
+        Returns: Json
+      }
       save_date_idea: {
         Args: {
           p_archived: boolean
@@ -1964,6 +2032,39 @@ export type Database = {
         SetofOptions: {
           from: '*'
           to: 'plans'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      save_safety_journey: {
+        Args: {
+          p_action: string
+          p_deadline?: string
+          p_destination?: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_id: string
+          p_request: string
+          p_share?: boolean
+          p_version: number | null
+        }
+        Returns: {
+          couple_id: string
+          created_at: string
+          deadline: string
+          destination: string
+          id: string
+          last_request: string
+          queued_version: number | null
+          share_overdue: boolean
+          state: string
+          updated_at: string
+          user_id: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'safety_journeys'
           isOneToOne: true
           isSetofReturn: false
         }

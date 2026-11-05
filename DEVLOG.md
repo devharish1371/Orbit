@@ -1618,3 +1618,23 @@ Final evidence commit faf5d23 remains local after three GitHub `commit_refs` rej
 including an HTTP/1.1 retry. Remote main is unchanged; no force/history rewrite attempted.
 The worktree is committed and verification evidence is available locally. See
 `docs/BLOCKERS.md`; this does not change the passing build or deferred physical gates.
+
+### V2.9 — safety (implementation underway)
+
+User asked to proceed to the next phase. V2.6 and physical gates remain deferred. Reviewed
+Android Location uncertainty/monotonic timing, sensor lifecycle and AOSP acceleration semantics.
+Building private timed journey check-ins, local sustained-speed reminders on existing opted-in
+tracking, and a synthetic motion prototype. No automatic impact/driver inference or partner
+escalation; permissions/settings remain unchanged. Design contract: docs/V2_SAFETY.md.
+
+Implemented additive 0035 journey schema, scoped sender/recipient opt-in queue, cancellation/
+check-in/extension version guards, bounded expiry and service-only cron functions. Deployed
+notification worker revalidates current consent/version/privacy before resolving recipient
+tokens; safety reminders are non-emergency and respect quiet hours. Private speed reminders
+use native speed/uncertainty on existing tracking, a sustained monotonic window, hysteresis
+and persistent cooldown. Account changes clear local configuration/pending prompts. Motion
+lab uses synthetic traces only; phone-drop ambiguity is intentional, no sensor is subscribed.
+224 web/38 worker checks, lint/types/format/build pass. Full hosted run passes 92/95; two
+connection-reset failures pass their isolated rerun and the updated cron inventory/private-
+privilege audit passes. Native/browser verification continues. V2.8 evidence push recovered
+normally through 24258e3; no history rewrite or force update was needed.

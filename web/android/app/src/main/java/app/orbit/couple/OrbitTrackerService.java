@@ -75,7 +75,7 @@ public class OrbitTrackerService extends Service {
             .setOngoing(true).setOnlyAlertOnce(true).setContentIntent(open).setCategory(NotificationCompat.CATEGORY_SERVICE).build();
         if(Build.VERSION.SDK_INT>=29)startForeground(28352,notification,android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);else startForeground(28352,notification);
     }
-    private void stopLocations(){refreshUntil=0;main.post(()->{main.removeCallbacks(endRefresh);endRefresh.run();try{manager.removeUpdates(listener);}catch(Exception ignored){}watching="";});}
+    private void stopLocations(){SafetyLocal.reset();refreshUntil=0;main.post(()->{main.removeCallbacks(endRefresh);endRefresh.run();try{manager.removeUpdates(listener);}catch(Exception ignored){}watching="";});}
     private void refresh(JSONObject request,long now){
         long requested=parseTime(request.optString("requested_at")),expires=parseTime(request.optString("expires_at"));
         if(!TrackerPolicy.refreshEligible(requested,expires,request.optLong("location_epoch",-1),policy.optLong("location_epoch"),policy.optString("share_mode"),now)||requested<=seenRefresh)return;
@@ -152,9 +152,10 @@ public class OrbitTrackerService extends Service {
         if(destroyed||policy==null||prefs().contains("pendingMode")||policy.optString("share_mode").equals("paused"))return;
         long now=System.currentTimeMillis();boolean mocked=Build.VERSION.SDK_INT>=31?location.isMock():location.isFromMockProvider();
         TrackerPolicy.Fix fix=new TrackerPolicy.Fix(location.getLatitude(),location.getLongitude(),location.getAccuracy(),location.hasSpeed()?location.getSpeed():-1,location.getTime(),mocked);
-        if(!TrackerPolicy.valid(fix,now,now-lastGood>600000)){TrackerStore.log(this,"fix_filtered");return;}
+        if(!TrackerPolicy.valid(fix,now,now-lastGood>600000)){SafetyLocal.reset();TrackerStore.log(this,"fix_filtered");return;}
         if(previous!=null&&fix.time()<=previous.time())return;
-        if(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())/((fix.time()-previous.time())/1000.0)>70){TrackerStore.log(this,"gps_jump_filtered");return;}
+        if(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())/((fix.time()-previous.time())/1000.0)>70){SafetyLocal.reset();TrackerStore.log(this,"gps_jump_filtered");return;}
+        SafetyLocal.fix(this,policy.optString("user_id"),policy.optString("share_mode").equals("live"),location);
         if(fix.accuracy()<=100)lastGood=now;
         if(fix.speed()>=1||(previous!=null&&TrackerPolicy.distance(fix.lat(),fix.lng(),previous.lat(),previous.lng())>=50))lastMovement=now;
         battery();adapt(fix,previous,now);

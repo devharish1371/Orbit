@@ -12,6 +12,7 @@ import { copy } from '@/copy/en'
 const LoginPage = lazy(() => import('@/features/auth/LoginPage'))
 const Shell = lazy(() => import('@/app/Shell'))
 const HomePage = lazy(() => import('@/features/home/HomePage'))
+const SafetyPage = lazy(() => import('@/features/safety/SafetyPage'))
 const WidgetPage = lazy(() => import('@/features/widget/WidgetPage'))
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
@@ -74,6 +75,7 @@ export default function App() {
           <Routes>
             <Route element={<Shell />}>
               <Route index element={<HomePage />} />
+              <Route path="safety" element={<SafetyPage />} />
               <Route path="widget" element={<WidgetPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="tracking" element={<TrackingPage />} />

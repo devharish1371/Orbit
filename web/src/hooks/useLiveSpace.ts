@@ -139,6 +139,8 @@ export function useLiveSpace() {
             'plans',
             'date-ideas',
             'plan-reminders',
+            'safety-journeys',
+            'safety-delivery',
           ])
             mark(key)
         },
@@ -171,6 +173,8 @@ export function useLiveSpace() {
             'plans',
             'date-ideas',
             'plan-reminders',
+            'safety-journeys',
+            'safety-delivery',
           ])
             mark(key)
         }
@@ -202,6 +206,8 @@ export function useLiveSpace() {
           'plans',
           'date-ideas',
           'plan-reminders',
+          'safety-journeys',
+          'safety-delivery',
         ])
           mark(key)
       }

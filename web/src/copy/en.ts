@@ -147,6 +147,7 @@ export const copy = {
       chat: 'New chat messages',
       reactions: 'Comments and reactions',
       capsule: 'Capsules and daily questions',
+      safety: 'Shared check-in reminders',
     },
     quietHours: 'Quiet hours',
     quietHint:

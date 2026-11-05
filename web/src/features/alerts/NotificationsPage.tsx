@@ -17,6 +17,7 @@ const preferences = [
   'chat',
   'reactions',
   'capsule',
+  'safety',
 ] as const
 export default function NotificationsPage() {
   const { client } = useAuth()
@@ -38,7 +39,7 @@ export default function NotificationsPage() {
       const result = await client
         .from('members')
         .update({
-          notify_prefs: prefs,
+          notify_prefs: { ...enabled, ...prefs },
           quiet_start: String(form.get('quiet_start')),
           quiet_end: String(form.get('quiet_end')),
         })
@@ -99,7 +100,11 @@ export default function NotificationsPage() {
               <input
                 type="checkbox"
                 name={key}
-                defaultChecked={enabled[key] !== false}
+                defaultChecked={
+                  key === 'safety'
+                    ? enabled[key] === true
+                    : enabled[key] !== false
+                }
               />
             </label>
           ))}

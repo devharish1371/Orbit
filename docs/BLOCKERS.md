@@ -62,7 +62,7 @@ signup is disabled. Disposable-user integration tests pass. M0 and M1 are pushed
 `devharish1371/Orbit` with milestone tags. The password-choice requirement was superseded
 by the user's email OTP request.
 
-## V2.8 evidence publication — remote ref update failed
+## Resolved — V2.8 evidence publication
 
 The V2.8 application source dcb1995 is pushed and verified by Android CI 42117158960.
 The final docs/browser evidence commit faf5d233c19cbd329ac91ea2284a885618a39eed is committed
@@ -73,3 +73,6 @@ available through the Git Data API. No force push, reset or history rewrite was 
 The status endpoint reported operational; this is an observed repository publication
 failure, not evidence of a general outage. Retry the ordinary fast-forward push when the
 remote accepts updates. No user action or APK installation is required for this issue.
+
+The ordinary push succeeded at the start of V2.9; remote main now includes both V2.8
+evidence commits through 24258e3. No workaround, force update or history rewrite was needed.

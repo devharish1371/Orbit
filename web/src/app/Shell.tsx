@@ -47,6 +47,7 @@ export default function Shell() {
           '/profile',
           '/settings',
           '/widget',
+          '/safety',
           '/keepsakes',
           '/on-this-day',
           '/capsules',

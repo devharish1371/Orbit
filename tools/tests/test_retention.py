@@ -75,9 +75,13 @@ def test_orphan_tombstone_prevents_late_post_reference(backend) -> None:
 def test_cron_and_function_privileges(backend) -> None:
     with backend.db() as db:
         jobs=db.execute("select jobname from cron.job where jobname like 'orbit-%'").fetchall()
-        assert {row[0] for row in jobs} == {'orbit-retention','orbit-stale','orbit-modes','orbit-rollup','orbit-capsules','orbit-notify-retry','orbit-notify-cleanup','orbit-plan-reminders','orbit-status-expiry'}
+        assert {row[0] for row in jobs} == {'orbit-retention','orbit-stale','orbit-modes','orbit-rollup','orbit-capsules','orbit-notify-retry','orbit-notify-cleanup','orbit-plan-reminders','orbit-status-expiry','orbit-safety-checkins','orbit-safety-cleanup'}
         assert db.execute("select schedule from cron.job where jobname='orbit-status-expiry'").fetchone()==('*/5 * * * *',)
         assert not db.execute("select has_function_privilege('authenticated','orbit_private.expire_member_status()','EXECUTE')").fetchone()[0]
+        assert db.execute("select schedule from cron.job where jobname='orbit-safety-checkins'").fetchone()==('* * * * *',)
+        assert db.execute("select schedule from cron.job where jobname='orbit-safety-cleanup'").fetchone()==('15 * * * *',)
+        for function in ('enqueue_safety_journeys()', 'enqueue_safety_journeys_for(uuid)', 'cleanup_safety_journeys()'):
+            assert not db.execute("select has_function_privilege('authenticated',%s,'EXECUTE')",('orbit_private.'+function,)).fetchone()[0]
         unsafe=db.execute("select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='orbit_private' and p.prosecdef and (has_function_privilege('anon',p.oid,'EXECUTE') or p.proconfig is null)").fetchall()
         assert unsafe == []
         assert db.execute("select public from storage.buckets where id='media'").fetchone() == (False,)

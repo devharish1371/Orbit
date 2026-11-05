@@ -62,6 +62,7 @@ export async function runNotify(
         !context ||
         !message ||
         context.prefs[message.preference] === false ||
+        (message.preference === "safety" && context.prefs.safety !== true) ||
         (!message.urgent &&
           inQuietHours(
             options.now ?? new Date(),

@@ -109,6 +109,9 @@ jobs:
           assert info.get(a+'updatePeriodMillis')=='1800000'
           assert Path('app/src/main/res/font/orbit_sans.ttf').stat().st_size>100000
           print('Native entrance/widget bridge, host privacy and scheduling configuration verified.')
+          assert 'SafetyPlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
+          assert 'android.permission.HIGH_SAMPLING_RATE_SENSORS' not in permissions
+          print('Local safety bridge verified; no high-rate sensor permission added.')
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:

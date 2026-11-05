@@ -48,7 +48,9 @@ export function useWidgetEntry(enabled: boolean) {
         .then(({ route }) => {
           if (
             active &&
-            ['/', '/keepsakes', '/plans', '/widget'].includes(route ?? '')
+            ['/', '/keepsakes', '/plans', '/widget', '/safety'].includes(
+              route ?? '',
+            )
           )
             void latestNavigate.current(route!)
         })

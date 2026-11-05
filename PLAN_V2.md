@@ -180,3 +180,8 @@ nine browser flows and 60 responsive states pass, and exact source dcb1995 passe
 CI 42117158960 plus private artifact integrity/signer continuity checks. No install/handover
 requested; native launch/unlock/launcher acceptance stays in the deferred task #7 batch.
 V2.6 remains deferred; proceed separately with V2.9/V2.10 and the archive policy when asked.
+
+V2.9 active: build explicit, private-by-default journey check-ins; local native sustained-speed
+reminders; synthetic-only motion prototype. Sender/recipient consent, live privacy, bounded
+retries/versioning/expiry and honest notification state are required. No sensors or real
+partner alerts enabled during implementation. See docs/V2_SAFETY.md.

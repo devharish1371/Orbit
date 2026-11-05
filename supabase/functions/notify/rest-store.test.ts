@@ -126,3 +126,108 @@ test.each([
     }
   },
 );
+
+test.each([
+  "valid",
+  "private",
+  "paused",
+  "surprise",
+  "recipient-off",
+  "recipient-unset",
+  "checked-in",
+  "cancelled",
+  "changed",
+  "not-queued",
+  "early",
+  "expired",
+  "foreign",
+])(
+  "journey %s validates current timer, both consent and privacy before reading recipient tokens",
+  async (variant) => {
+    const now = Date.now();
+    const transport = vi.fn<typeof fetch>().mockImplementation(async (url) => {
+      const path = String(url);
+      if (path.includes("/members?"))
+        return Response.json([
+          {
+            user_id: "a",
+            display_name: "A",
+            nickname: null,
+            share_mode: ["paused", "surprise"].includes(variant)
+              ? variant
+              : "live",
+            notify_prefs: {},
+            quiet_start: "23:00",
+            quiet_end: "07:00",
+          },
+          {
+            user_id: "b",
+            display_name: "B",
+            nickname: null,
+            share_mode: "live",
+            notify_prefs:
+              variant === "recipient-unset"
+                ? {}
+                : { safety: variant !== "recipient-off" },
+            quiet_start: "23:00",
+            quiet_end: "07:00",
+          },
+        ]);
+      if (path.includes("/safety_journeys?"))
+        return Response.json([
+          {
+            user_id: variant === "foreign" ? "x" : "a",
+            state:
+              variant === "checked-in"
+                ? "checked_in"
+                : variant === "cancelled"
+                  ? "cancelled"
+                  : "active",
+            share_overdue: variant !== "private",
+            version: variant === "changed" ? 2 : 1,
+            queued_version: variant === "not-queued" ? null : 1,
+            deadline: new Date(
+              now +
+                (variant === "early"
+                  ? 60000
+                  : variant === "expired"
+                    ? -3600001
+                    : -60000),
+            ).toISOString(),
+          },
+        ]);
+      if (path.includes("/couples?"))
+        return Response.json([{ timezone: "Asia/Kolkata" }]);
+      if (path.includes("/device_tokens?")) {
+        expect(path).toContain("user_id=eq.b");
+        return Response.json([{ token: "only-b" }]);
+      }
+      throw new Error("Unexpected request");
+    });
+    vi.stubGlobal("fetch", transport);
+    const result = await notifyStore("https://test.invalid", "test").context({
+      id: "job",
+      source_table: "safety_journeys",
+      record: {
+        journey_id: "trip",
+        user_id: "a",
+        couple_id: "room",
+        version: 1,
+        expires_at: new Date(now + 60000).toISOString(),
+      },
+      delivered_tokens: [],
+    });
+    if (variant === "valid") {
+      expect(result?.type).toBe("journey_overdue");
+      expect(result?.placeId).toBe("trip:1");
+      expect(result?.tokens).toEqual(["only-b"]);
+    } else {
+      expect(result).toBeNull();
+      expect(
+        transport.mock.calls.every(
+          ([url]) => !String(url).includes("/device_tokens?"),
+        ),
+      ).toBe(true);
+    }
+  },
+);

@@ -54,6 +54,7 @@ export function notifyStore(url: string, key: string): NotifyStore {
         {
           user_id: string;
           display_name: string;
+          share_mode: string;
           nickname: string | null;
           notify_prefs: Record<string, unknown>;
           quiet_start: string;
@@ -62,7 +63,7 @@ export function notifyStore(url: string, key: string): NotifyStore {
       >(
         "members?couple_id=eq." +
           encodeURIComponent(couple) +
-          "&select=user_id,display_name,nickname,notify_prefs,quiet_start,quiet_end",
+          "&select=user_id,display_name,nickname,notify_prefs,quiet_start,quiet_end,share_mode",
       );
       const self = members.find((m) => m.user_id === actor),
         partner =
@@ -71,7 +72,47 @@ export function notifyStore(url: string, key: string): NotifyStore {
             : members.find((m) => m.user_id !== actor);
       if (!self || !partner) return null;
       let type: string;
-      if (job.source_table === "plan_reminders") {
+      if (job.source_table === "safety_journeys") {
+        if (
+          members.length !== 2 ||
+          self.share_mode !== "live" ||
+          partner.notify_prefs.safety !== true ||
+          typeof record.journey_id !== "string" ||
+          !Number.isInteger(record.version)
+        )
+          return null;
+        const rows = await request<
+          {
+            user_id: string;
+            state: string;
+            share_overdue: boolean;
+            version: number;
+            queued_version: number | null;
+            deadline: string;
+          }[]
+        >(
+          "safety_journeys?id=eq." +
+            encodeURIComponent(record.journey_id) +
+            "&couple_id=eq." +
+            encodeURIComponent(couple) +
+            "&select=user_id,state,share_overdue,version,queued_version,deadline",
+        );
+        const item = rows[0],
+          now = Date.now();
+        if (
+          !item ||
+          item.user_id !== actor ||
+          item.state !== "active" ||
+          !item.share_overdue ||
+          item.version !== record.version ||
+          item.queued_version !== item.version ||
+          !Number.isFinite(Date.parse(item.deadline)) ||
+          Date.parse(item.deadline) > now ||
+          Date.parse(item.deadline) + 3600000 <= now
+        )
+          return null;
+        type = "journey_overdue";
+      } else if (job.source_table === "plan_reminders") {
         if (
           typeof record.plan_id !== "string" ||
           !Number.isInteger(record.version)
@@ -174,11 +215,13 @@ export function notifyStore(url: string, key: string): NotifyStore {
         name: self.nickname || self.display_name,
         place,
         placeId:
-          job.source_table === "plan_reminders"
-            ? `${record.plan_id}:${record.version}`
-            : typeof record.place_id === "string"
-              ? record.place_id
-              : undefined,
+          job.source_table === "safety_journeys"
+            ? `${record.journey_id}:${record.version}`
+            : job.source_table === "plan_reminders"
+              ? `${record.plan_id}:${record.version}`
+              : typeof record.place_id === "string"
+                ? record.place_id
+                : undefined,
         timezone: couples[0]?.timezone ?? "Asia/Kolkata",
         quietStart: partner.quiet_start,
         quietEnd: partner.quiet_end,

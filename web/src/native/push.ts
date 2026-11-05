@@ -20,6 +20,7 @@ export function notificationRoute(data: unknown): string | null {
       '/chat',
       '/us',
       '/plans',
+      '/safety',
     ].includes(route)
     ? route
     : null
