@@ -1403,3 +1403,24 @@ suite passes all 85 checks in 176.30s. Tests caught and fixed selected-photo dri
 The 173-web/24-worker pipeline passed before the final cover accessibility follow-up; final
 pipeline, responsive/audit evidence and Android CI are pending below. No real partner contact,
 phone install or APK handover requested.
+
+Final source 4a32eaa passes 174 web/24 worker checks plus lint, strict types, formatting and
+production build. All 85 backend checks pass; retention was deployed before set cleanup
+validation. Six Day/Night static screen audits score 100/100 with no binary findings.
+Eighteen final phone layouts fit at 320/360/412 px; visible controls are at least 44 px.
+A browser check caught the selected sixth thumbnail slipping outside the strip on resize;
+scoped horizontal reveal now keeps it visible without moving the page. Draft ordering and
+captions survive navigation. Browser ZIP verification confirms a three-photo set has all
+six files, correct captions/order and no duplicate entries (eight media files/two posts total).
+
+Android CI 41994769622 succeeds for 4a32eaa, including native unit tests and signing checks.
+The privately retained artifact is 6,985,685 bytes, SHA-256
+d8a49368b7950d93eb0c59b37e118c599d71a4b9fd336ce958046abd2e4c52c6.
+ZIP integrity, signing continuity against eaaefc2 and private-material scanning pass.
+The photo-set software slice is verified; physical/offline/process-death/two-phone checks
+remain in the requested later batch. Persistent offline media drafts and cloud archive/removal
+policy remain open. Cloud originals stay saved. No real partner contact or APK handover.
+See docs/V2_PHOTO_SETS.md and docs/screens/v2-photo-sets/README.md for scope/evidence.
+Final source/evidence secret scan: 1,031 files, zero findings. Only documentation/evidence
+changed after the verified application commit. Temporary audit server and QA tab closed;
+user dev/preview servers remain running. Day appearance and default viewport restored.

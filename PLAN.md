@@ -172,6 +172,6 @@ Android evidence is recorded in DEVLOG. V2.5 includes dual-phone offline keepsak
 explicit, verified cloud-space recovery. Device gates remain deferred.
 Do not hand over APKs or request installs until the user asks for their larger test batch.
 
-V2.5 follow-up (5 November): photo sets are implemented and under final software verification;
+V2.5 follow-up (5 November): photo-set software is implemented and verified;
 see PLAN_V2.md and docs/V2_PHOTO_SETS.md. Cloud originals remain saved, and APK handover
 and physical phone checks remain deferred at the user’s request.

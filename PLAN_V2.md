@@ -141,8 +141,10 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   with no findings. Final source eaaefc2 passes Android CI 41926210764 and artifact checks.
   The collection software slice is verified. Photo-set implementation now adds up to six
   ordered/captioned photos, continuous viewer, complete export/retention and per-photo
-  encrypted copies with all-image receipts. All 85 backend checks pass; final browser
-  evidence and Android CI are being completed. Archive/cloud-removal policy remains open. See docs/V2_PHONE_KEEPSAKES.md and docs/V2_COLLECTIONS.md.
+  encrypted copies with all-image receipts. All 85 backend, 174 web/24 worker checks pass;
+  18 final layouts fit and six static audits score 100/100. Source 4a32eaa passes Android
+  CI 41994769622 and artifact checks. Photo-set software is verified; physical gates,
+  persistent offline media drafts and archive/cloud-removal policy remain open. See docs/V2_PHONE_KEEPSAKES.md and docs/V2_COLLECTIONS.md.
 - V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.

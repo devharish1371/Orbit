@@ -1,0 +1,764 @@
+[
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 5",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-day",
+    "scroll": 320,
+    "selectedVisible": true,
+    "width": 320,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 5",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-day",
+    "scroll": 360,
+    "selectedVisible": true,
+    "width": 360,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 5",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-day",
+    "scroll": 412,
+    "selectedVisible": true,
+    "width": 412,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-day",
+    "scroll": 320,
+    "selectedVisible": true,
+    "width": 320,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-day",
+    "scroll": 360,
+    "selectedVisible": true,
+    "width": 360,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-day",
+    "scroll": 412,
+    "selectedVisible": true,
+    "width": 412,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-day",
+    "scroll": 320,
+    "selectedVisible": null,
+    "width": 320,
+    "hidden_controls": 9
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-day",
+    "scroll": 360,
+    "selectedVisible": null,
+    "width": 360,
+    "hidden_controls": 9
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-day",
+    "scroll": 412,
+    "selectedVisible": null,
+    "width": 412,
+    "hidden_controls": 9
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-night",
+    "scroll": 320,
+    "selectedVisible": true,
+    "width": 320,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-night",
+    "scroll": 360,
+    "selectedVisible": true,
+    "width": 360,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 6",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "chat-night",
+    "scroll": 412,
+    "selectedVisible": true,
+    "width": 412,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-night",
+    "scroll": 320,
+    "selectedVisible": true,
+    "width": 320,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-night",
+    "scroll": 360,
+    "selectedVisible": true,
+    "width": 360,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Remove photo 1",
+        "w": 44
+      },
+      {
+        "h": 48,
+        "name": "Select photo 1",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 2",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 3",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 4",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 5",
+        "w": 48
+      },
+      {
+        "h": 48,
+        "name": "Select photo 6",
+        "w": 48
+      },
+      {
+        "h": 44,
+        "name": "Move photo earlier",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Move photo later",
+        "w": 44
+      }
+    ],
+    "name": "moment-night",
+    "scroll": 412,
+    "selectedVisible": true,
+    "width": 412,
+    "hidden_controls": 0
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-night",
+    "scroll": 320,
+    "selectedVisible": null,
+    "width": 320,
+    "hidden_controls": 9
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-night",
+    "scroll": 360,
+    "selectedVisible": null,
+    "width": 360,
+    "hidden_controls": 9
+  },
+  {
+    "controls": [
+      {
+        "h": 44,
+        "name": "Previous photo",
+        "w": 44
+      },
+      {
+        "h": 44,
+        "name": "Next photo",
+        "w": 44
+      }
+    ],
+    "name": "viewer-night",
+    "scroll": 412,
+    "selectedVisible": null,
+    "width": 412,
+    "hidden_controls": 9
+  }
+]

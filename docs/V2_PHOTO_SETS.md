@@ -42,5 +42,7 @@ Offline/process-death/native gesture and two-phone proof remain in the user's la
 
 Five hosted photo-set checks cover RLS, canonical/malformed manifests, authoritative byte
 accounting, quota rollback, current-device receipts, orphan protection and old/new cleanup.
-The complete backend suite passes 85 checks. Final web/browser/Android evidence is recorded
-in DEVLOG.md and docs/screens/v2-photo-sets after final verification.
+The complete backend suite passes 85 checks. Final source 4a32eaa passes 174 web/24 worker
+checks, lint/types/format/build and Android CI 41994769622. Eighteen responsive states fit;
+six Day/Night static audits score 100/100 with no binary findings. Actual browser ZIP
+contents and integrity pass. See DEVLOG.md and docs/screens/v2-photo-sets for evidence.
