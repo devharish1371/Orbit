@@ -25,7 +25,7 @@ export default function UsPage() {
             <StatusLine user={self.user_id} editable bubble />
             <Link
               to={`/person/${self.user_id}`}
-              aria-label={`View profile: ${self.nickname || self.display_name}`}
+              aria-description="View profile"
             >
               <Avatar
                 name={self.display_name}
@@ -44,7 +44,7 @@ export default function UsPage() {
               <StatusLine user={partner.user_id} bubble />
               <Link
                 to={`/person/${partner.user_id}`}
-                aria-label={`View ${self.partner_nickname || partner.nickname || partner.display_name}’s profile`}
+                aria-description="View profile"
               >
                 <Avatar
                   name={partner.display_name}

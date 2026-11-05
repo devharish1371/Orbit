@@ -60,8 +60,8 @@ export function StatusLine({
           className="personal-status-button"
           type="button"
           disabled={statuses.isPending || !!statuses.error}
-          aria-label={active ? 'Edit your status' : 'Add a status'}
-          aria-description={bubble && active ? full : undefined}
+          aria-label={active ? undefined : 'Add a status'}
+          aria-description={active ? `${full}. Edit status.` : undefined}
           onClick={() => setEditing(true)}
         >
           {content}
@@ -71,7 +71,7 @@ export function StatusLine({
         <Link
           className="personal-status-button"
           to={`/person/${user}`}
-          aria-label={`View full status: ${full}`}
+          aria-description={`View profile. ${full}`}
         >
           {content}
         </Link>

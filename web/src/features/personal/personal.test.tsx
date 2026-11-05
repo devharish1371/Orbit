@@ -175,7 +175,7 @@ test('the shared shelf links to the chosen active collection without archived it
   ]
   wrap(<SharedShelf days={359} />)
   expect(
-    screen.getByRole('link', { name: 'Open Weekends, 2 saved' }),
+    screen.getByRole('link', { name: 'Weekends 2 saved' }),
   ).toHaveAttribute('href', '/keepsakes?collection=one')
   expect(screen.queryByText('Archived')).not.toBeInTheDocument()
   expect(screen.getByText('359 days together')).toBeVisible()
@@ -202,7 +202,7 @@ test('on-this-day stays absent without real results and uses actual retained yea
   expect(screen.getByText('2025')).toBeVisible()
   expect(
     screen.getByRole('link', {
-      name: 'Open memory from 2025: That rainy walk',
+      name: '2025 That rainy walk',
     }),
   ).toHaveAttribute('href', '/on-this-day')
 })
@@ -221,7 +221,13 @@ test('thought previews shorten four-word lines and keep a full-text profile dest
   expect(screen.getByText('Taking the scenic…')).toBeVisible()
   expect(
     screen.getByRole('link', {
-      name: 'View full status: Taking the scenic route today',
+      name: 'Taking the scenic…',
     }),
   ).toHaveAttribute('href', '/person/partner')
+  expect(
+    screen.getByRole('link', { name: 'Taking the scenic…' }),
+  ).toHaveAttribute(
+    'aria-description',
+    'View profile. Taking the scenic route today',
+  )
 })

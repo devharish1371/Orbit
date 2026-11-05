@@ -22,7 +22,7 @@ function MemorySlip({ post }: { post: Post }) {
     <Link
       to="/on-this-day"
       className="memory-slip"
-      aria-label={`Open memory from ${new Intl.DateTimeFormat('en-IN', { timeZone: space?.couple.timezone, year: 'numeric' }).format(new Date(post.created_at))}: ${post.body || (post.kind === 'voice' ? 'Voice note' : 'Photo')}`}
+      aria-description="Open this memory"
     >
       <span className="memory-slip-art" aria-hidden="true">
         {image.data ? (
@@ -40,10 +40,9 @@ function MemorySlip({ post }: { post: Post }) {
           timeZone: space?.couple.timezone,
           year: 'numeric',
         }).format(new Date(post.created_at))}
-      </time>
+      </time>{' '}
       <strong>
-        {post.body ||
-          (post.kind === 'voice' ? 'A voice we kept' : 'A photo we kept')}
+        {post.body || (post.kind === 'voice' ? 'Voice note' : 'Photo')}
       </strong>
     </Link>
   )

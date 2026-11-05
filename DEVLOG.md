@@ -1527,3 +1527,10 @@ Largest text and Less motion survive fixture reload; rotation is stopped and its
 local toggle is absent. Full partner status and Back-to-Us were observed. All 89 hosted checks
 are validated across the 88-pass full run and corrected cron-inventory/schedule/privilege rerun.
 The injected local fixture is distinct from hosted server checks; no real partner contact.
+
+Accessibility follow-up: visible thought/collection/memory labels now provide their own
+accessible names, with full status/action details in descriptions. This resolves the speech-input
+label mismatch advisory without extra visible wording. Strengthened Us feature selectors and
+matched the isolated harness stylesheet order to production; all 198 final states fit again.
+203 web/24 worker and the full client pipeline pass after these changes. Android CI
+42071973843 passed at 167652d; the final accessibility source is being verified below.

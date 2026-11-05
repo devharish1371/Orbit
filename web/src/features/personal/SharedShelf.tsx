@@ -37,12 +37,12 @@ export function SharedShelf({ days }: { days: number | null }) {
           {active.slice(0, 6).map((item) => (
             <Link
               className="shared-shelf-book"
-              aria-label={`Open ${item.name}, ${item.kept_count} saved`}
+              aria-description="Open collection"
               key={item.id}
               to={`/keepsakes?collection=${item.id}`}
             >
               <CollectionMark tone={item.tone} />
-              <strong>{item.name}</strong>
+              <strong>{item.name}</strong>{' '}
               <small>{item.kept_count} saved</small>
             </Link>
           ))}
