@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MotionConfig } from 'motion/react'
 import { AppBoundary } from '@/components/ErrorBoundary'
 import { AuthProvider } from '@/app/AuthProvider'
 import './index.css'
@@ -11,7 +10,8 @@ import './styles/orbit-worlds.css'
 import './styles/orbit-atelier.css'
 import './styles/orbit-foundation.css'
 import '@/hooks/useTheme'
-import App from './App'
+import ComfortableApp from '@/app/ComfortableApp'
+import './styles/orbit-comfort.css'
 const query = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
 })
@@ -29,9 +29,7 @@ createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={query}>
         <AuthProvider>
           <HashRouter>
-            <MotionConfig reducedMotion="user">
-              <App />
-            </MotionConfig>
+            <ComfortableApp />
           </HashRouter>
         </AuthProvider>
       </QueryClientProvider>

@@ -1,0 +1,27 @@
+/* Typography scales independently of touch geometry and the map canvas. */
+:root[data-text-size='standard'] {
+  font-size: 100%;
+}
+:root[data-text-size='larger'] {
+  font-size: 112.5%;
+}
+:root[data-text-size='largest'] {
+  font-size: 125%;
+}
+:root[data-motion='reduced'] *,
+:root[data-motion='reduced'] *::before,
+:root[data-motion='reduced'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+:root[data-motion='reduced']::view-transition-group(*),
+:root[data-motion='reduced']::view-transition-old(*),
+:root[data-motion='reduced']::view-transition-new(*) {
+  animation: none !important;
+}
+
+/* Text-only tabs keep a full touch target at every reading size. */
+.posts-page:not(.chat-page) .post-filters button {
+  min-width: 44px;
+}

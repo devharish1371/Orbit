@@ -1,3 +1,4 @@
+import { ComfortControls } from './ComfortControls'
 import { BackLink } from '@/components/ui/JourneyLink'
 import { ThemePicker } from '@/components/ui/ThemePicker'
 import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
@@ -157,6 +158,7 @@ export default function SettingsPage() {
           </p>
         )}
       </form>
+      <ComfortControls />
       <StorageStatus />
       <PrivacySettings />
       <ExportMemories />

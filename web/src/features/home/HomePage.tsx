@@ -1,3 +1,4 @@
+import { StatusLine } from '@/features/personal/StatusLine'
 import {
   ArrowUpRight,
   Heart,
@@ -65,6 +66,7 @@ export default function HomePage() {
                   '…'}
               </PersonLink>
             </h2>
+            <StatusLine user={partner?.user_id} />
             <p className="status-chip">
               <span className="status-dot" />
               {partner?.share_mode === 'paused'

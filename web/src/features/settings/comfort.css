@@ -1,0 +1,30 @@
+.comfort-controls fieldset {
+  border: 0;
+  margin: 22px 0;
+  padding: 0;
+  min-width: 0;
+}
+.comfort-controls legend {
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+.comfort-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.comfort-options button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--surface);
+  font-size: 0.8125rem;
+}
+.comfort-options button[aria-pressed='true'] {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+}

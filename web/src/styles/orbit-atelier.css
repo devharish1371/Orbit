@@ -23,7 +23,7 @@
   border: 0;
   background: var(--surface-strong);
   border-radius: 28px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 650;
   color: var(--text);
 }
@@ -73,7 +73,7 @@
   border-bottom: 1px solid var(--border);
 }
 .orbit-sheet-heading h2 {
-  font-size: 22px;
+  font-size: 1.375rem;
   letter-spacing: -0.04em;
   margin: 0;
   min-width: 0;
@@ -109,7 +109,7 @@
   background: var(--panel);
   color: var(--text);
   box-shadow: 0 3px 12px #0003;
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 .person-map-marker {
@@ -210,7 +210,7 @@
   background: none;
   box-shadow: none;
   font-family: 'Fraunces Variable', serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 1.4;
   resize: vertical;
 }
@@ -263,14 +263,14 @@
   border-radius: 30px;
   border: 0;
   background: var(--surface-strong);
-  font-size: 11px;
+  font-size: 0.6875rem;
   padding: 10px 13px;
 }
 .moment-create .composer-options > .button {
   margin-left: auto;
   min-height: 44px;
   border-radius: 50px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .moment-create .file-picker {
   min-height: 150px;
@@ -282,7 +282,7 @@
   border: 0;
   border-radius: 28px;
   color: var(--text);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .moment-create-icon {
   color: var(--primary);
@@ -314,13 +314,13 @@
 :is(.posts-page:not(.chat-page), .keepsakes-page) .post-author .avatar {
   width: 30px;
   height: 30px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 :is(.posts-page:not(.chat-page), .keepsakes-page) .post-author strong {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 :is(.posts-page:not(.chat-page), .keepsakes-page) .post-author time {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .posts-page:not(.chat-page) .expiry-ring {
   width: auto;
@@ -328,7 +328,7 @@
   height: 28px;
   padding: 0 7px;
   border-radius: 50px;
-  font-size: 9px;
+  font-size: 0.5625rem;
   background: none;
   border: 1px solid var(--border);
 }
@@ -347,7 +347,7 @@
 }
 :is(.posts-page:not(.chat-page), .keepsakes-page) .post-body {
   margin: 15px 2px 12px;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.65;
 }
 :is(.posts-page:not(.chat-page), .keepsakes-page)
@@ -357,7 +357,7 @@
   .post-card[data-kind='mood']
   .post-body {
   font-family: 'Fraunces Variable', serif;
-  font-size: clamp(25px, 7vw, 36px);
+  font-size: clamp(1.5625rem, 7vw, 2.25rem);
   line-height: 1.35;
   letter-spacing: -0.025em;
   padding: 28px 24px 36px;
@@ -429,7 +429,7 @@
   height: 44px;
   min-width: 44px;
   padding: 0;
-  font-size: 23px;
+  font-size: 1.4375rem;
   border-radius: 50%;
   background: none;
   transition:
@@ -453,7 +453,7 @@
   place-items: center;
 }
 .reaction-burst > span {
-  font-size: 32px;
+  font-size: 2rem;
   animation: heart-lift 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 .reaction-burst > i {
@@ -510,7 +510,7 @@
   background: none;
   border: 0;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
 }
 .photo-picker-art {
@@ -560,13 +560,13 @@
 .moment-create .moment-studio textarea {
   min-height: 132px;
   padding: 16px 0;
-  font-size: 23px;
+  font-size: 1.4375rem;
 }
 .moment-create .moment-studio:not([data-kind='text']) textarea {
   min-height: 64px;
   height: 72px;
   font: inherit;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.5;
   padding: 12px 0;
 }
@@ -624,7 +624,7 @@
   border-radius: 8px;
   background: none;
   border: 0;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
 }
 .moment-studio .choice-trigger > span {
@@ -721,7 +721,7 @@
   border-radius: 50px;
   background: var(--surface-strong);
   box-shadow: none;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text);
 }
 .studio-recorder[data-state='recording'] .voice-capture > button {
@@ -753,7 +753,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  font-size: 25px;
+  font-size: 1.5625rem;
   background: none;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -767,11 +767,11 @@
   text-decoration: none;
 }
 .moment-create-toggle strong {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 650;
 }
 .moment-reaction-palette .palette-close {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .posts-page:not(.chat-page) .reaction-summary {
   display: flex;
@@ -782,7 +782,7 @@
   min-width: 44px;
   height: 32px;
   padding: 4px 8px;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 20px;
 }
 .post-comments {
@@ -794,7 +794,7 @@
   margin: 20px 0;
   border-left: 2px solid var(--primary);
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: 0.875rem;
   max-height: 120px;
   overflow: auto;
   white-space: pre-wrap;
@@ -819,23 +819,23 @@
   flex: none;
   width: 30px;
   height: 30px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .reply-content {
   flex: 1;
   min-width: 0;
 }
 .reply-content strong {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .reply-content p {
   margin: 5px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 .reply-content time {
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--text-dim);
 }
 .post-comments li > button {
@@ -945,7 +945,7 @@
 .person-photo-trigger .avatar {
   width: 128px;
   height: 128px;
-  font-size: 52px;
+  font-size: 3.25rem;
   border-width: 4px;
   box-shadow: 0 15px 40px #0002;
 }
@@ -963,7 +963,7 @@
 }
 .person-cover h1 {
   margin: 0;
-  font-size: clamp(32px, 9vw, 48px);
+  font-size: clamp(2rem, 9vw, 3rem);
   line-height: 1.1;
   overflow-wrap: anywhere;
 }
@@ -974,7 +974,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   margin-top: 20px;
   color: var(--text-dim);
 }
@@ -992,7 +992,7 @@
   padding: 22px 8px;
   background: var(--surface-strong);
   border-radius: 24px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text);
   text-decoration: none;
 }
@@ -1002,7 +1002,7 @@
   align-items: center;
   min-height: 52px;
   border-block: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text);
 }
 
@@ -1033,7 +1033,7 @@
 .us-page .bond-portraits .avatar {
   width: 80px;
   height: 80px;
-  font-size: 32px;
+  font-size: 2rem;
 }
 .us-page .bond-portraits > span {
   margin-top: 31px;
@@ -1043,7 +1043,7 @@
   height: 32px;
 }
 .us-page .bond-portraits strong {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
   text-align: center;
@@ -1108,7 +1108,7 @@
   border-radius: 50px;
   background: none;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .note-style-picker button[aria-pressed='true'] {
   border-color: var(--primary);
@@ -1156,7 +1156,7 @@
   color: #fff3fa;
   font-family: 'Plus Jakarta Sans Variable', sans-serif;
   font-weight: 750;
-  font-size: clamp(25px, 7.5vw, 34px);
+  font-size: clamp(1.5625rem, 7.5vw, 2.125rem);
   line-height: 1.25;
   letter-spacing: -0.055em;
   text-shadow: 0 0 26px #d4a7ff25;
@@ -1189,7 +1189,7 @@
 :is(.posts-page:not(.chat-page), .keepsakes-page)
   .post-card
   .post-body[data-note-style][data-long='true'] {
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 :is(.posts-page:not(.chat-page), .keepsakes-page)
@@ -1201,6 +1201,6 @@
 }
 .note-expand {
   min-height: 44px;
-  font-size: 12px;
+  font-size: 0.75rem;
   padding: 8px 0;
 }

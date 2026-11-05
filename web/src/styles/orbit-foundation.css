@@ -23,7 +23,7 @@
 }
 .page :is(.settings-section, .memory-section) h2 {
   font-family: var(--font-sans);
-  font-size: 21px;
+  font-size: 1.3125rem;
   letter-spacing: -0.035em;
 }
 .page
@@ -110,7 +110,7 @@
 }
 .storage-details {
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .storage-details > summary {
   min-height: var(--orbit-touch-target);
@@ -125,7 +125,7 @@
 }
 .storage-details > summary::after {
   content: '+';
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 .storage-details[open] > summary::after {
   content: '−';

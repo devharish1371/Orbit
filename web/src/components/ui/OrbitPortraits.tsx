@@ -1,3 +1,4 @@
+import { useComfort } from '@/hooks/useComfort'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Pause, Play } from 'lucide-react'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
@@ -7,6 +8,7 @@ import { copy } from '@/copy/en'
 
 export function OrbitPortraits() {
   const { data } = useSpace()
+  const { reduced } = useComfort()
   const scene = useRef<HTMLDivElement>(null)
   const [paused, setPaused] = useState(false)
   const [visible, setVisible] = useState(true)
@@ -33,7 +35,7 @@ export function OrbitPortraits() {
     <div
       className="portrait-universe"
       ref={scene}
-      data-running={!paused && visible && !hidden && !held}
+      data-running={!reduced && !paused && visible && !hidden && !held}
       style={
         {
           '--self-color': self.color,
@@ -71,19 +73,21 @@ export function OrbitPortraits() {
           />
         </Link>
       </div>
-      <button
-        className="orbit-motion-toggle"
-        type="button"
-        aria-label={paused ? 'Animate orbit' : 'Pause orbit'}
-        aria-pressed={paused}
-        onClick={() => setPaused(!paused)}
-      >
-        {paused ? (
-          <Play size={13} aria-hidden="true" />
-        ) : (
-          <Pause size={13} aria-hidden="true" />
-        )}
-      </button>
+      {!reduced && (
+        <button
+          className="orbit-motion-toggle"
+          type="button"
+          aria-label={paused ? 'Animate orbit' : 'Pause orbit'}
+          aria-pressed={paused}
+          onClick={() => setPaused(!paused)}
+        >
+          {paused ? (
+            <Play size={13} aria-hidden="true" />
+          ) : (
+            <Pause size={13} aria-hidden="true" />
+          )}
+        </button>
+      )}
     </div>
   )
 }

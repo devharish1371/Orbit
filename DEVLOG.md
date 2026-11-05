@@ -1479,3 +1479,29 @@ No real partner contact, microphone use or APK handover. QA tabs closed, Day app
 and default viewport restored. User dev/production preview servers restored on 5173/4173.
 Temporary QA servers on 4176/4177 stopped; app previews remain available. Final
 source/evidence secret scan: 1,052 files, zero findings.
+
+### 5 November — Combined personal space and comfort batch
+
+User asked to combine compatible work to save time and explicitly defer V2.6. Implemented
+V2.7 voluntary expiring status, real past-year kept memories and the Us shelf, together with
+V2.8 device-local text size and reduced-motion controls. Native entrance/widget and safety
+remain open. Cloud originals remain saved; no archive/removal policy is activated.
+
+Migrations 0033/0034 add guarded/versioned status writes, author/partner RLS, server-time expiry,
+five-minute private text erasure with empty version tombstones, and timezone-scoped cursor
+queries over actual retained memories. Status changes do not send notifications. Us opens
+specific collections and keeps daily questions on Home. Existing CSS font sizes now use rem;
+default size is unchanged, larger settings scale typography independently from map/touch
+geometry. OS reduced motion always wins over a local Follow phone choice. Background,
+shared-image and orbital motion safeguards remain. No new permissions or real partner contact.
+
+201 web/24 worker checks plus lint, strict types, format and production build pass. Initial
+hosted testing encountered a network interruption; the next run passed 87/88, with the timed-out
+anonymous-read check and new-table stranger checks passing on targeted retry. A final full run
+including expired-status erasure is in progress. Browser fixtures cover 180 layout combinations
+across ten pages, 320/360/412 px, both themes and all three text sizes without horizontal page
+overflow; measured visible product button/input/icon targets are at least 44 px. A narrow
+Moments All tab found in the first pass now has a full touch target. Isolated browser status
+failure preserves text, retry saves and reload restores it; collection deep links select the
+intended shelf. This harness has fake providers/local transport, not real partner accounts.
+Final Android CI and screen audits follow. No APK handover. See docs/V2_PERSONAL_SPACE.md.

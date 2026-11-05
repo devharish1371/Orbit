@@ -42,12 +42,12 @@ h2 {
   font-variation-settings: normal;
 }
 h1 {
-  font-size: clamp(38px, 10vw, 50px);
+  font-size: clamp(2.375rem, 10vw, 3.125rem);
   letter-spacing: -0.065em;
   line-height: 1.08;
 }
 h2 {
-  font-size: 26px;
+  font-size: 1.625rem;
   letter-spacing: -0.045em;
 }
 .glass {
@@ -107,7 +107,7 @@ h2 {
 .login-brand {
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 24px;
+  font-size: 1.5rem;
   letter-spacing: -0.08em;
 }
 .brand img,
@@ -207,7 +207,7 @@ h2 {
 .bottom-nav a {
   color: var(--text-dim);
   gap: 4px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .bottom-nav a.active {
   color: var(--ink);
@@ -237,13 +237,13 @@ h2 {
   padding-block: 12px 0;
 }
 .home-page .page-heading h1 {
-  font-size: 44px;
+  font-size: 2.75rem;
   max-width: 100%;
 }
 .home-page .page-heading .eyebrow {
   text-transform: none;
   letter-spacing: 0.01em;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .connection-card {
   padding: 0 18px 18px;
@@ -268,7 +268,7 @@ h2 {
 .portrait-orb .avatar {
   width: 86px;
   height: 86px;
-  font-size: 36px;
+  font-size: 2.25rem;
   border-width: 4px;
   box-shadow: 5px 7px 0 color-mix(in srgb, var(--text) 8%, transparent);
 }
@@ -282,7 +282,7 @@ h2 {
 }
 .portrait-self > span {
   font-weight: 700;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .orbit-knot {
   left: calc(50% - 17px);
@@ -297,7 +297,7 @@ h2 {
   color: #3e4c95;
 }
 .partner-heading h2 {
-  font-size: 28px;
+  font-size: 1.75rem;
 }
 .partner-chat-link {
   border-radius: 50%;
@@ -315,7 +315,7 @@ h2 {
   border: 1px solid var(--border);
   background: var(--surface-strong);
   border-radius: 14px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-height: 48px;
 }
 .connection-card .location-status {
@@ -370,7 +370,7 @@ h2 {
 }
 .chat-heading h1 {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 800;
   letter-spacing: -0.035em;
 }
@@ -498,7 +498,7 @@ h2 {
   border-bottom: 1px solid var(--border);
 }
 .post-card:not(.chat-bubble) .post-body {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
 }
 .post-actions {
@@ -526,7 +526,7 @@ h2 {
 }
 /* Map: a large atlas with tools at the point of use. */
 .map-page .section-heading h1 {
-  font-size: 44px;
+  font-size: 2.75rem;
 }
 .location-refresh {
   display: grid;
@@ -551,7 +551,7 @@ h2 {
   color: var(--text);
   padding: 11px 16px;
   font: inherit;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
   cursor: pointer;
   transition:
@@ -575,7 +575,7 @@ h2 {
 .location-refresh p {
   margin: 0;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -621,7 +621,7 @@ h2 {
   grid-row: 2;
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 32px;
+  font-size: 2rem;
   letter-spacing: -0.06em;
 }
 .distance-card .card-link {
@@ -654,7 +654,7 @@ h2 {
 .map-person-tabs .avatar {
   width: 32px;
   height: 32px;
-  font-size: 15px;
+  font-size: 0.9375rem;
   flex: none;
 }
 .map-person-tabs button span {
@@ -684,7 +684,7 @@ h2 {
 .map-person-heading h2 {
   margin: 0 0 3px;
   overflow-wrap: anywhere;
-  font-size: 22px;
+  font-size: 1.375rem;
   letter-spacing: -0.04em;
 }
 .map-person-heading .location-freshness {
@@ -743,12 +743,12 @@ h2 {
   box-shadow: 4px 5px 0 var(--surface-strong);
 }
 .us-bond h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .us-bond h2 em {
   font-family: 'Fraunces Variable', serif;
   color: var(--primary);
-  font-size: 32px;
+  font-size: 2rem;
 }
 .bond-actions {
   margin-top: 16px;
@@ -758,7 +758,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 8px 11px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .memory-doors {
   gap: 12px;
@@ -817,12 +817,12 @@ h2 {
   color: var(--text);
 }
 .door-label strong {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 800;
 }
 .door-days strong {
   font-family: 'Fraunces Variable', serif;
-  font-size: 58px;
+  font-size: 3.625rem;
 }
 .daily-question {
   margin-top: 22px;
@@ -836,7 +836,7 @@ h2 {
 }
 .daily-question h2 {
   font-family: var(--font-sans);
-  font-size: 25px;
+  font-size: 1.5625rem;
   font-weight: 650;
   line-height: 1.28;
   letter-spacing: -0.035em;
@@ -875,7 +875,7 @@ h2 {
   border-radius: 50%;
   background: var(--button-from);
   color: var(--ink);
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .capsule-compose[hidden] {
   display: none;
@@ -893,7 +893,7 @@ h2 {
 }
 .capsule-card h2 {
   padding-right: 34px;
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .capsule-card time {
   padding-top: 12px;
@@ -911,7 +911,7 @@ h2 {
   border: 2px dotted var(--primary);
   color: var(--primary);
   rotate: 10deg;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 .capsule-open .post-body {
   padding-top: 12px;
@@ -929,11 +929,11 @@ h2 {
   overflow: hidden;
 }
 .story-count .countdown-number {
-  font-size: clamp(80px, 24vw, 120px);
+  font-size: clamp(5rem, 24vw, 7.5rem);
   line-height: 1;
 }
 .story-count p {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 650;
 }
 .story-timeline {
@@ -1040,7 +1040,7 @@ h2 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 700;
 }
 .theme-sample:hover .mini-planet + .mini-planet {
@@ -1060,11 +1060,11 @@ h2 {
 .profile-photo-section .avatar {
   width: 84px;
   height: 84px;
-  font-size: 36px;
+  font-size: 2.25rem;
   box-shadow: 5px 5px 0 var(--surface-strong);
 }
 .profile-photo-section h2 {
-  font-size: 26px;
+  font-size: 1.625rem;
 }
 .profile-photo-section .photo-upload {
   border-radius: 18px;
@@ -1076,7 +1076,7 @@ h2 {
 .settings-section h2 {
   font-family: var(--font-sans);
   font-weight: 750;
-  font-size: 21px;
+  font-size: 1.3125rem;
   letter-spacing: -0.035em;
 }
 .settings-section
@@ -1102,7 +1102,7 @@ h2 {
 }
 .profile-settings-link strong {
   flex: 1;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 700;
 }
 .profile-settings-link > span {
@@ -1129,7 +1129,7 @@ h2 {
 .preference-row {
   min-height: 64px;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .preference-row input[type='checkbox'] {
   appearance: none;
@@ -1184,7 +1184,7 @@ h2 {
   font-weight: 800;
 }
 .login-page h1 {
-  font-size: 46px;
+  font-size: 2.875rem;
 }
 .login-page .orbit-art {
   transform: scale(1.12);
@@ -1204,7 +1204,7 @@ h2 {
 /* Small-screen layout never depends on hovering or a decorative animation. */
 @media (max-width: 380px) {
   .section-heading h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
   .heading-object {
     width: 56px;
@@ -1222,13 +1222,13 @@ h2 {
   .chat-heading .avatar {
     width: 32px;
     height: 32px;
-    font-size: 16px;
+    font-size: 1rem;
   }
   .chat-heading .icon-button {
     width: 44px;
   }
   .chat-heading h1 {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
   .memory-door {
     min-height: 195px;
@@ -1240,7 +1240,7 @@ h2 {
     gap: 3px;
   }
   .theme-sample-label {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .theme-sample {
     padding: 3px;
@@ -1282,7 +1282,7 @@ h2 {
   color: var(--text-dim);
   background: var(--surface-strong);
   text-align: left;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .explorer-toggle > svg:nth-of-type(2) {
   margin-left: auto;
@@ -1313,7 +1313,7 @@ h2 {
   min-width: 0;
   min-height: 48px;
   font: inherit;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text);
   background: var(--bg);
   border: 1px solid var(--border);
@@ -1334,7 +1334,7 @@ h2 {
   flex: 1;
   min-height: 44px;
   padding: 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   border: 1px solid var(--border);
   border-radius: 18px;
   background: var(--bg);
@@ -1350,7 +1350,7 @@ h2 {
 }
 .chat-page .explorer-toggle {
   min-height: 36px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   background: transparent;
 }
 .chat-page:has(.explorer-panel:not([hidden])) .chat-scroll {
@@ -1363,7 +1363,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 650;
   background: var(--bg);
   margin-block: 12px;
@@ -1387,7 +1387,7 @@ h2 {
 }
 .directions-link {
   margin-block: 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .sharing-signal {
   display: flex;
@@ -1412,7 +1412,7 @@ h2 {
   --text-dim: #4c5570;
 }
 .sharing-signal h2 {
-  font-size: 24px;
+  font-size: 1.5rem;
   margin-block: 5px 8px;
 }
 .signal-illustration {
@@ -1440,7 +1440,7 @@ h2 {
   position: absolute;
   right: 7px;
   bottom: 4px;
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 .tracking-setup > summary {
   display: flex;
@@ -1452,11 +1452,11 @@ h2 {
   border: 1px solid var(--border);
   cursor: pointer;
   font-weight: 750;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .tracking-setup > summary span {
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .tracking-step {
   margin-top: 10px;
@@ -1550,7 +1550,7 @@ h2 {
 .portrait-orb .avatar {
   width: 48px;
   height: 48px;
-  font-size: 21px;
+  font-size: 1.3125rem;
   border-width: 2px;
   box-shadow: 0 0 0 6px var(--panel);
 }
@@ -1564,13 +1564,13 @@ h2 {
 }
 .portrait-self > span:not(.avatar) {
   margin-top: 10px;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .connection-card {
   padding-bottom: 20px;
 }
 .connection-card .partner-heading h2 {
-  font-size: 28px;
+  font-size: 1.75rem;
   letter-spacing: -0.035em;
   font-weight: 720;
 }
@@ -1587,7 +1587,7 @@ h2 {
   border-radius: 26px;
 }
 .us-bond h2 {
-  font-size: 24px;
+  font-size: 1.5rem;
   letter-spacing: -0.025em;
 }
 .memory-door {
@@ -1752,7 +1752,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 14px;
   font: inherit;
-  font-size: 13px;
+  font-size: 0.8125rem;
   text-align: left;
 }
 .choice-trigger > span {
@@ -1799,7 +1799,7 @@ h2 {
 }
 .choice-sheet h2 {
   font-family: var(--font-sans);
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 720;
   letter-spacing: -0.025em;
 }
@@ -1830,14 +1830,14 @@ h2 {
   border-bottom: none;
 }
 .choice-list strong {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 650;
 }
 .choice-list small {
   display: block;
   margin-top: 5px;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 .choice-check {
@@ -1901,13 +1901,13 @@ html:has(.choice-sheet[open]) {
   color: var(--text);
 }
 .orbit-loading > strong {
-  font-size: 27px;
+  font-size: 1.6875rem;
   font-weight: 750;
   letter-spacing: -0.05em;
 }
 .orbit-loading > p {
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .loading-emblem {
   position: relative;
@@ -2035,7 +2035,7 @@ html:has(.choice-sheet[open]) {
 .portrait-motion-track .portrait-orb .avatar {
   width: 34px;
   height: 34px;
-  font-size: 16px;
+  font-size: 1rem;
   box-shadow: 0 0 0 3px var(--panel);
 }
 .portrait-motion-track .portrait-self {
@@ -2144,7 +2144,7 @@ html:has(.choice-sheet[open]) {
 .timeline-page .story-count .countdown-number {
   display: block;
   max-width: 100%;
-  font-size: clamp(54px, 18vw, 92px);
+  font-size: clamp(3.375rem, 18vw, 5.75rem);
   line-height: 1.08;
   overflow-wrap: anywhere;
   text-align: center;
@@ -2193,7 +2193,7 @@ html:has(.choice-sheet[open]) {
   border-radius: 50%;
   background: var(--button-from);
   color: var(--ink);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 }
 .timeline-page .story-timeline li > div {
@@ -2202,14 +2202,14 @@ html:has(.choice-sheet[open]) {
 }
 .timeline-page .story-timeline strong {
   display: block;
-  font-size: 15px;
+  font-size: 0.9375rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 .timeline-page .story-timeline time {
   display: block;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.6;
   color: var(--text-dim);
   overflow-wrap: anywhere;
@@ -2225,7 +2225,7 @@ html:has(.choice-sheet[open]) {
   border-radius: 12px;
   background: var(--surface-strong);
   color: var(--text-dim);
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .timeline-page .week-recap {
   display: grid;
@@ -2246,13 +2246,13 @@ html:has(.choice-sheet[open]) {
 .timeline-page .recap-grid strong {
   display: block;
   min-width: 0;
-  font-size: clamp(21px, 6.5vw, 32px);
+  font-size: clamp(1.3125rem, 6.5vw, 2rem);
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 .timeline-page .recap-grid span {
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -2297,13 +2297,13 @@ html:has(.choice-sheet[open]) {
 .keepsake-photo-card time {
   display: block;
   color: var(--text-dim);
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1.5;
 }
 .keepsake-photo-card p {
   margin-top: 6px;
   color: var(--text);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -2316,7 +2316,7 @@ html:has(.choice-sheet[open]) {
   margin-top: 24px;
   border-top: 1px solid var(--border);
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 @media (max-width: 340px) {
   .keepsake-photo-grid {

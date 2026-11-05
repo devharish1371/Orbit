@@ -152,6 +152,14 @@ the real partner's unavailable phone. Physical two-phone verification stays for 
   artifact integrity/signing/private scan pass. The Chat media software slice is verified;
   physical gates remain deferred. Moments drafts remain in memory. See docs/V2_PHONE_KEEPSAKES.md, docs/V2_COLLECTIONS.md
   and docs/V2_MEDIA_OUTBOX.md.
-- V2.6–V2.10: planned and approved. Safety defaults remain off until implemented and validated.
+- 5 November priority update: user asked to combine compatible work to save time and explicitly
+  defer V2.6. Build V2.7 personal space together with V2.8 reading/motion comfort controls.
+  V2.6 remains deferred, not cancelled. V2.5 cloud-removal/archive policy, V2.8 native
+  entrance/widget, V2.9 safety and V2.10 release audit remain open. No sensor is enabled
+  silently and no APK handover/phone install is requested during this batch.
 - The approved audit is the scope reference; its earlier “await selection” wording is superseded
   by this approval. Keep every proposal on this plan, even when it ships in a later phase.
+
+Combined batch underway: V2.7 personal space and V2.8 reading/motion controls are implemented;
+201 web/24 worker checks pass. Final browser/hosted/Android evidence follows in DEVLOG.md and
+docs/V2_PERSONAL_SPACE.md. V2.6 remains deferred at the user’s request.

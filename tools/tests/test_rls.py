@@ -7,7 +7,7 @@ import pytest
 from tools.orbit_common import Api
 
 pytestmark = pytest.mark.integration
-TABLES = ['couples','members','live_location','location_history','daily_summary','places','place_presence','events','posts','comments','reactions','capsules','question_answers','device_tokens','retention_runs','_migrations','media_gc']
+TABLES = ['couples','members','live_location','location_history','daily_summary','places','place_presence','events','posts','comments','reactions','capsules','question_answers','device_tokens','member_status','retention_runs','_migrations','media_gc']
 
 
 def test_rls_enabled_and_stranger_cannot_read_any_orbit_table(backend) -> None:

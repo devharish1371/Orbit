@@ -1,3 +1,4 @@
+import { StatusLine } from '@/features/personal/StatusLine'
 import { BackLink } from '@/components/ui/JourneyLink'
 import { PersonLink } from '@/components/ui/PersonLink'
 import { ThemePicker } from '@/components/ui/ThemePicker'
@@ -231,6 +232,7 @@ function ProfileEditor({ member }: { member: Member }) {
           </p>
         )}
       </section>
+      <StatusLine user={member.user_id} editable />
       <form
         onSubmit={(event) => {
           void save(event)

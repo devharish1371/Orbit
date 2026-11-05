@@ -34,7 +34,7 @@
   color: var(--text-dim);
   text-align: left;
   font: inherit;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.5;
 }
 .reply-preview > svg {
@@ -71,7 +71,7 @@
   gap: 12px;
   align-items: center;
   padding: 4px 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
 }
 .composer-feedback .form-message {
@@ -79,7 +79,7 @@
   flex: 1;
 }
 .chat-message-meta > span {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .edit-message-sheet textarea {
   width: 100%;
@@ -101,7 +101,7 @@
 }
 .original-message time {
   display: block;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
   margin-bottom: 12px;
 }
@@ -148,7 +148,7 @@
   border: 0;
   border-radius: 20px;
   font: inherit;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-align: left;
 }
 .open-pin > svg {
@@ -178,7 +178,7 @@
 .pending-message > p {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 .pending-message-state {
@@ -187,7 +187,7 @@
   gap: 6px;
   flex-wrap: wrap;
   margin-top: 8px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
 }
 .pending-message-state .icon-button {
@@ -199,7 +199,7 @@
 }
 .pending-message-state time {
   margin-left: auto;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 /* A small tool shelf leaves the typing row to text and its primary action. */
@@ -226,7 +226,7 @@
   background: transparent;
   color: var(--text-dim);
   font: inherit;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .chat-media-tray .chat-tray-action > span:first-child,
 .chat-media-tray .choice-trigger-icon {
@@ -301,7 +301,7 @@
   background: none;
   color: inherit;
   font: inherit;
-  font-size: 14px;
+  font-size: 0.875rem;
   text-align: left;
 }
 .pending-media-preview > svg {

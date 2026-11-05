@@ -109,11 +109,11 @@ h2 {
 }
 h1 {
   white-space: pre-line;
-  font-size: 42px;
+  font-size: 2.625rem;
   line-height: 1.13;
 }
 h2 {
-  font-size: 28px;
+  font-size: 1.75rem;
   line-height: 1.16;
 }
 strong {
@@ -122,15 +122,15 @@ strong {
 }
 .muted {
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.7;
 }
 .small {
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.65;
 }
 .eyebrow {
-  font-size: 10px;
+  font-size: 0.625rem;
   letter-spacing: 0.19em;
   font-weight: 700;
   line-height: 1.6;
@@ -177,7 +177,7 @@ strong {
   );
   color: #2c163b;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 0.875rem;
   box-shadow: 0 6px 22px #d98bbb18;
 }
 .button-secondary {
@@ -192,7 +192,7 @@ strong {
   color: var(--primary);
   min-height: 44px;
   padding: 6px 3px;
-  font-size: 12px;
+  font-size: 0.75rem;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -223,7 +223,7 @@ strong {
 }
 .login-brand {
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: 1.4375rem;
   letter-spacing: -0.02em;
 }
 .brand-end {
@@ -288,24 +288,24 @@ strong {
 .star-one {
   right: 33px;
   bottom: 20px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .star-two {
   left: 29px;
   top: 27px;
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .login-copy {
   text-align: center;
 }
 .login-copy h1 {
-  font-size: 40px;
+  font-size: 2.5rem;
   margin: 14px 0;
 }
 .login-copy .muted {
   max-width: 300px;
   margin: auto;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .login-card {
   margin-top: 29px;
@@ -315,7 +315,7 @@ strong {
 }
 .login-card label,
 .settings-section label {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
   font-weight: 600;
 }
@@ -337,7 +337,7 @@ input {
   border-radius: 13px;
   padding: 13px 14px;
   outline-offset: 2px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .input-wrap input {
   padding-left: 44px;
@@ -352,17 +352,17 @@ input::placeholder {
   align-items: center;
   gap: 6px;
   color: var(--text-dim);
-  font-size: 10px;
+  font-size: 0.625rem;
   line-height: 1.6;
 }
 .field-error {
   color: var(--danger);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.6;
 }
 .code-input {
   text-align: center;
-  font-size: 25px;
+  font-size: 1.5625rem;
   letter-spacing: 0.25em;
   font-variant-numeric: tabular-nums;
   padding-left: 20px;
@@ -373,13 +373,13 @@ input::placeholder {
   gap: 8px;
 }
 .code-actions button {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .login-footer {
   margin-top: auto;
   padding-top: 28px;
   text-align: center;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text-faint);
   display: flex;
   align-items: center;
@@ -388,7 +388,7 @@ input::placeholder {
 }
 .login-footer span {
   color: var(--primary);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .app-shell {
   max-width: 480px;
@@ -402,7 +402,7 @@ input::placeholder {
 }
 .brand {
   font-family: var(--font-display);
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .page {
   padding: 18px 25px 30px;
@@ -413,7 +413,7 @@ input::placeholder {
 }
 .page-heading h1 {
   margin-top: 12px;
-  font-size: 40px;
+  font-size: 2.5rem;
 }
 .page-heading > .muted {
   margin-top: 10px;
@@ -422,7 +422,7 @@ input::placeholder {
   position: absolute;
   right: 8px;
   top: 54px;
-  font-size: 29px;
+  font-size: 1.8125rem;
   color: var(--primary);
 }
 .partner-card {
@@ -434,7 +434,7 @@ input::placeholder {
   gap: 15px;
 }
 .partner-heading h2 {
-  font-size: 30px;
+  font-size: 1.875rem;
   margin: 3px 0 8px;
 }
 .partner-heart {
@@ -451,17 +451,17 @@ input::placeholder {
   background: color-mix(in srgb, var(--person-color), transparent 84%);
   border: 2px solid color-mix(in srgb, var(--person-color), transparent 25%);
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: 1.4375rem;
   color: var(--text);
 }
 .avatar-large {
   width: 68px;
   height: 68px;
-  font-size: 35px;
+  font-size: 2.1875rem;
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--person-color), transparent 94%);
 }
 .status-chip {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text-dim);
   display: flex;
   align-items: center;
@@ -479,7 +479,7 @@ input::placeholder {
   padding-top: 18px;
   display: flex;
   gap: 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.7;
 }
 .location-status svg {
@@ -502,7 +502,7 @@ input::placeholder {
   flex-direction: column;
   align-items: center;
   gap: 9px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-height: 76px;
   padding: 12px 4px 9px;
   border-radius: 15px;
@@ -536,11 +536,11 @@ input::placeholder {
 .map-preview h2 {
   position: relative;
   white-space: pre-line;
-  font-size: 29px;
+  font-size: 1.8125rem;
 }
 .map-preview > p {
   position: relative;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
   margin: 10px 0 18px;
 }
@@ -548,7 +548,7 @@ input::placeholder {
   display: inline-flex;
   gap: 8px;
   align-items: center;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--primary);
   min-height: 44px;
 }
@@ -597,7 +597,7 @@ input::placeholder {
   gap: 18px;
 }
 .anniversary-card h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
   margin: 12px 0 6px;
   max-width: 220px;
 }
@@ -608,12 +608,12 @@ input::placeholder {
 }
 .countdown-number {
   font-family: var(--font-display);
-  font-size: 52px;
+  font-size: 3.25rem;
   line-height: 1.2;
   margin: 8px 0;
 }
 .countdown-number span {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--primary);
   padding-left: 15px;
 }
@@ -622,12 +622,12 @@ input::placeholder {
 }
 .little-things h2 {
   white-space: pre-line;
-  font-size: 31px;
+  font-size: 1.9375rem;
   margin: 12px 0;
 }
 .little-things > .muted {
   max-width: 290px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .bottom-nav {
   position: fixed;
@@ -648,7 +648,7 @@ input::placeholder {
   flex-direction: column;
   gap: 5px;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-width: 55px;
   min-height: 48px;
   justify-content: center;
@@ -665,7 +665,7 @@ input::placeholder {
   gap: 15px;
 }
 .settings-section h2 {
-  font-size: 23px;
+  font-size: 1.4375rem;
 }
 .theme-options {
   display: flex;
@@ -678,7 +678,7 @@ input::placeholder {
   border: 0;
   background: transparent;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
   min-height: 44px;
   flex: 1;
   border-radius: 10px;
@@ -692,11 +692,11 @@ input::placeholder {
   align-items: center;
   gap: 7px;
   min-height: 44px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
 }
 .form-message {
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.6;
   color: var(--primary);
 }
@@ -710,7 +710,7 @@ input::placeholder {
   gap: 17px;
 }
 .empty-page h1 {
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 .empty-icon {
   height: 95px;
@@ -736,7 +736,7 @@ input::placeholder {
   gap: 10px;
   background: var(--bg-2);
   color: var(--text);
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.6;
   border-bottom: 1px solid var(--border);
 }
@@ -752,10 +752,10 @@ input::placeholder {
   gap: 22px;
 }
 .fallback h1 {
-  font-size: 34px;
+  font-size: 2.125rem;
 }
 .fallback p {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.7;
   color: var(--text-dim);
 }
@@ -780,7 +780,7 @@ input::placeholder {
   padding: 20px;
   min-width: 280px;
   background: var(--bg-2);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .update-prompt button {
   margin-right: 12px;
@@ -803,7 +803,7 @@ input::placeholder {
     padding-inline: 20px;
   }
   .login-copy h1 {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
   .page {
     padding-inline: 20px;
@@ -858,7 +858,7 @@ input::placeholder {
   width: 38px;
   height: 38px;
   margin: 3px;
-  font-size: 19px;
+  font-size: 1.1875rem;
 }
 .profile-photo-section {
   padding: 24px;
@@ -872,7 +872,7 @@ input::placeholder {
   min-width: 150px;
 }
 .profile-photo-section h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
   margin-bottom: 7px;
 }
 .profile-photo-section .form-message {
@@ -925,7 +925,7 @@ input::placeholder {
   cursor: pointer;
 }
 .profile-subheading {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   margin: 10px 0 0;
 }
@@ -941,7 +941,7 @@ input::placeholder {
   margin-top: 7px;
 }
 .profile-page .page-heading h1 {
-  font-size: 38px;
+  font-size: 2.375rem;
 }
 .profile-page input[readonly] {
   color: var(--text-dim);
@@ -955,7 +955,7 @@ input::placeholder {
   flex-wrap: wrap;
 }
 .person-profile-card h2 {
-  font-size: 28px;
+  font-size: 1.75rem;
   margin-top: 6px;
 }
 .person-profile-card .card-link {
@@ -972,7 +972,7 @@ input::placeholder {
   justify-content: space-between;
   min-height: 76px;
   padding: 20px 23px;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .profile-privacy {
   padding: 20px 8px;
@@ -983,7 +983,7 @@ input::placeholder {
   align-items: center;
   min-height: 52px;
   padding: 10px 8px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--primary);
 }
 
@@ -991,13 +991,13 @@ input::placeholder {
   margin-bottom: 16px;
 }
 .map-page .page-heading h1 {
-  font-size: 34px;
+  font-size: 2.125rem;
 }
 .map-connection {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
   margin: 12px 0;
 }
@@ -1028,11 +1028,11 @@ input::placeholder {
   border-radius: 14px;
   background: var(--bg);
   padding: 12px;
-  font-size: 12px;
+  font-size: 0.75rem;
   z-index: 4;
 }
 .maplibregl-ctrl-attrib {
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 .maplibregl-ctrl button {
   min-width: 44px;
@@ -1067,7 +1067,7 @@ input::placeholder {
   padding: 2px 5px;
   background: #21182f;
   color: white;
-  font-size: 9px;
+  font-size: 0.5625rem;
   white-space: nowrap;
 }
 .heading-tip {
@@ -1085,7 +1085,7 @@ input::placeholder {
   border-bottom: 9px solid var(--person-color);
 }
 .place-map-marker {
-  font-size: 23px;
+  font-size: 1.4375rem;
   text-shadow: 0 2px 4px #0008;
 }
 .map-toolbar {
@@ -1095,12 +1095,12 @@ input::placeholder {
 }
 .map-toolbar .button {
   flex: 1;
-  font-size: 11px;
+  font-size: 0.6875rem;
   padding: 10px 7px;
 }
 .map-add-hint {
   color: var(--primary);
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .distance-card {
   padding: 20px 22px;
@@ -1118,7 +1118,7 @@ input::placeholder {
     serif;
 }
 .distance-card .card-link {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .map-sharing {
   padding: 20px;
@@ -1137,7 +1137,7 @@ input::placeholder {
   cursor: pointer;
   min-height: 44px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .map-person-tabs {
   display: flex;
@@ -1152,7 +1152,7 @@ input::placeholder {
   border-radius: 20px;
   padding: 8px 15px;
   min-height: 44px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .map-person-tabs button[aria-pressed='true'] {
   color: var(--primary);
@@ -1165,14 +1165,14 @@ input::placeholder {
   margin-bottom: 18px;
 }
 .map-person-title h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 .location-metrics {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin: 16px 0;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .location-metrics span {
   background: var(--surface);
@@ -1181,7 +1181,7 @@ input::placeholder {
 }
 .stale-label {
   color: var(--primary);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .map-connect {
   display: flex;
@@ -1193,14 +1193,14 @@ input::placeholder {
   align-items: center;
   gap: 6px;
   min-height: 44px;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .check-row {
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 44px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .check-row input {
   width: 20px;
@@ -1215,7 +1215,7 @@ input::placeholder {
   margin: 20px 0;
 }
 .place-editor label {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-dim);
 }
 .place-editor input[type='range'] {
@@ -1228,11 +1228,11 @@ input::placeholder {
   align-items: center;
 }
 .our-places > h2 {
-  font-size: 26px;
+  font-size: 1.625rem;
   margin: 28px 0 18px;
 }
 .our-places > p {
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.8;
 }
 .place-row {
@@ -1248,18 +1248,18 @@ input::placeholder {
   min-width: 80px;
 }
 .place-row h3 {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
 .place-row .text-button {
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .place-delete {
   flex-basis: 100%;
   border-top: 1px solid var(--border);
   padding-top: 14px;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
 .map-center-button {
@@ -1281,11 +1281,11 @@ input::placeholder {
   padding: 13px 18px;
   background: #6a4815;
   color: #fff4d8;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-align: center;
 }
 .tracking-page .page-heading h1 {
-  font-size: 38px;
+  font-size: 2.375rem;
 }
 .tracking-overview dl {
   display: grid;
@@ -1296,7 +1296,7 @@ input::placeholder {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .tracking-overview dt {
   color: var(--text-dim);
@@ -1317,14 +1317,14 @@ input::placeholder {
   gap: 14px;
 }
 .tracking-step-heading h2 {
-  font-size: 21px;
+  font-size: 1.3125rem;
 }
 .step-ready {
   color: var(--accent);
 }
 .step-missing {
   color: var(--primary);
-  font-size: 10px;
+  font-size: 0.625rem;
   white-space: nowrap;
 }
 .tracking-consent {
@@ -1341,7 +1341,7 @@ input::placeholder {
   gap: 10px;
 }
 .share-mode-options .button {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .share-mode-options .button:last-child {
   grid-column: 1/-1;
@@ -1354,7 +1354,7 @@ input::placeholder {
   padding: 13px;
   min-height: 48px;
   font: inherit;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .tracking-page summary {
   cursor: pointer;
@@ -1366,7 +1366,7 @@ input::placeholder {
   border-radius: 12px;
   overflow: auto;
   max-height: 300px;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text-dim);
 }
 /* Shared activity and per-person notification preferences. */

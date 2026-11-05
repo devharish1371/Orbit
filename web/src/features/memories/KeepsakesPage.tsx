@@ -1,3 +1,5 @@
+import { motionReduced } from '@/hooks/useComfort'
+import { useSearchParams } from 'react-router-dom'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { BackLink } from '@/components/ui/JourneyLink'
 import { SectionHeading } from '@/components/ui/SectionHeading'
@@ -37,11 +39,11 @@ export default function KeepsakesPage() {
   const { data: space } = useSpace()
   const memory = useContext(CollectionContext)
   if (!memory) throw new Error('FlowProvider required')
+  const [params, setParams] = useSearchParams()
   const collections = useCollections()
+  const selectedId = params.get('collection') ?? memory.memory.selected
   const selected =
-    collections.data?.find(
-      (c) => c.id === memory.memory.selected && !c.archived,
-    ) ?? null
+    collections.data?.find((c) => c.id === selectedId && !c.archived) ?? null
   const [editor, setEditor] = useState(false),
     [organizing, setOrganizing] = useState<Post | null>(null)
   function newCollection() {
@@ -114,9 +116,10 @@ export default function KeepsakesPage() {
         onRetry={() => {
           void collections.refetch()
         }}
-        onSelect={(id) =>
+        onSelect={(id) => {
+          if (params.has('collection')) setParams({}, { replace: true })
           memory.setMemory((previous) => ({ ...previous, selected: id }))
-        }
+        }}
         onNew={newCollection}
         onEdit={editCollection}
       />
@@ -156,12 +159,13 @@ export default function KeepsakesPage() {
               </p>
               <button
                 className="text-button"
-                onClick={() =>
+                onClick={() => {
+                  if (params.has('collection')) setParams({}, { replace: true })
                   memory.setMemory((previous) => ({
                     ...previous,
                     selected: null,
                   }))
-                }
+                }}
               >
                 Choose from Keepsakes
               </button>
@@ -181,11 +185,7 @@ export default function KeepsakesPage() {
               dark={dark}
               onSelect={(id) => {
                 document.getElementById(`post-${id}`)?.scrollIntoView({
-                  behavior: window.matchMedia(
-                    '(prefers-reduced-motion: reduce)',
-                  ).matches
-                    ? 'instant'
-                    : 'smooth',
+                  behavior: motionReduced() ? 'instant' : 'smooth',
                   block: 'center',
                 })
               }}
@@ -288,6 +288,8 @@ export default function KeepsakesPage() {
           onChange={draftChange}
           onClose={() => setEditor(false)}
           onSaved={(id) => {
+            if (!organizing && params.has('collection'))
+              setParams({}, { replace: true })
             memory.setMemory((previous) => ({
               ...previous,
               selected: organizing ? previous.selected : id,

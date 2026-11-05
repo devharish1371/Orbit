@@ -5,10 +5,11 @@ import { useSpace } from '@/hooks/useSpace'
 import { Avatar } from '@/components/ui/Avatar'
 import { copy } from '@/copy/en'
 
-import { MemoryDoors } from '@/components/ui/MemoryDoors'
+import { SharedShelf } from '@/features/personal/SharedShelf'
+import { OnThisDay } from '@/features/personal/OnThisDay'
+import { StatusLine } from '@/features/personal/StatusLine'
 import { storyDays } from '@/lib/memories'
 import { useNow } from '@/hooks/useNow'
-import { DailyQuestion } from '@/features/memories/DailyQuestion'
 import { NextPlan } from '@/features/plans/NextPlan'
 export default function UsPage() {
   const { data } = useSpace()
@@ -54,9 +55,14 @@ export default function UsPage() {
             </Link>
           )}
         </div>
+        <div className="status-duet">
+          <StatusLine user={self.user_id} editable />
+          <StatusLine user={partner?.user_id} />
+        </div>
       </section>
       <NextPlan />
-      <MemoryDoors
+      <OnThisDay />
+      <SharedShelf
         days={
           data.couple.anniversary
             ? storyDays(
@@ -67,7 +73,6 @@ export default function UsPage() {
             : null
         }
       />
-      <DailyQuestion />
     </div>
   )
 }

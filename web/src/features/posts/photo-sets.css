@@ -25,7 +25,7 @@
   padding: 5px 10px;
   background: #171924d9;
   color: #fff;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
 }
@@ -89,7 +89,7 @@
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: 14px;
+  font-size: 0.875rem;
   box-shadow: none;
 }
 .photo-set-caption input:focus-visible {
@@ -118,7 +118,7 @@
   padding: 6px 10px;
   background: #171924d9;
   color: #fff;
-  font-size: 12px;
+  font-size: 0.75rem;
   pointer-events: none;
 }
 .photo-set-order .icon-button {

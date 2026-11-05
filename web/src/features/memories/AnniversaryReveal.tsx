@@ -1,3 +1,4 @@
+import { motionReduced } from '@/hooks/useComfort'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -28,7 +29,7 @@ function Reveal({ close }: { close: () => void }) {
     }
   }, [])
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (motionReduced()) return
     let active = true
     let clear: (() => void) | undefined
     void import('canvas-confetti').then(({ default: confetti }) => {

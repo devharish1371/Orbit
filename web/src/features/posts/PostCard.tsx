@@ -145,6 +145,7 @@ export function PostCard({
         'post-reactions',
         'storage-summary',
         'expiring',
+        'on-this-day',
         'kept-memories',
         'collections',
         'collection-links',

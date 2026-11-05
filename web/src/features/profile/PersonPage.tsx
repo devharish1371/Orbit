@@ -1,3 +1,4 @@
+import { StatusLine } from '@/features/personal/StatusLine'
 import { useId, useRef, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { ArrowUpRight, MapPin, MessageCircle, Phone, Image } from 'lucide-react'
@@ -89,6 +90,7 @@ function PersonProfile({ id }: { id?: string }) {
         {name !== person.display_name && (
           <p className="muted">{person.display_name}</p>
         )}
+        <StatusLine user={person.user_id} editable={own} />
         <div className="person-mode">
           <span
             className={`status-dot ${person.share_mode === 'paused' ? 'is-old' : ''}`}

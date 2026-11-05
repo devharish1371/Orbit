@@ -774,6 +774,48 @@ export type Database = {
         }
         Relationships: []
       }
+      member_status: {
+        Row: {
+          couple_id: string
+          emoji: string
+          expires_at: string | null
+          message: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          couple_id: string
+          emoji?: string
+          expires_at?: string | null
+          message?: string
+          user_id: string
+          version: number
+        }
+        Update: {
+          couple_id?: string
+          emoji?: string
+          expires_at?: string | null
+          message?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'member_status_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'member_status_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: true
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
       members: {
         Row: {
           avatar_path: string | null
@@ -1718,6 +1760,50 @@ export type Database = {
         Returns: undefined
       }
       memory_collections_index: { Args: never; Returns: Json }
+      on_this_day_keepsakes: {
+        Args: { p_before_created?: string; p_before_id?: string }
+        Returns: {
+          archive_revision: number
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          note_style: string
+          photo_items: Json
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }[]
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       open_capsule: {
         Args: { p_id: string }
         Returns: {
@@ -1919,6 +2005,30 @@ export type Database = {
         SetofOptions: {
           from: '*'
           to: 'keepsake_devices'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      set_member_status: {
+        Args: {
+          p_emoji: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_hours: number
+          p_message: string
+          p_version: number
+        }
+        Returns: {
+          couple_id: string
+          emoji: string
+          expires_at: string | null
+          message: string
+          user_id: string
+          version: number
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'member_status'
           isOneToOne: true
           isSetofReturn: false
         }

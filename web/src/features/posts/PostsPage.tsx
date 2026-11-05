@@ -1,3 +1,4 @@
+import { motionReduced } from '@/hooks/useComfort'
 import './chat.css'
 import { useComposerMemory, usePostViewMemory } from '@/hooks/useComposerMemory'
 import { PostExplorer } from './PostExplorer'
@@ -92,9 +93,7 @@ export default function PostsPage({ channel }: { channel: Channel }) {
     if (element) {
       element.scrollIntoView({
         block: 'center',
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-          ? 'instant'
-          : 'smooth',
+        behavior: motionReduced() ? 'instant' : 'smooth',
       })
       element.classList.add('quote-highlight')
       element.addEventListener(

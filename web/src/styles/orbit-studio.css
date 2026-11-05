@@ -128,7 +128,7 @@
 }
 .attention-actions .section-title h2 {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -137,7 +137,7 @@
 }
 .attention-actions > .attention-buttons .button {
   min-width: 0;
-  font-size: 11px;
+  font-size: 0.6875rem;
   padding: 12px 8px;
   border-radius: 18px;
 }
@@ -153,12 +153,12 @@
 .daily-question > .eyebrow::before {
   content: '✳';
   color: var(--secondary);
-  font-size: 18px;
+  font-size: 1.125rem;
   margin-right: 9px;
   vertical-align: middle;
 }
 .daily-question h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
   line-height: 1.3;
 }
 .memory-section textarea {
@@ -178,7 +178,7 @@
     var(--surface);
 }
 .countdown-number {
-  font-size: 66px;
+  font-size: 4.125rem;
   letter-spacing: -0.06em;
 }
 .memory-hub-link {
@@ -281,7 +281,7 @@
 .chat-heading .avatar {
   width: 40px;
   height: 40px;
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 .chat-heading h1 {
   font-size: 1rem;
@@ -431,7 +431,7 @@
   gap: 0;
 }
 .messenger-input-row textarea {
-  font-size: 16px;
+  font-size: 1rem;
   padding: 11px 6px;
   min-height: 44px;
   caret-color: var(--primary);
@@ -469,7 +469,7 @@
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--primary);
-  font-size: 12px;
+  font-size: 0.75rem;
   margin: -52px auto 8px;
   padding: 8px 16px;
   box-shadow: var(--shadow);
@@ -577,7 +577,7 @@
   justify-content: space-between;
   gap: 5px;
   color: var(--text-dim);
-  font-size: 10px;
+  font-size: 0.625rem;
   font-variant-numeric: tabular-nums;
 }
 .audio-rate {
@@ -587,7 +587,7 @@
   background: transparent;
   border: 0;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   flex: none;
 }
@@ -621,12 +621,12 @@
 }
 .moment-create-toggle strong {
   display: block;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .moment-create-toggle small {
   display: block;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.5;
   margin-top: 5px;
 }
@@ -657,7 +657,7 @@
   flex-wrap: nowrap;
 }
 .composer-modes button {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .post-photo {
   border-radius: 20px;
@@ -709,7 +709,7 @@
   border-radius: 50%;
   background: var(--surface-strong);
   color: var(--primary);
-  font-size: 20px;
+  font-size: 1.25rem;
   flex: none;
 }
 .location-sheet[open] summary::after {
@@ -745,7 +745,7 @@
     right: -8px;
   }
   .audio-caption {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
   .orbit-audio {
     gap: 5px;
@@ -754,7 +754,7 @@
 
 .settings-about {
   margin: 24px 4px 8px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--text-dim);
 }
 .settings-about summary {
@@ -768,7 +768,7 @@
   padding-block: 4px;
 }
 .home-page .page-heading h1 {
-  font-size: 34px;
+  font-size: 2.125rem;
   max-width: 100%;
   margin-top: 4px;
 }
@@ -849,12 +849,12 @@
   height: 64px;
 }
 .portrait-self .avatar {
-  font-size: 32px;
+  font-size: 2rem;
 }
 .portrait-self > span:not(.avatar) {
   display: block;
   text-align: center;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text-dim);
   margin-top: 12px;
 }
@@ -865,14 +865,14 @@
   height: 104px;
 }
 .portrait-partner .avatar {
-  font-size: 51px;
+  font-size: 3.1875rem;
   border-width: 3px;
 }
 .portrait-spark {
   position: absolute;
   right: -10px;
   top: -8px;
-  font-size: 27px;
+  font-size: 1.6875rem;
   color: var(--primary);
   rotate: 15deg;
 }
@@ -902,7 +902,7 @@
   gap: 15px;
 }
 .connection-card .partner-heading h2 {
-  font-size: 32px;
+  font-size: 2rem;
   margin: 0 0 8px;
 }
 .partner-chat-link {
@@ -921,7 +921,7 @@
   border: 0;
   padding: 0;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .connection-card .location-status > svg {
   width: 14px;
@@ -938,7 +938,7 @@
   min-height: 50px;
   border-radius: 18px;
   background: var(--surface);
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .connection-card .quick-actions a > span {
   padding: 0;
@@ -979,7 +979,7 @@
   align-items: start;
 }
 .home-tiles .map-preview h2 {
-  font-size: 26px;
+  font-size: 1.625rem;
   margin: 3px 0 10px;
 }
 .home-tiles .map-preview .card-link {
@@ -1008,12 +1008,12 @@
   opacity: 0.5;
 }
 .home-tiles .anniversary-card .eyebrow {
-  font-size: 8px;
+  font-size: 0.5rem;
   letter-spacing: 0.1em;
   padding-right: 13px;
 }
 .home-tiles .countdown-number {
-  font-size: 52px;
+  font-size: 3.25rem;
   line-height: 1;
   margin: 14px 0 6px;
 }
@@ -1021,11 +1021,11 @@
   display: none;
 }
 .home-tiles .anniversary-card .small {
-  font-size: 11px;
+  font-size: 0.6875rem;
   line-height: 1.4;
 }
 .home-tiles .anniversary-card h2 {
-  font-size: 23px;
+  font-size: 1.4375rem;
 }
 .daily-question {
   position: relative;
@@ -1040,7 +1040,7 @@
   bottom: -25px;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 160px;
+  font-size: 10rem;
   line-height: 1;
   color: var(--secondary);
   opacity: 0.055;
@@ -1053,10 +1053,10 @@
 .daily-question > .eyebrow {
   color: var(--text-dim);
   letter-spacing: 0.12em;
-  font-size: 9px;
+  font-size: 0.5625rem;
 }
 .daily-question h2 {
-  font-size: 25px;
+  font-size: 1.5625rem;
   max-width: 90%;
 }
 .daily-question form[hidden] {
@@ -1072,7 +1072,7 @@
   background: none;
   color: var(--primary);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .question-answer-button > span {
   display: grid;
@@ -1111,7 +1111,7 @@
   width: 76px;
   height: 76px;
   background: var(--panel);
-  font-size: 37px;
+  font-size: 2.3125rem;
   transition: rotate 450ms var(--ease-orbit);
 }
 .bond-portraits > span:not(.avatar) {
@@ -1121,11 +1121,11 @@
   rotate: 0deg;
 }
 .us-bond h2 {
-  font-size: 27px;
+  font-size: 1.6875rem;
   line-height: 1.4;
 }
 .us-bond h2 em {
-  font-size: 21px;
+  font-size: 1.3125rem;
   padding-inline: 10px;
   color: var(--primary);
 }
@@ -1137,7 +1137,7 @@
   margin-top: 8px;
 }
 .bond-actions .card-link {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
 }
 .memory-doors {
@@ -1186,7 +1186,7 @@
   width: 100%;
 }
 .door-label strong {
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.5;
 }
 .door-label > svg {
@@ -1232,7 +1232,7 @@
   position: absolute;
   right: -15px;
   top: -15px;
-  font-size: 27px;
+  font-size: 1.6875rem;
   color: var(--secondary);
 }
 .memory-door:is(:hover, :focus-visible) .polaroid-stack > div {
@@ -1339,13 +1339,13 @@
 }
 .door-days > strong {
   font-family: var(--font-display);
-  font-size: 45px;
+  font-size: 2.8125rem;
   font-weight: 450;
   letter-spacing: -0.04em;
   line-height: 1;
 }
 .door-days > span {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
 }
 .timeline-object {
@@ -1418,7 +1418,7 @@
     padding: 14px;
   }
   .door-label strong {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
   .door-timeline {
     padding: 20px;

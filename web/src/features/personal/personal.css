@@ -1,0 +1,254 @@
+.personal-status {
+  min-width: 0;
+  color: var(--text-dim);
+}
+.personal-status p,
+.personal-status-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.personal-status-button {
+  border: 0;
+  border-radius: 24px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  color: var(--text);
+  text-align: start;
+}
+.personal-status-button > span:not(.personal-status-emoji),
+.personal-status p > span {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.personal-status-button > svg {
+  flex-shrink: 0;
+}
+.personal-status-emoji {
+  font-size: 1.125rem;
+}
+.status-duet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  text-align: center;
+  margin-top: 12px;
+}
+.person-cover .personal-status {
+  margin-top: 8px;
+}
+.status-editor fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.status-editor form {
+  display: grid;
+  gap: 20px;
+}
+.status-editor input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 24px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+.status-editor input:focus-visible {
+  outline-offset: -2px;
+}
+.status-editor label {
+  display: block;
+  margin: 18px 0 10px;
+}
+.status-emoji-choices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(44px, 1fr));
+  gap: 6px;
+}
+.status-emoji-choices button {
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: none;
+  font-size: 1.5rem;
+}
+.status-emoji-choices button[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  border-color: var(--primary);
+}
+.status-expiry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 0.875rem;
+}
+.status-expiry .theme-options {
+  margin: 0;
+}
+.status-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.personal-section-heading {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.personal-section-heading h2 {
+  font-size: 1.375rem;
+}
+.us-page .us-bond {
+  margin-bottom: 24px;
+}
+.us-page > :is(.on-this-day, .shared-shelf) {
+  margin-top: 36px;
+}
+.shared-shelf-rail,
+.memory-slip-rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 6px 6px 16px;
+  margin: 0 -6px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.shared-shelf-book,
+.shared-shelf-start {
+  flex: 0 0 128px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scroll-snap-align: start;
+  padding: 4px;
+}
+.shared-shelf-book .collection-mark {
+  width: 100%;
+  height: 102px;
+  border-radius: 42% 48% 38% 45%;
+}
+.shared-shelf-book strong {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.shared-shelf-book small {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+.shared-shelf-start {
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 116px;
+  border-radius: 48px;
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+  font-size: 0.875rem;
+}
+.shelf-destinations {
+  margin-top: 12px;
+}
+.shelf-destinations a {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 22px 0;
+  min-height: 76px;
+  border-top: 1px solid var(--border);
+}
+.shelf-destinations a > svg:first-child {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.shelf-destinations a > span {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+.shelf-destinations strong {
+  font-size: 0.9375rem;
+}
+.shelf-destinations small {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.memory-slip {
+  flex: 0 0 156px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 2px;
+  scroll-snap-align: start;
+}
+.memory-slip-art {
+  width: 100%;
+  height: 132px;
+  display: grid;
+  place-items: center;
+  border-radius: 30px;
+  background: color-mix(in srgb, var(--secondary) 10%, var(--bg));
+  color: var(--secondary);
+  overflow: hidden;
+}
+.memory-slip-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.memory-slip time {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+}
+.memory-slip strong {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.on-this-day-date {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  font-size: 0.875rem;
+}
+.memory-year {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 24px 0 10px;
+}
+.on-this-day-entry {
+  min-width: 0;
+}
+@media (max-width: 359px) {
+  .status-duet {
+    gap: 12px;
+  }
+  .shared-shelf-book {
+    flex-basis: 118px;
+  }
+}

@@ -41,12 +41,12 @@
 }
 .photo-viewer-header strong {
   color: inherit;
-  font-size: 14px;
+  font-size: 0.875rem;
   overflow-wrap: anywhere;
 }
 .photo-viewer-header time {
   color: #bec7db;
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 .photo-dialog .icon-button {
   flex: none;
@@ -108,7 +108,7 @@
   margin: 0;
   padding: 16px 20px max(20px, env(safe-area-inset-bottom));
   color: inherit;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.6;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -121,7 +121,7 @@
   align-items: center;
   gap: 12px;
   color: #f6f1e9;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 .viewer-image-state.has-preview {
   inset: auto 12px 12px;
@@ -201,5 +201,5 @@ html:has(.photo-dialog[open]) {
   min-width: 4em;
   text-align: center;
   font-variant-numeric: tabular-nums;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }

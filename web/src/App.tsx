@@ -27,6 +27,7 @@ const KeepsakesPage = lazy(() => import('@/features/memories/KeepsakesPage'))
 const CapsulesPage = lazy(() => import('@/features/memories/CapsulesPage'))
 const TimelinePage = lazy(() => import('@/features/memories/TimelinePage'))
 const ReplayReveal = lazy(() => import('@/features/memories/AnniversaryReveal'))
+const OnThisDayPage = lazy(() => import('@/features/personal/OnThisDay'))
 const PlansPage = lazy(() => import('@/features/plans/PlansPage'))
 const OfflineKeepsakesPage = lazy(
   () => import('@/features/phone-keepsakes/OfflineKeepsakesPage'),
@@ -78,6 +79,7 @@ export default function App() {
               <Route path="profile" element={<ProfilePage />} />
               <Route path="person/:id" element={<PersonPage />} />
               <Route path="us" element={<UsPage />} />
+              <Route path="on-this-day" element={<OnThisDayPage />} />
               <Route path="plans" element={<PlansPage />} />
               <Route path="keepsakes" element={<KeepsakesPage />} />
               <Route path="capsules" element={<CapsulesPage />} />

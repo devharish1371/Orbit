@@ -30,7 +30,12 @@ export function EditMessage({
         p_expected_version: version,
       })
       if (result.error) throw result.error
-      for (const key of ['posts', 'reply-posts', 'kept-memories'])
+      for (const key of [
+        'posts',
+        'reply-posts',
+        'on-this-day',
+        'kept-memories',
+      ])
         void query.invalidateQueries({ queryKey: [key] })
       onClose()
     } catch (failure) {

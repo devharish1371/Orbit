@@ -1,3 +1,4 @@
+import { motionReduced } from '@/hooks/useComfort'
 import { MapCameraContext } from '@/app/FlowContext'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -68,11 +69,8 @@ export function PersonMarker({
       target = { lat: location.lat, lng: location.lng },
       began = performance.now()
     let frame = 0
-    const reduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
     const tick = (now: number) => {
-      const progress = reduced ? 1 : Math.min(1, (now - began) / 900)
+      const progress = motionReduced() ? 1 : Math.min(1, (now - began) / 900)
       const p = interpolate(
         start,
         target,
@@ -380,9 +378,7 @@ export default function MapCanvas({
     map.fitBounds(bounds, {
       padding: 60,
       maxZoom: 15,
-      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 0
-        : 600,
+      duration: motionReduced() ? 0 : 600,
     })
   }, [map, focus])
   useEffect(() => {
@@ -425,9 +421,7 @@ export default function MapCanvas({
     map.fitBounds(bounds, {
       padding: 70,
       maxZoom: 14,
-      duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 0
-        : 600,
+      duration: motionReduced() ? 0 : 600,
     })
   }, [fit, map])
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { motionReduced } from '@/hooks/useComfort'
 import { FlowProvider } from '@/app/FlowProvider'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { Settings } from 'lucide-react'
@@ -43,6 +44,7 @@ export default function Shell() {
           '/profile',
           '/settings',
           '/keepsakes',
+          '/on-this-day',
           '/capsules',
           '/timeline',
           '/reveal',
@@ -174,9 +176,7 @@ export default function Shell() {
                         )
                           return
                         event.preventDefault()
-                        const reduce = window.matchMedia(
-                          '(prefers-reduced-motion: reduce)',
-                        ).matches
+                        const reduce = motionReduced()
                         if (chat) {
                           const conversation =
                             document.querySelector('.chat-scroll')
