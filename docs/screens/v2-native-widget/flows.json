@@ -1,0 +1,38 @@
+[
+  {
+    "check": "Cancel consent preserves Private",
+    "pass": true
+  },
+  {
+    "check": "Failed save keeps consent and retry",
+    "pass": true
+  },
+  {
+    "check": "Photo selection only after successful acknowledgement",
+    "pass": true
+  },
+  {
+    "check": "Pin request does not claim installation",
+    "pass": true
+  },
+  {
+    "check": "Privacy-covered selection has no photo",
+    "pass": true
+  },
+  {
+    "check": "Stale state requests refresh without photo",
+    "pass": true
+  },
+  {
+    "check": "Future plan selection uses confirmed native reply",
+    "pass": true
+  },
+  {
+    "check": "Reduced motion disables opening animation",
+    "pass": true
+  },
+  {
+    "check": "Browser has no native widget controls",
+    "pass": true
+  }
+]

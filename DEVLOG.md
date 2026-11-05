@@ -1559,7 +1559,7 @@ closed; Day/Standard/Follow phone and the default viewport restored. User app pr
 running on 5173/4173.
 Final source/evidence secret scan: 1,088 files, zero findings.
 
-### V2.8 — native entrance and private widget (verification underway)
+### V2.8 — native entrance and private widget
 
 User requested finishing V2.8. Implemented themed native splash/cover, window/bar contrast,
 shared typography/artwork, authenticated/current-page readiness and interruption-safe reveal.
@@ -1582,3 +1582,33 @@ widget checks pass 2/2. Pure native policy/codec/encryption/contrast tests and A
 compilation are next in CI. Browser verification uses an injected native bridge with synthetic
 content; real native/launcher/cold-start/physical gates stay deferred. Scope, limits and primary
 references are in docs/V2_NATIVE_ENTRANCE_WIDGET.md.
+
+Android resource compilation caught unquoted variable-font axis settings in the first run
+42090053495; quoted the style values in dcb1995. Final Android CI 42117158960 passes
+215 web/24 worker checks, native JVM tests, resource/Java compilation, APK assembly, merged
+manifest/bridge/widget/service/font assertions and signing verification.
+Privately retained APK: 7,114,025 bytes; SHA-256
+5be14cf65305eb0bf0e1f7a7dd60089dc7cb40b797960b9c7099c804dfbebad1.
+Local ZIP integrity, signer continuity against 1c58d7c and private-material scan pass.
+
+Nine browser flow checks pass with production components and an injected native bridge.
+60 responsive states fit at 320/360/412px, both themes and all reading sizes; largest-size
+photo picker/consent also fit. Covered/stale previews contain no photo, failed saves retain
+consent, and pin requests never imply installation. Reduced-motion opening animation is
+disabled. Browser snapshots cannot prove native cover, launcher caching/scheduling or
+physical start/unlock frame pacing. These remain deferred task #7 gates, with no APK handover
+or installation requested. V2.6 remains deferred; safety, release audit and archive/cloud
+removal policy remain open. See docs/V2_NATIVE_ENTRANCE_WIDGET.md and
+docs/screens/v2-native-widget/README.md.
+
+Static audit capture corrections: restored the HTML doctype (outerHTML omits it) and
+disabled animation only in copied documents after Lighthouse NO_FCP on replayed entrance
+animations. This does not change production CSS or substitute for the live reduced-motion
+check. The corrected covered-state sample scores 100/100 before the complete static suite.
+
+Final V2.8 result: all seventeen static screen audits score 100/100 for accessibility and
+best practices, with no binary findings. The V2.8 software slice is complete and verified
+at dcb1995; physical phone/launcher acceptance remains explicitly deferred. Final source
+and evidence scan: 1,139 files, zero findings. QA tabs and temporary 4176/4177 servers are
+closed; user app previews 5173/4173 are preserved, viewport and Day/Standard/Follow phone
+restored. Only docs/evidence change after the verified application source.

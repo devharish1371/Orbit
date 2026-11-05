@@ -1,0 +1,590 @@
+[
+  {
+    "name": "photo-consent-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "photo-failure-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "photo-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "pin-request-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "covered-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "stale-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "plan-picker-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "plan-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "plan-light-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "plan-light-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "plan-day",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "plan-light-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "plan-light-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "plan-light-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "plan-light-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "plan-light-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "plan-light-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "plan-light-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "plan-dark-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "plan-dark-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "plan-night",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "plan-dark-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "plan-dark-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "plan-dark-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "plan-dark-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "plan-dark-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "plan-dark-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "plan-dark-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "photo-picker-night-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "photo-picker-night-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "photo-picker-night-largest",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "photo-picker-night-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "photo-consent-night-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "photo-consent-night-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "photo-consent-night-largest",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "photo-consent-night-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "private-light-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "private-light-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "private-light",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "private-light-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "private-light-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "private-light-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "private-light-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "private-light-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "private-light-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "private-light-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "private-dark-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "private-dark-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "private-dark",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "private-dark-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "private-dark-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "private-dark-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "private-dark-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "private-dark-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "private-dark-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "private-dark-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "opening-light-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "opening-light-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "opening-light",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "opening-light-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "opening-light-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "opening-light-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "opening-light-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "opening-light-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "opening-light-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "opening-light-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "opening-dark-standard",
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "opening-dark-standard",
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "opening-dark",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "opening-dark-standard",
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "opening-dark-larger",
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "opening-dark-larger",
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "opening-dark-larger",
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "opening-dark-largest",
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "opening-dark-largest",
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "opening-dark-largest",
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "route-loading-light",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  },
+  {
+    "name": "unsupported-light",
+    "w": 360,
+    "h": 800,
+    "sw": 360
+  }
+]

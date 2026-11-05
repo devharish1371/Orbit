@@ -168,8 +168,15 @@ and V2.8 comfort software batch is verified. See DEVLOG.md, docs/V2_PERSONAL_SPA
 evidence. V2.6 remains deferred at the user’s request. V2.8 native entrance/widget,
 V2.9 safety, V2.10 release audit and the V2.5 archive/cloud-removal policy remain open.
 
-V2.8 remaining software is implemented for verification: native theme/splash/cover and current-
+V2.8 remaining software is implemented and Android-verified: native theme/splash/cover and current-
 page readiness handoff, private-by-default photo/plan widget with explicit local consent and
 source/revision/identity/privacy guards. 215 web/24 worker and all 91 backend checks pass.
-Native compilation/CI and browser evidence are in progress; physical launch/unlock/widget
-behavior remains in the user's deferred task #7 batch. See docs/V2_NATIVE_ENTRANCE_WIDGET.md.
+Source dcb1995 passes native tests, compilation, manifest, assembly and signing in CI
+42117158960. Nine browser flows and 60 measured phone-sized states pass; physical
+launch/unlock/widget behavior remains in the user's deferred task #7 batch. See docs/V2_NATIVE_ENTRANCE_WIDGET.md.
+
+V2.8 software complete: seventeen final static audits score 100/100 with no findings,
+nine browser flows and 60 responsive states pass, and exact source dcb1995 passes Android
+CI 42117158960 plus private artifact integrity/signer continuity checks. No install/handover
+requested; native launch/unlock/launcher acceptance stays in the deferred task #7 batch.
+V2.6 remains deferred; proceed separately with V2.9/V2.10 and the archive policy when asked.
