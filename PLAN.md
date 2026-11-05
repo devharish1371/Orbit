@@ -195,3 +195,12 @@ and all 91 backend checks pass. Final browser evidence is in docs/screens/v2-nat
 Physical launch/unlock/launcher gates stay deferred in task #7; no APK handover or install ask.
 V2.6 remains deferred. V2.9 safety, V2.10 release audit and V2.5 archive/cloud-removal policy
 remain open. See docs/V2_NATIVE_ENTRANCE_WIDGET.md and DEVLOG.md.
+
+V2.9 safety software is implemented at ce81729: private timed check-ins with explicit
+sharing/recipient consent, versioned check-in/extend/cancel and scoped overdue reminders;
+local sustained-speed reminders on existing Android tracking; synthetic-only motion research
+kept outside the shipped app screen. 224 web/38 worker and all 96 hosted/tool checks pass.
+Android CI 42132581549 passes; 54 app plus six research responsive states fit, and ten static
+audits score 100/100. Physical task #7 gates and APK handover remain deferred. V2.6 remains
+deferred; V2.10 release audit and the V2.5 archive/cloud-removal policy remain open. See
+docs/V2_SAFETY.md and docs/screens/v2-safety/README.md.

@@ -1,0 +1,64 @@
+[
+  {
+    "check": "Timer starts private",
+    "pass": true
+  },
+  {
+    "check": "Shared consent cancel retains draft",
+    "pass": true
+  },
+  {
+    "check": "Timer appears only after server acknowledgement",
+    "pass": true
+  },
+  {
+    "check": "Extend updates the acknowledged timer",
+    "pass": true,
+    "evidence": "Deadline advanced by exactly 15 minutes; live countdown ticks during QA."
+  },
+  {
+    "check": "Cancelling the close sheet preserves the active timer",
+    "pass": true
+  },
+  {
+    "check": "Speed enables only after explicit local setup",
+    "pass": true
+  },
+  {
+    "check": "Overdue means no confirmed check-in",
+    "pass": true,
+    "evidence": "No check-in yet 5:21 am"
+  },
+  {
+    "check": "Dismiss clears the local prompt only",
+    "pass": true
+  },
+  {
+    "check": "Failed server save keeps consent and retry",
+    "pass": true
+  },
+  {
+    "check": "Check-in closes active timer after acknowledgement",
+    "pass": true
+  },
+  {
+    "check": "Stillness alone does not produce a motion candidate",
+    "pass": true
+  },
+  {
+    "check": "Research preview shows phone-drop ambiguity explicitly",
+    "pass": true
+  },
+  {
+    "check": "Research prompt dismisses locally without escalation",
+    "pass": true
+  },
+  {
+    "check": "Browser fallback exposes no native speed setup",
+    "pass": true
+  },
+  {
+    "check": "Production Safety screen excludes motion research controls",
+    "pass": true
+  }
+]

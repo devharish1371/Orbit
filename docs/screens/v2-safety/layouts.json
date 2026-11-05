@@ -1,0 +1,602 @@
+[
+  {
+    "name": "active-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "active-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "active-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "active-light-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "active-light-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "active-light-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "active-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "active-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "active-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "active-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "active-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "active-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "active-dark-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "larger",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "active-dark-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "larger",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "active-dark-larger",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "larger",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "active-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "active-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "active-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "overdue-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "overdue-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "overdue-light-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "overdue-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "overdue-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "overdue-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "overdue-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "standard",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "overdue-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "standard",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "overdue-dark-standard",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "standard",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "overdue-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "overdue-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "overdue-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "editor-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "editor-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "editor-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "consent-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "consent-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "consent-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "editor-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "editor-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "editor-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "consent-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "consent-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "consent-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "speed-setup-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "speed-setup-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "speed-setup-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "speed-choices-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "speed-choices-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "speed-choices-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "speed-setup-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "speed-setup-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "speed-setup-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "speed-choices-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "speed-choices-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "speed-choices-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  },
+  {
+    "name": "research-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "light",
+    "w": 320
+  },
+  {
+    "name": "research-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "light",
+    "w": 360
+  },
+  {
+    "name": "research-light-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "light",
+    "w": 412
+  },
+  {
+    "name": "research-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 320,
+    "text": "largest",
+    "theme": "dark",
+    "w": 320
+  },
+  {
+    "name": "research-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 360,
+    "text": "largest",
+    "theme": "dark",
+    "w": 360
+  },
+  {
+    "name": "research-dark-largest",
+    "measured": true,
+    "h": 800,
+    "over": [],
+    "sw": 412,
+    "text": "largest",
+    "theme": "dark",
+    "w": 412
+  }
+]

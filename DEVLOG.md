@@ -1638,3 +1638,32 @@ lab uses synthetic traces only; phone-drop ambiguity is intentional, no sensor i
 connection-reset failures pass their isolated rerun and the updated cron inventory/private-
 privilege audit passes. Native/browser verification continues. V2.8 evidence push recovered
 normally through 24258e3; no history rewrite or force update was needed.
+
+Final V2.9 verification: all 96 hosted/tool tests pass in 151.59s after worker deployment,
+including the additional concurrency test. All 224 web/38 worker checks and lint/types/
+format/build pass. Native speed policy tests, resource/Java compilation, assembly, merged
+manifest/bridge and signing pass in Android CI 42132581549 at exact source
+ce8172947c3d88e6c9b5960390108cb0729088c6. Earlier Android builds c92bc0a and 0ba7525 pass
+as well. Follow-ups report generic worker processing honestly (sent can also mean token
+cleanup), check blocked local notification channels, and keep the motion research component
+outside the installed screen. No sensors were registered or real partner contacted.
+
+15 browser flows pass (12 app and three QA-only research checks). 60 responsive states fit
+(54 production web and six research) at 320/360/412px, both themes and reading sizes, including
+largest-size sheets. All ten static audits score 100/100 with no binary findings; these are
+settled DOM semantics/contrast checks, not startup or hardware proof. Countdown validation
+uses the exact 15-minute acknowledged deadline delta rather than a ticking display label.
+
+V2.9 software slice is verified; actual Nothing Phone speed uncertainty, local notification
+channel/tap, ordinary safe-use/background/reboot/battery behavior and physical gates remain
+in task #7. Motion monitoring/automatic partner speed or impact escalation is not enabled or
+exposed. V2.6 stays deferred; release audit and archive/cloud-removal policy remain open.
+No APK handover or phone install requested. Source/contract: docs/V2_SAFETY.md; complete
+browser evidence: docs/screens/v2-safety/README.md. QA tabs and temporary 4176/4177 servers
+are closed; viewport/Day/Standard/Follow phone restored; user previews 5173/4173 preserved.
+
+Privately retained final APK: 7,122,184 bytes; SHA-256
+0ea5ca75d6620802bd23559e356a1e85bd0f31d94c38ce3d0a7ffc711dd94d53.
+Local ZIP integrity, signer continuity against dcb1995 and private-material scan pass.
+Final source/evidence secret scan: 1,174 files, zero findings. Only docs/evidence changed
+after the verified application source ce81729.

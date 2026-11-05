@@ -1,0 +1,62 @@
+[
+  {
+    "name": "active-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "active-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "consent-dark-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "editor-light-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "overdue-dark-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "overdue-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "research-light-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "speed-choices-dark-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "speed-setup-light-largest-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  },
+  {
+    "name": "unsupported-light-360.html",
+    "accessibility": 100,
+    "bestPractices": 100,
+    "failures": []
+  }
+]

@@ -185,3 +185,15 @@ V2.9 active: build explicit, private-by-default journey check-ins; local native 
 reminders; synthetic-only motion prototype. Sender/recipient consent, live privacy, bounded
 retries/versioning/expiry and honest notification state are required. No sensors or real
 partner alerts enabled during implementation. See docs/V2_SAFETY.md.
+
+V2.9 software is implemented and verified at ce81729. Private-by-default timed check-ins
+include explicit sharing, recipient opt-in, live privacy, version/retry/expiry/concurrency
+guards, quiet hours and honest reminder-processing state. Local Android speed reminders
+use valid native speed uncertainty, sustained monotonic fixes, hysteresis and cooldown on
+existing opted-in tracking. No automatic partner speed/impact escalation is exposed. Motion
+research is synthetic-only and excluded from the shipped screen until phone validation.
+224 web/38 worker and all 96 hosted/tool checks pass. Android CI 42132581549 passes;
+15 browser flows (12 app/3 research), 60 responsive states (54 app/6 research) pass and all
+ten static audits score 100/100 with no findings. Physical/notification/speed-accuracy/
+battery gates remain deferred task #7; no install or APK handover requested. V2.6 stays
+deferred; V2.10 release audit and V2.5 archive policy remain open. See docs/V2_SAFETY.md.

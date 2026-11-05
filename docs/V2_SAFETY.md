@@ -23,14 +23,28 @@ left elsewhere cannot monitor a person. Hardware, false-positive and battery evi
 precede real monitoring. Never fall, drop a phone or drive fast to test these features.
 
 Primary research checked 6 November 2026:
-- https://developer.android.com/reference/android/location/Location — speed accuracy is an
+- [Android Location](https://developer.android.com/reference/android/location/Location) — speed accuracy is an
   optional API 26+ estimate; elapsed realtime is monotonic. The selected two-uncertainty
   margin is a conservative product heuristic, not a calibrated probability guarantee.
-- https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview —
+- [Android sensors](https://developer.android.com/develop/sensors-and-location/sensors/sensors_overview) —
   continuous background sensor limits and listener lifecycle.
-- https://source.android.com/docs/core/interaction/sensors/sensor-types — accelerometer
+- [AOSP sensor types](https://source.android.com/docs/core/interaction/sensors/sensor-types) — accelerometer
   includes gravity; free-fall/impact patterns concern the device, not a validated human fall.
 
 Automated checks use disposable accounts and synthetic traces. No real partner contact,
 permissions, sensors or settings changes during QA. Physical task #7 gates and APK handover
 remain deferred. V2.6 stays deferred. Final verification is recorded in DEVLOG.md.
+
+## Verified software and deferred acceptance
+
+Exact source ce81729 passes Android CI 42132581549 and native policy tests. 224 web/38 worker
+and all 96 hosted/tool checks pass; 15 browser flows and 60 responsive states are verified
+with injected native replies and synthetic content. Ten static screen audits score 100/100.
+The motion preview is QA-only; installed users see working timer/local-reminder controls,
+not a prototype monitoring switch. Recipient safety notifications remain default off.
+A processed job never claims phone delivery, including when unregistered tokens are removed.
+
+Physical speed-uncertainty availability, notification channel/routing, safe-use false-positive
+evidence, background/reboot/battery checks remain deferred. No automatic partner speed or
+impact escalation is shipped before that evidence. See DEVLOG.md and
+docs/screens/v2-safety/README.md for the artifact and proof limits.

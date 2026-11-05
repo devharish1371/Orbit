@@ -1,0 +1,20 @@
+{
+  "source": "ce8172947c3d88e6c9b5960390108cb0729088c6",
+  "android_run": 42132581549,
+  "web_tests": 224,
+  "worker_tests": 38,
+  "hosted_tool_tests": 96,
+  "browser_app_flows": 12,
+  "browser_research_flows": 3,
+  "responsive_app_states": 54,
+  "responsive_research_states": 6,
+  "static_app_audits": 9,
+  "static_research_audits": 1,
+  "apk_bytes": 7122184,
+  "apk_sha256": "0ea5ca75d6620802bd23559e356a1e85bd0f31d94c38ce3d0a7ffc711dd94d53",
+  "zip_integrity": "pass",
+  "signer_continuity": "pass",
+  "private_scan": "pass",
+  "physical_gates": "deferred task #7",
+  "apk_handover": "not requested"
+}
