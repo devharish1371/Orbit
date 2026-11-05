@@ -167,3 +167,9 @@ Android CI 42077458980 and artifact integrity/signing/private-material checks. T
 and V2.8 comfort software batch is verified. See DEVLOG.md, docs/V2_PERSONAL_SPACE.md and the browser
 evidence. V2.6 remains deferred at the user’s request. V2.8 native entrance/widget,
 V2.9 safety, V2.10 release audit and the V2.5 archive/cloud-removal policy remain open.
+
+V2.8 remaining software is implemented for verification: native theme/splash/cover and current-
+page readiness handoff, private-by-default photo/plan widget with explicit local consent and
+source/revision/identity/privacy guards. 215 web/24 worker and all 91 backend checks pass.
+Native compilation/CI and browser evidence are in progress; physical launch/unlock/widget
+behavior remains in the user's deferred task #7 batch. See docs/V2_NATIVE_ENTRANCE_WIDGET.md.

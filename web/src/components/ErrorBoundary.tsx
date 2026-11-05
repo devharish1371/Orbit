@@ -1,3 +1,4 @@
+import { NativeReady } from '@/app/NativeSurface'
 import { Component, type ReactNode } from 'react'
 import { copy } from '@/copy/en'
 import { UpdatePrompt } from './UpdatePrompt'
@@ -23,6 +24,7 @@ export class ErrorBoundary extends Component<
     if (this.state.failed)
       return (
         <main className="fallback">
+          <NativeReady />
           <h1>{copy.common.unavailable}</h1>
           <p>{copy.common.error}</p>
           <button className="button" onClick={() => location.reload()}>

@@ -1,3 +1,6 @@
+import { nativeSurfaceSupported } from '@/native/surface'
+import { useNativeReady, useWidgetEntry } from '@/hooks/useNativeSurface'
+import { WidgetSync } from '@/features/widget/useWidget'
 import { motionReduced } from '@/hooks/useComfort'
 import { FlowProvider } from '@/app/FlowProvider'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
@@ -43,6 +46,7 @@ export default function Shell() {
     : [
           '/profile',
           '/settings',
+          '/widget',
           '/keepsakes',
           '/on-this-day',
           '/capsules',
@@ -62,6 +66,8 @@ export default function Shell() {
   )
   const space = useSpace()
   const { signOut } = useAuth()
+  useNativeReady(!space.isPending)
+  useWidgetEntry(!!space.data)
   const mode = space.data?.self.theme_mode
   const accent = space.data?.self.theme_accent
   useEffect(() => {
@@ -105,6 +111,7 @@ export default function Shell() {
         <LocationProvider>
           <PushProvider>
             <OutboxProvider>
+              {nativeSurfaceSupported && <WidgetSync />}
               <AutomaticReveal />
               {phoneCopiesSupported && <PhoneCopySync />}
               <div

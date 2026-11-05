@@ -99,6 +99,16 @@ jobs:
           from pathlib import Path
           assert 'PrivacyPlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
           print('Native privacy bridge and biometric permission verified.')
+          widget=next(p for p in root.findall('./application/receiver') if p.get(a+'name')=='app.orbit.couple.OrbitWidgetProvider')
+          assert widget.get(a+'exported')=='false'
+          job=next(p for p in root.findall('./application/service') if p.get(a+'name')=='app.orbit.couple.OrbitWidgetJob')
+          assert job.get(a+'permission')=='android.permission.BIND_JOB_SERVICE'
+          assert 'SurfacePlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
+          info=ET.parse('app/src/main/res/xml/orbit_widget_info.xml').getroot()
+          assert info.get(a+'widgetCategory')=='home_screen|not_keyguard'
+          assert info.get(a+'updatePeriodMillis')=='1800000'
+          assert Path('app/src/main/res/font/orbit_sans.ttf').stat().st_size>100000
+          print('Native entrance/widget bridge, host privacy and scheduling configuration verified.')
           PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:

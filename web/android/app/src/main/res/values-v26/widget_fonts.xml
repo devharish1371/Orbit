@@ -1,0 +1,1 @@
+<resources><style name="OrbitWidgetText"><item name="android:fontFamily">@font/orbit_sans</item><item name="android:fontVariationSettings">'wght' 400</item></style><style name="OrbitWidgetTitle" parent="OrbitWidgetText"><item name="android:fontFamily">@font/orbit_sans</item><item name="android:fontVariationSettings">'wght' 650</item></style></resources>

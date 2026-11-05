@@ -75,3 +75,7 @@ export function useTheme() {
     },
   }
 }
+
+export function appearanceSnapshot() {
+  return { theme: choice, accent }
+}

@@ -1,3 +1,4 @@
+import { useNativeReady } from '@/hooks/useNativeSurface'
 import { ScrollContinuity } from '@/app/ScrollContinuity'
 import { NativeNavigation } from '@/app/NativeNavigation'
 import { MotionSafety } from '@/app/MotionSafety'
@@ -11,6 +12,7 @@ import { copy } from '@/copy/en'
 const LoginPage = lazy(() => import('@/features/auth/LoginPage'))
 const Shell = lazy(() => import('@/app/Shell'))
 const HomePage = lazy(() => import('@/features/home/HomePage'))
+const WidgetPage = lazy(() => import('@/features/widget/WidgetPage'))
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage'))
 const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'))
 const PersonPage = lazy(() => import('@/features/profile/PersonPage'))
@@ -35,6 +37,7 @@ const OfflineKeepsakesPage = lazy(
 export default function App() {
   const { pathname } = useLocation()
   const { session, restoring, restoreError, retryRestore } = useAuth()
+  useNativeReady(!!restoreError && !session)
   return (
     <>
       <ScrollContinuity userId={session?.user.id} />
@@ -71,6 +74,7 @@ export default function App() {
           <Routes>
             <Route element={<Shell />}>
               <Route index element={<HomePage />} />
+              <Route path="widget" element={<WidgetPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="tracking" element={<TrackingPage />} />
               <Route path="notifications" element={<NotificationsPage />} />

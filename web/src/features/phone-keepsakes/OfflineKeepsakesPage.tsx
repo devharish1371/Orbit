@@ -1,3 +1,4 @@
+import { useNativeReady } from '@/hooks/useNativeSurface'
 import { splitCopyId } from '@/lib/photos'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '@/app/AuthContext'
@@ -22,6 +23,7 @@ import {
 import type { PhoneCopy, PhoneIdentity } from './model'
 import './phone-keepsakes.css'
 export default function OfflineKeepsakesPage() {
+  useNativeReady()
   // Native identity remains sufficient for cold offline access; a known live account must agree.
   const account = useContext(AuthContext)?.session?.user.id
   const returnFocus = useRef<HTMLElement | null>(null)

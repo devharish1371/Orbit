@@ -17,6 +17,10 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="android:background">@drawable/splash</item>
+        <item name="windowSplashScreenBackground">@color/orbit_launch_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/orbit_seal</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
     </style>
+    <style name="AppTheme.OrbitDayLaunch" parent="AppTheme.NoActionBarLaunch"><item name="windowSplashScreenBackground">@color/orbit_day_bg</item></style>
+    <style name="AppTheme.OrbitNightLaunch" parent="AppTheme.NoActionBarLaunch"><item name="windowSplashScreenBackground">@color/orbit_night_bg</item></style>
 </resources>

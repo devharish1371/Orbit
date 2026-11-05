@@ -159,6 +159,11 @@ export default function SettingsPage() {
         )}
       </form>
       <ComfortControls />
+      <Link className="profile-settings-link" to="/widget">
+        <OrbitGlyph name="home" width={26} height={26} />
+        <strong>Your widget</strong>
+        <span aria-hidden="true">↗</span>
+      </Link>
       <StorageStatus />
       <PrivacySettings />
       <ExportMemories />

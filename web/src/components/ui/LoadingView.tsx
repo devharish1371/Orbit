@@ -1,18 +1,14 @@
+import { EntranceSeal } from '@/features/widget/WidgetPreview'
+import '@/features/widget/widget.css'
 import { useLocation } from 'react-router-dom'
 export function LoadingView({ label = 'Opening Orbit…' }: { label?: string }) {
   return (
     <main className="orbit-loading" role="status" aria-label={label}>
       <div className="loading-emblem" aria-hidden="true">
-        <img
-          src={`${import.meta.env.BASE_URL}orbit.svg`}
-          alt=""
-          width="56"
-          height="56"
-        />
-        <span />
+        <EntranceSeal />
       </div>
       <strong>Orbit</strong>
-      <p>{label}</p>
+      <div className="loading-breath" aria-hidden="true" />
     </main>
   )
 }

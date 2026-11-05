@@ -73,3 +73,7 @@ export function useComfort() {
   useSyncExternalStore(subscribe, snapshot, () => 'standard|system|false')
   return { ...choice, reduced: motionReduced(), setComfort }
 }
+
+export function comfortSnapshot() {
+  return { text: choice.text, reduced: motionReduced() }
+}

@@ -1558,3 +1558,27 @@ changed after the verified application source. QA tabs and temporary 4176/4177 s
 closed; Day/Standard/Follow phone and the default viewport restored. User app previews stay
 running on 5173/4173.
 Final source/evidence secret scan: 1,088 files, zero findings.
+
+### V2.8 — native entrance and private widget (verification underway)
+
+User requested finishing V2.8. Implemented themed native splash/cover, window/bar contrast,
+shared typography/artwork, authenticated/current-page readiness and interruption-safe reveal.
+No timed minimum opening pause. A stalled start offers Reload; failed/cancelled auth stays
+covered. Native tickets invalidate on reload/destroy; optional palette persistence failure
+cannot strand an otherwise usable web screen. Existing screenshot/monotonic lock rules remain.
+
+Added private-by-default Android widget with explicit photo/plan consent and launcher pin
+request. Lock/screenshot protection keeps it covered. Native source validation, encrypted
+atomic/bounded snapshots, revision/identity/epoch guards, metadata-only foreground checks and
+reuse of unchanged encrypted thumbnails preserve privacy and reduce downloads. Known removal,
+logout/account/couple changes clear content; full RemoteViews updates remove old bitmap/text.
+JobService handles background network work; launcher scheduling/caching limits are explicit.
+Google Fonts Jakarta TTF/OFL are vendored for native typography. No new runtime permission,
+cloud deletion, real partner contact, sensor use, APK handover or phone-install request.
+
+215 web/24 worker checks and lint/types/format/build pass. All 91 hosted backend checks pass
+in 158.11s, including two exact widget-source/RLS/signing-path scenarios; the earlier targeted
+widget checks pass 2/2. Pure native policy/codec/encryption/contrast tests and Android resource
+compilation are next in CI. Browser verification uses an injected native bridge with synthetic
+content; real native/launcher/cold-start/physical gates stay deferred. Scope, limits and primary
+references are in docs/V2_NATIVE_ENTRANCE_WIDGET.md.

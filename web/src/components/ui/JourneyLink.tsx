@@ -17,6 +17,7 @@ const routes = new Set([
   '/us',
   '/profile',
   '/settings',
+  '/widget',
   '/tracking',
   '/notifications',
   '/activity',

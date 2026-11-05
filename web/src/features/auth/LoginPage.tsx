@@ -1,3 +1,4 @@
+import { useNativeReady } from '@/hooks/useNativeSurface'
 import { useEffect, useState, type FormEvent } from 'react'
 import { ArrowLeft, ArrowRight, Heart, LockKeyhole, Mail } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
@@ -6,6 +7,7 @@ import { requestCode, verifyCode, validEmail, validCode } from '@/lib/auth'
 import { Button } from '@/components/ui/Button'
 
 export default function LoginPage() {
+  useNativeReady()
   const { client } = useAuth()
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')

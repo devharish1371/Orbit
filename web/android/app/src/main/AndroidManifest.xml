@@ -14,6 +14,8 @@
         <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="social" />
 
         <service android:name=".OrbitTrackerService" android:exported="false" android:stopWithTask="false" android:foregroundServiceType="location" />
+        <receiver android:name=".OrbitWidgetProvider" android:exported="false" android:label="@string/widget_name"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/orbit_widget_info"/></receiver>
+        <service android:name=".OrbitWidgetJob" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE"/>
         <receiver android:name=".TrackerHeartbeat" android:exported="false" />
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
