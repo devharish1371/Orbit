@@ -21,3 +21,8 @@ export function statusError(error: unknown) {
     ? 'This status changed on another device. Close and reopen to edit it.'
     : 'Couldn’t save. Your changes are still here.'
 }
+
+export function shortStatus(message: string) {
+  const words = message.trim().split(/\s+/)
+  return words.length >= 4 ? words.slice(0, 3).join(' ') + '…' : message.trim()
+}

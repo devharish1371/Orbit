@@ -3,6 +3,7 @@ import {
   ArrowUpRight,
   Heart,
   MapPin,
+  MapPinOff,
   MessageCircle,
   Phone,
   Video,
@@ -67,38 +68,42 @@ export default function HomePage() {
               </PersonLink>
             </h2>
             <StatusLine user={partner?.user_id} />
-            <p className="status-chip">
-              <span className="status-dot" />
-              {partner?.share_mode === 'paused'
-                ? copy.home.paused
-                : partner?.share_mode === 'surprise'
-                  ? copy.home.surprise
-                  : copy.home.live}
-            </p>
           </div>
-          <Link
-            className="partner-chat-link"
-            to="/chat"
-            aria-label={copy.nav.chat}
-          >
-            <MessageCircle size={21} />
-          </Link>
-        </div>
-        <div className="location-status">
-          <MapPin size={18} aria-hidden="true" />
-          <div>
-            <p>
-              {locationAvailable
-                ? `${copy.map.lastFix}: ${new Intl.DateTimeFormat('en-IN', { timeZone: couple.timezone, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(partnerLocation.recorded_at))}`
-                : partner?.share_mode === 'paused'
-                  ? copy.home.paused
-                  : copy.home.waiting}
-            </p>
-            {locationAvailable && partnerLocation.fuzzed && (
-              <p className="muted small">{copy.map.surprise}</p>
+          <div className="partner-heading-actions">
+            {partner?.share_mode === 'paused' && (
+              <Link
+                className="icon-button partner-location-mode"
+                to="/map"
+                aria-label="Location sharing paused"
+                title="Location sharing paused"
+              >
+                <MapPinOff size={19} aria-hidden="true" />
+              </Link>
             )}
+            <Link
+              className="partner-chat-link"
+              to="/chat"
+              aria-label={copy.nav.chat}
+            >
+              <MessageCircle size={21} aria-hidden="true" />
+            </Link>
           </div>
         </div>
+        {partner?.share_mode !== 'paused' && (
+          <div className="location-status">
+            <MapPin size={18} aria-hidden="true" />
+            <div>
+              <p>
+                {locationAvailable
+                  ? `${copy.map.lastFix}: ${new Intl.DateTimeFormat('en-IN', { timeZone: couple.timezone, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(partnerLocation.recorded_at))}`
+                  : copy.home.waiting}
+              </p>
+              {partner?.share_mode === 'surprise' && (
+                <p className="muted small">{copy.map.surprise}</p>
+              )}
+            </div>
+          </div>
+        )}
         <div className="quick-actions">
           {callUrl(phone) && (
             <a

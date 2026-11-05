@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, expect, test, vi } from 'vitest'
 import type { MemberStatus } from './model'
-import { activeStatus } from './model'
+import { activeStatus, shortStatus } from './model'
 import { StatusEditor } from './StatusEditor'
 import { StatusLine } from './StatusLine'
 import { SharedShelf } from './SharedShelf'
@@ -205,4 +205,23 @@ test('on-this-day stays absent without real results and uses actual retained yea
       name: 'Open memory from 2025: That rainy walk',
     }),
   ).toHaveAttribute('href', '/on-this-day')
+})
+
+test('thought previews shorten four-word lines and keep a full-text profile destination', () => {
+  expect(shortStatus('One two three')).toBe('One two three')
+  expect(shortStatus('One two three four')).toBe('One two three…')
+  state.statuses = [
+    {
+      ...current,
+      user_id: 'partner',
+      message: 'Taking the scenic route today',
+    },
+  ]
+  wrap(<StatusLine user="partner" bubble />)
+  expect(screen.getByText('Taking the scenic…')).toBeVisible()
+  expect(
+    screen.getByRole('link', {
+      name: 'View full status: Taking the scenic route today',
+    }),
+  ).toHaveAttribute('href', '/person/partner')
 })

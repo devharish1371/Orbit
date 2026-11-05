@@ -1505,3 +1505,25 @@ Moments All tab found in the first pass now has a full touch target. Isolated br
 failure preserves text, retry saves and reload restores it; collection deep links select the
 intended shelf. This harness has fake providers/local transport, not real partner accounts.
 Final Android CI and screen audits follow. No APK handover. See docs/V2_PERSONAL_SPACE.md.
+
+User refinement during verification: Home repeated the paused-location sentence. Replaced
+both rows with one labelled crossed-out location icon beside Chat. Personal status is smaller
+beneath the name, with a two-line visual limit; full text stays on the person profile. The
+paused state no longer renders a waiting/fix row. Surprise mode retains its accuracy label.
+The new regression passes in the 202-web/24-worker pipeline. An expanded-sheet check caught
+short status-duration targets; they now retain 44px width/height at every reading size.
+Hosted verification passes 88/89; the remaining assertion was the expected cron-job inventory,
+updated for orbit-status-expiry and verified with its schedule and authenticated denial.
+Android CI 42069313442 passed at 55dab3c before the Home refinement; final source follows.
+
+Us follow-up requested during verification: statuses now sit in small thought bubbles above
+their portraits, with two connecting dots. Four-word-or-longer lines shorten to three words
+and an ellipsis; narrow layouts add visual clipping while full text stays accessible. Partner
+bubble opens the person profile with the complete status; own bubble opens the editor.
+Removed the previous separate status row and excess bond spacing. The new shortening/link
+regression brings the client suite to 203 web/24 worker checks. Final browser evidence covers
+198 page/sheet states, with no horizontal overflow and measured targets at least 44px.
+Largest text and Less motion survive fixture reload; rotation is stopped and its redundant
+local toggle is absent. Full partner status and Back-to-Us were observed. All 89 hosted checks
+are validated across the 88-pass full run and corrected cron-inventory/schedule/privilege rerun.
+The injected local fixture is distinct from hosted server checks; no real partner contact.

@@ -9,7 +9,11 @@ is added. No sensor or alert is enabled and no partner is contacted during verif
 ## Your status
 
 Choose an emoji and/or a line of up to 80 characters from your profile or Us. The partner's
-active status appears on Home, Us and their profile. Durations are 1, 4 or 24 hours, calculated
+active status appears on Home, Us and their profile. Us uses a thought bubble above each
+portrait; four or more words shorten to the first three and an ellipsis, with further visual
+clipping when space is tight. Tap the partner bubble for full text in their profile; tap your
+own to edit. Full text remains in accessible names/descriptions. Home places a smaller
+status beneath the name and uses one crossed-out location icon for paused sharing. Durations are 1, 4 or 24 hours, calculated
 by the server. Nothing is suggested or inferred from tracking data. Clear is explicit.
 
 Status records are private to the couple; only the author can write through the guarded RPC.
@@ -53,7 +57,7 @@ browser tabs. Theme and profile accent settings remain independent.
 Regression coverage includes status ownership, expiry, erasure, stale/concurrent edits, direct
 write/anonymous denial, past-year timezone/cursor/Keep/unsend scope, retained editor contents,
 account switches, collection links, OS motion precedence and unavailable/cross-tab storage.
-The full client pipeline passes 201 web and 24 worker tests, lint, strict types, format and
+The full client pipeline passes 203 web and 24 worker tests, lint, strict types, format and
 production build. Final hosted/native/browser evidence is recorded in DEVLOG.md.
 
 Browser screenshots use an isolated harness with synthetic people/media and injected auth/data
