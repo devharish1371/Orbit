@@ -150,3 +150,28 @@
 .archive-memory button:disabled {
   opacity: 0.45;
 }
+.archive-pick {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  text-align: left;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.archive-pick > span {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.archive-pick time {
+  font-size: 0.72rem;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.archive-pick[aria-pressed='true'] {
+  color: var(--accent);
+}

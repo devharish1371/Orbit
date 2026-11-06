@@ -143,3 +143,23 @@ def test_complete_photo_set_and_both_media_sides_restore_with_original_authors(b
  # Caption-only edits can reuse an isolated restored path; replacement still needs a fresh canonical ID.
  edited=ok(write(b,new,1,version=own['version'],side=dict(own,body='After restore')))
  assert next(x for x in edited['memory_sides'] if x['author_id']==b.users[1])['path']==own['path']
+
+def test_deployed_endpoint_verifies_identity_complete_removal_and_restore_hash(backend):
+ b=backend;p,a,phones,files,data=proposal(b);approvals(b,p,a,phones,files);ok(queue(b,p,a))
+ route='/functions/v1/archive';params=dict(action='process',post=p['id'])
+ import httpx
+ assert httpx.post(b.url+route,params=params,headers={'apikey':b.public_key},timeout=30).status_code==401
+ assert b.clients[3].client.post(route,params=params,json={'actor':b.users[0]}).json()=={'completed':0}
+ removed=b.clients[0].client.post(route,params=params);assert removed.status_code==200,removed.text
+ assert removed.json()=={'completed':1}
+ current=b.rest(b.clients[0],'GET','memory_archives',post_id='eq.'+p['id']).json()[0];assert current['state']=='archived'
+ r=ok(rpc(b,1,'begin_memory_restore',p_post=p['id'],p_archive=a['archive_id'],p_snapshot_sha=a['snapshot_sha']))
+ for t in r['targets']:
+  b.paths.append(t['path']);params=dict(action='asset',post=p['id'],restore=r['restore_id'],source=t['source'])
+  wrong=b.clients[1].client.post(route,params=params,content=b'wrong',headers={'Content-Type':'application/octet-stream'})
+  assert wrong.status_code==409 and wrong.json()['error']=='WRONG_BACKUP'
+  assert b.clients[0].client.post(route,params=params,content=data,headers={'Content-Type':'application/octet-stream'}).status_code==409
+  result=b.clients[1].client.post(route,params=params,content=data,headers={'Content-Type':'application/octet-stream'});assert result.status_code==200,result.text
+  assert b.clients[1].client.post(route,params=params,content=data,headers={'Content-Type':'application/octet-stream'}).status_code==200
+ result=b.clients[1].client.post(route,params=dict(action='finish',post=p['id'],restore=r['restore_id']))
+ assert result.status_code==200 and result.json()=={'restored':True}

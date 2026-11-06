@@ -1705,3 +1705,17 @@ Logout/disable and ordinary export now distinguish cloud archives and separate b
 237 web and 44 worker tests, lint/types/format/build pass. Authenticated archive endpoint and
 retention support deployed; nothing auto-queued and no real memory removed. Full hosted,
 responsive browser and Android CI verification continue. APK handover remains deferred.
+
+Full hosted/tool regression passes 105/105 in 211.63s, including the deployed archive
+endpoint's JWT/scope guards, wrong-file rejection, exact retry/readback and complete restore.
+Android source b3551b1 passes CI 42169366307 and private artifact integrity/signer checks.
+Browser checks pass 78 layouts and ten flows; ten settled static audits score 100/100 for
+accessibility/best practices. An initial static-only missing favicon was supplied and audited
+again; no app defect was hidden. Native SAF/provider/process-death and two actual phones remain
+unverified, deferred task #7. The browser bridge is a synthetic UI fixture, not native proof.
+
+Final review added complete paginated archive/proof reads and access to older keepsakes.
+Selection is compact and opens one backup form at a time. Interrupted manifest reads fail
+instead of presenting partial readiness. The older-item selection flow and page-failure/abort
+checks are tested. 239 web/44 worker checks and lint/types/format/build pass; final Android
+UI build and evidence cleanup continue. No real memory archive or partner contact performed.

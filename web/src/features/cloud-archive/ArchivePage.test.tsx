@@ -6,9 +6,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { beforeEach, expect, test, vi } from 'vitest'
 import type { Post } from '@/lib/posts'
 import type { CloudArchive } from './backup'
-import { ArchiveMemory } from './ArchivePage'
+import ArchivePage, { ArchiveMemory } from './ArchivePage'
 const f = vi.hoisted(() => ({
   rpc: vi.fn(),
+  from: vi.fn(),
   verify: vi.fn(),
   save: vi.fn(),
   build: vi.fn(),
@@ -17,7 +18,11 @@ const f = vi.hoisted(() => ({
 vi.mock('@/hooks/useAuth', () => ({
   useAuth: () => ({
     session: { user: { id: 'me' } },
-    client: { rpc: f.rpc, storage: { from: () => ({ download: vi.fn() }) } },
+    client: {
+      rpc: f.rpc,
+      from: f.from,
+      storage: { from: () => ({ download: vi.fn() }) },
+    },
   }),
 }))
 vi.mock('@/hooks/useSpace', () => ({
@@ -142,4 +147,68 @@ test('saved-off-cloud memory opens a scoped phone library and never renders a br
   expect(screen.getByLabelText('Choose Orbit archive ZIP')).toBeInTheDocument()
   expect(screen.queryByRole('img')).not.toBeInTheDocument()
   expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
+})
+
+test('older keepsakes stay reachable through compact selection, with one backup form at a time', async () => {
+  const u = userEvent.setup()
+  f.from.mockImplementation((table: string) => {
+    let offset = 0
+    const q: Record<string, unknown> = {}
+    for (const key of ['select', 'eq', 'is', 'order', 'abortSignal'])
+      q[key] = () => q
+    q.range = (from: number) => {
+      offset = from
+      return q
+    }
+    q.then = (resolve: (value: unknown) => unknown) =>
+      Promise.resolve({
+        data:
+          table === 'posts'
+            ? offset === 0
+              ? Array.from({ length: 100 }, (_, i) => ({
+                  ...root,
+                  id: 'post-' + i,
+                  media_path: 'photo.webp',
+                  body: 'Memory ' + i,
+                }))
+              : [
+                  {
+                    ...root,
+                    id: 'earlier',
+                    media_path: 'earlier.webp',
+                    body: 'An earlier afternoon',
+                  },
+                ]
+            : [],
+        error: null,
+      }).then(resolve)
+    return q
+  })
+  render(
+    <StrictMode>
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: { queries: { retry: false, gcTime: 0 } },
+          })
+        }
+      >
+        <MemoryRouter>
+          <ArchivePage />
+        </MemoryRouter>
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+  await u.click(await screen.findByText('Choose a keepsake'))
+  expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
+  await u.click(
+    await screen.findByRole('button', { name: 'Earlier keepsakes' }),
+  )
+  await u.click(
+    await screen.findByRole('button', { name: /An earlier afternoon/ }),
+  )
+  expect(screen.getAllByRole('checkbox')).toHaveLength(1)
+  expect(
+    screen.getByRole('heading', { name: 'An earlier afternoon' }),
+  ).toBeInTheDocument()
 })

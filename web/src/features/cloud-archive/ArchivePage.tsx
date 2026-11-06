@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import {
   Archive,
   ArrowDownToLine,
@@ -20,6 +24,7 @@ import type { Post } from '@/lib/posts'
 import { buildBackup, readBackup, type CloudArchive } from './backup'
 import { archiveSupported, saveVerifiedBackup } from './native'
 import { verifyMemoryCopies } from './verify'
+import { archiveRows } from './pages'
 import './archive.css'
 const pending = [
   'proposed',
@@ -33,38 +38,67 @@ export default function ArchivePage() {
   const { client, session } = useAuth(),
     { data: space } = useSpace(),
     query = useQueryClient()
+  const [chosen, setChosen] = useState<string | null>(null)
   const data = useQuery({
     queryKey: ['cloud-archives', session?.user.id, space?.couple.id],
     enabled: !!space,
     refetchInterval: 30000,
-    queryFn: async () => {
-      const [archives, proofs, posts] = await Promise.all([
-        client
-          .from('memory_archives')
-          .select('*')
-          .order('created_at', { ascending: false }),
-        client.from('memory_archive_proofs').select('*'),
-        client
-          .from('posts')
-          .select('*')
-          .eq('keep', true)
-          .is('unsent_at', null)
-          .order('created_at', { ascending: false })
-          .limit(100),
+    queryFn: async ({ signal }) => {
+      const [archives, proofs] = await Promise.all([
+        archiveRows(
+          (from, to) =>
+            client
+              .from('memory_archives')
+              .select('*')
+              .order('post_id')
+              .range(from, to)
+              .abortSignal(signal),
+          signal,
+        ),
+        archiveRows(
+          (from, to) =>
+            client
+              .from('memory_archive_proofs')
+              .select('*')
+              .order('post_id')
+              .order('user_id')
+              .range(from, to)
+              .abortSignal(signal),
+          signal,
+        ),
       ])
-      if (archives.error || proofs.error || posts.error)
-        throw new Error('ARCHIVE_UNAVAILABLE')
       return {
-        archives: archives.data.filter((a) =>
+        archives: archives.filter((a) =>
           pending.includes(a.state),
         ) as unknown as CloudArchive[],
-        proofs: proofs.data,
-        posts: posts.data.filter((p) =>
-          copySources(p).some((s) => s.media_path),
-        ),
+        proofs,
       }
     },
   })
+  const candidates = useInfiniteQuery({
+    queryKey: ['archive-candidates', session?.user.id, space?.couple.id],
+    enabled: !!space,
+    initialPageParam: 0,
+    queryFn: async ({ pageParam, signal }) => {
+      const r = await client
+        .from('posts')
+        .select('*')
+        .eq('keep', true)
+        .is('unsent_at', null)
+        .order('created_at', { ascending: false })
+        .order('id')
+        .range(pageParam, pageParam + 99)
+        .abortSignal(signal)
+      if (r.error) throw r.error
+      return r.data
+    },
+    getNextPageParam: (last, pages) =>
+      last.length === 100 ? pages.length * 100 : undefined,
+  })
+  const posts =
+    candidates.data?.pages
+      .flat()
+      .filter((p) => copySources(p).some((s) => s.media_path)) ?? []
   return (
     <div className="page archive-page">
       <BackLink fallback="/keepsakes" />
@@ -77,7 +111,10 @@ export default function ArchivePage() {
         <button
           className="icon-button"
           aria-label="Refresh archives"
-          onClick={() => void data.refetch()}
+          onClick={() => {
+            void data.refetch()
+            void candidates.refetch()
+          }}
         >
           <RefreshCw size={18} />
         </button>
@@ -108,7 +145,7 @@ export default function ArchivePage() {
           <ArchiveMemory
             key={a.archive_id}
             archive={a}
-            post={data.data.posts.find((p) => p.id === a.post_id)}
+            post={posts.find((p) => p.id === a.post_id)}
             approved={data.data.proofs
               .filter(
                 (p) =>
@@ -121,22 +158,62 @@ export default function ArchivePage() {
           />
         ))}
       </div>
-      {!!data.data?.posts.length && (
+      {(!!posts.length || candidates.hasNextPage) && (
         <details className="archive-choose">
           <summary>
             Choose a keepsake <ChevronDown size={18} aria-hidden="true" />
           </summary>
-          {data.data.posts
-            .filter((p) => !data.data.archives.some((a) => a.post_id === p.id))
+          {posts
+            .filter((p) => !data.data?.archives.some((a) => a.post_id === p.id))
             .map((post) => (
-              <ArchiveMemory key={post.id} post={post} approved={[]} />
+              <button
+                className="archive-pick"
+                key={post.id}
+                onClick={() => setChosen(post.id)}
+                aria-pressed={chosen === post.id}
+              >
+                <span>{post.body?.trim() || 'A kept memory'}</span>
+                <time dateTime={post.created_at}>
+                  {new Intl.DateTimeFormat('en-IN', {
+                    dateStyle: 'medium',
+                  }).format(new Date(post.created_at))}
+                </time>
+              </button>
             ))}
+          {candidates.hasNextPage && (
+            <button
+              className="text-button"
+              disabled={candidates.isFetchingNextPage}
+              onClick={() => void candidates.fetchNextPage()}
+            >
+              Earlier keepsakes
+            </button>
+          )}
         </details>
+      )}
+      {posts
+        .filter(
+          (p) =>
+            p.id === chosen &&
+            !data.data?.archives.some((a) => a.post_id === p.id),
+        )
+        .map((post) => (
+          <ArchiveMemory key={post.id} post={post} approved={[]} />
+        ))}
+      {candidates.error && (
+        <button
+          className="text-button"
+          onClick={() => void candidates.refetch()}
+        >
+          Couldn’t load keepsakes. Retry
+        </button>
       )}
       {!data.isPending &&
         !data.error &&
         !data.data?.archives.length &&
-        !data.data?.posts.length && <p>No cloud files to archive yet.</p>}
+        !candidates.isPending &&
+        !candidates.error &&
+        !posts.length && <p>No cloud files to archive yet.</p>}
       <Link className="text-button" to="/offline">
         Open phone library
       </Link>
@@ -231,15 +308,17 @@ export function ArchiveMemory({
         setMessage(
           text.includes('FRESH_PHONE')
             ? 'Both phones need to check this memory first. Open this page on each phone and try again.'
-            : text.includes('CANCELLED')
-              ? 'Cancelled. Your cloud files are unchanged.'
-              : text.includes('UPDATE_PHONE')
-                ? 'Use the latest Android app with phone copies enabled.'
-                : text.includes('WRONG_BACKUP')
-                  ? 'That ZIP doesn’t match this memory. Choose its Orbit archive backup.'
-                  : text.includes('QUOTA')
-                    ? 'Cloud storage is full. Make room before restoring.'
-                    : 'Couldn’t finish. Your current state is saved; check your connection and retry.',
+            : text.includes('CHANGED')
+              ? 'This memory changed. Cancel the proposal and choose the keepsake again.'
+              : text.includes('CANCELLED')
+                ? 'Cancelled. Your cloud files are unchanged.'
+                : text.includes('UPDATE_PHONE')
+                  ? 'Use the latest Android app with phone copies enabled.'
+                  : text.includes('WRONG_BACKUP')
+                    ? 'That ZIP doesn’t match this memory. Choose its Orbit archive backup.'
+                    : text.includes('QUOTA')
+                      ? 'Cloud storage is full. Make room before restoring.'
+                      : 'Couldn’t finish. Your current state is saved; check your connection and retry.',
         )
       }
     } finally {
@@ -250,6 +329,7 @@ export function ArchiveMemory({
       }
       for (const key of [
         'cloud-archives',
+        'archive-candidates',
         'archive-requirements',
         'kept-memories',
         'phone-copies',
