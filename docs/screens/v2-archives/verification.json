@@ -1,0 +1,25 @@
+{
+  "source": "9b427ec94d6823b6692c89e58f0b5008ed3ac4b9",
+  "android_ci": 42170571273,
+  "android_result": "success",
+  "web_tests": 239,
+  "worker_tests": 44,
+  "hosted_tool_tests": 105,
+  "hosted_seconds": 211.63,
+  "browser_layouts": 90,
+  "browser_flows": 12,
+  "static_audits": 12,
+  "all_audits_accessibility": 100,
+  "all_audits_best_practices": 100,
+  "artifact": {
+    "bytes": 7152817,
+    "sha256": "2f382c15f96ce95658258b9d4b9e51b655f710327838a0ce3c27636d5d4e7fb3",
+    "zip_integrity": "pass",
+    "signing_identity_matches_baseline": true,
+    "private_scan": "pass"
+  },
+  "real_memories_archived": 0,
+  "real_partner_contacted": false,
+  "apk_handover": "deferred at user request",
+  "physical_gate": "Task #7: actual two phones, SAF/provider/process-death, capture/playback, offline/expired-session and battery checks deferred"
+}

@@ -22,6 +22,21 @@ the original PLAN.md and deferred physical release gates remain valid.
 - User preference: continue building/automated verification, retain verified builds internally,
   and do not hand over APKs or request a phone install until the user asks for their test batch.
 
+## Current acceptance — 6 November
+
+- V2.5 software complete: photo sets/collections/media outbox, encrypted phone library,
+  explicit whole-memory cloud archives, two-member fresh-copy/verified-ZIP approvals,
+  author final confirmation, scoped Storage API removal, and generation-isolated restore.
+- V2.6 software complete: a kept photo can carry one voluntary text/photo/voice side per
+  member. Ownership, version/retry/Keep identity, quota, receipts, export and retention cover
+  the whole memory. Explicit turn controls and chosen playback respect comfort settings.
+- Source `9b427ec`: 239 web/44 worker tests; full 105 hosted/tool checks; 90 responsive
+  states and twelve browser flows pass. Android CI 42170571273 passes; twelve static audits score 100/100. Evidence: DEVLOG.md and
+  docs/screens/v2-archives/README.md. No real archive or partner contact performed.
+- Actual two-phone/offline/SAF/provider/process-death behavior remains deferred task #7.
+  Do not deliver an APK or request installation until the user asks. V2.10 release audit
+  remains next. The dated updates below preserve the implementation history.
+
 ## Milestones
 
 | Phase | Deliverable | Acceptance |

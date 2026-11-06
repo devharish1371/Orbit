@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Failed readback retains acknowledgement without approval",
+    "pass": true
+  },
+  {
+    "name": "Retry saves approval only after verified readback",
+    "pass": true
+  },
+  {
+    "name": "Final cloud removal needs a separate confirmation",
+    "pass": true
+  },
+  {
+    "name": "Cancelling final confirmation leaves proposal intact",
+    "pass": true
+  },
+  {
+    "name": "Explicit memory turn reveals contribution and linked profile",
+    "pass": true
+  },
+  {
+    "name": "Failed contribution save keeps draft words",
+    "pass": true
+  },
+  {
+    "name": "Acknowledged retry reveals both voluntary sides",
+    "pass": true
+  },
+  {
+    "name": "Removing a contribution requires own-side confirmation",
+    "pass": true
+  },
+  {
+    "name": "Cancelling contribution removal keeps both sides",
+    "pass": true
+  },
+  {
+    "name": "Reduced motion selected",
+    "pass": true
+  },
+  {
+    "name": "Compact picker hides backup forms until a memory is selected",
+    "pass": true
+  },
+  {
+    "name": "Selecting a memory opens exactly one backup form",
+    "pass": true
+  }
+]

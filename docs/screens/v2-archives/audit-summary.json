@@ -1,0 +1,98 @@
+[
+  {
+    "name": "archived-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "archived-dark",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "confirmation-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "confirmation-dark",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "memory-front-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "memory-back-dark",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "editor-A-few-words-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "editor-Photo-dark",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "editor-Voice-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "both-sides-day",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "picker-light",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  },
+  {
+    "name": "picker-dark",
+    "categories": {
+      "accessibility": 1,
+      "best-practices": 1
+    },
+    "findings": []
+  }
+]

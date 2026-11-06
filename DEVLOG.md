@@ -1719,3 +1719,33 @@ Selection is compact and opens one backup form at a time. Interrupted manifest r
 instead of presenting partial readiness. The older-item selection flow and page-failure/abort
 checks are tested. 239 web/44 worker checks and lint/types/format/build pass; final Android
 UI build and evidence cleanup continue. No real memory archive or partner contact performed.
+
+### V2.5 / V2.6 — final software verification (6 November)
+
+Final source `9b427ec94d6823b6692c89e58f0b5008ed3ac4b9` passes Android CI
+42170571273: full web checks, Python/source scan, native unit tests (including ZIP proof),
+Java/resources, manifest/bridge checks, assembly and signing. 239 web/44 worker tests;
+all 105 hosted/tool checks pass in 211.63s. Backend migrations and authenticated archive/
+retention endpoints are deployed. Earlier native builds 8557284/b3551b1 also passed.
+
+Final browser evidence: docs/screens/v2-archives. Ninety responsive states and twelve
+flows pass; all twelve settled static audits score 100/100 with no binary findings.
+The final picker accesses earlier memories, uses compact rows and opens one backup form.
+Browser contribution retry evidence initially needed the fixture to include the server's
+canonical zero-byte text metadata; corrected in the isolated harness, then verified. Native
+save/readback is covered by pure-Java tests and compilation, not claimed from the browser mock.
+Day/Standard/Follow phone and the viewport are restored; temporary QA tabs/4176/4177 servers
+are closed. User previews 5173/4173 are preserved. The initial refused-connection tab was
+unmarked and remains temporary; it is not a delivered app screen.
+
+V2.5 and V2.6 software acceptance is complete. Actual phone SAF/provider/process-death,
+expired-session/offline/two-phone/capture/playback and battery gates stay deferred in task #7.
+No real memory was cloud-archived, microphone started or partner contacted. The anniversary
+letter stays outside Orbit. No APK handover or install requested. V2.10 release audit remains
+next; milestone completion does not waive the existing physical release gates.
+
+Privately retained final APK: 7,152,817 bytes; SHA-256
+2f382c15f96ce95658258b9d4b9e51b655f710327838a0ce3c27636d5d4e7fb3.
+ZIP integrity, signer continuity against ce81729 and private-material scan pass. Final
+source/evidence scan: 1,233 files, zero findings. Plans/contracts and verification.json are
+current; no application changes follow the verified source 9b427ec.

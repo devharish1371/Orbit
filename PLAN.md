@@ -5,6 +5,16 @@ The existing `orbit-agent-docs/` folder is the repository root. The numbered sou
 documents stay here; planning and development logs also live here as explicitly requested.
 Architecture notes and version records live in `docs/`.
 
+## Current V2 status — 6 November
+
+V2.5 archive completion and V2.6 mixed memories are implemented. Source `9b427ec`
+includes compact access to older keepsakes, complete archive proofs and verified restore.
+239 web/44 worker checks and the complete 105 hosted/tool suite pass. Browser verification
+covers 90 responsive states and twelve flows. Android CI 42170571273 passes. Final evidence results are recorded
+in DEVLOG.md and docs/screens/v2-archives/README.md. Physical task #7 tests and APK handover
+remain deferred by the user. V2.10 release audit remains next; earlier dated status entries
+below are historical. The anniversary letter remains outside the app.
+
 ## Working rules
 
 - Complete each milestone's acceptance criteria before starting the next.

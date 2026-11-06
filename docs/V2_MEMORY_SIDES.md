@@ -23,3 +23,11 @@ whole manifest, compatible phones, independent backup and both members' explicit
 QA uses synthetic content and disposable accounts. No real partner contact, microphone use
 or existing memory deletion. Native capture/playback/gesture/offline/two-phone checks remain
 in the deferred task #7 batch; no APK handover is requested.
+
+Software verification: implementation `8557284`, combined archive/picker source `9b427ec`.
+The full current suite includes ownership/cross-couple/Keep-instance/concurrency/retry,
+all-file retention and complete mixed-memory archive/restore checks. Browser turn/edit,
+failed-save draft retention, acknowledged retry, own-side removal confirmation and large-text/
+reduced-motion layouts pass. Updated native builds compile and run unit checks; actual
+phone capture/playback/SAF/two-phone behavior remains the explicitly deferred task #7 gate.
+Exact current results: ../DEVLOG.md and screens/v2-archives/README.md.
