@@ -47,7 +47,7 @@ export const memories = {
   addDate: 'Set your anniversary in Settings to start your timeline.',
   export: 'Export our memories',
   exportHint:
-    'Saved memories in one ZIP. Sealed partner capsules stay private.',
+    'Online memories and archive details in one ZIP. Keep separate archive ZIPs for files removed from the cloud. Sealed partner capsules stay private.',
   exportStart: 'Download ZIP',
   exportDone: 'Your ZIP is ready.',
   exportFailed:

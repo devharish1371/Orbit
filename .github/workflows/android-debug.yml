@@ -97,6 +97,9 @@ jobs:
           print('Foreground voice permissions and chat keyboard resize verified.')
           assert 'android.permission.USE_BIOMETRIC' in permissions
           from pathlib import Path
+          assert 'ArchivePlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
+          assert 'ACTION_CREATE_DOCUMENT' in Path('app/src/main/java/app/orbit/couple/ArchivePlugin.java').read_text()
+          assert not {'android.permission.MANAGE_EXTERNAL_STORAGE','android.permission.WRITE_EXTERNAL_STORAGE'} & permissions
           assert 'PrivacyPlugin.class' in Path('app/src/main/java/app/orbit/couple/MainActivity.java').read_text()
           print('Native privacy bridge and biometric permission verified.')
           widget=next(p for p in root.findall('./application/receiver') if p.get(a+'name')=='app.orbit.couple.OrbitWidgetProvider')

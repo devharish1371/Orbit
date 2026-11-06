@@ -1,3 +1,5 @@
+import { archiveStore } from "../archive/store.ts";
+import { removeArchives } from "../archive/worker.ts";
 import { runRetention } from "./worker.ts";
 import { restStore } from "./rest-store.ts";
 
@@ -34,6 +36,7 @@ Deno.serve(async (request) => {
     ) as Record<string, string>;
     const key = keys.default ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     if (!url || !key) throw new Error("Missing backend configuration");
+    await removeArchives(archiveStore(url, key));
     const stats = await runRetention(restStore(url, key));
     return Response.json(stats, { status: stats.error ? 500 : 200 });
   } catch {

@@ -281,6 +281,9 @@ export default function KeepsakesPage() {
       <Link className="collection-settings-link" to="/settings">
         Storage & export <span aria-hidden="true">↗</span>
       </Link>
+      <Link className="collection-settings-link" to="/archives">
+        Cloud archives <span aria-hidden="true">↗</span>
+      </Link>
       <PhoneCopiesControl />
       {editor && memory.memory.draft && (
         <CollectionEditor

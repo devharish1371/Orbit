@@ -24,6 +24,7 @@ const routes = new Set([
   '/activity',
   '/call',
   '/keepsakes',
+  '/archives',
   '/on-this-day',
   '/capsules',
   '/timeline',

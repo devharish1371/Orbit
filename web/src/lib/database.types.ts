@@ -505,23 +505,29 @@ export type Database = {
       }
       keepsake_devices: {
         Row: {
+          checked_at: string | null
           couple_id: string
           device_id: string
           enabled: boolean
+          protocol: number
           updated_at: string
           user_id: string
         }
         Insert: {
+          checked_at?: string | null
           couple_id: string
           device_id: string
           enabled: boolean
+          protocol?: number
           updated_at?: string
           user_id: string
         }
         Update: {
+          checked_at?: string | null
           couple_id?: string
           device_id?: string
           enabled?: boolean
+          protocol?: number
           updated_at?: string
           user_id?: string
         }
@@ -890,6 +896,133 @@ export type Database = {
           },
         ]
       }
+      memory_archive_proofs: {
+        Row: {
+          approved: boolean
+          archive_id: string
+          couple_id: string
+          device_id: string
+          files: Json
+          post_id: string
+          snapshot_sha: string
+          user_id: string
+          verified_at: string
+          zip_bytes: number
+          zip_sha: string
+        }
+        Insert: {
+          approved: boolean
+          archive_id: string
+          couple_id: string
+          device_id: string
+          files: Json
+          post_id: string
+          snapshot_sha: string
+          user_id: string
+          verified_at?: string
+          zip_bytes: number
+          zip_sha: string
+        }
+        Update: {
+          approved?: boolean
+          archive_id?: string
+          couple_id?: string
+          device_id?: string
+          files?: Json
+          post_id?: string
+          snapshot_sha?: string
+          user_id?: string
+          verified_at?: string
+          zip_bytes?: number
+          zip_sha?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'memory_archive_proofs_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'memory_archive_proofs_post_id_fkey'
+            columns: ['post_id']
+            isOneToOne: false
+            referencedRelation: 'memory_archives'
+            referencedColumns: ['post_id']
+          },
+          {
+            foreignKeyName: 'memory_archive_proofs_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'members'
+            referencedColumns: ['user_id']
+          },
+        ]
+      }
+      memory_archives: {
+        Row: {
+          archive_id: string
+          couple_id: string
+          created_at: string
+          files: Json
+          kept_at: string
+          post_id: string
+          restore_id: string | null
+          restore_targets: Json | null
+          revision: number
+          snapshot: string
+          snapshot_sha: string
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          archive_id: string
+          couple_id: string
+          created_at?: string
+          files: Json
+          kept_at: string
+          post_id: string
+          restore_id?: string | null
+          restore_targets?: Json | null
+          revision: number
+          snapshot: string
+          snapshot_sha: string
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          archive_id?: string
+          couple_id?: string
+          created_at?: string
+          files?: Json
+          kept_at?: string
+          post_id?: string
+          restore_id?: string | null
+          restore_targets?: Json | null
+          revision?: number
+          snapshot?: string
+          snapshot_sha?: string
+          state?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'memory_archives_couple_id_fkey'
+            columns: ['couple_id']
+            isOneToOne: false
+            referencedRelation: 'couples'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'memory_archives_post_id_fkey'
+            columns: ['post_id']
+            isOneToOne: true
+            referencedRelation: 'posts'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       memory_collections: {
         Row: {
           archived: boolean
@@ -1156,6 +1289,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1193,6 +1327,7 @@ export type Database = {
           author_id: string
           body?: string | null
           channel: string
+          cloud_state?: string
           couple_id: string
           created_at?: string
           deleting_at?: string | null
@@ -1230,6 +1365,7 @@ export type Database = {
           author_id?: string
           body?: string | null
           channel?: string
+          cloud_state?: string
           couple_id?: string
           created_at?: string
           deleting_at?: string | null
@@ -1508,6 +1644,16 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      ack_memory_restore_asset: {
+        Args: {
+          p_actor: string
+          p_post: string
+          p_restore: string
+          p_sha256: string
+          p_source: string
+        }
+        Returns: undefined
+      }
       answer_daily_question: {
         Args: { p_answer: string }
         Returns: {
@@ -1525,7 +1671,76 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      approve_memory_archive: {
+        Args: {
+          p_archive: string
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_files: Json
+          p_independent_backup: boolean
+          p_post: string
+          p_snapshot_sha: string
+          p_zip_bytes: number
+          p_zip_sha: string
+        }
+        Returns: {
+          approved: boolean
+          archive_id: string
+          couple_id: string
+          device_id: string
+          files: Json
+          post_id: string
+          snapshot_sha: string
+          user_id: string
+          verified_at: string
+          zip_bytes: number
+          zip_sha: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'memory_archive_proofs'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      archive_requirements: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+        }
+        Returns: Json
+      }
+      begin_memory_restore: {
+        Args: {
+          p_archive: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+          p_snapshot_sha: string
+        }
+        Returns: Json
+      }
       cancel_capsule: { Args: { p_id: string }; Returns: undefined }
+      cancel_memory_archive: {
+        Args: {
+          p_archive: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+        }
+        Returns: undefined
+      }
+      cancel_memory_restore: {
+        Args: {
+          p_actor: string
+          p_finish?: boolean
+          p_post: string
+          p_restore: string
+        }
+        Returns: Json
+      }
       claim_expired_posts: {
         Args: { p_limit?: number }
         Returns: {
@@ -1533,6 +1748,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1571,6 +1787,10 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      claim_memory_archives: {
+        Args: { p_actor?: string; p_post?: string }
+        Returns: Json
       }
       claim_notification_jobs: {
         Args: { p_id?: string; p_limit?: number }
@@ -1595,6 +1815,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1633,6 +1854,14 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      confirm_copy_protocol: {
+        Args: {
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+        }
+        Returns: undefined
       }
       create_capsule: {
         Args: {
@@ -1666,6 +1895,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1712,6 +1942,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1768,6 +1999,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1811,6 +2043,14 @@ export type Database = {
         Args: { p_id: string; p_token: string }
         Returns: boolean
       }
+      finish_memory_archive: {
+        Args: { p_archive: string; p_post: string; p_token: string }
+        Returns: boolean
+      }
+      finish_memory_restore: {
+        Args: { p_actor: string; p_post: string; p_restore: string }
+        Returns: boolean
+      }
       finish_notification: {
         Args: { p_id: string; p_status: string; p_tokens?: string[] }
         Returns: undefined
@@ -1836,6 +2076,15 @@ export type Database = {
         Returns: undefined
       }
       memory_collections_index: { Args: never; Returns: Json }
+      memory_restore_asset: {
+        Args: {
+          p_actor: string
+          p_post: string
+          p_restore: string
+          p_source: string
+        }
+        Returns: Json
+      }
       on_this_day_keepsakes: {
         Args: { p_before_created?: string; p_before_id?: string }
         Returns: {
@@ -1843,6 +2092,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null
@@ -1898,6 +2148,116 @@ export type Database = {
         SetofOptions: {
           from: '*'
           to: 'capsules'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      phone_copy_manifest: {
+        Args: {
+          p_after?: string
+          p_device: string
+          p_expected_couple: string
+          p_expected_user: string
+        }
+        Returns: {
+          archive_revision: number
+          author_id: string
+          body: string | null
+          channel: string
+          cloud_state: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
+          note_style: string
+          photo_items: Json
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }[]
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      prepare_memory_archive: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+        }
+        Returns: {
+          archive_id: string
+          couple_id: string
+          created_at: string
+          files: Json
+          kept_at: string
+          post_id: string
+          restore_id: string | null
+          restore_targets: Json | null
+          revision: number
+          snapshot: string
+          snapshot_sha: string
+          state: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'memory_archives'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      queue_memory_archive: {
+        Args: {
+          p_archive: string
+          p_expected_couple: string
+          p_expected_user: string
+          p_post: string
+          p_snapshot_sha: string
+        }
+        Returns: {
+          archive_id: string
+          couple_id: string
+          created_at: string
+          files: Json
+          kept_at: string
+          post_id: string
+          restore_id: string | null
+          restore_targets: Json | null
+          revision: number
+          snapshot: string
+          snapshot_sha: string
+          state: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'memory_archives'
           isOneToOne: true
           isSetofReturn: false
         }
@@ -2115,9 +2475,11 @@ export type Database = {
           p_expected_user: string
         }
         Returns: {
+          checked_at: string | null
           couple_id: string
           device_id: string
           enabled: boolean
+          protocol: number
           updated_at: string
           user_id: string
         }
@@ -2204,6 +2566,7 @@ export type Database = {
           author_id: string
           body: string | null
           channel: string
+          cloud_state: string
           couple_id: string
           created_at: string
           deleting_at: string | null

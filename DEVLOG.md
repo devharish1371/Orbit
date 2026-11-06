@@ -1688,3 +1688,20 @@ Updated retention is deployed. 230 web/40 worker checks and lint/types/format/bu
 new tests exercise turn/profile flow, StrictMode acknowledgement/retry, own-only removal,
 complete file manifests, pair receipts and safe cleanup. Full hosted/native/browser checks
 continue while the V2.5 archive layer is developed; no real memories are removed or recorded.
+
+V2.5 archive implementation: additive 0038–0040 bind both members' current protocol-2
+phone receipts, read-back ZIP proofs and explicit approvals to the exact Keep/revision.
+Author-only final removal uses scoped service leases and Storage API cleanup. References
+shared with an avatar/other post block removal; concurrent references cannot capture files.
+Restores reserve quota and use isolated generation paths, verify every file/hash before
+acknowledgement, retain author/asset identities and support partial retry/cancel. Hosted
+checks caught the legacy root-path constraint; corrected additively in 0040. All four
+focused hosted scenarios pass, including complete sets with photo/voice contributions.
+
+New archive shelf, bounded ZIP STORE reader/writer, independent-backup acknowledgement,
+Android SAF save/readback bridge and pure-Java proof checks are implemented. Current native
+copy manifests retain archived roots; missing archived copies never attempt cloud downloads.
+Logout/disable and ordinary export now distinguish cloud archives and separate backup ZIPs.
+237 web and 44 worker tests, lint/types/format/build pass. Authenticated archive endpoint and
+retention support deployed; nothing auto-queued and no real memory removed. Full hosted,
+responsive browser and Android CI verification continue. APK handover remains deferred.

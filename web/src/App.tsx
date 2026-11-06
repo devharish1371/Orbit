@@ -26,6 +26,7 @@ const NotificationsPage = lazy(
 )
 const ActivityPage = lazy(() => import('@/features/alerts/ActivityPage'))
 const CallPage = lazy(() => import('@/features/alerts/CallPage'))
+const ArchivePage = lazy(() => import('@/features/cloud-archive/ArchivePage'))
 const KeepsakesPage = lazy(() => import('@/features/memories/KeepsakesPage'))
 const CapsulesPage = lazy(() => import('@/features/memories/CapsulesPage'))
 const TimelinePage = lazy(() => import('@/features/memories/TimelinePage'))
@@ -87,6 +88,7 @@ export default function App() {
               <Route path="us" element={<UsPage />} />
               <Route path="on-this-day" element={<OnThisDayPage />} />
               <Route path="plans" element={<PlansPage />} />
+              <Route path="archives" element={<ArchivePage />} />
               <Route path="keepsakes" element={<KeepsakesPage />} />
               <Route path="capsules" element={<CapsulesPage />} />
               <Route path="timeline" element={<TimelinePage />} />

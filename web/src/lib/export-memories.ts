@@ -67,6 +67,16 @@ export async function exportMemories(
         .range(from, to),
     signal,
   )
+  const archives = await collect(
+    (from, to) =>
+      client
+        .from('memory_archives')
+        .select('*')
+        .lte('created_at', started)
+        .order('post_id')
+        .range(from, to),
+    signal,
+  )
   const postIds = posts.map((post) => post.id)
   const collections = await collect(
     (from, to) =>
@@ -158,7 +168,11 @@ export async function exportMemories(
           format: 'orbit-memories-v1',
           exported_at: started,
           scope:
-            'Kept posts with media; RLS-visible capsules and answers; daily summaries. Locked partner capsules are excluded.',
+            'Online kept posts with media; cloud archive metadata without archived files; RLS-visible capsules and answers; daily summaries. Locked partner capsules are excluded. Keep the separate Orbit archive ZIPs for removed cloud files.',
+          cloud_archives: archives.map((a) => ({
+            ...a,
+            media_included: false,
+          })),
           posts,
           comments,
           reactions,

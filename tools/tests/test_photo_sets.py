@@ -73,7 +73,7 @@ def test_set_quota_cannot_be_bypassed_by_cover_only_and_failed_keep_is_atomic(ba
     b=backend;payload=draft(b,2);row=create(b,payload).json();filler=b.post()
     with b.db() as db:
         quota=db.execute('select keepsake_quota_mb from public.couples where id=%s',(b.couples[0],)).fetchone()[0]
-        used=db.execute('select coalesce(sum(media_bytes::bigint+thumb_bytes+extra_media_bytes+extra_thumb_bytes),0) from public.posts where couple_id=%s and keep',(b.couples[0],)).fetchone()[0]
+        used=db.execute('select coalesce(sum(media_bytes::bigint+thumb_bytes+extra_media_bytes+extra_thumb_bytes+memory_bytes),0) from public.posts where couple_id=%s and keep and cloud_state in (\'online\',\'restoring\')',(b.couples[0],)).fetchone()[0]
         db.execute('update public.posts set media_bytes=%s where id=%s',(quota*1048576-used-row['media_bytes']-row['thumb_bytes']-1,filler['id']))
     assert b.rest(b.clients[0],'PATCH','posts',{'keep':True},id='eq.'+filler['id']).status_code==200
     try:

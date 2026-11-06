@@ -107,7 +107,8 @@ export function PhoneCopiesControl() {
         </p>
       )}
       <p className="phone-copy-cloud">
-        <Cloud size={15} aria-hidden="true" /> Cloud originals stay saved.
+        <Cloud size={15} aria-hidden="true" /> Cloud files stay saved unless you
+        both approve an archive.
       </p>
       {(error || state.error) && (
         <p role="status">
@@ -132,7 +133,7 @@ export function PhoneCopiesControl() {
           title={enabled ? 'Remove phone copies?' : 'Save keepsakes here?'}
           description={
             enabled
-              ? 'This removes private copies from this phone. Your cloud keepsakes and the other phone stay saved.'
+              ? 'This removes private copies from this phone. Cloud-archived memories may have no cloud originals. Keep their separate ZIP backups before continuing. The other phone stays saved.'
               : 'Either of you can tap Keep. Each opted-in phone downloads its own copy while Orbit is open. Up to 256 MB, with files up to 16 MB each. This becomes your keepsake phone; any previous phone stops syncing. Signing out or uninstalling removes these copies. Removed keepsakes disappear here after the next sync.'
           }
           confirmLabel={enabled ? 'Remove copies' : 'Use this phone'}

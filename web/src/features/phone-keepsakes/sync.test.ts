@@ -197,3 +197,21 @@ test('both-phone evidence requires two distinct current opted-in phones, revisio
     ),
   ).toBe(false)
 })
+
+test('archived roots preserve matching copies and do not fetch a missing cloud original', async () => {
+  const archived = { ...post, cloud_state: 'archived' },
+    p = port({
+      manifest: vi.fn().mockResolvedValue([archived]),
+      local: vi.fn().mockResolvedValue([copy]),
+    })
+  await syncPhoneCopies(p, () => true)
+  expect(p.remove).not.toHaveBeenCalled()
+  expect(p.download).not.toHaveBeenCalled()
+  const missing = port({ manifest: vi.fn().mockResolvedValue([archived]) })
+  expect(await syncPhoneCopies(missing, () => true)).toEqual({
+    saved: 0,
+    skipped: 1,
+  })
+  expect(missing.download).not.toHaveBeenCalled()
+  expect(missing.write).not.toHaveBeenCalled()
+})

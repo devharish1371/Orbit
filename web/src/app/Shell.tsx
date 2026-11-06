@@ -49,6 +49,7 @@ export default function Shell() {
           '/widget',
           '/safety',
           '/keepsakes',
+          '/archives',
           '/on-this-day',
           '/capsules',
           '/timeline',

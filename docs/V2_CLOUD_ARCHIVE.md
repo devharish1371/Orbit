@@ -39,8 +39,8 @@ Neither missing/offline phones nor a cache are described as an independent backu
 
 Restore accepts the matching portable backup, verifies its snapshot/files and uploads through
 an authenticated, server-authorized path. Partial restore remains retryable, accounts for quota
-and is not labelled restored before every file is checked. Both authors' original paths and
-ownership are preserved. Backup files and phone copies are not removed when cloud restore
+and is not labelled restored before every file is checked. Both authors' ownership and logical asset IDs are preserved. Restored files use fresh
+generation-specific paths so a late deletion request cannot erase a restored copy. Backup files and phone copies are not removed when cloud restore
 succeeds. A missing/corrupt local copy offers restore from ZIP, not a broken cloud image.
 
 Logout, disable copies and recovery guidance must distinguish ordinary cloud keepsakes from

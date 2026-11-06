@@ -32,7 +32,7 @@ public class KeepsakesPlugin extends Plugin {
     }
     @PluginMethod public void status(PluginCall call){run(call,false,(owner,couple)->{
         var p=getContext().getSharedPreferences("OrbitKeepsakes",0);String device=p.getString("device",null);if(device==null){device=UUID.randomUUID().toString();p.edit().putString("device",device).commit();}
-        JSObject result=new JSObject();result.put("device",device);result.put("enabled",p.getBoolean("enabled",false)&&owner.equals(p.getString("owner",null))&&couple.equals(p.getString("couple",null)));result.put("used",KeepsakeFiles.used(getContext()));result.put("quota",KeepsakeFiles.QUOTA);return result;
+        JSObject result=new JSObject();result.put("protocol",2);result.put("device",device);result.put("enabled",p.getBoolean("enabled",false)&&owner.equals(p.getString("owner",null))&&couple.equals(p.getString("couple",null)));result.put("used",KeepsakeFiles.used(getContext()));result.put("quota",KeepsakeFiles.QUOTA);return result;
     });}
     @PluginMethod public void configure(PluginCall call){run(call,false,(owner,couple)->{
         boolean enabled=Boolean.TRUE.equals(call.getBoolean("enabled"));var prefs=getContext().getSharedPreferences("OrbitKeepsakes",0);

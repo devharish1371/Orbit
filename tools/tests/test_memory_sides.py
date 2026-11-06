@@ -91,13 +91,16 @@ def test_side_paths_metadata_quota_and_failed_write_rollback(backend):
  assert result.json()['memory_sides'][0]['bytes']==size
  qroot=root(b);sid=str(uuid.uuid4());path=b.couples[0]+'/'+b.users[0]+'/'+qroot['id']+'_side_'+sid+'.webm'
  assert b.clients[0].client.post('/storage/v1/object/media/'+path,content=b'x'*(1048576+1),headers={'Content-Type':'audio/webm'}).status_code==200;b.paths.append(path)
+ filler=b.post()
  with b.db() as db:
-  previous=db.execute('select keepsake_quota_mb from public.couples where id=%s',(b.couples[0],)).fetchone()[0]
-  db.execute('update public.couples set keepsake_quota_mb=1 where id=%s',(b.couples[0],))
+  quota=db.execute('select keepsake_quota_mb from public.couples where id=%s',(b.couples[0],)).fetchone()[0]
+  used=db.execute('select coalesce(sum(media_bytes::bigint+thumb_bytes+extra_media_bytes+extra_thumb_bytes+memory_bytes),0) from public.posts where couple_id=%s and keep and cloud_state in (\'online\',\'restoring\')',(b.couples[0],)).fetchone()[0]
+  db.execute('update public.posts set media_bytes=%s where id=%s',(quota*1048576-used-1048575,filler['id']))
+ assert b.rest(b.clients[0],'PATCH','posts',{'keep':True},id='eq.'+filler['id']).status_code==200
  try:
   response=write(b,qroot,side=dict(id=sid,kind='voice',body='',path=path,duration=5))
   assert response.status_code>=400 and 'QUOTA' in response.text
   row=b.rest(b.clients[0],'GET','posts',id='eq.'+qroot['id']).json()[0]
   assert row['memory_sides']==[] and row['memory_bytes']==0 and row['archive_revision']==qroot['archive_revision']
  finally:
-  with b.db() as db:db.execute('update public.couples set keepsake_quota_mb=%s where id=%s',(previous,b.couples[0]))
+  assert b.rest(b.clients[0],'PATCH','posts',{'keep':False},id='eq.'+filler['id']).status_code==200

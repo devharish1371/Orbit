@@ -22,6 +22,7 @@ export interface PhoneCopy {
   sha256: string
 }
 export interface PhoneStatus {
+  protocol?: number
   device: string
   enabled: boolean
   used: number
@@ -70,6 +71,9 @@ export function copyMatches(copy: PhoneCopy, post: PhotoSource) {
         copy.memory_author === post.copy_memory_author)) &&
     !post.unsent_at &&
     copy.id === post.id &&
+    copy.kind === post.kind &&
+    copy.body === post.body &&
+    copy.created_at === post.created_at &&
     copy.revision === post.archive_revision &&
     copy.bytes === post.media_bytes &&
     (!post.copy_set ||

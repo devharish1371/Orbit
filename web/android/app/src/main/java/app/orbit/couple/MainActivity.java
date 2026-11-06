@@ -8,7 +8,7 @@ public class MainActivity extends BridgeActivity {
         setTheme(OrbitAppearance.launchTheme(this));
         androidx.core.splashscreen.SplashScreen.installSplashScreen(this).setOnExitAnimationListener(view -> view.remove());
         readWidgetRoute(getIntent());
-        registerPlugin(SafetyPlugin.class); registerPlugin(SurfacePlugin.class); registerPlugin(TrackingPlugin.class); registerPlugin(PrivacyPlugin.class); registerPlugin(OutboxPlugin.class); registerPlugin(KeepsakesPlugin.class);
+        registerPlugin(ArchivePlugin.class); registerPlugin(SafetyPlugin.class); registerPlugin(SurfacePlugin.class); registerPlugin(TrackingPlugin.class); registerPlugin(PrivacyPlugin.class); registerPlugin(OutboxPlugin.class); registerPlugin(KeepsakesPlugin.class);
         if (getSharedPreferences("orbit-privacy",MODE_PRIVATE).getBoolean("lock",false) || getSharedPreferences("orbit-privacy",MODE_PRIVATE).getBoolean("screenshots",false))
             getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState); privacy = new PrivacyGuard(this);

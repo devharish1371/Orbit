@@ -2,7 +2,7 @@ import { useNativeReady } from '@/hooks/useNativeSurface'
 import { splitCopyId } from '@/lib/photos'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '@/app/AuthContext'
-import { Link } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import {
   ArrowLeft,
   Smartphone,
@@ -25,6 +25,8 @@ import './phone-keepsakes.css'
 export default function OfflineKeepsakesPage() {
   useNativeReady()
   // Native identity remains sufficient for cold offline access; a known live account must agree.
+  const [params] = useSearchParams()
+  const memory = params.get('memory')
   const account = useContext(AuthContext)?.session?.user.id
   const returnFocus = useRef<HTMLElement | null>(null)
   const [identity, setIdentity] = useState<PhoneIdentity>(),
@@ -52,6 +54,10 @@ export default function OfflineKeepsakesPage() {
           setItems(
             result.rows.sort(
               (a, b) =>
+                (splitCopyId(a.id).post === splitCopyId(b.id).post
+                  ? Number(a.memory_side ?? false) -
+                    Number(b.memory_side ?? false)
+                  : 0) ||
                 b.created_at.localeCompare(a.created_at) ||
                 splitCopyId(a.id).post.localeCompare(splitCopyId(b.id).post) ||
                 (a.photo_position ?? 0) - (b.photo_position ?? 0),
@@ -119,7 +125,9 @@ export default function OfflineKeepsakesPage() {
     setMediaError(false)
   }
   const sameAccount = !account || identity?.owner === account
-  const visibleItems = sameAccount ? items : []
+  const visibleItems = sameAccount
+    ? items.filter((item) => !memory || splitCopyId(item.id).post === memory)
+    : []
   const visibleSelection = sameAccount ? selected : null
   const setPhotos = visibleSelection?.photo_set
     ? visibleItems.filter(
@@ -167,7 +175,7 @@ export default function OfflineKeepsakesPage() {
       </p>
       {loading && <p role="status">Checking saved files…</p>}
       {error && <p role="status">{error}</p>}
-      {!loading && !error && !items.length && (
+      {!loading && !error && !visibleItems.length && (
         <p>No phone copies yet. Open Keepsakes while connected to sync.</p>
       )}
       <div className="phone-library-list">
@@ -220,8 +228,9 @@ export default function OfflineKeepsakesPage() {
       </div>
       <p className="phone-library-note">
         These copies were checked on this phone. Changes made while offline
-        appear after your next sync. Phone copies aren’t a backup; signing out
-        or uninstalling removes them.
+        appear after your next sync. Restore cloud archives from their separate
+        ZIP in Keepsakes → Cloud archives. Phone copies aren’t an independent
+        backup; signing out or uninstalling removes them.
       </p>
       {visibleSelection?.kind === 'photo' && (
         <ImageViewer

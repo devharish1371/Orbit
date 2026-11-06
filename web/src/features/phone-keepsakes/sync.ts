@@ -68,6 +68,10 @@ export async function syncPhoneCopies(
     }
     let copy = local.find((c) => copyMatches(c, post))
     if (!copy) {
+      if (post.cloud_state && post.cloud_state !== 'online') {
+        skipped++
+        continue
+      }
       if (saved >= 1000) {
         skipped++
         continue

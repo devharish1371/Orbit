@@ -22,7 +22,7 @@ def invoke(arguments: list[str], env: dict[str, str]) -> None:
 
 
 @app.command()
-def main(notify: bool = False, live: bool = False) -> None:
+def main(notify: bool = False, live: bool = False, archive: bool = False) -> None:
     """Link the configured project, set the internal secret and deploy retention via API."""
     v = settings('SUPABASE_ACCESS_TOKEN', 'SUPABASE_PROJECT_REF', 'SUPABASE_DB_URL', 'ORBIT_FN_SECRET')
     env = dict(os.environ)
@@ -45,9 +45,9 @@ def main(notify: bool = False, live: bool = False) -> None:
             path.chmod(0o600)
             invoke(['secrets', 'set', '--env-file', str(path), '--project-ref', v['SUPABASE_PROJECT_REF']], env)
         console.print('Internal function secret configured (value hidden).')
-        function='notify' if notify else 'retention'
+        function='archive' if archive else 'notify' if notify else 'retention'
         invoke(['functions', 'deploy', function, '--project-ref', v['SUPABASE_PROJECT_REF'], '--no-verify-jwt', '--use-api'], env)
-        console.print(function.capitalize()+' function deployed; only x-orbit-secret calls are authorized.')
+        console.print(function.capitalize()+' function deployed; '+('user JWT verification required.' if archive else 'only x-orbit-secret calls are authorized.'))
         if notify:console.print('Notification mode: '+('live' if live else 'dry run'))
     except RuntimeError as error:
         console.print(str(error), markup=False)

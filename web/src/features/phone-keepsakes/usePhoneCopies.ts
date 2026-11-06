@@ -145,7 +145,13 @@ export function PhoneCopySync() {
                     .order('id')
                     .limit(500)
                   if (after) request = request.gt('id', after)
-                  const page = await request
+                  const page =
+                    status.protocol === 2
+                      ? await client.rpc('phone_copy_manifest', {
+                          ...args,
+                          p_after: after ?? undefined,
+                        })
+                      : await request
                   if (page.error) throw page.error
                   rows.push(...page.data)
                   if (page.data.length < 500) return rows.flatMap(copySources)
