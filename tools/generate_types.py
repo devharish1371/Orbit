@@ -9,7 +9,7 @@ if result.returncode or 'export type Database' not in result.stdout:raise System
 source=result.stdout
 # The generator omits scalar RPC nullability. These arguments deliberately
 # accept SQL NULL (create identity / personal reminder off), covered by hosted tests.
-for name,fields in {'save_safety_journey':['p_version'],'save_plan':['p_version'],'save_date_idea':['p_version'],'set_plan_reminder':['p_minutes'],'save_memory_collection':['p_version']}.items():
+for name,fields in {'write_memory_side':['p_version'],'save_safety_journey':['p_version'],'save_plan':['p_version'],'save_date_idea':['p_version'],'set_plan_reminder':['p_minutes'],'save_memory_collection':['p_version']}.items():
     start=source.index('      '+name+': {')
     end=source.index('        Returns:',start)
     block=source[start:end]

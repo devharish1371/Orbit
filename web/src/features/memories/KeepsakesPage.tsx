@@ -23,7 +23,7 @@ import { useNow } from '@/hooks/useNow'
 import { memories as text } from '@/copy/memories'
 import { PostCard } from '@/features/posts/PostCard'
 import { usePostReactions, useQuotedPosts } from '@/features/posts/usePosts'
-import { PostMedia } from '@/features/posts/PostMedia'
+import { MemoryFaces } from '@/features/memory-sides/MemoryFaces'
 import { PostViewContext } from '@/app/FlowContext'
 import { useSpace } from '@/hooks/useSpace'
 import { useKeptMemories } from './useMemories'
@@ -204,7 +204,7 @@ export default function KeepsakesPage() {
               className="keepsake-photo-card"
               id={`post-${post.id}`}
             >
-              <PostMedia post={post} timezone={space?.couple.timezone} />
+              <MemoryFaces post={post} timezone={space?.couple.timezone} />
               <div>
                 <time dateTime={post.created_at}>
                   {new Intl.DateTimeFormat('en-IN', {

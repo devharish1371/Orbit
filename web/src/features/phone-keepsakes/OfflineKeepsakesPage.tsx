@@ -188,6 +188,13 @@ export default function OfflineKeepsakesPage() {
                   dateStyle: 'medium',
                 }).format(new Date(copy.created_at))}
               </time>
+              {copy.memory_side && (
+                <span className="muted">
+                  {copy.memory_author === identity?.owner
+                    ? 'Your side of a memory'
+                    : 'The other side of a memory'}
+                </span>
+              )}
               {copy.body && <p>{copy.body}</p>}
               {copy.photo_caption && <p>{copy.photo_caption}</p>}
               {copy.photo_set && (

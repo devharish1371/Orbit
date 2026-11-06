@@ -16,6 +16,8 @@ export interface PhotoItem {
   thumb_bytes: number
 }
 export type PhotoSource = Post & {
+  copy_memory_side?: boolean
+  copy_memory_author?: string
   copy_set?: boolean
   copy_position?: number
   copy_caption?: string
@@ -85,6 +87,18 @@ export function postFiles(post: Post) {
       [
         post.media_path,
         post.thumb_path,
+        ...(Array.isArray(post.memory_sides)
+          ? post.memory_sides.flatMap((side) =>
+              side && typeof side === 'object' && !Array.isArray(side)
+                ? [
+                    typeof side.path === 'string' ? side.path : null,
+                    typeof side.thumb_path === 'string'
+                      ? side.thumb_path
+                      : null,
+                  ]
+                : [],
+            )
+          : []),
         ...photosOf(post).flatMap((photo) => [photo.path, photo.thumb_path]),
       ].filter((path): path is string => !!path),
     ),

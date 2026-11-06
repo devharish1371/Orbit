@@ -1,4 +1,5 @@
-import { photoSources, type PhotoSource } from '@/lib/photos'
+import type { PhotoSource } from '@/lib/photos'
+import { copySources } from '@/lib/memory-sides'
 import type { Post } from '@/lib/posts'
 export const MAX_COPY_BYTES = 16 * 1024 * 1024
 export interface PhoneIdentity {
@@ -7,6 +8,8 @@ export interface PhoneIdentity {
 }
 export interface PhoneCopy {
   id: string
+  memory_side?: boolean
+  memory_author?: string
   photo_set?: boolean
   photo_position?: number
   photo_caption?: string
@@ -41,6 +44,9 @@ export interface CopyReceipt {
 export function copyMetadata(post: PhotoSource, mime: string) {
   // Deliberately excludes location, signed URLs, quote snapshots and unrelated profile data.
   return {
+    ...(post.copy_memory_side
+      ? { memory_side: true, memory_author: post.copy_memory_author }
+      : {}),
     ...(post.copy_set
       ? {
           photo_set: true,
@@ -59,6 +65,9 @@ export function copyMetadata(post: PhotoSource, mime: string) {
 export function copyMatches(copy: PhoneCopy, post: PhotoSource) {
   return (
     post.keep &&
+    (!post.copy_memory_side ||
+      (copy.memory_side === true &&
+        copy.memory_author === post.copy_memory_author)) &&
     !post.unsent_at &&
     copy.id === post.id &&
     copy.revision === post.archive_revision &&
@@ -82,7 +91,7 @@ export function verifiedPair(
     post.unsent_at
   )
     return false
-  return photoSources(post).every((source) => {
+  return copySources(post).every((source) => {
     const copies = users.map((user) =>
       verifiedUser(source, user, devices, receipts),
     )
@@ -116,6 +125,10 @@ export function validCopy(value: unknown): value is PhoneCopy {
     /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}(:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})?$/.test(
       c.id,
     ) &&
+    (c.memory_side === undefined ||
+      (c.memory_side === true &&
+        typeof c.memory_author === 'string' &&
+        /^[0-9a-f-]{36}$/.test(c.memory_author))) &&
     (c.photo_set === undefined ||
       (c.photo_set === true &&
         Number.isInteger(c.photo_position) &&

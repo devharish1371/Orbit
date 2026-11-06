@@ -32,6 +32,7 @@ import {
 } from '@/lib/posts'
 import type { Database } from '@/lib/database.types'
 import { PostMedia } from './PostMedia'
+import { MemoryFaces } from '@/features/memory-sides/MemoryFaces'
 import { Comments } from './Comments'
 import { PersonLink } from '@/components/ui/PersonLink'
 import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
@@ -305,9 +306,12 @@ export function PostCard({
           onOpen={onOpenQuote}
         />
       )}
-      {['photo', 'voice'].includes(post.kind) && (
-        <PostMedia post={post} timezone={space?.couple.timezone} />
-      )}
+      {['photo', 'voice'].includes(post.kind) &&
+        (post.kind === 'photo' && post.keep ? (
+          <MemoryFaces post={post} timezone={space?.couple.timezone} />
+        ) : (
+          <PostMedia post={post} timezone={space?.couple.timezone} />
+        ))}
       {post.body && (
         <p
           className={`post-body ${post.kind === 'mood' ? 'post-mood' : ''}`}

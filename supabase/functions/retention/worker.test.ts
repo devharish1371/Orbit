@@ -140,3 +140,57 @@ test("a malformed set cannot lose its remaining references", async () => {
   );
   expect(result.error).toContain("lease retained");
 });
+
+test("mixed memories delete every side through Storage API before finishing their root", async () => {
+  const store = fixture();
+  vi.mocked(store.claimPosts)
+    .mockReset()
+    .mockResolvedValueOnce([
+      {
+        id: "root",
+        deletion_token: "lease",
+        media_path: "front",
+        thumb_path: "front_t",
+        media_bytes: 20,
+        thumb_bytes: 5,
+        memory_bytes: 10,
+        memory_sides: [
+          { kind: "voice", path: "voice", thumb_path: null },
+          { kind: "photo", path: "back", thumb_path: "back_t" },
+        ],
+      },
+    ])
+    .mockResolvedValue([]);
+  const result = await runRetention(store, now);
+  expect(store.removeFiles).toHaveBeenCalledWith([
+    "front",
+    "front_t",
+    "voice",
+    "back",
+    "back_t",
+  ]);
+  expect(result.bytes_freed).toBe(43);
+  expect(vi.mocked(store.removeFiles).mock.invocationCallOrder[0]).toBeLessThan(
+    vi.mocked(store.finishPost).mock.invocationCallOrder[0]!,
+  );
+});
+test("malformed mixed manifest keeps metadata for retry instead of dropping unseen files", async () => {
+  const store = fixture();
+  vi.mocked(store.claimPosts)
+    .mockReset()
+    .mockResolvedValueOnce([
+      {
+        id: "root",
+        deletion_token: "lease",
+        media_path: "front",
+        thumb_path: null,
+        media_bytes: 20,
+        thumb_bytes: 0,
+        memory_sides: [{ kind: "voice", path: 3 }],
+      },
+    ])
+    .mockResolvedValue([]);
+  const result = await runRetention(store, now);
+  expect(store.finishPost).not.toHaveBeenCalled();
+  expect(result.error).toContain("lease retained");
+});

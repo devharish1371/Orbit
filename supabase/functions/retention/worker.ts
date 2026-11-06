@@ -6,6 +6,8 @@ export interface ExpiredPost {
   thumb_path: string | null;
   media_bytes: number;
   thumb_bytes: number;
+  memory_sides?: unknown;
+  memory_bytes?: number;
   photo_items?: unknown;
   extra_media_bytes?: number;
   extra_thumb_bytes?: number;
@@ -69,6 +71,27 @@ export async function runRetention(
               additional.push(item.path, item.thumb_path);
             }
           }
+          if (post.memory_sides !== undefined) {
+            if (
+              !Array.isArray(post.memory_sides) ||
+              post.memory_sides.length > 2
+            )
+              throw new Error("Invalid memory manifest");
+            for (const side of post.memory_sides) {
+              if (
+                !side ||
+                typeof side !== "object" ||
+                !["text", "photo", "voice"].includes(side.kind)
+              )
+                throw new Error("Invalid memory manifest");
+              for (const field of ["path", "thumb_path"]) {
+                const path = side[field];
+                if (path !== null && typeof path !== "string")
+                  throw new Error("Invalid memory path");
+                if (path) additional.push(path);
+              }
+            }
+          }
           const paths = [
             ...new Set(
               [post.media_path, post.thumb_path, ...additional].filter(
@@ -85,7 +108,8 @@ export async function runRetention(
               post.media_bytes +
               post.thumb_bytes +
               (post.extra_media_bytes ?? 0) +
-              (post.extra_thumb_bytes ?? 0);
+              (post.extra_thumb_bytes ?? 0) +
+              (post.memory_bytes ?? 0);
           }
         } catch {
           failures.push(

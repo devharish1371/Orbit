@@ -1,4 +1,5 @@
-import { photoSources, splitCopyId } from '@/lib/photos'
+import { splitCopyId } from '@/lib/photos'
+import { copySources } from '@/lib/memory-sides'
 import type { OrbitClient } from '@/lib/supabase'
 import { useEffect, useRef, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -147,7 +148,7 @@ export function PhoneCopySync() {
                   const page = await request
                   if (page.error) throw page.error
                   rows.push(...page.data)
-                  if (page.data.length < 500) return rows.flatMap(photoSources)
+                  if (page.data.length < 500) return rows.flatMap(copySources)
                   if (rows.length >= 10000)
                     throw new Error('COPY_MANIFEST_LIMIT')
                   after = page.data.at(-1)!.id

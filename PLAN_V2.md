@@ -197,3 +197,12 @@ research is synthetic-only and excluded from the shipped screen until phone vali
 ten static audits score 100/100 with no findings. Physical/notification/speed-accuracy/
 battery gates remain deferred task #7; no install or APK handover requested. V2.6 stays
 deferred; V2.10 release audit and V2.5 archive policy remain open. See docs/V2_SAFETY.md.
+
+6 November update: the user requests the remaining V2.5 and V2.6 work; V2.6 is no longer
+ deferred. Build the shared mixed-media manifest first so archives include the complete
+ memory. V2.6 adds one voluntary, owner-controlled photo/text/voice side per member to a
+ kept photo, including a voice-backed front with an explicit accessible turn control.
+ V2.5 then adds explicit, version-bound portable backup, both-member archive consent,
+ fresh compatible-phone checks, Storage-API cloud removal, truthful local availability
+ and verified restore. No existing cloud originals are removed during implementation/QA;
+ destructive worker tests use disposable fixture media only. APK/device handover stays deferred.

@@ -1667,3 +1667,24 @@ Privately retained final APK: 7,122,184 bytes; SHA-256
 Local ZIP integrity, signer continuity against dcb1995 and private-material scan pass.
 Final source/evidence secret scan: 1,174 files, zero findings. Only docs/evidence changed
 after the verified application source ce81729.
+
+### V2.5 completion and V2.6 — implementation underway
+
+User explicitly requests both remaining phases, superseding the earlier V2.6 deferral.
+The mixed-media manifest comes first so backup/removal includes the entire memory rather
+than its cover. Design: one voluntary owner-controlled side per member on a kept photo;
+photo/text/voice, accessible turn controls, atomic quota/revision/retention, complete export
+and phone copies. Cloud archive requires explicit two-member consent, fresh compatible
+copies and verified portable backups, with a restore path. No real cloud file is removed
+or partner contacted during QA. Physical gates/APK handover remain deferred.
+
+V2.6 mixed-memory implementation: 0036/0037 add owner-versioned contributions and exact
+request replay on the current Keep instance, immutable canonical media references, authoritative
+quota totals, revision/receipt invalidation and complete Storage API retention. An ambiguous
+PL/pgSQL identity was caught by the first targeted tests and corrected additively in 0037.
+All three original targeted hosted scenarios then pass, including both-member concurrent
+contributions, cross-couple denial, mixed-file signing/receipts and old-worker completion guard.
+Updated retention is deployed. 230 web/40 worker checks and lint/types/format/build pass;
+new tests exercise turn/profile flow, StrictMode acknowledgement/retry, own-only removal,
+complete file manifests, pair receipts and safe cleanup. Full hosted/native/browser checks
+continue while the V2.5 archive layer is developed; no real memories are removed or recorded.

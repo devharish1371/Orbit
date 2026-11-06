@@ -14,7 +14,7 @@ import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 import type { Post } from '@/lib/posts'
 import { phone, phoneCopiesSupported, phoneOperation } from './native'
 import { usePhoneCopies } from './usePhoneCopies'
-import { photoSources } from '@/lib/photos'
+import { copySources } from '@/lib/memory-sides'
 import { verifiedPair, verifiedUser } from './model'
 import './phone-keepsakes.css'
 export function PhoneCopiesControl() {
@@ -157,7 +157,7 @@ export function PhoneCopyBadge({ post }: { post: Post }) {
     state.data.devices,
     state.data.receipts,
   )
-  const own = photoSources(post).every((source) =>
+  const own = copySources(post).every((source) =>
     verifiedUser(
       source,
       space.self.user_id,

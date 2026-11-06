@@ -1177,6 +1177,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1212,6 +1214,8 @@ export type Database = {
           media_height?: number | null
           media_path?: string | null
           media_width?: number | null
+          memory_bytes?: number
+          memory_sides?: Json
           note_style?: string
           photo_items?: Json
           reply_to_id?: string | null
@@ -1247,6 +1251,8 @@ export type Database = {
           media_height?: number | null
           media_path?: string | null
           media_width?: number | null
+          memory_bytes?: number
+          memory_sides?: Json
           note_style?: string
           photo_items?: Json
           reply_to_id?: string | null
@@ -1548,6 +1554,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1608,6 +1616,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1677,6 +1687,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1721,6 +1733,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1775,6 +1789,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -1848,6 +1864,8 @@ export type Database = {
           media_height: number | null
           media_path: string | null
           media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
           note_style: string
           photo_items: Json
           reply_to_id: string | null
@@ -2171,6 +2189,60 @@ export type Database = {
         Returns: Json
       }
       week_recap: { Args: never; Returns: Json }
+      write_memory_side: {
+        Args: {
+          p_expected_couple: string
+          p_expected_user: string
+          p_kept_at: string
+          p_post: string
+          p_request: string
+          p_side?: Json
+          p_version: number | null
+        }
+        Returns: {
+          archive_revision: number
+          author_id: string
+          body: string | null
+          channel: string
+          couple_id: string
+          created_at: string
+          deleting_at: string | null
+          deletion_token: string | null
+          edit_version: number
+          edited_at: string | null
+          expires_at: string | null
+          extra_media_bytes: number
+          extra_thumb_bytes: number
+          id: string
+          keep: boolean
+          kept_at: string | null
+          kept_by: string | null
+          kind: string
+          lat: number | null
+          lng: number | null
+          media_bytes: number
+          media_duration_s: number | null
+          media_height: number | null
+          media_path: string | null
+          media_width: number | null
+          memory_bytes: number
+          memory_sides: Json
+          note_style: string
+          photo_items: Json
+          reply_to_id: string | null
+          thumb_bytes: number
+          thumb_path: string | null
+          ttl_hours: number | null
+          unsent_at: string | null
+          waveform: number[] | null
+        }
+        SetofOptions: {
+          from: '*'
+          to: 'posts'
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
