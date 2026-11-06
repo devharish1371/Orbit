@@ -1,3 +1,4 @@
+import { ContextHelp } from '@/components/ui/ContextHelp'
 import { StatusLine } from '@/features/personal/StatusLine'
 import { BackLink } from '@/components/ui/JourneyLink'
 import { PersonLink } from '@/components/ui/PersonLink'
@@ -258,9 +259,16 @@ function ProfileEditor({ member }: { member: Member }) {
             maxLength={40}
             onChange={(event) => update('nickname', event.target.value)}
           />
-          <label htmlFor="partner-nickname">
-            {copy.profile.partnerNickname}
-          </label>
+          <div className="field-label-row">
+            <label htmlFor="partner-nickname">
+              {copy.profile.partnerNickname}
+            </label>
+            <ContextHelp label="About partner nicknames">
+              <p id="partner-nickname-help">
+                {copy.profile.partnerNicknameNote}
+              </p>
+            </ContextHelp>
+          </div>
           <input
             id="partner-nickname"
             value={draft.partnerNickname}
@@ -268,9 +276,6 @@ function ProfileEditor({ member }: { member: Member }) {
             aria-describedby="partner-nickname-help"
             onChange={(event) => update('partnerNickname', event.target.value)}
           />
-          <p id="partner-nickname-help" className="muted small">
-            {copy.profile.partnerNicknameNote}
-          </p>
           <label htmlFor="profile-phone">{copy.profile.phone}</label>
           <input
             id="profile-phone"
@@ -281,7 +286,12 @@ function ProfileEditor({ member }: { member: Member }) {
             onChange={(event) => update('phone', event.target.value)}
             required
           />
-          <label htmlFor="profile-email">{copy.profile.email}</label>
+          <div className="field-label-row">
+            <label htmlFor="profile-email">{copy.profile.email}</label>
+            <ContextHelp label="About sign-in email">
+              <p id="profile-email-help">{copy.profile.emailNote}</p>
+            </ContextHelp>
+          </div>
           <input
             id="profile-email"
             type="email"
@@ -289,9 +299,6 @@ function ProfileEditor({ member }: { member: Member }) {
             readOnly
             aria-describedby="profile-email-help"
           />
-          <p id="profile-email-help" className="muted small">
-            {copy.profile.emailNote}
-          </p>
         </section>
         <section className="glass settings-section">
           <h2>{copy.profile.color}</h2>

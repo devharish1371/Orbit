@@ -13,7 +13,7 @@ export const memories = {
   waiting: 'Waiting for their answer.',
   saved: 'Saved',
   failed: 'Couldn’t save. Try again.',
-  empty: 'Saved moments and messages appear here.',
+  empty: 'No keepsakes yet.',
   mapEmpty: 'Keep a moment with a place pin to start your Memory Map.',
   more: 'Show earlier keepsakes',
   newCapsule: 'New capsule',
@@ -33,8 +33,8 @@ export const memories = {
   opened: 'Opened',
   you: 'You',
   recap: 'This week',
-  moments: 'moments shared',
-  arrivals: 'arrivals logged',
+  moments: 'moments',
+  arrivals: 'arrivals',
   kilometres: 'km recorded',
   recapHint: 'Last 7 days · recorded locations',
   replay: 'Replay our anniversary',
@@ -47,7 +47,7 @@ export const memories = {
   addDate: 'Set your anniversary in Settings to start your timeline.',
   export: 'Export our memories',
   exportHint:
-    'Online memories and archive details in one ZIP. Keep separate archive ZIPs for files removed from the cloud. Sealed partner capsules stay private.',
+    'Online memories + archive details. Cloud-archived files need their separate ZIPs; sealed partner capsules stay private.',
   exportStart: 'Download ZIP',
   exportDone: 'Your ZIP is ready.',
   exportFailed:

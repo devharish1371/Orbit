@@ -95,10 +95,6 @@
   border-radius: 50%;
   background: var(--text);
 }
-.place-sheet input:focus-visible {
-  outline: 2px solid var(--secondary);
-  outline-offset: 3px;
-}
 @media (forced-colors: active) {
   .place-sheet input[type='checkbox'],
   .place-sheet input[type='range'] {

@@ -216,7 +216,6 @@
 }
 .moment-create.is-open textarea:focus {
   box-shadow: none;
-  border-bottom-color: var(--primary);
   outline: none;
 }
 .moment-create .composer-modes {

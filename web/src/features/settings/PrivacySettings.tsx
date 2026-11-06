@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { isAndroid, nativePrivacy, type PrivacyState } from '@/native/privacy'
-export function PrivacySettings() {
+export function PrivacySettings({ heading = true }: { heading?: boolean }) {
   const [state, setState] = useState<PrivacyState | null>(null),
     [message, setMessage] = useState(''),
     [busy, setBusy] = useState(false)
@@ -37,7 +37,7 @@ export function PrivacySettings() {
   }
   return (
     <section className="glass memory-section">
-      <h2>Privacy</h2>
+      {heading && <h2>Privacy</h2>}
       {!isAndroid() ? (
         <p className="muted small">
           App lock is available on Android. On shared browsers, log out when
@@ -60,9 +60,8 @@ export function PrivacySettings() {
                 Lock Orbit
               </label>
               <p className="muted small">
-                Use device biometrics or your device PIN, pattern or password.
-                Locks at launch and after one minute away. App previews and
-                screenshots are hidden while app lock is enabled.
+                Device authentication at launch and after 1 minute away. Also
+                hides screenshots and app previews.
               </p>
               {!state.available && (
                 <p className="muted small">
@@ -82,8 +81,7 @@ export function PrivacySettings() {
                 Block screenshots and app previews
               </label>
               <p className="muted small">
-                This setting applies to this device. It doesn’t change your
-                partner’s device or stop location sharing.
+                This phone only. Location sharing continues.
               </p>
             </>
           )}

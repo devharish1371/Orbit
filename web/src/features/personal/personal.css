@@ -55,9 +55,6 @@
   background: var(--surface);
   color: var(--text);
 }
-.status-editor input:focus-visible {
-  outline-offset: -2px;
-}
 .status-editor label {
   display: block;
   margin: 18px 0 10px;

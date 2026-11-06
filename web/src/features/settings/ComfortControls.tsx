@@ -7,7 +7,7 @@ export function ComfortControls() {
       className="settings-section comfort-controls"
       aria-labelledby="comfort-heading"
     >
-      <h2 id="comfort-heading">Make yourself comfortable</h2>
+      <h2 id="comfort-heading">Reading & motion</h2>
       <fieldset>
         <legend>Text size</legend>
         <div className="comfort-options">

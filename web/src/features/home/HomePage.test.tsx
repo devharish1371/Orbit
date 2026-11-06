@@ -52,7 +52,7 @@ test('home connects to the partner and shared room without inventing location da
       'https://meet.google.com/abc-defg-hij',
     )
     expect(screen.getByText('12')).toBeVisible()
-    expect(screen.getByText('Waiting for a first location')).toBeVisible()
+    expect(screen.getByText('Waiting for a location')).toBeVisible()
   } finally {
     vi.useRealTimers()
   }
@@ -75,9 +75,7 @@ test('paused sharing has one labelled location icon and no repeated status rows'
       screen.getByRole('link', { name: 'Location sharing paused' }),
     ).toHaveAttribute('href', '/map')
     expect(screen.queryByText('Sharing is paused')).not.toBeInTheDocument()
-    expect(
-      screen.queryByText('Waiting for a first location'),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('Waiting for a location')).not.toBeInTheDocument()
   } finally {
     mode.value = 'live'
   }

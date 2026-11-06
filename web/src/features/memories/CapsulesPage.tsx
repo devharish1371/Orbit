@@ -130,7 +130,7 @@ export default function CapsulesPage() {
           required
         />
         <p className="muted small">
-          Time shown in this device’s timezone. Saved dates below use{' '}
+          Choose in your device’s timezone. Saved dates use{' '}
           {space?.couple.timezone}.
         </p>
         <Button disabled={busy}>{text.seal}</Button>

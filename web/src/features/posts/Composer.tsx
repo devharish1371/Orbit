@@ -132,10 +132,10 @@ export function Composer({
         '{days}',
         String(space?.couple.retention_days ?? 7),
       ),
-      note: 'Use your shared setting',
+      note: 'Shared default',
     },
-    { value: '24', label: copy.posts.day, note: 'Disappears after one day' },
-    { value: '7d', label: copy.posts.week, note: 'Disappears after one week' },
+    { value: '24', label: copy.posts.day, note: undefined },
+    { value: '7d', label: copy.posts.week, note: undefined },
     {
       value: 'keep',
       label: copy.posts.keep,
@@ -742,7 +742,6 @@ export function Composer({
           </label>
         )}
       </div>
-      {ttl === 'keep' && <p className="muted small">{copy.posts.keepHint}</p>}
       {message && (
         <p role="status" className="form-message">
           {message}

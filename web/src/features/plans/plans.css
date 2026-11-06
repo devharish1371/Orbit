@@ -415,10 +415,6 @@
 .planning-editor textarea {
   resize: vertical;
 }
-.planning-editor :is(input, textarea):focus-visible {
-  outline: 2px solid var(--secondary);
-  outline-offset: -2px;
-}
 .planning-editor .button {
   width: 100%;
   min-height: 48px;

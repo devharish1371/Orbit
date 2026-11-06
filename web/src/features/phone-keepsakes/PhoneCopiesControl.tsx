@@ -1,12 +1,6 @@
 import { useState } from 'react'
 import { skipToken, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  Smartphone,
-  Cloud,
-  RefreshCw,
-  ArrowUpRight,
-  CheckCheck,
-} from 'lucide-react'
+import { Smartphone, RefreshCw, ArrowUpRight, CheckCheck } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useSpace } from '@/hooks/useSpace'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
@@ -66,10 +60,10 @@ export function PhoneCopiesControl() {
           <h2>On this phone</h2>
           <p>
             {enabled
-              ? 'Keepsakes sync while Orbit is open.'
+              ? 'Syncs while Orbit is open'
               : phoneCopiesSupported
-                ? 'Keep once. Save on both phones.'
-                : 'Private phone copies are available in the Android app.'}
+                ? 'Save keepsakes offline'
+                : 'Offline copies · Android app'}
           </p>
         </div>
       </div>
@@ -106,10 +100,6 @@ export function PhoneCopiesControl() {
           Private to Orbit
         </p>
       )}
-      <p className="phone-copy-cloud">
-        <Cloud size={15} aria-hidden="true" /> Cloud files stay saved unless you
-        both approve an archive.
-      </p>
       {(error || state.error) && (
         <p role="status">
           {error || 'Storage status is unavailable. Try again when connected.'}
@@ -124,8 +114,8 @@ export function PhoneCopiesControl() {
       )}
       {enabled && !!sync.data?.skipped && (
         <p role="status">
-          Some files are larger than 16 MB or the library is full. Their cloud
-          copies stay saved.
+          Some memories aren’t on this phone. Check Cloud archives before
+          removing any other copy.
         </p>
       )}
       {confirm && (
@@ -180,11 +170,7 @@ export function PhoneCopyBadge({ post }: { post: Post }) {
         <Smartphone size={15} aria-hidden="true" />
       )}
       <span>
-        {both
-          ? 'Both phones verified'
-          : own
-            ? 'Waiting for other phone'
-            : 'Not on both phones yet'}
+        {both ? 'Both phones' : own ? 'This phone' : 'Not saved here'}
       </span>
     </span>
   )

@@ -74,7 +74,7 @@ export function PlanEditor({
             maxLength={100}
             value={draft.title}
             onChange={(e) => change('title', e.target.value)}
-            placeholder="Dinner, a walk, a little trip…"
+            placeholder="What’s the plan?"
           />
           <label htmlFor="plan-when">When · {draft.zone}</label>
           <input
@@ -114,7 +114,7 @@ export function PlanEditor({
           .{' '}
           {draft.version
             ? 'Changes need a fresh confirmation.'
-            : 'They can confirm when they’re ready.'}
+            : 'Waiting for their confirmation.'}
         </p>
         {error && <p role="alert">{error}</p>}
         <Button disabled={busy}>

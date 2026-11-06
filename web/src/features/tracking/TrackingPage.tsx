@@ -147,10 +147,10 @@ export default function TrackingPage() {
           </h2>
           <p className="small muted">
             {data?.self.share_mode === 'paused'
-              ? 'Your partner can see that sharing is paused.'
+              ? 'Pause is visible to your partner.'
               : data?.self.share_mode === 'surprise'
                 ? 'Your partner sees an approximate area.'
-                : 'Your partner can see your shared location.'}
+                : 'Visible to your partner.'}
           </p>
         </div>
       </section>

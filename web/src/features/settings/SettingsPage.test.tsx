@@ -21,14 +21,14 @@ vi.mock('@/hooks/useTheme', () => ({
   useTheme: () => ({ theme: 'light', setTheme: vi.fn() }),
 }))
 vi.mock('@/features/outbox/OutboxContext', () => ({
-  useOutbox: () => ({ items: [{ id: 'pending' }] }),
+  useOutbox: () => ({ items: [] }),
 }))
 vi.mock('@/features/posts/StorageStatus', () => ({ StorageStatus: () => null }))
 vi.mock('@/features/memories/ExportMemories', () => ({
   ExportMemories: () => null,
 }))
 vi.mock('./PrivacySettings', () => ({ PrivacySettings: () => null }))
-test('logging out with pending texts requires confirmation before clearing them', async () => {
+test('logging out with an empty outbox still warns before clearing phone copies', async () => {
   vi.stubGlobal('__ORBIT_BUILD__', 'test')
   HTMLDialogElement.prototype.showModal = function () {
     this.setAttribute('open', '')

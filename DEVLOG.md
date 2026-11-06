@@ -1749,3 +1749,30 @@ Privately retained final APK: 7,152,817 bytes; SHA-256
 ZIP integrity, signer continuity against ce81729 and private-material scan pass. Final
 source/evidence scan: 1,233 files, zero findings. Plans/contracts and verification.json are
 current; no application changes follow the verified source 9b427ec.
+
+### V2.10 — whole-app visual cleanup and release audit underway
+
+User explicitly adds the complete visual/copy/typing-focus cleanup to V2.10 and asks to
+proceed. Plan: docs/V2_RELEASE_AUDIT.md. Consolidate competing input focus rules; normal
+caret for editing, visible keyboard focus for other controls. Trim filler/repeated copy,
+use accessible familiar icons, group Settings, open spacing and reveal occasional guidance
+on demand while retaining consent/recovery consequences. Initial source audit also found
+logout warning bypass with an empty outbox and an inaccurate skipped-archive sync message;
+fix these before verification. No real partner contact, sensor, archive or APK handover.
+
+V2.10 first implementation: removed competing composer/field focus rings and the chat
+underline at their sources; centralized caret-only editable fields across pages and sheets.
+Non-text/read-only controls retain keyboard focus. Home portrait hero is unframed, quick
+connection actions are open icons, attention actions are circles with short labels, daily
+answer entry is ruled with a compact save action. Settings groups appearance/details/device/
+privacy/storage; collapsed groups and contextual profile help replace repeated explanations.
+Profile actions and keepsake organization use labelled icons; repeated footers/choice notes
+are trimmed. No consent, error or backup consequence is removed from its decision.
+
+Release review fixes: logout always confirms removal of private phone copies even with an
+empty outbox; skipped archived-copy feedback no longer promises cloud files exist. Both have
+meaningful regression coverage. 240 web/44 worker checks and lint/types/format/build pass;
+all 105 hosted/tool tests pass in 223.65s. Production dependency audit: zero findings; Python
+requirements consistent. Production browser checks use the verified disposable UI couple on
+isolated port 4176; no real account/contact/sensor change. Complete responsive/native evidence
+continues; care/recovery and explicit deferred release checklist are drafted.

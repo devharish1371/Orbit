@@ -22,6 +22,13 @@ the original PLAN.md and deferred physical release gates remain valid.
 - User preference: continue building/automated verification, retain verified builds internally,
   and do not hand over APKs or request a phone install until the user asks for their test batch.
 
+## V2.10 active — 6 November
+
+User expands V2.10 to include complete visual cleanup: reduce clutter, remove unnecessary
+copy, use visual language where clear, remove typing highlights and improve spacing/flow
+throughout the app. Execute docs/V2_RELEASE_AUDIT.md. APK handover and physical tests remain
+deferred; do not mark the app production-released from automated checks alone.
+
 ## Current acceptance — 6 November
 
 - V2.5 software complete: photo sets/collections/media outbox, encrypted phone library,
@@ -51,7 +58,7 @@ the original PLAN.md and deferred physical release gates remain valid.
 | V2.7 — Personal space | Optional expiring emoji/status, on-this-day kept memories, Us shared shelf and restrained Home hierarchy | User-authored status only, real saved memories only, no inferred mood/relationship score or streak pressure |
 | V2.8 — Native entrance and comfort | Theme-aware privacy cover/splash/unlock handoff; text size/ambient-motion controls; private photo/plan widget | Lock cancel/failure keeps cover; no pre-unlock personal content, privacy-safe widget defaults; measured phone behavior |
 | V2.9 — Safety | Opt-in sustained high-speed alerts, timed journey check-ins and experimental impact/fall check-in research/prototype | See safety contract below; no unvalidated emergency or medical claim; simulation and safe phone validation before enabling |
-| V2.10 — Release audit | Consolidated CSS/component system, performance/large text/TalkBack/reduced motion, cold/slow/offline flows, complete acceptance/backup/recovery documentation | Original deferred device/partner/soak/signing gates resolved before a final production release |
+| V2.10 — Release audit + visual cleanup | Whole-app copy/spacing/surface audit; icon-led familiar actions; caret-only text entry without highlights; consolidated CSS; grouped Settings; performance/large text/TalkBack/reduced motion; cold/slow/offline and backup/recovery documentation | Automated visual/security/reliability evidence and current docs; original deferred device/partner/soak/signing gates resolved before final production release |
 
 ## Safety contract and research
 

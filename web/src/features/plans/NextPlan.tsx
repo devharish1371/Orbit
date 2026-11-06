@@ -15,8 +15,8 @@ export function NextPlan() {
         <CalendarDays size={24} aria-hidden="true" />
       </span>
       <div>
-        <span>Our plans</span>
-        <strong>{next?.title ?? 'Plan something'}</strong>
+        {next && <span>Our plans</span>}
+        <strong>{next?.title ?? 'Our plans'}</strong>
         {next && (
           <time dateTime={next.starts_at}>
             {new Intl.DateTimeFormat('en-IN', {

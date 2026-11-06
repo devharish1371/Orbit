@@ -104,20 +104,17 @@ function PersonProfile({ id }: { id?: string }) {
       </section>
       <div className="person-actions">
         {!own && (
-          <Link to="/chat">
+          <Link to="/chat" aria-label="Message" title="Message">
             <MessageCircle size={21} />
-            <span>Message</span>
           </Link>
         )}
         {!own && phone && (
-          <a href={phone}>
+          <a href={phone} aria-label="Call" title="Call">
             <Phone size={21} />
-            <span>Call</span>
           </a>
         )}
-        <Link to="/map">
+        <Link to="/map" aria-label="Map" title="Map">
           <MapPin size={21} />
-          <span>Map</span>
         </Link>
       </div>
       {own && (

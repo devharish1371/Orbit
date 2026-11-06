@@ -18,4 +18,6 @@ All provider accounts must stay free and require no credit card. Never put secre
 keystores, or Firebase account JSON in source control.
 
 The ten numbered documents are the implementation specification, preserved at the root.
-The final end-user installation, release, recovery, and ongoing-care guide is due in M9.
+Use [care and recovery](docs/CARE_AND_RECOVERY.md) for backups, cloud archives, updates and
+ongoing care. The [release checklist](docs/RELEASE_CHECKLIST.md) records the remaining physical
+and owner gates. No final production release is claimed before those gates pass.

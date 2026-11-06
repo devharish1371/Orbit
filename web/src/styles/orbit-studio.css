@@ -416,16 +416,6 @@
     border-color 180ms,
     box-shadow 180ms;
 }
-.messenger-composer:focus-within {
-  border-color: color-mix(in srgb, var(--primary) 60%, var(--border));
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent),
-    0 6px 22px #0001;
-}
-/* Focus is expressed by the entire rounded composer, never a square inside it. */
-.messenger-input-row textarea:focus-visible {
-  outline: none;
-}
 .messenger-input-row {
   padding: 5px;
   gap: 0;

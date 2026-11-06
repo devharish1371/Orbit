@@ -5,7 +5,14 @@ import { OrbitGlyph } from '@/components/ui/OrbitGlyph'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { LogOut } from 'lucide-react'
+import {
+  LogOut,
+  Palette,
+  Heart,
+  Shield,
+  HardDrive,
+  Smartphone,
+} from 'lucide-react'
 import { JourneyLink as Link } from '@/components/ui/JourneyLink'
 import { copy } from '@/copy/en'
 import { useAuth } from '@/hooks/useAuth'
@@ -16,7 +23,7 @@ import { Button } from '@/components/ui/Button'
 import { StorageStatus } from '@/features/posts/StorageStatus'
 import { ExportMemories } from '@/features/memories/ExportMemories'
 import { PrivacySettings } from './PrivacySettings'
-import { useOutbox } from '@/features/outbox/OutboxContext'
+import { SettingsGroup } from './SettingsGroup'
 import { ConfirmSheet } from '@/components/ui/ConfirmSheet'
 
 export default function SettingsPage() {
@@ -27,7 +34,6 @@ export default function SettingsPage() {
   const [message, setMessage] = useState('')
   const [busy, setBusy] = useState(false)
   const [themeBusy, setThemeBusy] = useState(false)
-  const outbox = useOutbox()
   const [logoutConfirm, setLogoutConfirm] = useState(false),
     [logoutBusy, setLogoutBusy] = useState(false)
   async function logout() {
@@ -96,82 +102,101 @@ export default function SettingsPage() {
     <div className="page settings-page">
       <BackLink fallback="/" />
       <SectionHeading title={copy.settings.title} kind="us" />
-      <Link className="profile-settings-link" to="/tracking">
-        <OrbitGlyph name="map" width={26} height={26} />
-        <strong>{copy.tracking.title}</strong>
-        <span aria-hidden="true">↗</span>
-      </Link>
-      <Link className="profile-settings-link" to="/safety">
-        <OrbitGlyph name="map" width={26} height={26} />
-        <strong>Safety &amp; check-ins</strong>
-        <span aria-hidden="true">↗</span>
-      </Link>
-      <Link className="profile-settings-link" to="/notifications">
-        <OrbitGlyph name="chat" width={26} height={26} />
-        <strong>{copy.alerts.notificationTitle}</strong>
-        <span aria-hidden="true">↗</span>
-      </Link>
-      <Link className="profile-settings-link" to="/activity">
-        <OrbitGlyph name="moments" width={26} height={26} />
-        <strong>{copy.alerts.activity}</strong>
-        <span aria-hidden="true">↗</span>
-      </Link>
-      <section className="glass settings-section">
-        <h2>{copy.common.theme}</h2>
-        <ThemePicker
-          value={theme}
-          disabled={themeBusy}
-          onChange={(value) => {
-            void changeTheme(value)
-          }}
-        />
-      </section>
       <Link className="profile-settings-link" to="/profile">
         <OrbitGlyph name="us" width={26} height={26} />
         <strong>{copy.profile.appearanceLink}</strong>
         <span aria-hidden="true">↗</span>
       </Link>
-      <form
-        className="glass settings-section"
-        onSubmit={(event) => {
-          void save(event)
-        }}
-        noValidate
-      >
-        <label htmlFor="anniversary">{copy.settings.anniversary}</label>
-        <input
-          id="anniversary"
-          name="anniversary"
-          type="date"
-          defaultValue={space?.couple.anniversary ?? ''}
-        />
-        <label htmlFor="meet">{copy.settings.meet}</label>
-        <input
-          id="meet"
-          name="meet"
-          type="url"
-          placeholder={copy.settings.meetPlaceholder}
-          defaultValue={space?.couple.meet_url ?? ''}
-        />
+      <SettingsGroup title="Appearance" icon={<Palette size={21} />}>
+        <section className="glass settings-section">
+          <ThemePicker
+            value={theme}
+            disabled={themeBusy}
+            onChange={(value) => {
+              void changeTheme(value)
+            }}
+          />
+        </section>
+        <ComfortControls />
+      </SettingsGroup>
+      <SettingsGroup title="Our details" icon={<Heart size={21} />}>
+        <form
+          className="glass settings-section"
+          onSubmit={(event) => {
+            void save(event)
+          }}
+          noValidate
+        >
+          <label htmlFor="anniversary">{copy.settings.anniversary}</label>
+          <input
+            id="anniversary"
+            name="anniversary"
+            type="date"
+            defaultValue={space?.couple.anniversary ?? ''}
+          />
+          <label htmlFor="meet">{copy.settings.meet}</label>
+          <input
+            id="meet"
+            name="meet"
+            type="url"
+            placeholder={copy.settings.meetPlaceholder}
+            defaultValue={space?.couple.meet_url ?? ''}
+          />
 
-        <Button disabled={busy}>
-          {busy ? copy.common.saving : copy.common.save}
-        </Button>
-        {message && (
-          <p className="form-message" role="status">
-            {message}
-          </p>
-        )}
-      </form>
-      <ComfortControls />
-      <Link className="profile-settings-link" to="/widget">
-        <OrbitGlyph name="home" width={26} height={26} />
-        <strong>Your widget</strong>
-        <span aria-hidden="true">↗</span>
-      </Link>
-      <StorageStatus />
-      <PrivacySettings />
-      <ExportMemories />
+          <Button disabled={busy}>
+            {busy ? copy.common.saving : copy.common.save}
+          </Button>
+          {message && (
+            <p className="form-message" role="status">
+              {message}
+            </p>
+          )}
+        </form>
+      </SettingsGroup>
+      <SettingsGroup title="Device & alerts" icon={<Smartphone size={21} />}>
+        <Link className="profile-settings-link" to="/tracking">
+          <OrbitGlyph name="map" width={26} height={26} />
+          <strong>{copy.tracking.title}</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <Link className="profile-settings-link" to="/safety">
+          <OrbitGlyph name="map" width={26} height={26} />
+          <strong>Safety &amp; check-ins</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <Link className="profile-settings-link" to="/notifications">
+          <OrbitGlyph name="chat" width={26} height={26} />
+          <strong>{copy.alerts.notificationTitle}</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <Link className="profile-settings-link" to="/activity">
+          <OrbitGlyph name="moments" width={26} height={26} />
+          <strong>{copy.alerts.activity}</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <Link className="profile-settings-link" to="/widget">
+          <OrbitGlyph name="home" width={26} height={26} />
+          <strong>Your widget</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+      </SettingsGroup>
+      <SettingsGroup title="Privacy" icon={<Shield size={21} />}>
+        <PrivacySettings heading={false} />
+      </SettingsGroup>
+      <SettingsGroup title="Storage & backup" icon={<HardDrive size={21} />}>
+        <StorageStatus />
+        <Link className="profile-settings-link" to="/keepsakes">
+          <OrbitGlyph name="moments" width={24} height={24} />
+          <strong>Keepsakes & phone copies</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <Link className="profile-settings-link" to="/archives">
+          <HardDrive size={23} aria-hidden="true" />
+          <strong>Cloud archives</strong>
+          <span aria-hidden="true">↗</span>
+        </Link>
+        <ExportMemories />
+      </SettingsGroup>
       <details className="settings-about">
         <summary>About Orbit</summary>
         <p className="muted small">
@@ -184,8 +209,7 @@ export default function SettingsPage() {
           type="button"
           disabled={logoutBusy}
           onClick={() => {
-            if (outbox?.items.length) setLogoutConfirm(true)
-            else void logout()
+            setLogoutConfirm(true)
           }}
         >
           <LogOut size={17} aria-hidden="true" />

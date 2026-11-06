@@ -1,3 +1,4 @@
+import { locationStatus } from '@/lib/location-status'
 import { StatusLine } from '@/features/personal/StatusLine'
 import {
   ArrowUpRight,
@@ -34,7 +35,11 @@ export default function HomePage() {
   const partnerLocation = live.locations.data?.find(
     (row) => row.user_id === partner?.user_id,
   )
-  const locationAvailable = partnerLocation && partner?.share_mode !== 'paused'
+  const freshness = locationStatus(
+    partner?.share_mode ?? 'live',
+    partnerLocation?.recorded_at,
+    now,
+  )
   const days = couple.anniversary
     ? anniversaryDays(couple.anniversary, new Date(now), couple.timezone)
     : null
@@ -93,14 +98,19 @@ export default function HomePage() {
           <div className="location-status">
             <MapPin size={18} aria-hidden="true" />
             <div>
-              <p>
-                {locationAvailable
-                  ? `${copy.map.lastFix}: ${new Intl.DateTimeFormat('en-IN', { timeZone: couple.timezone, month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(partnerLocation.recorded_at))}`
-                  : copy.home.waiting}
+              <p
+                title={
+                  partnerLocation
+                    ? new Intl.DateTimeFormat('en-IN', {
+                        timeZone: couple.timezone,
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      }).format(new Date(partnerLocation.recorded_at))
+                    : undefined
+                }
+              >
+                {freshness.label}
               </p>
-              {partner?.share_mode === 'surprise' && (
-                <p className="muted small">{copy.map.surprise}</p>
-              )}
             </div>
           </div>
         )}
@@ -178,8 +188,7 @@ export default function HomePage() {
           <MapPin size={21} aria-hidden="true" />
           <h2>{copy.home.mapTitle}</h2>
 
-          <span className="card-link">
-            {copy.home.openMap}
+          <span className="card-link" aria-hidden="true">
             <ArrowUpRight size={17} aria-hidden="true" />
           </span>
         </Link>

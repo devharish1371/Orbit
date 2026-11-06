@@ -143,7 +143,7 @@ export function PhotoSetDraft({
           <span className="sr-only">Caption for photo {at + 1}</span>
           <input
             type="text"
-            placeholder="A caption for this one…"
+            placeholder="Caption…"
             maxLength={400}
             value={photo.caption}
             disabled={disabled}

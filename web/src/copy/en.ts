@@ -37,8 +37,7 @@ export const copy = {
     choosePhoto: 'Choose photos',
     photoFailed: 'Choose a JPG, PNG or WebP under 20 MB.',
     photoPreview: 'Your photo before sharing',
-    voiceHint:
-      'Up to two minutes. Recording stops when you leave the app. Nothing is sent until you share.',
+    voiceHint: 'Up to 2 min · Preview before sending',
     record: 'Record voice',
     stop: 'Stop recording',
     cancel: 'Cancel',
@@ -61,8 +60,8 @@ export const copy = {
     sending: 'Sending…',
     retrySend: 'Retry send',
     shared: 'Shared',
-    keepHint: 'Saved until you remove it. Uses keepsake storage.',
-    expiryHint: 'Either of you can save it before it expires.',
+    keepHint: 'Saved in Keepsakes',
+    expiryHint: 'Tap Keep before it expires.',
     empty: 'Add a note or finish your attachment first.',
     errors: {
       reply:
@@ -485,7 +484,7 @@ export const copy = {
   },
   empty: {
     map: 'Your shared view.',
-    mapBody: 'Your places and live locations will live here.',
+    mapBody: 'Share location to see each other here.',
     moments: 'Moments',
     momentsBody: '',
     chat: 'Chat',

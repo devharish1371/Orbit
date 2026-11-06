@@ -36,8 +36,7 @@ const pending = [
 ]
 export default function ArchivePage() {
   const { client, session } = useAuth(),
-    { data: space } = useSpace(),
-    query = useQueryClient()
+    { data: space } = useSpace()
   const [chosen, setChosen] = useState<string | null>(null)
   const data = useQuery({
     queryKey: ['cloud-archives', session?.user.id, space?.couple.id],
@@ -106,7 +105,6 @@ export default function ArchivePage() {
         <Archive aria-hidden="true" />
         <div>
           <h1>Cloud archives</h1>
-          <p>Keep the memory. Make room.</p>
         </div>
         <button
           className="icon-button"
@@ -130,9 +128,9 @@ export default function ArchivePage() {
           person who shared the memory makes the final choice.
         </p>
         <p>
-          ZIPs contain personal photos, audio and any saved locations. Save
-          yours somewhere safe, independently of Orbit. Signing out or
-          uninstalling removes app-private phone copies.
+          ZIPs aren’t encrypted. Save your photos, audio and locations somewhere
+          safe outside Orbit. Logging out or uninstalling removes app-private
+          copies.
         </p>
         <p>
           Approvals expire after 15 minutes. Nothing is removed automatically.
@@ -217,14 +215,6 @@ export default function ArchivePage() {
       <Link className="text-button" to="/offline">
         Open phone library
       </Link>
-      <button
-        className="text-button"
-        onClick={() =>
-          void query.invalidateQueries({ queryKey: ['kept-memories'] })
-        }
-      >
-        Refresh keepsakes
-      </button>
     </div>
   )
 }

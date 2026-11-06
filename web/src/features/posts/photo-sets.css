@@ -92,11 +92,6 @@
   font-size: 0.875rem;
   box-shadow: none;
 }
-.photo-set-caption input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: -3px;
-  box-shadow: none;
-}
 .photo-set-draft[data-compact='true'] {
   padding: 4px 12px;
 }

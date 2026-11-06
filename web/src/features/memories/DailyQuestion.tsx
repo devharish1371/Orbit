@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Check } from 'lucide-react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
@@ -81,18 +81,26 @@ export function DailyQuestion() {
               void submit(event)
             }}
           >
-            <label htmlFor="daily-answer">{text.answer}</label>
+            <label className="sr-only" htmlFor="daily-answer">
+              {text.answer}
+            </label>
             <textarea
               ref={answerField}
               id="daily-answer"
               name="answer"
+              placeholder="Your answer…"
               required
               maxLength={1000}
               rows={3}
             />
             <p className="muted small">{text.answerHint}</p>
-            <Button disabled={busy}>
-              {busy ? 'Saving…' : text.sealAnswer}
+            <Button
+              className="question-save"
+              aria-label={busy ? 'Saving…' : text.sealAnswer}
+              disabled={busy}
+            >
+              <Check size={18} aria-hidden="true" />
+              {busy ? 'Saving…' : 'Save'}
             </Button>
           </form>
         </div>

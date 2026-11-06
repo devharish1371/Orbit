@@ -406,10 +406,6 @@ h2 {
   background: var(--panel);
   box-shadow: 0 4px 0 #0001;
 }
-.chat-composer .messenger-composer:focus-within {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
-  border-color: var(--primary);
-}
 .chat-message-menu {
   color: var(--text-dim);
 }

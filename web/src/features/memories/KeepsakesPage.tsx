@@ -216,10 +216,10 @@ export default function KeepsakesPage() {
                 <button
                   className="text-button keepsake-organize"
                   aria-label="Collections for this keepsake"
+                  title="Collections"
                   onClick={() => setOrganizing(post)}
                 >
                   <FolderPlus size={17} aria-hidden="true" />
-                  Collections
                 </button>
                 <PhoneCopyBadge post={post} />
               </div>
@@ -242,10 +242,10 @@ export default function KeepsakesPage() {
               <button
                 className="text-button keepsake-organize"
                 aria-label="Collections for this keepsake"
+                title="Collections"
                 onClick={() => setOrganizing(post)}
               >
                 <FolderPlus size={17} aria-hidden="true" />
-                Collections
               </button>
             </div>
           ),
@@ -273,10 +273,7 @@ export default function KeepsakesPage() {
         </button>
       )}
       {map && posts.length > 0 && (
-        <p className="muted small">
-          Map pins follow the keepsakes loaded on this page. Load earlier
-          keepsakes to explore further back.
-        </p>
+        <p className="muted small">Pins show loaded keepsakes.</p>
       )}
       <Link className="collection-settings-link" to="/settings">
         Storage & export <span aria-hidden="true">↗</span>
