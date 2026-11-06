@@ -22,11 +22,11 @@ the original PLAN.md and deferred physical release gates remain valid.
 - User preference: continue building/automated verification, retain verified builds internally,
   and do not hand over APKs or request a phone install until the user asks for their test batch.
 
-## V2.10 active — 6 November
+## V2.10 software verified — 6 November
 
 User expands V2.10 to include complete visual cleanup: reduce clutter, remove unnecessary
 copy, use visual language where clear, remove typing highlights and improve spacing/flow
-throughout the app. Execute docs/V2_RELEASE_AUDIT.md. APK handover and physical tests remain
+throughout the app. Implemented and verified: docs/V2_RELEASE_AUDIT.md. APK handover and physical tests remain
 deferred; do not mark the app production-released from automated checks alone.
 
 ## Current acceptance — 6 November
@@ -41,8 +41,11 @@ deferred; do not mark the app production-released from automated checks alone.
   states and twelve browser flows pass. Android CI 42170571273 passes; twelve static audits score 100/100. Evidence: DEVLOG.md and
   docs/screens/v2-archives/README.md. No real archive or partner contact performed.
 - Actual two-phone/offline/SAF/provider/process-death behavior remains deferred task #7.
-  Do not deliver an APK or request installation until the user asks. V2.10 release audit
-  remains next. The dated updates below preserve the implementation history.
+  Do not deliver an APK or request installation until the user asks.
+- V2.10 software complete at `25fd54e`: 241 web/44 worker and all 105 hosted/tool checks;
+  459 responsive layouts, 17 flows, 16 editable fields and 63 static audits pass. Android CI
+  42266311411 passes. Care/recovery and deferred release gates are current. The dated updates
+  below preserve implementation history; final production release remains gated on device/owner acceptance.
 
 ## Milestones
 

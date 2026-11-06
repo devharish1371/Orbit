@@ -1,0 +1,380 @@
+[
+  {
+    "name": "activity-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "activity-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "archives-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "archives-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "call-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "call-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "capsule-editor-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "capsules-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "capsules-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "chat-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "chat-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "chat-search-empty-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "chat-tools-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "collection-editor-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "daily-answer-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "expiry-sheet-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "home-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "home-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "home-reduced-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "keepsakes-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "keepsakes-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "logout-confirmation-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "map-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "map-expanded-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "map-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "memory-side-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "moment-note-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "moments-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "moments-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "notifications-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "notifications-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "offline-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "offline-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "on-this-day-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "on-this-day-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "partner-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "partner-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "place-editor-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "plan-editor-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "plans-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "plans-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "profile-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "profile-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "reaction-palette-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "reply-sheet-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "safety-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "safety-editor-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "safety-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "self-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "self-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "settings-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "settings-details-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "settings-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "settings-storage-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "timeline-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "timeline-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "tracking-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "tracking-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "us-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "us-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "voice-draft-night-largest",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "widget-day-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  },
+  {
+    "name": "widget-night-standard",
+    "accessibility": 100,
+    "best_practices": 100,
+    "findings": []
+  }
+]

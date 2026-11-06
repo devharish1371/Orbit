@@ -6,7 +6,9 @@ One React/TypeScript codebase targets the web and a sideloaded Capacitor Android
 **Status:** Implemented: remembered email OTP, profiles/themes, live/background location,
 push, disappearing photo/voice/text chat and moments, keepsakes/capsules, app lock and export.
 V2 adds connected media flows, an anchored journey map, shared plans, personal reminders
-and a date jar/want-to-go list. Device reliability, partner onboarding and final release gates
+and a date jar/want-to-go list, mixed memories, explicit phone/cloud archives, comfort
+controls and opt-in safety check-ins. V2.10 cleans up copy, text entry and page hierarchy.
+Device reliability, partner onboarding and final release gates
 remain open; verified builds stay internal until the user's requested test batch.
 See [tracking setup and test steps](docs/TRACKING.md) and
 [authentication setup](docs/AUTHENTICATION.md).

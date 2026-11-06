@@ -1809,3 +1809,41 @@ multiple-image action. All 241 web/44 worker checks and lint/types/format/build 
 Native final-source assembly is refreshed. Static native-dialog serialization also lost its
 browser top layer; the audit harness now reopens captured dialogs with showModal, matching
 the production component. This is a harness correction, not a production z-index patch.
+
+### V2.10 — final software verification (6 November)
+
+Application source `25fd54e04aee680d539c4aec8563bd7140de1a9e` passes strict web checks:
+241 web/44 worker tests, lint/types/format/build. The full hosted/tool suite passes 105/105
+in 223.65s. Production dependencies have zero vulnerabilities; Python requirements agree.
+Android CI 42266311411 passes web/tool/native tests, sync, Java/resources, merged-manifest/
+bridge checks, assembly and signing. No backend deployment was needed for the UI-only pass.
+
+Browser evidence: docs/screens/v210-release. All 459 measured layouts, 17 flows and 16 focused
+editable fields pass. The regular matrix covers 22 routes × two themes × three text sizes
+× three widths, plus expanded/long-name/answer states. Reduced motion stops orbit animation;
+non-text focus and draft/focus return stay intact. The final tray label was refreshed in
+both Chat-tools and expiry-sheet captures. 65 PNGs retained; 63 settled static audits score
+100/100 with zero binary findings. Static assets were made same-origin, exact test image
+bytes localized, and serialized dialogs restored with showModal before re-audit. The single
+revoked-blob photo-preview HTML case is explicitly excluded; real preview/caption/reorder
+and its screenshot remain documented. No performance claim comes from that static harness.
+
+Main JS is 513.56 KB /149.62 KB gzip; separate lazy MapLibre is 1,076.03 KB /292.01 KB gzip,
+excluded from precache. Vite's >500 KB advisory remains documented. Optional cold-login
+measurement approval was declined; no new startup score is claimed. Physical phone frame
+pacing, OS text scaling/TalkBack, true offline, native SAF/provider/process-death, keyboard/
+gesture, battery/soak and partner gates remain deferred task #7. Recovery/readiness has
+bounded unit/source/browser evidence, not a physical acceptance claim.
+
+V2.10 software acceptance is complete. Plans, recovery guidance and the release checklist
+are current. Final production release still requires the deferred physical and owner-signing
+checks. No real partner contact, recording/sensor activation or real-memory removal occurred.
+The disposable fixture and its Storage files were removed. Preferences/viewport were restored,
+QA tabs closed; user previews remain. No APK handover/install request. Letter remains outside
+Orbit. Exact artifact metadata and verification limits are retained in verification.json.
+
+Private final APK: 7,155,288 bytes; SHA-256
+4d5e4d07d15aa4771e9eed9b3101ede8147cc0ff636e231405ed90b4bc899020. ZIP integrity, signer continuity against 9b427ec
+and private-material scan pass. No application edits follow the verified source.
+
+Final source/evidence secret scan: 1,309 files, zero findings. Git diff whitespace check passes.

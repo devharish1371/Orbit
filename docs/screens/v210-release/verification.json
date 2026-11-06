@@ -1,0 +1,60 @@
+{
+  "application_source": "25fd54e04aee680d539c4aec8563bd7140de1a9e",
+  "date": "2026-11-06",
+  "web_tests": 241,
+  "worker_tests": 44,
+  "hosted_tool_tests": 105,
+  "hosted_tool_seconds": 223.65,
+  "lint_types_format_build": "pass",
+  "responsive_cases": 459,
+  "browser_flows": 17,
+  "focused_editable_fields": 16,
+  "pngs": 65,
+  "settled_static_audits": 63,
+  "static_accessibility": 100,
+  "static_best_practices": 100,
+  "static_binary_findings": 0,
+  "excluded_static_cases": [
+    "photo-set-caption-night-largest"
+  ],
+  "production_dependency_vulnerabilities": 0,
+  "android_ci": {
+    "id": 42266311411,
+    "url": "https://github.com/devharish1371/Orbit/actions/runs/42266311411",
+    "conclusion": "success"
+  },
+  "apk": {
+    "bytes": 7155288,
+    "sha256": "4d5e4d07d15aa4771e9eed9b3101ede8147cc0ff636e231405ed90b4bc899020",
+    "zip_integrity": "pass",
+    "signing_identity_matches_baseline": true,
+    "private_scan": "pass"
+  },
+  "performance": {
+    "main_js_kb": 513.56,
+    "main_js_gzip_kb": 149.62,
+    "maplibre_js_kb": 1076.03,
+    "maplibre_js_gzip_kb": 292.01,
+    "map_lazy": true,
+    "map_tiles_cached": false,
+    "precache_entries": 132,
+    "precache_kib": 1375.81,
+    "vite_large_chunk_advisory": true,
+    "current_cold_login": "not measured; optional execution approval declined",
+    "physical_phone_performance": "deferred human task 7"
+  },
+  "limits": [
+    "settled DOM audits are not runtime performance or map-canvas proof",
+    "Largest is built-in 125 percent, not OS font scaling/TalkBack acceptance",
+    "native physical offline, SAF/provider/process death, keyboard/gestures, two-phone and soak gates remain deferred",
+    "stable internal test signing; owner production key/backup gate remains open"
+  ],
+  "real_partner_contact": false,
+  "real_memory_cloud_removal": false,
+  "apk_handover": false,
+  "fixture_cleanup": "pass",
+  "source_evidence_scan": {
+    "files": 1309,
+    "findings": 0
+  }
+}

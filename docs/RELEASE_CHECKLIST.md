@@ -6,16 +6,19 @@ for. Vidya's phone is unavailable before the surprise; do not contact her during
 
 ## Automated/software gate — current audit
 
-- [ ] Whole-app visual/copy/focus cleanup, production-component responsive evidence.
-- [ ] Text entry retains visible caret without a box/ring/glow or focus underline.
-- [ ] Keyboard controls, labelled icons, reading sizes, reduced motion, empty/error states.
-- [ ] Strict lint/types/format/build; web and worker checks.
-- [ ] Complete hosted/tool regression with disposable accounts and Storage API teardown.
-- [ ] Production dependency audit, source/evidence scan and no privileged client credentials.
-- [ ] Cold/loading/error/offline/retry/update behavior reviewed with bounded evidence.
-- [ ] Android compilation/native unit/manifest/signing checks; privately retained artifact
+- [x] Whole-app visual/copy/focus cleanup, production-component responsive evidence.
+- [x] Text entry retains visible caret without a box/ring/glow or focus underline.
+- [x] Keyboard controls, labelled icons, reading sizes, reduced motion, empty/error states.
+- [x] Strict lint/types/format/build; web and worker checks.
+- [x] Complete hosted/tool regression with disposable accounts and Storage API teardown.
+- [x] Production dependency audit, source/evidence scan and no privileged client credentials.
+- [x] Cold/loading/error/offline/retry/update behavior reviewed with bounded evidence.
+- [x] Android compilation/native unit/manifest/signing checks; privately retained artifact
       passes ZIP integrity, signer continuity and private-material scan.
-- [ ] Backup/restore/logout consequences and operational guidance current.
+- [x] Backup/restore/logout consequences and operational guidance current.
+
+Current cold-login startup timing was not measured: optional measurement approval was declined.
+The loading/recovery gate above records unit/source and browser evidence, not phone performance.
 
 Exact source, results and any limitations: DEVLOG.md and V2_RELEASE_AUDIT.md.
 
