@@ -1776,3 +1776,11 @@ all 105 hosted/tool tests pass in 223.65s. Production dependency audit: zero fin
 requirements consistent. Production browser checks use the verified disposable UI couple on
 isolated port 4176; no real account/contact/sensor change. Complete responsive/native evidence
 continues; care/recovery and explicit deferred release checklist are drafted.
+
+Production browser review confirms visible caret with no field outline/shadow, keyboard focus
+on contextual help, latest web-update route/session continuity, and compact Settings with no
+duplicate Appearance title. The first full-page Chat capture was a transient skeleton and
+was replaced after waiting for its labelled loading state. Additional inspection removed
+Chat's squared header cap and extended calm entry styling to native date/time fields while
+retaining native segment selection. Initial 66 route/width checks fit; complete theme/text-size
+and expanded-state verification continues. Final small CSS refinement is checked below.
