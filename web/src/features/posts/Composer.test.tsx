@@ -293,3 +293,38 @@ test('a failed durable media save retains the photo set and never falls through 
   expect(enqueue).toHaveBeenCalledTimes(1)
   expect(f.share).not.toHaveBeenCalled()
 })
+
+test('preparing photos is distinct from sending and cannot post before preview', async () => {
+  let ready!: (value: object) => void
+  f.photo.mockReturnValueOnce(
+    new Promise((resolve) => {
+      ready = resolve
+    }),
+  )
+  URL.createObjectURL = vi.fn(() => 'blob:preparing-preview')
+  URL.revokeObjectURL = vi.fn()
+  mount('moment')
+  await userEvent.click(screen.getByRole('button', { name: 'Photo' }))
+  fireEvent.change(screen.getByLabelText('Choose photos'), {
+    target: { files: [new File(['x'], 'fixture.png', { type: 'image/png' })] },
+  })
+  expect(await screen.findByRole('status')).toHaveTextContent(
+    'Preparing photos…',
+  )
+  expect(
+    screen.getByRole('button', { name: 'Preparing photos…' }),
+  ).toBeDisabled()
+  expect(
+    screen.queryByRole('button', { name: 'Posting…' }),
+  ).not.toBeInTheDocument()
+  expect(f.share).not.toHaveBeenCalled()
+  ready({
+    blob: new Blob(['image'], { type: 'image/webp' }),
+    extension: 'webp',
+    width: 2,
+    height: 2,
+  })
+  await screen.findByRole('img', { name: 'Photo 1 preview' })
+  expect(screen.getByRole('button', { name: 'Post moment' })).toBeEnabled()
+  expect(f.share).not.toHaveBeenCalled()
+})

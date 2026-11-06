@@ -1784,3 +1784,12 @@ was replaced after waiting for its labelled loading state. Additional inspection
 Chat's squared header cap and extended calm entry styling to native date/time fields while
 retaining native segment selection. Initial 66 route/width checks fit; complete theme/text-size
 and expanded-state verification continues. Final small CSS refinement is checked below.
+
+Photo QA clarification: both selected local files produced previews and retained captions
+when reordered, with no console errors and no post sent. The long file-chooser automation
+call includes picker/transport time, so it is not an image-processing benchmark and does
+not justify changing the WebP pipeline. A separate UI defect was real: photo preparation
+used the same busy label as posting. Added a route-safe preparation phase, an honest status,
+and a deferred-promise regression proving it cannot post before preview. New-plan draft copy
+also stops saying confirmation is already pending before the plan is proposed. Final web
+checks now include 241 tests; native verification is refreshed for this small correction.

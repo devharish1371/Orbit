@@ -15,6 +15,7 @@ export interface ComposerMemory {
   ttl: string
   place: string
   busy: boolean
+  preparingPhotos: boolean
   message: string
   more: boolean
   noteStyle: NoteStyle
@@ -30,6 +31,7 @@ export const freshComposer = (): ComposerMemory => ({
   ttl: 'default',
   place: '',
   busy: false,
+  preparingPhotos: false,
   message: '',
   more: false,
   noteStyle: 'ink',

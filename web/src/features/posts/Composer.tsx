@@ -93,6 +93,7 @@ export function Composer({
     [ttl, setTtl] = field('ttl'),
     [place, setPlace] = field('place'),
     [busy, setBusy] = field('busy'),
+    [preparingPhotos, setPreparingPhotos] = field('preparingPhotos'),
     [message, setMessage] = field('message'),
     [more, setMore] = field('more'),
     [noteStyle, setNoteStyle] = field('noteStyle'),
@@ -166,6 +167,7 @@ export function Composer({
       return
     }
     edited()
+    setPreparingPhotos(true)
     setBusy(true)
     try {
       const ready: DraftPhoto[] = []
@@ -182,6 +184,7 @@ export function Composer({
     } catch {
       setMessage(copy.posts.photoFailed)
     } finally {
+      setPreparingPhotos(false)
       setBusy(false)
     }
   }
@@ -478,7 +481,13 @@ export function Composer({
               type="submit"
               className="chat-send"
               disabled={busy || voiceDraft}
-              aria-label={busy ? copy.posts.sending : copy.posts.send}
+              aria-label={
+                preparingPhotos
+                  ? 'Preparing photos…'
+                  : busy
+                    ? copy.posts.sending
+                    : copy.posts.send
+              }
             >
               <Send size={20} />
             </button>
@@ -486,7 +495,7 @@ export function Composer({
         </div>
         {busy && (
           <p className="composer-feedback" role="status">
-            {copy.posts.sending}
+            {preparingPhotos ? 'Preparing photos…' : copy.posts.sending}
           </p>
         )}
         {message && (
@@ -692,7 +701,13 @@ export function Composer({
         <Button
           type="submit"
           title="Post"
-          aria-label={busy ? copy.posts.sharing : 'Post moment'}
+          aria-label={
+            preparingPhotos
+              ? 'Preparing photos…'
+              : busy
+                ? copy.posts.sharing
+                : 'Post moment'
+          }
           disabled={
             busy ||
             recording ||
@@ -704,6 +719,11 @@ export function Composer({
           <ArrowUpRight size={22} aria-hidden="true" />
         </Button>
       </div>
+      {preparingPhotos && (
+        <p className="composer-feedback" role="status">
+          Preparing photos…
+        </p>
+      )}
       <div className="composer-options">
         <label>
           <Clock3 size={14} aria-hidden="true" />

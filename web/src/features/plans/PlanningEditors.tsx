@@ -111,10 +111,7 @@ export function PlanEditor({
             space?.partner?.nickname ||
             space?.partner?.display_name ||
             'your partner'}
-          .{' '}
-          {draft.version
-            ? 'Changes need a fresh confirmation.'
-            : 'Waiting for their confirmation.'}
+          . {draft.version ? 'Changes need a fresh confirmation.' : ''}
         </p>
         {error && <p role="alert">{error}</p>}
         <Button disabled={busy}>
