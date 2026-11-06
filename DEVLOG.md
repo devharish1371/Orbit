@@ -1793,3 +1793,12 @@ used the same busy label as posting. Added a route-safe preparation phase, an ho
 and a deferred-promise regression proving it cannot post before preview. New-plan draft copy
 also stops saying confirmation is already pending before the plan is proposed. Final web
 checks now include 241 tests; native verification is refreshed for this small correction.
+
+Largest-text hit testing found a real Atlas overlap: the add-place instruction panel covered
+Use map center. Removed the redundant visual panel and its CSS; the instruction remains an
+accessible status. The action is now the single visible alternative to tapping the map.
+Also merged the ruled writing-surface rule into its original shared definition rather than
+keeping a competing override. These are final visual audit corrections, not new features.
+Native/source checks are refreshed for the exact corrected build; in-app hit/open verification
+and final settled static audits follow. Projected map markers and intentional horizontal
+rails are clipped by their own viewport, and are distinguished from page/control overflow.

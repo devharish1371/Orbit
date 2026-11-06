@@ -26,12 +26,21 @@
   font-size: 1.3125rem;
   letter-spacing: -0.035em;
 }
+/* Quiet, ruled writing surfaces. Geometry never changes when editing starts. */
 .page
   :is(.settings-section, .memory-section, .place-editor)
   :is(
-    input:not([type='checkbox']):not([type='color']):not([type='range']),
+    input:not([type='checkbox']):not([type='color']):not([type='range']):not(
+        [type='file']
+      ),
     textarea
-  ),
+  ) {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding-inline: 0;
+}
 .page .choice-trigger {
   border: 1px solid transparent;
   border-radius: 24px;
@@ -278,21 +287,6 @@
   box-shadow: none;
 }
 
-/* Quiet, ruled writing surfaces. Geometry never changes when editing starts. */
-.page
-  :is(.settings-section, .memory-section, .place-editor)
-  :is(
-    input:not([type='checkbox']):not([type='color']):not([type='range']):not(
-        [type='file']
-      ),
-    textarea
-  ) {
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--border);
-  border-radius: 0;
-  padding-inline: 0;
-}
 .context-help {
   display: inline-block;
   max-width: 100%;

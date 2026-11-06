@@ -387,7 +387,7 @@ export default function MapPage() {
             </button>
           </div>
           {adding && (
-            <p className="atlas-map-hint" role="status">
+            <p className="sr-only" role="status">
               Tap the map to pin a place
             </p>
           )}

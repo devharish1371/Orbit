@@ -124,17 +124,6 @@
 [data-theme='light'] .atlas-page .maplibregl-ctrl-icon {
   filter: none;
 }
-.atlas-map-hint {
-  position: absolute;
-  z-index: 2;
-  bottom: 38px;
-  inset-inline: 12px;
-  padding: 10px 14px;
-  border-radius: 22px;
-  background: var(--panel);
-  font-size: 0.75rem;
-  text-align: center;
-}
 .atlas-sheet {
   position: relative;
   z-index: 3;
