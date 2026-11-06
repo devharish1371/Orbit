@@ -1847,3 +1847,10 @@ Private final APK: 7,155,288 bytes; SHA-256
 and private-material scan pass. No application edits follow the verified source.
 
 Final source/evidence secret scan: 1,309 files, zero findings. Git diff whitespace check passes.
+
+### Requested APK handover — 6 November
+
+User explicitly requests the final built APK named orbit. Delivered the verified source
+25fd54e artifact as `.artifacts/delivery/orbit.apk`, with identical SHA-256 to the recorded
+CI artifact. This supersedes the no-handover preference for this requested build; deferred
+physical/partner/soak and owner production-signing gates remain open.
