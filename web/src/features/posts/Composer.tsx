@@ -345,7 +345,7 @@ export function Composer({
               <span aria-hidden="true">
                 <ImagePlus size={21} />
               </span>
-              <span>Photo</span>
+              <span>Photos</span>
             </button>
             <button
               className="chat-tray-action"

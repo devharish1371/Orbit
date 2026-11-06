@@ -1802,3 +1802,10 @@ keeping a competing override. These are final visual audit corrections, not new 
 Native/source checks are refreshed for the exact corrected build; in-app hit/open verification
 and final settled static audits follow. Projected map markers and intentional horizontal
 rails are clipped by their own viewport, and are distinguished from page/control overflow.
+
+Static accessibility review found a small speech-label mismatch in the Chat tray: visible
+“Photo” versus accessible “Choose photos”. The visible label is now “Photos”, matching the
+multiple-image action. All 241 web/44 worker checks and lint/types/format/build pass again.
+Native final-source assembly is refreshed. Static native-dialog serialization also lost its
+browser top layer; the audit harness now reopens captured dialogs with showModal, matching
+the production component. This is a harness correction, not a production z-index patch.
